@@ -1,6 +1,6 @@
 {
   "name": "adze",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Better JavaScript console logging.",
   "main": "dist/adze.js",
   "sideEffects": false,
