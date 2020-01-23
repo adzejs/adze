@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "outDir": "dist",
+    "declaration": true,
+    "declarationDir": "types",
+    "emitDeclarationOnly": true,
+    "preserveConstEnums": true
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./old",
+    "./dist",
+    "./node_modules",
+    "./test.ts",
+    "./types",
+    "./img",
+    "./webpack.config.js",
+    "./ava.config.js"
+  ]
+}

@@ -1,0 +1,1 @@
+export { initialCaps } from './util';

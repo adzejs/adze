@@ -1,0 +1,1 @@
+export { getLabel, addLabel, hasLabel } from './label';

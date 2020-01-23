@@ -1,0 +1,1 @@
+export { time, timeNow, timeEnd, timeLog } from './timing';
