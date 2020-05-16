@@ -16,15 +16,15 @@ export function printGroupEnd(this: Log, def: LogLevelDefinition, base_style: st
 }
 
 export function printTable(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {
-  console.table(...args);
+  console.table(args);
 }
 
 export function printDir(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {
-  console.dir(...args);
+  console.dir(args);
 }
 
 export function printDirxml(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {
-  console.dirxml(...args);
+  console.dirxml(args);
 }
 
 // ------- PRINT HELPERS -------- //

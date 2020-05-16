@@ -5,7 +5,13 @@ import { initialCaps } from '../../util';
 // ------- PRINT METHODS -------- //
 
 export function printLog(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {
-  console[def.method](`${fLeader(def, args)}`, (base_style + def.style), fMeta(this), args);
+  // Must check the return value of meta otherwise FF prints "empty string"...
+  const meta = fMeta(this);
+  if (meta === '') {
+    console[def.method](`${fLeader(def, args)}`, (base_style + def.style), ...args);
+  } else {
+    console[def.method](`${fLeader(def, args)}`, (base_style + def.style), fMeta(this), ...args);
+  }
 }
 
 export function printGroup(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {

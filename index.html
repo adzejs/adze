@@ -6,6 +6,35 @@
   <link rel="icon" type="image/png" href="img/favicon.png">
 
   <script src="dist/adze.js"></script>
+  <style>
+    html, body {
+      font-size: 62.5%;
+      background-color: #fff;
+      font-family: arial;
+    }
+    .main {
+      text-align: center;
+    }
+    .main img {
+      width: 50%;
+      height: 50%;
+    }
+    h1, h2 { text-align: center; }
+    h1 { font-size: 4rem; }
+    h2 { font-size: 2.8rem; }
+    p, pre {
+      padding: 5rem;
+      font-size: 1.8rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <img src="img/logo.png">
+    <h2>Open up the console to see the tests.</h2>
+  </div>
+
   <script>
     window.adze = AdzeLib.adze;
 
@@ -65,7 +94,11 @@
     adze().label('tables').table().count().success(tabular_data);
 
     adze().label('tables').log("Counted tables!");
-    adze().table().dir().success(tabular_data);
+    adze().table().dir().success({firstName: 'Andrew', lastName: 'Stacy'});
+
+    const el = document.querySelector('.main h2');
+    adze().dirxml().success(el);
+
     adze().assert(2 > 3).warn("This will print because the assertion failed.");
     adze().test(2 < 3).warn("This will print because the test passed.");
     for (let i = 0; i < 5; i++) {
@@ -87,35 +120,6 @@
 
     adze().label('testAll').timeEnd().info('End of the timer');
   </script>
-
-  <style>
-    html, body {
-      font-size: 62.5%;
-      background-color: #fff;
-      font-family: arial;
-    }
-    .main {
-      text-align: center;
-    }
-    .main img {
-      width: 50%;
-      height: 50%;
-    }
-    h1, h2 { text-align: center; }
-    h1 { font-size: 4rem; }
-    h2 { font-size: 2.8rem; }
-    p, pre {
-      padding: 5rem;
-      font-size: 1.8rem;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="main">
-    <img src="img/logo.png">
-    <h2>Open up the console to see the tests.</h2>
-  </div>
 
   <script>
     // const testObj = {
