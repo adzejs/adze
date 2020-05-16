@@ -4,7 +4,11 @@ import {
   printGroup as printGroupB,
   printGroupCollapsed as printGroupCollapsedB,
 } from './browser';
-import { printNode } from './node';
+import {
+  printNode,
+  printNodeGroup,
+  printNodeGroupCollapsed,
+} from './node';
 import {
   print,
   printGroupEnd,
@@ -14,8 +18,8 @@ import {
 } from './shared';
 
 const printLog = isBrowser ? printLogB : printNode;
-const printGroup = isBrowser ? printGroupB : printNode;
-const printGroupCollapsed = isBrowser ? printGroupCollapsedB : printNode;
+const printGroup = isBrowser ? printGroupB : printNodeGroup;
+const printGroupCollapsed = isBrowser ? printGroupCollapsedB : printNodeGroupCollapsed;
 
 export {
   print,

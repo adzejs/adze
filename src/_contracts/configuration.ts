@@ -34,7 +34,6 @@ export interface CustomLogLevels {
 export interface LogLevelDefinition {
   level: number;
   method: ConsoleMethod;
-  baseStyle: string;
   style: string;
   terminal: string|string[];
   emoji: string;

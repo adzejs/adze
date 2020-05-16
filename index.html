@@ -69,15 +69,17 @@
 
     adze().label('TestTimer').time().log("This is the start of my timer log.");
 
-    adze().ns('wow!').attention("This is an attention!", 'adsfadf', 'dfadfadf');
-    adze().ns('wow!').error("This is an error!", 'adsfadf', 'dfadfadf');
-    adze().ns('wow!').fail("This is a failure!", 'adsfadf', 'dfadfadf');
-    adze().ns('wow!').warn("This is a warn!", 'adsfadf', 'dfadfadf');
-    adze().ns('wow!').info("This is an info!", 'adsfadf', 'dfadfadf');
-    adze().ns('wow!').success("This is a success!", 'adsfadf', 'adsfadf');
-    adze().ns('wow!').log("This is a log!", 'adsfadf', 'dfadfadf');
-    adze().ns('wow!').debug("This is a debug!", 'adsfadf', 'adsfadf');
-    adze().ns('wow!').verbose("This is a verbose!", 'adsfadf', 'adsfadf');
+    const wow = adze().ns('wow!');
+
+    wow.attention("This is an attention!", 'adsfadf', 'dfadfadf');
+    wow.error("This is an error!", 'adsfadf', 'dfadfadf');
+    wow.fail("This is a failure!", 'adsfadf', 'dfadfadf');
+    wow.warn("This is a warn!", 'adsfadf', 'dfadfadf');
+    wow.info("This is an info!", 'adsfadf', 'dfadfadf');
+    wow.success("This is a success!", 'adsfadf', 'adsfadf');
+    wow.log("This is a log!", 'adsfadf', 'dfadfadf');
+    wow.debug("This is a debug!", 'adsfadf', 'adsfadf');
+    wow.verbose("This is a verbose!", 'adsfadf', 'adsfadf');
 
     // $inkwell.level = 5;
     // adze().verbose("This shouldn't appear because the log level excludes it.");

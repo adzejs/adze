@@ -1,57 +1,58 @@
 import { adze, createStore } from './src';
-import { ConsoleType } from './src/_contracts';
+import { ConsoleMethod } from './src/_contracts';
 
 declare const $shed: Shed;
 
 adze().label("Test").info("Trying to create a labeled log without a store.");
 
-createStore({
-  log_level: 9000,
-  custom_levels: {
-    andrew: {
-      level: 8,
-      method: ConsoleType.Info,
-      style: 'background: #00FF00; padding-right: 26px;',
-      terminal: ['bgGreen', 'yellow'],
-      emoji: '🧙‍♂️',
-    },
-    matt: {
-      level: 9,
-      method: ConsoleType.Info,
-      style: 'color: #fff; background: #7E5109; padding-right: 39px;',
-      terminal: ['bgBlack', 'red'],
-      emoji: '💩',
-    }
-  }
-});
+// createStore({
+//   log_level: 9000,
+//   custom_levels: {
+//     andrew: {
+//       level: 8,
+//       method: 'info',
+//       style: 'background: linear-gradient(to right, #fff, #00FF00); padding-right: 31px;',
+//       emoji: '🧙‍♂️',
+//     },
+//     matt: {
+//       level: 9,
+//       method: 'info',
+//       style: 'color: #fff; background: linear-gradient(to right, #fff, #7E5109); padding-right: 44px;',
+//       emoji: '💩',
+//     }
+//   }
+// });
 
 adze().label('testAll').time().info();
 
 adze().andrew('flippyfloo');
 adze().matt('poopypoo');
 
-$shed.addListener([0,1], (log: any) => {
-  console.debug("Testing the log listener callbacks", log.level);
+$shed.addListener([0,1,2], (log) => {
+  console.debug(`Callback fired for level ${log.level}`, log);
 });
 
 adze().label('TestTimer').time().log("This is the start of my timer log.");
 
-adze().ns('wow!').attention("This is an attention!", 'adsfadf', 'dfadfadf');
-adze().ns('wow!').error("This is an error!", 'adsfadf', 'dfadfadf');
-adze().ns('wow!').warn("This is a warn!", 'adsfadf', 'dfadfadf');
-adze().ns('wow!').info("This is an info!", 'adsfadf', 'dfadfadf');
-adze().ns('wow!').success("This is a success!", 'adsfadf', 'adsfadf');
-adze().ns('wow!').log("This is a log!", 'adsfadf', 'dfadfadf');
-adze().ns('wow!').debug("This is a debug!", 'adsfadf', 'adsfadf');
-adze().ns('wow!').detail("This is a detail!", 'adsfadf', 'adsfadf');
+const wow = adze().ns('wow!');
 
-$shed.level = 5;
-adze().detail("This shouldn't appear because the log level excludes it.");
-adze().debug("This one shouldn't appear either.");
-$shed.level = 7;
+wow.attention("This is an attention!", 'adsfadf', 'dfadfadf');
+wow.error("This is an error!", 'adsfadf', 'dfadfadf');
+wow.fail("This is a failure!", 'adsfadf', 'dfadfadf');
+wow.warn("This is a warn!", 'adsfadf', 'dfadfadf');
+wow.info("This is an info!", 'adsfadf', 'dfadfadf');
+wow.success("This is a success!", 'adsfadf', 'adsfadf');
+wow.log("This is a log!", 'adsfadf', 'dfadfadf');
+wow.debug("This is a debug!", 'adsfadf', 'adsfadf');
+wow.verbose("This is a verbose!", 'adsfadf', 'adsfadf');
 
-adze().label('doobadoo').time().detail();
-adze().label('doobadoo').timeEnd().detail();
+// $inkwell.level = 5;
+// adze().verbose("This shouldn't appear because the log level excludes it.");
+// adze().debug("This one shouldn't appear either.");
+// $inkwell.level = 7;
+
+adze().label('doobadoo').time().verbose();
+adze().label('doobadoo').timeEnd().verbose();
 const tabular_data = [
   {firstName: 'Andrew', lastName: 'Stacy'},
   {firstName: 'James', lastName: 'Jones'}
@@ -60,8 +61,13 @@ adze().label('tables').table().count().success(tabular_data);
 adze().label('tables').table().count().success(tabular_data);
 
 adze().label('tables').log("Counted tables!");
-adze().assert(2 < 3).warn("This should show because the assertion is true.");
-adze().assert(3 < 2).warn("This shouldn't show because the assertion is false.");
+adze().table().dir().success({firstName: 'Andrew', lastName: 'Stacy'});
+
+const el = document.querySelector('.main h2');
+adze().dirxml().success(el);
+
+adze().assert(2 > 3).warn("This will print because the assertion failed.");
+adze().test(2 < 3).warn("This will print because the test passed.");
 for (let i = 0; i < 5; i++) {
   adze().label("Test Counting").count().log("This is a message with a counter.", "More text.", "even more");
 }

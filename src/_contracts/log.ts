@@ -1,3 +1,4 @@
+import { LogFunction } from './shed';
 import { Label } from "./label";
 import { LogLevelDefinition } from ".";
 
@@ -17,6 +18,8 @@ interface LogValues {
 }
 
 interface LogMethods {
+  [name: string]: LogFunction;
+  
   cache(this: Log, def: LogLevelDefinition, args: any[]): void;
   print(this: Log, def: LogLevelDefinition, base_style: string, args: any[]): void;
   fireListeners(this: Log, def: LogLevelDefinition, args: any[]): void;
