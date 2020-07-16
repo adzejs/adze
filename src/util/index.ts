@@ -1,1 +1,1 @@
-export { initialCaps } from './util';
+export { initialCaps, applyMixins } from './util';

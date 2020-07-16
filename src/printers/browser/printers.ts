@@ -8,9 +8,10 @@ export function printLog(this: Log, def: LogLevelDefinition, base_style: string,
   // Must check the return value of meta otherwise FF prints "empty string"...
   const meta = fMeta(this);
   if (meta === '') {
+    const x = def.method;
     console[def.method](`${fLeader(def, args)}`, (base_style + def.style), ...args);
   } else {
-    console[def.method](`${fLeader(def, args)}`, (base_style + def.style), fMeta(this), ...args);
+    console[def.method](`${fLeader(def, args)}`, (base_style + def.style), meta, ...args);
   }
 }
 

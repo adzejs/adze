@@ -1,6 +1,4 @@
-import { Log, ConsoleMethod } from './log';
-import { CustomLogLevels } from './configuration';
-import { Label } from './label';
+import { Log, ConsoleMethod, Label } from '.';
 
 type LabelMap = Map<string, Label>;
 
@@ -19,21 +17,13 @@ export interface Defaults {
   log_cache_size: number;
   use_emoji: boolean;
   base_style: string;
-  log_levels: BaseLogLevels;
-  custom_levels?: CustomLogLevels;
+  log_levels: LogLevels;
+  custom_levels: Partial<LogLevels>;
   filters: Filters;
 };
 
-export type BaseLogLevels = {
-  verbose: LogLevelDefinition;
-  debug: LogLevelDefinition;
-  log: LogLevelDefinition;
-  success: LogLevelDefinition;
-  info: LogLevelDefinition;
-  warn: LogLevelDefinition;
-  fail: LogLevelDefinition;
-  error: LogLevelDefinition;
-  attention: LogLevelDefinition;
+export type LogLevels = {
+  [method: string]: LogLevelDefinition;
 }
 
 export interface LogLevelDefinition {

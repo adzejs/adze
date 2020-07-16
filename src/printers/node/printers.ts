@@ -11,7 +11,7 @@ export function printNode(this: Log, def: LogLevelDefinition, base_style: string
   if (meta === '') {
     console[def.method](`${fLeader(def, args)}`, (base_style + def.style), ...args);
   } else {
-    console[def.method](`${fLeader(def, args)}`, (base_style + def.style), fMeta(this), ...args);
+    console[def.method](`${fLeader(def, args)}`, (base_style + def.style), meta, ...args);
   }
 }
 

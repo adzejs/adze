@@ -1,6 +1,7 @@
 import { Log } from '../_contracts';
 import { getLabel, addLabel } from '../label';
 import { prependModifier, modifier } from './modifier';
+import { printTrace } from '../printers';
 
 export function label(this: Log, name: string):Log {
   return prependModifier(this, () => {
@@ -20,6 +21,6 @@ export function ns(this: Log, ns: string):Log {
 
 export function trace(this: Log):Log {
   return modifier(this, () => {
-    this.method = 'trace';
+    this.printer = printTrace;
   })
 }

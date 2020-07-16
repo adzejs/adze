@@ -1,8 +1,11 @@
-import { LogFunction } from './shed';
-import { Label } from "./label";
-import { LogLevelDefinition } from ".";
+import { Label } from "./Label";
+import { LogLevelDefinition, LogFunction } from ".";
 
-export type ConsoleMethod = "error"|"warn"|"info"|"log"|"debug"|"trace";
+export type MethodKeys = "attention"|"error"|"warn"|"fail"|"success"|"info"|"log"|"debug"|"verbose";
+
+export type Methods = {
+  [method in MethodKeys]: LogFunction;
+};
 
 interface LogFlags {
   traceable: boolean;
@@ -18,11 +21,11 @@ interface LogValues {
 }
 
 interface LogMethods {
-  [name: string]: LogFunction;
-  
+  custom: LogFunction;
   cache(this: Log, def: LogLevelDefinition, args: any[]): void;
   print(this: Log, def: LogLevelDefinition, base_style: string, args: any[]): void;
   fireListeners(this: Log, def: LogLevelDefinition, args: any[]): void;
+  
   // Modifier Functions
   count(): Log;
   countReset(): Log;
@@ -43,4 +46,6 @@ interface LogMethods {
   timeEnd(): Log;
 }
 
-export interface Log extends LogValues, LogFlags, LogMethods {}
+export interface BaseLog extends LogFlags, LogValues, LogMethods {};
+
+export type Log = BaseLog & Methods;

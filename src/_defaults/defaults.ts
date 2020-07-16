@@ -6,6 +6,7 @@ export const defaults: Defaults = {
   log_cache_size: 300,
   use_emoji: true,
   base_style: 'font-size: 10px; font-weight: bold; border-radius: 0 10px 10px 0; border-width: 1px; border-style: solid;',
+  custom_levels: {},
   log_levels: {
     verbose: {
       level: 8,
@@ -35,26 +36,26 @@ export const defaults: Defaults = {
       method: 'info',
       emoji: '🎉'
     },
-    info: {
+    fail: {
       level: 4,
+      style: `padding-right: ${ isChrome ? '34' : '32' }px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;`,
+      terminal: ['bgRed', 'white'],
+      method: 'error',
+      emoji: '❌'
+    },
+    info: {
+      level: 3,
       style: `padding-right: ${ isSafari ? '49' : '44' }px; background: linear-gradient(to right, #fff, #b2d7ff); color: #465464; border-color: #96b5d7;`,
       terminal: ['bgBlue', 'white'],
       method: 'info',
       emoji: '📬'
     },
     warn: {
-      level: 3,
+      level: 2,
       style: `background: linear-gradient(to right, #fff, #fff0a8); color: #715100; border-color: #e3d696; padding-right: ${ isChrome ? '34' : '44' }px; `,
       terminal: ['bgYellow', 'gray'],
       method: 'warn',
       emoji: '🔔'
-    },
-    fail: {
-      level: 2,
-      style: `padding-right: ${ isChrome ? '34' : '32' }px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;`,
-      terminal: ['bgRed', 'white'],
-      method: 'error',
-      emoji: '❌'
     },
     error: {
       level: 1,

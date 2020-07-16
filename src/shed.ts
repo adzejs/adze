@@ -1,16 +1,19 @@
 import defaultsDeep from 'lodash.defaultsdeep';
-import { Shed, Configuration, Defaults, Log } from './_contracts';
+import {
+  Shed, Log,
+  Configuration, Defaults,
+  LogLevelDefinition, ListenerLocations,
+  Listeners, ListenerCallback
+} from './_contracts';
 import { defaults } from './_defaults';
 
 import { env } from './global';
-import { ListenerData, ListenerLocations, Listeners, ListenerCallback } from './_contracts/shed';
-import { LogLevelDefinition } from './_contracts/configuration';
 
 export function storeExists(store: Shed|undefined):store is Shed {
   return store !== undefined;
 }
 
-export function createStore(config: Configuration):void {
+export function createShed(config: Configuration):void {
   const cfg: Defaults = defaultsDeep(config, defaults);
   env.$shed = {
     cfg,

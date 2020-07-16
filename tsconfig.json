@@ -5,6 +5,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "outDir": "dist",
+    "lib": ["DOM", "ES2018"],
     "declaration": true,
     "declarationDir": "types",
     "emitDeclarationOnly": true,

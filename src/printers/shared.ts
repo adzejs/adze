@@ -27,6 +27,10 @@ export function printDirxml(this: Log, def: LogLevelDefinition, base_style: stri
   console.dirxml(args);
 }
 
+export function printTrace(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {
+  console.trace(...args);
+}
+
 // ------- PRINT HELPERS -------- //
 
 export function allowed(ctxt: Log, def: LogLevelDefinition):boolean {
