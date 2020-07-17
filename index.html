@@ -39,29 +39,39 @@
     window.adze = AdzeLib.adze;
 
     adze().label("Test").info("Trying to create a labeled log without a store.");
+    adze().label('testAll').time().info();
 
-    AdzeLib.createStore({
-      log_level: 9000,
+    const log = adze({
       custom_levels: {
         andrew: {
-          level: 8,
+          level: 9,
           method: 'info',
           style: 'background: linear-gradient(to right, #fff, #00FF00); padding-right: 31px;',
           emoji: '🧙‍♂️',
         },
         matt: {
-          level: 9,
+          level: 10,
           method: 'info',
           style: 'color: #fff; background: linear-gradient(to right, #fff, #7E5109); padding-right: 44px;',
           emoji: '💩',
-        }
+        },
       }
     });
 
-    adze().label('testAll').time().info();
+    const log2 = adze({
+      custom_levels: {
+        andrew: {
+          level: 9,
+          method: 'info',
+          style: 'background: linear-gradient(to right, #fff, #FF0000); padding-right: 31px;',
+          emoji: '🧙‍♂️',
+        },
+      },
+    });
 
-    adze().andrew('flippyfloo');
-    adze().matt('poopypoo');
+    log.custom('andrew', 'flippyfloo');
+    log.custom('matt', 'poopypoo');
+    log2.custom('andrew', 'flippyfloo');
 
     $shed.addListener([0,1,2], (log) => {
       console.debug(`Callback fired for level ${log.level}`, log);
