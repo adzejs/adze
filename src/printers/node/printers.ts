@@ -1,26 +1,42 @@
 import chalk from 'chalk';
-import { Log, LogLevelDefinition } from '../../_contracts';
+import { Log, LogLevelDefinition, ConsoleMethod, LogRender } from '../../_contracts';
 import { env } from '../../global';
 import { initialCaps } from '../../util';
 
 // ------- PRINT METHODS -------- //
 
-export function printNode(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {
-  // Must check the return value of meta otherwise FF prints "empty string"...
-  const meta = fMeta(this);
-  if (meta === '') {
-    console[def.method](`${fLeader(def, args)}`, (base_style + def.style), ...args);
-  } else {
-    console[def.method](`${fLeader(def, args)}`, (base_style + def.style), meta, ...args);
-  }
+export function printNode(this: Log, def: LogLevelDefinition, base_style: string, _args: any[]):LogRender {
+  const render = makeRender(this, def.method, def, base_style, _args);
+  const [ method, [leader, style, meta, args ]] = render;
+
+  console[method](leader, style, meta, ...args);
+
+  return render;
 }
 
-export function printNodeGroup(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {
-  console.group(`${fLeader(def, args)}`, (base_style + def.style), typeof args[0] === "string" ? args[0] : undefined );
+export function printNodeGroup(this: Log, def: LogLevelDefinition, base_style: string, _args: any[]):LogRender {
+  const render = makeRender(this, 'group', def, base_style, _args);
+  const [ _, [leader, style, __, args ]] = render;
+
+  console.group(leader, style, typeof args[0] === "string" ? args[0] : undefined );
+
+  return render;
 }
 
-export function printNodeGroupCollapsed(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {
-  console.groupCollapsed(`${fLeader(def, args)}`, (base_style + def.style), typeof args[0] === "string" ? args[0] : undefined );
+export function printNodeGroupCollapsed(this: Log, def: LogLevelDefinition, base_style: string, _args: any[]):LogRender {
+  const render = makeRender(this, 'groupCollapsed', def, base_style, _args);
+  const [ _, [leader, style, __, args ]] = render;
+
+  console.groupCollapsed(leader, style, typeof args[0] === "string" ? args[0] : undefined );
+
+  return render;
+}
+
+/**
+ * Utility function to create the LogRender tuple.
+ */
+function makeRender(ctxt: Log, method: ConsoleMethod, def: LogLevelDefinition, base_style: string, args: any[]):LogRender {
+  return [method, [fLeader(def, args), (base_style + def.style), fMeta(ctxt), args]];
 }
 
 // ------- PRINT FORMATTERS -------- //

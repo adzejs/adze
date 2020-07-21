@@ -2,7 +2,7 @@ import { Log, Label, RecursivePartial } from '.';
 
 type LabelMap = Map<string, Label>;
 
-export type ConsoleMethod = "error"|"warn"|"info"|"log"|"debug"|"trace";
+export type ConsoleMethod = "error"|"warn"|"info"|"log"|"debug"|"trace"|"group"|"groupCollapsed"|"groupEnd"|"table"|"dir"|"dirxml";
 
 export interface Shed {
   cfg: Defaults;

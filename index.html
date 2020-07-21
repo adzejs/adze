@@ -37,49 +37,19 @@
 
   <script>
     window.adze = AdzeLib.adze;
+    window.bundle = AdzeLib.bundle;
+    window.factory = AdzeLib.factory;
 
     adze().label("Test").info("Trying to create a labeled log without a store.");
     adze().label('testAll').time().info();
 
-    const log = adze({
-      custom_levels: {
-        andrew: {
-          level: 9,
-          method: 'info',
-          style: 'background: linear-gradient(to right, #fff, #00FF00); padding-right: 31px;',
-          emoji: '🧙‍♂️',
-        },
-        matt: {
-          level: 10,
-          method: 'info',
-          style: 'color: #fff; background: linear-gradient(to right, #fff, #7E5109); padding-right: 44px;',
-          emoji: '💩',
-        },
-      }
-    });
-
-    const log2 = adze({
-      custom_levels: {
-        andrew: {
-          level: 9,
-          method: 'info',
-          style: 'background: linear-gradient(to right, #fff, #FF0000); padding-right: 31px;',
-          emoji: '🧙‍♂️',
-        },
-      },
-    });
-
-    log.custom('andrew', 'flippyfloo');
-    log.custom('matt', 'poopypoo');
-    log2.custom('andrew', 'flippyfloo');
-
-    $shed.addListener([0,1,2], (log) => {
-      console.debug(`Callback fired for level ${log.level}`, log);
-    });
+    // $shed.addListener([0,1,2], (log) => {
+    //   console.debug(`Callback fired for level ${log.level}`, log);
+    // });
 
     adze().label('TestTimer').time().log("This is the start of my timer log.");
 
-    const wow = adze().ns('wow!');
+    const wow = bundle(adze())().ns('wow!').seal();
 
     wow.attention("This is an attention!", 'adsfadf', 'dfadfadf');
     wow.error("This is an error!", 'adsfadf', 'dfadfadf');
@@ -90,6 +60,9 @@
     wow.log("This is a log!", 'adsfadf', 'dfadfadf');
     wow.debug("This is a debug!", 'adsfadf', 'adsfadf');
     wow.verbose("This is a verbose!", 'adsfadf', 'adsfadf');
+
+    wow.log("ALL BUNDLE");
+    wow.all();
 
     // $inkwell.level = 5;
     // adze().verbose("This shouldn't appear because the log level excludes it.");
@@ -131,6 +104,26 @@
     adze().label('DMAC-99999').error('scoobydoo');
 
     adze().label('testAll').timeEnd().info('End of the timer');
+
+    const log2 = adze({
+      custom_levels: {
+        andrew: {
+          level: 9,
+          method: 'info',
+          style: 'background: linear-gradient(to right, #fff, #00FF00); padding-right: 31px;',
+          emoji: '🧙‍♂️',
+        },
+        matt: {
+          level: 10,
+          method: 'info',
+          style: 'color: #fff; background: linear-gradient(to right, #fff, #7E5109); padding-right: 44px;',
+          emoji: '💩',
+        },
+      }
+    });
+
+    log2.custom('andrew', 'flippyfloo');
+    log2.custom('matt', 'poopypoo');
   </script>
 
   <script>

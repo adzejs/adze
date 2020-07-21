@@ -1,5 +1,5 @@
 import { Label } from "./Label";
-import { LogLevelDefinition } from ".";
+import { LogLevelDefinition, Configuration, ConsoleMethod } from ".";
 
 /**
  * Fingerprint of the function that is called when you execute
@@ -40,11 +40,20 @@ interface LogFlags {
  * be printed.
  */
 interface LogValues {
+  cfg: Configuration;
+  terminatingMethod?: string;
+  args?: any[];
   namespaceVal?: string;
   labelVal?: Label;
   modifierQueue: Function[];
-  printer(this: Log, def: LogLevelDefinition, ...args: any[]): void;
+  printer(this: Log, def: LogLevelDefinition, ...args: any[]): LogRender;
 }
+
+export type Bundle = (user_cfg?: Configuration) => Log;
+
+export interface Bundled {
+  all(): void;
+};
 
 /**
  * All of the user accessible methods that can be chained to
@@ -52,8 +61,9 @@ interface LogValues {
  */
 interface LogMethods {
   custom: CustomLogFunction;
+  seal(this: Log): Log;
   cache(this: Log, def: LogLevelDefinition, args: any[]): void;
-  print(this: Log, def: LogLevelDefinition, base_style: string, args: any[]): void;
+  print(this: Log, def: LogLevelDefinition, base_style: string, args: any[]): LogRender;
   fireListeners(this: Log, def: LogLevelDefinition, args: any[]): void;
   
   // Modifier Functions
@@ -79,4 +89,23 @@ interface LogMethods {
 /**
  * The final Adze log object prototype interface.
  */
-export interface Log extends LogFlags, LogValues, LogMethods, TerminatingMethods {};
+export interface Log extends LogFlags, LogValues, LogMethods, TerminatingMethods, Bundled {};
+
+/**
+ * The render value for a Log.
+ */
+type LogLeader = string;
+type LogStyle = string;
+type LogMeta = string;
+type LogArgs = any[];
+export type LogRender = [ConsoleMethod, [LogLeader, LogStyle, LogMeta, LogArgs]];
+
+/**
+ * The final value of a log after it has been terminated. This is useful for 
+ * gleaning the final render information and getting the Log instance for 
+ * unit testing purposes.
+ */
+export interface TerminatedLog {
+  log: Log;
+  render: LogRender|null;
+};

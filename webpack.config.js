@@ -1,12 +1,15 @@
 const { resolve } = require('path');
 
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const IfPlugin = require('if-webpack-plugin')
+
 const rootPath = (path) => resolve(__dirname, path);
 
 module.exports = env => ({
-  mode: env && env.production ? 'production' : 'development',
+  mode: env.production ? 'production' : 'development',
 
   entry: {
-    adze: rootPath('src/index.ts'),
+    'adze': rootPath('src/index.ts'),
   },
 
   output: {
@@ -22,7 +25,12 @@ module.exports = env => ({
   },
 
   devtool: env && env.production ? '' : 'inline-source-map',
+
   resolve: {
+    alias: {
+      '~': resolve(__dirname, 'src'),
+    },
+
     extensions: ['.js', '.ts'],
   },
 
@@ -31,22 +39,14 @@ module.exports = env => ({
       {
         test: /\.ts$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            "presets": [
-              ["@babel/env", { "targets": { "node": 8 } }],
-              "@babel/typescript"
-            ],
-            "plugins": [
-              "@babel/plugin-transform-runtime",
-              "@babel/plugin-proposal-class-properties",
-              "@babel/plugin-proposal-optional-chaining",
-              "@babel/plugin-proposal-nullish-coalescing-operator",
-            ]
-          }
-        }
+        loaders: [
+          'babel-loader'
+        ],
       },
     ],
   },
+
+  plugins: [
+    new IfPlugin(env.withAnalysis, new BundleAnalyzerPlugin()),
+  ]
 });

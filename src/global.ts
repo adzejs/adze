@@ -3,12 +3,12 @@ import { Shed } from './_contracts';
 declare global {
   interface Window {
     $shed?: Shed;
-    CSAW_ENV?: string;
+    ADZE_ENV?: string;
   }
   namespace NodeJS {
     export interface Global {
       $shed?: Shed;
-      CSAW_ENV?: string;
+      ADZE_ENV?: string;
     }
   }
 }

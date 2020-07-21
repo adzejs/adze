@@ -1,0 +1,1 @@
+export { logMethod, customMethod, seal } from './terminators';

@@ -2,7 +2,7 @@ import { isChrome, isFirefox, isSafari } from '../global';
 import { Defaults } from "../_contracts";
 
 export const defaults: Defaults = {
-  log_level: 7,
+  log_level: 8,
   log_cache_size: 300,
   use_emoji: true,
   base_style: 'font-size: 10px; font-weight: bold; border-radius: 0 10px 10px 0; border-width: 1px; border-style: solid;',

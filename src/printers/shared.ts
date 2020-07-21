@@ -1,67 +1,34 @@
-import { env, isBrowser } from '../global';
-import { LogLevelDefinition, Log } from "../_contracts";
+import { LogLevelDefinition, Log, LogRender } from "../_contracts";
 
 // ------- PRINT ENTRY -------- //
 
-export function print(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {
-  if (allowed(this, def)) {
-    this.printer(def, base_style, args);
-  }
+export function print(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):LogRender {
+  return this.printer(def, base_style, args);
 }
 
 // ------- PRINT METHODS -------- //
 
-export function printGroupEnd(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {
+export function printGroupEnd(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):LogRender {
   console.groupEnd();
+  return ['groupEnd', ['', '', '', []]];
 }
 
-export function printTable(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {
+export function printTable(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):LogRender {
   console.table(args);
+  return ['table', ['', '', '', args]];
 }
 
-export function printDir(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {
+export function printDir(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):LogRender {
   console.dir(args);
+  return ['dir', ['', '', '', args]];
 }
 
-export function printDirxml(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {
+export function printDirxml(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):LogRender {
   console.dirxml(args);
+  return ['dirxml', ['', '', '', args]];
 }
 
-export function printTrace(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):void {
+export function printTrace(this: Log, def: LogLevelDefinition, base_style: string, args: any[]):LogRender {
   console.trace(...args);
-}
-
-// ------- PRINT HELPERS -------- //
-
-export function allowed(ctxt: Log, def: LogLevelDefinition):boolean {
-  return levelActive(def) && evalPasses(ctxt) && notTestEnv();
-
-}
-
-function levelActive(def: LogLevelDefinition):boolean {
-  if (env.$shed) {
-    return def.level <= env.$shed.cfg.log_level;
-  }
-  return true;
-}
-
-function evalPasses(ctxt: Log):boolean {
-  if (ctxt.assertion !== undefined && ctxt.expression !== undefined) {
-    console.warn("You have declared both an assertion and test on the same log. Please only declare one or nefarious results may occur.");
-    return true;
-  }
-  if (ctxt.assertion !== undefined) {
-    return !(ctxt.assertion === false);
-  }
-  if (ctxt.expression !== undefined) {
-    return ctxt.expression === true;
-  }
-  return true;
-}
-
-function notTestEnv():boolean {
-  if (isBrowser) {
-    return true;
-  }
-  return env && env.CSAW_ENV !== 'test';
+  return ['trace', ['', '', '', args]];
 }
