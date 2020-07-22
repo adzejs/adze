@@ -49,7 +49,7 @@ export function adze(user_cfg: Configuration = {}):Log {
 
     all: () => {},
 
-    seal, cache, print,  fireListeners, count, countReset,
+    seal, cache, print, fireListeners, count, countReset,
     dir, dirxml, table, assert, test, group, groupCollapsed,
     groupEnd, label, namespace, ns, trace, time, timeNow, timeEnd,
   };

@@ -1,1 +1,1 @@
-export { printNode, printNodeGroup, printNodeGroupCollapsed } from './printers';
+export { printLog, printGroup, printGroupCollapsed, fLeader, fMeta } from './printers';

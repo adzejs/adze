@@ -27,10 +27,10 @@ interface ShedProps {
 
 interface ShedMethods {
   assignId(this: Shed): number;
-  addToCache(this: Shed, log: Log, def: LogLevelDefinition, args: any[]): void;
+  addToCache(this: Shed, loog: Log, args: any[]): void;
   addListener(this: Shed, levels: number[], cb: ListenerCallback): void;
   removeListener(this: Shed, locations: ListenerLocations): void;
-  fireListeners(this: Shed, ctxt: Log, def: LogLevelDefinition, args: any[]): void;
+  fireListeners(this: Shed, log: Log, args: any[]): void;
 }
 
 export interface Shed extends ShedProps, ShedMethods {}

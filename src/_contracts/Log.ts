@@ -1,17 +1,17 @@
 import { Label } from "./Label";
-import { LogLevelDefinition, Configuration, ConsoleMethod } from ".";
+import { LogLevelDefinition, Configuration, ConsoleMethod, Defaults } from ".";
 
 /**
  * Fingerprint of the function that is called when you execute
  * a log method such as info().
  */
-export type LogFunction = (...args: any[]) => void;
+export type LogFunction = (...args: any[]) => TerminatedLog;
 
 /**
  * Fingerprint of the function that is called when you execute
  * a custom log method defined in the configuration.
  */
-export type CustomLogFunction = (levelName: string, ...args: any[]) => void;
+export type CustomLogFunction = (levelName: string, ...args: any[]) => TerminatedLog;
 
 /**
  * The keys of the default terminating log methods included with Adze.
@@ -41,12 +41,12 @@ interface LogFlags {
  */
 interface LogValues {
   cfg: Configuration;
-  terminatingMethod?: string;
+  render?: LogRender;
   args?: any[];
   namespaceVal?: string;
   labelVal?: Label;
   modifierQueue: Function[];
-  printer(this: Log, def: LogLevelDefinition, ...args: any[]): LogRender;
+  printer(this: Log, cfg: Defaults, levelName: string, args: any[]): LogRender;
 }
 
 export type Bundle = (user_cfg?: Configuration) => Log;
@@ -62,9 +62,9 @@ export interface Bundled {
 interface LogMethods {
   custom: CustomLogFunction;
   seal(this: Log): Log;
-  cache(this: Log, def: LogLevelDefinition, args: any[]): void;
-  print(this: Log, def: LogLevelDefinition, base_style: string, args: any[]): LogRender;
-  fireListeners(this: Log, def: LogLevelDefinition, args: any[]): void;
+  cache(this: Log, args: any[]): void;
+  print(this: Log, cfg: Defaults, levelName: string, args: any[]): LogRender;
+  fireListeners(this: Log, args: any[]): void;
   
   // Modifier Functions
   count(): Log;
@@ -94,11 +94,8 @@ export interface Log extends LogFlags, LogValues, LogMethods, TerminatingMethods
 /**
  * The render value for a Log.
  */
-type LogLeader = string;
-type LogStyle = string;
-type LogMeta = string;
-type LogArgs = any[];
-export type LogRender = [ConsoleMethod, [LogLeader, LogStyle, LogMeta, LogArgs]];
+type Arguments = any[];
+export type LogRender = [ConsoleMethod, Arguments];
 
 /**
  * The final value of a log after it has been terminated. This is useful for 

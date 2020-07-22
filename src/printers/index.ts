@@ -1,13 +1,13 @@
 import { isBrowser } from '../global';
 import {
-  printLog as printLogB,
-  printGroup as printGroupB,
-  printGroupCollapsed as printGroupCollapsedB,
+  printLog as printLogBrowser,
+  printGroup as printGroupBrowser,
+  printGroupCollapsed as printGroupCollapsedBrowser,
 } from './browser';
 import {
-  printNode,
-  printNodeGroup,
-  printNodeGroupCollapsed,
+  printLog as printLogNode,
+  printGroup as printGroupNode,
+  printGroupCollapsed as printGroupCollapsedNode,
 } from './node';
 import {
   print,
@@ -18,9 +18,9 @@ import {
   printTrace,
 } from './shared';
 
-const printLog = isBrowser ? printLogB : printNode;
-const printGroup = isBrowser ? printGroupB : printNodeGroup;
-const printGroupCollapsed = isBrowser ? printGroupCollapsedB : printNodeGroupCollapsed;
+const printLog = isBrowser ? printLogBrowser : printLogNode;
+const printGroup = isBrowser ? printGroupBrowser : printGroupNode;
+const printGroupCollapsed = isBrowser ? printGroupCollapsedBrowser : printGroupCollapsedNode;
 
 export {
   print,

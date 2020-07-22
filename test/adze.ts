@@ -2,9 +2,15 @@ import test from 'ava';
 import { adze, defaults, } from '../src';
 import { Defaults, LogLevelDefinition } from '../src/_contracts';
 
-global.ADZE_ENV = 'test';
+test.beforeEach(t => {
+  global.ADZE_ENV = 'test';
+});
 
-test('create a new logger with defaults', (t) => {
+test.afterEach(t => {
+  global.ADZE_ENV = undefined;
+});
+
+test('create a new logger with defaults', t => {
   const log = adze();
 
   t.truthy(log);
@@ -47,10 +53,15 @@ test('create a new logger with defaults', (t) => {
   t.deepEqual(cfg.filters.label.include, defaults.filters.label.include);
 });
 
-test('create a logger with a customized log level', (t) => {
-  const log = adze({ log_level: 5 });
+test("prevents log render when the log level is lowered", t => {
+  const terminated = adze({ log_level: 5 }).log('testing');
+  t.truthy(terminated.log);
+  t.is(terminated.render, null);
+});
 
-  // Test the congruity of the default options
-  const cfg = log.cfg as Defaults;
-  t.is(cfg.log_level, 5);
+test("prevents log render when in a test environment", t => {
+  global.ADZE_ENV = 'test';
+  const terminated = adze().log('testing');
+  t.truthy(terminated.log);
+  t.is(terminated.render, null);
 });

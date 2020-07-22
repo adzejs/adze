@@ -1,51 +1,34 @@
-import { Log, LogLevelDefinition, LogRender, ConsoleMethod } from '../../_contracts';
+import { Log, LogLevelDefinition, LogRender, Defaults } from '../../_contracts';
+import { applyRender, toConsole } from '../shared';
 import { env } from '../../global';
 import { initialCaps } from '../../util';
 
 // ------- PRINT METHODS -------- //
 
-export function printLog(this: Log, def: LogLevelDefinition, base_style: string, _args: any[]):LogRender {
-  const render = makeRender(this, def.method, def, base_style, _args);
-  const [ method, [leader, style, meta, args ]] = render;
-
-  // Must check the return value of meta otherwise Firefox prints "empty string"...
-  if (meta === '') {
-    console[method](leader, style, ...args);
-  } else {
-    console[method](leader, style, meta, ...args);
-  }
-  
-  return render;
+export function printLog(this: Log, cfg: Defaults, levelName: string, args: any[]):LogRender {
+  const def = cfg.log_levels[levelName];
+  const [ method, leader, style, meta ] = [ def.method, fLeader(def, args), (cfg.base_style + def.style), fMeta(this) ];
+  const render_args = meta === '' ? [ leader, style, ...args ] : [ leader, style, meta, ...args ];
+  return toConsole(applyRender(this, method, render_args ));
 }
 
-export function printGroup(this: Log, def: LogLevelDefinition, base_style: string, _args: any[]):LogRender {
-  const render = makeRender(this, 'group', def, base_style, _args);
-  const [ _, [leader, style, __, args ]] = render;
-
-  console.group(`${leader}`, style, typeof args[0] === "string" ? args[0] : undefined );
-
-  return render;
+export function printGroup(this: Log, cfg: Defaults, levelName: string, args: any[]):LogRender {
+  const def = cfg.log_levels[levelName];
+  const partial_args = [ fLeader(def, args), (cfg.base_style + def.style) ];
+  const render_args = typeof args[0] === "string" ? [ ...partial_args, args[0] ] : partial_args;
+  return toConsole(applyRender(this, 'group', render_args));
 }
 
-export function printGroupCollapsed(this: Log, def: LogLevelDefinition, base_style: string, _args: any[]):LogRender {
-  const render = makeRender(this, 'groupCollapsed', def, base_style, _args);
-  const [ _, [leader, style, __, args ]] = render;
-
-  console.groupCollapsed(`${leader}`, style, typeof args[0] === "string" ? args[0] : undefined );
-
-  return render;
-}
-
-/**
- * Utility function to create the LogRender tuple.
- */
-function makeRender(ctxt: Log, method: ConsoleMethod, def: LogLevelDefinition, base_style: string, args: any[]):LogRender {
-  return [method, [fLeader(def, args), (base_style + def.style), fMeta(ctxt), args]];
+export function printGroupCollapsed(this: Log, cfg: Defaults, levelName: string, args: any[]):LogRender {
+  const def = cfg.log_levels[levelName];
+  const partial_args = [ fLeader(def, args), (cfg.base_style + def.style) ];
+  const render_args = typeof args[0] === "string" ? [ ...partial_args, args[0] ] : partial_args;
+  return toConsole(applyRender(this, 'groupCollapsed', render_args));
 }
 
 // ------- PRINT FORMATTERS -------- //
 
-function fLeader(def: LogLevelDefinition, args: any[]):string {
+export function fLeader(def: LogLevelDefinition, args: any[]):string {
   return ` %c${fEmoji(def)} ${fName(def.levelName)}(${args.length})`;
 }
 
@@ -57,7 +40,7 @@ function fName(name: string|undefined):string {
   return initialCaps(name ?? '');
 }
 
-function fMeta(ctxt: Log):string {
+export function fMeta(ctxt: Log):string {
   return `${fNamespace(ctxt)}${fLabel(ctxt)}${fTime(ctxt)}${fCount(ctxt)}`;
 }
 

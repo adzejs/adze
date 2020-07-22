@@ -21,7 +21,7 @@ export function logMethod(cfg: Defaults, levelName: string):LogFunction {
     const definition = cfg.log_levels[levelName];
     const def: LogLevelDefinition = { ...definition, levelName };
     if (allowed(this, cfg, def)) {
-      return executionPipeline(this, def, args);
+      return executionPipeline(this, cfg, levelName, args);
     }
     return { log: this, render: null };
   };
@@ -35,9 +35,8 @@ export function customMethod(cfg: Defaults):CustomLogFunction {
   return function(this: Log, levelName: string, ...args: any[]):TerminatedLog {
     const definition = cfg.custom_levels[levelName];
     if (definition) {
-      const def: LogLevelDefinition = { ...definition, levelName };
-      if (allowed(this, cfg, def)) {
-        return executionPipeline(this, def, args);
+      if (allowed(this, cfg, definition)) {
+        return executionPipeline(this, cfg, levelName, args);
       }
     }
     return { log: this, render: null };
@@ -47,15 +46,14 @@ export function customMethod(cfg: Defaults):CustomLogFunction {
 /**
  * The primary execution pipeline for terminating log methods.
  */
-function executionPipeline(log: Log, def: LogLevelDefinition, args: any[]):TerminatedLog {
-  // Save the terminating method key and args for recall purposes
-  log.terminatingMethod = def.levelName;
+function executionPipeline(log: Log, cfg: Defaults, levelName: string, args: any[]):TerminatedLog {
+  // Save the args for recall purposes
   log.args = args;
   // Apply modifiers in the proper order
   log.modifierQueue.forEach(func => func());
-  const render = log.print(def, defaults.base_style, args);
-  log.cache(def, args);
-  log.fireListeners(def, args);
+  const render = log.print(cfg, levelName, args);
+  log.cache(args);
+  log.fireListeners(args);
 
   return { log, render }
 }
