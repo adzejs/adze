@@ -6,8 +6,8 @@
   "sideEffects": false,
   "scripts": {
     "test": "ava",
-    "test:browser": "http-server -o -p 8082",
-    "test:node": "ts-node ./test",
+    "demo:browser": "http-server -o -p 8082",
+    "demo:node": "ts-node ./demo",
     "watch": "webpack --env.development --watch",
     "build": "webpack --env.development",
     "build:production": "webpack --env.production"
