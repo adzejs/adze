@@ -8,11 +8,12 @@ import { ConsoleMethod } from './src/_contracts';
 
 const log = adze({
   log_level: 4,
+  use_emoji: true,
   custom_levels: {
     andrew: {
       level: 9,
       method: 'info',
-      terminal: '',
+      terminal: [],
       style: 'background: linear-gradient(to right, #fff, #00FF00); padding-right: 31px;',
       emoji: '🧙‍♂️',
     }
@@ -32,13 +33,13 @@ log.custom('andrew', 'falkdfjaldkfjadlkfjalsdkfj');
 
 // adze().label('TestTimer').time().log("This is the start of my timer log.");
 
-const wow = bundle(adze().ns('wow!').seal());
+const wow = bundle(adze({ use_emoji: true, }).ns('wow!').seal());
 
 wow().attention("This is an attention!", 'adsfadf', 'dfadfadf');
 wow().error("This is an error!", 'adsfadf', 'dfadfadf');
-wow().fail("This is a failure!", 'adsfadf', 'dfadfadf');
 wow().warn("This is a warn!", 'adsfadf', 'dfadfadf');
 wow().info("This is an info!", 'adsfadf', 'dfadfadf');
+wow().fail("This is a failure!", 'adsfadf', 'dfadfadf');
 wow().success("This is a success!", 'adsfadf', 'adsfadf');
 wow().log("This is a log!", 'adsfadf', 'dfadfadf');
 wow().debug("This is a debug!", 'adsfadf', 'adsfadf');

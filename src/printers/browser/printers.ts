@@ -5,22 +5,22 @@ import { initialCaps } from '../../util';
 
 // ------- PRINT METHODS -------- //
 
-export function printLog(this: Log, cfg: Defaults, levelName: string, args: any[]):LogRender {
-  const def = cfg.log_levels[levelName];
+export function printLog(this: Log, cfg: Defaults, levelName: string, use_emoji: boolean, args: any[]):LogRender {
+  const def = { ...cfg.log_levels[levelName], levelName };
   const [ method, leader, style, meta ] = [ def.method, fLeader(def, args), (cfg.base_style + def.style), fMeta(this) ];
   const render_args = meta === '' ? [ leader, style, ...args ] : [ leader, style, meta, ...args ];
   return toConsole(applyRender(this, method, render_args ));
 }
 
-export function printGroup(this: Log, cfg: Defaults, levelName: string, args: any[]):LogRender {
-  const def = cfg.log_levels[levelName];
+export function printGroup(this: Log, cfg: Defaults, levelName: string, use_emoji: boolean, args: any[]):LogRender {
+  const def = { ...cfg.log_levels[levelName], levelName };
   const partial_args = [ fLeader(def, args), (cfg.base_style + def.style) ];
   const render_args = typeof args[0] === "string" ? [ ...partial_args, args[0] ] : partial_args;
   return toConsole(applyRender(this, 'group', render_args));
 }
 
-export function printGroupCollapsed(this: Log, cfg: Defaults, levelName: string, args: any[]):LogRender {
-  const def = cfg.log_levels[levelName];
+export function printGroupCollapsed(this: Log, cfg: Defaults, levelName: string, use_emoji: boolean, args: any[]):LogRender {
+  const def = { ...cfg.log_levels[levelName], levelName };
   const partial_args = [ fLeader(def, args), (cfg.base_style + def.style) ];
   const render_args = typeof args[0] === "string" ? [ ...partial_args, args[0] ] : partial_args;
   return toConsole(applyRender(this, 'groupCollapsed', render_args));

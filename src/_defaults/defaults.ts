@@ -4,35 +4,35 @@ import { Defaults } from "../_contracts";
 export const defaults: Defaults = {
   log_level: 8,
   log_cache_size: 300,
-  use_emoji: true,
+  use_emoji: false,
   base_style: 'font-size: 10px; font-weight: bold; border-radius: 0 10px 10px 0; border-width: 1px; border-style: solid;',
   custom_levels: {},
   log_levels: {
     verbose: {
       level: 8,
       style: 'padding-right: 26px; border-color: 1px solid #d9dce0; color: #999999; border-color: #cbc9c9;',
-      terminal: ['bgBlack', 'italic', 'white'],
+      terminal: ['italic', 'white'],
       method: 'debug',
       emoji: '💤'
     },
     debug: {
       level: 7,
       style: 'padding-right: 38px; border-right: 1px solid #d9dce0; color: #465464; border-color: #999999;',
-      terminal: ['bgBlack','italic', 'white'],
+      terminal: ['bgBlack', 'white'],
       method: 'debug',
       emoji: '🐞'
     },
     log: {
       level: 6,
       style: `padding-right: 50px; background: linear-gradient(to right, #fff, #d9dce0); color: #333435; border-color: #bfc1c5;`,
-      terminal: ['bgBlack', 'white'],
+      terminal: ['bgGray', 'white'],
       method: 'log',
       emoji: '📓'
     },
     success: {
       level: 5,
       style: 'padding-right: 26px; background: linear-gradient(to right, #fff, #ceedc9); color: #4e594d; border-color: #b7d1b3;',
-      terminal: ['bgGreen', 'white'],
+      terminal: ['bgGreen', 'gray'],
       method: 'info',
       emoji: '🎉'
     },
@@ -40,7 +40,7 @@ export const defaults: Defaults = {
       level: 4,
       style: `padding-right: ${ isChrome ? '34' : '32' }px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;`,
       terminal: ['bgRed', 'white'],
-      method: 'error',
+      method: 'info',
       emoji: '❌'
     },
     info: {

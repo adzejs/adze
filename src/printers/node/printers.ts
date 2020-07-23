@@ -1,40 +1,59 @@
-import chalk from 'chalk';
-import { Log, LogLevelDefinition, LogRender, Defaults } from '../../_contracts';
+import * as chalk from 'chalk';
+import { Log, LogLevelDefinition, LogRender, Defaults, ConsoleMethod } from '../../_contracts';
 import { toConsole, applyRender } from '../shared';
 import { env } from '../../global';
 import { initialCaps } from '../../util';
 
 // ------- PRINT METHODS -------- //
 
-export function printLog(this: Log, cfg: Defaults, levelName: string, args: any[]):LogRender {
-  const def = cfg.log_levels[levelName];
-  const [ method, leader, style, meta ] = [ def.method, fLeader(def, args), (cfg.base_style + def.style), fMeta(this) ];
-  const render_args = meta === '' ? [ leader, style, ...args ] : [ leader, style, meta, ...args ];
+export function printLog(this: Log, cfg: Defaults, levelName: string, use_emoji: boolean, args: any[]):LogRender {
+  const def = { ...cfg.log_levels[levelName], levelName };
+  const [ method, leader, meta ] = [ def.method, fLeader(def, use_emoji, args), fMeta(this) ];
+  const render_args = meta === '' ? [ leader, ...args ] : [ leader, meta, ...args ];
   return toConsole(applyRender(this, method, render_args ));
 }
 
-export function printGroup(this: Log, cfg: Defaults, levelName: string, args: any[]):LogRender {
-  const def = cfg.log_levels[levelName];
-  const partial_args = [ fLeader(def, args), (cfg.base_style + def.style) ];
-  const render_args = typeof args[0] === "string" ? [ ...partial_args, args[0] ] : partial_args;
+export function printGroup(this: Log, cfg: Defaults, levelName: string, use_emoji: boolean, args: any[]):LogRender {
+  const render_args = setupPrintGroup(cfg, levelName, use_emoji, args);
   return toConsole(applyRender(this, 'group', render_args));
 }
 
-export function printGroupCollapsed(this: Log, cfg: Defaults, levelName: string, args: any[]):LogRender {
-  const def = cfg.log_levels[levelName];
-  const partial_args = [ fLeader(def, args), (cfg.base_style + def.style) ];
+export function printGroupCollapsed(this: Log, cfg: Defaults, levelName: string, use_emoji: boolean, args: any[]):LogRender {
+  const def = { ...cfg.log_levels[levelName], levelName };
+  const partial_args = [ fLeader(def, use_emoji, args) ];
   const render_args = typeof args[0] === "string" ? [ ...partial_args, args[0] ] : partial_args;
   return toConsole(applyRender(this, 'groupCollapsed', render_args));
 }
 
-// ------- PRINT FORMATTERS -------- //
-
-export function fLeader(def: LogLevelDefinition, args: any[]):string {
-  return ` %c${fEmoji(def)} ${fName(def.levelName)}(${args.length})`;
+function setupPrintGroup(cfg: Defaults, levelName: string, use_emoji: boolean, args: any[]):any[] {
+  const def = { ...cfg.log_levels[levelName], levelName };
+  const partial_args = [ fLeader(def, use_emoji, args) ];
+  return typeof args[0] === "string" ? [ ...partial_args, args[0] ] : partial_args;
 }
 
-function fEmoji(def: LogLevelDefinition):string {
-  return env.$shed?.cfg?.use_emoji === true ? ` ${def.emoji}` : '';
+// ------- PRINT FORMATTERS -------- //
+
+export function fLeader(def: LogLevelDefinition, use_emoji: boolean, args: any[]):string {
+  const emoji = use_emoji ? fEmoji(def.emoji) : '';
+  const padding = use_emoji ? (14 + emoji.length) : 14;
+  const padded_leader = addPadding(`${emoji} ${fName(def.levelName)}(${args.length})`, padding);
+  
+  return def.terminal.reduce((acc, style) => {
+    return chalk[style](acc);
+  }, padded_leader);
+}
+
+function addPadding(str: string, len: number):string {
+  const diff = len - str.length;
+  let padded = str;
+  for (let i = 0; i <= diff; i += 1) {
+    padded += ' ';
+  }
+  return padded;
+}
+
+function fEmoji(emoji: string):string {
+  return ` ${emoji}`;
 }
 
 function fName(name: string|undefined):string {

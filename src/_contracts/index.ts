@@ -13,4 +13,5 @@ export {
   Filters, Configuration, ConsoleMethod,
 } from './Configuration';
 export { Label } from './Label';
+export { ChalkStyles } from './Styles';
 export { RecursivePartial } from './Utility';

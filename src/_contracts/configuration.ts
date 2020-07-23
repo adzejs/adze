@@ -1,4 +1,4 @@
-import { Log, Label, RecursivePartial } from '.';
+import { Log, Label, RecursivePartial, ChalkStyles } from '.';
 
 type LabelMap = Map<string, Label>;
 
@@ -29,7 +29,7 @@ export interface LogLevelDefinition {
   levelName?: string;
   method: ConsoleMethod;
   style: string;
-  terminal: string|string[];
+  terminal: ChalkStyles[];
   emoji: string;
 }
 

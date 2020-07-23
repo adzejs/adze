@@ -46,7 +46,7 @@ interface LogValues {
   namespaceVal?: string;
   labelVal?: Label;
   modifierQueue: Function[];
-  printer(this: Log, cfg: Defaults, levelName: string, args: any[]): LogRender;
+  printer(this: Log, cfg: Defaults, levelName: string, use_emoji: boolean, args: any[]): LogRender;
 }
 
 export type Bundle = (user_cfg?: Configuration) => Log;

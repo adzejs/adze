@@ -29,7 +29,7 @@ import { defaults } from './_defaults';
  */
 export function adze(user_cfg: Configuration = {}):Log {
   const cfg = defaultsDeep(user_cfg, defaults) as Defaults;
-  
+
   return {
     cfg,
     traceable: false,
