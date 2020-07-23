@@ -1,32 +1,32 @@
-import { Log, LogRender, Defaults, ConsoleMethod } from "../_contracts";
+import { Log, LogRender, Defaults, ConsoleMethod, LogLevelDefinition } from "../_contracts";
 import { env } from '../global';
 
 // ------- PRINT ENTRY -------- //
 
-export function print(this: Log, cfg: Defaults, levelName: string, args: any[]):LogRender {
-  const use_emoji = env.$shed?.cfg?.use_emoji === true || cfg.use_emoji === true;
-  return this.printer(cfg, levelName, use_emoji, args);
+export function print(this: Log, def: LogLevelDefinition, args: any[]):LogRender {
+  const use_emoji = env.$shed?.cfg?.use_emoji === true || this.cfg.use_emoji === true;
+  return this.printer(def, use_emoji, args);
 }
 
 // ------- PRINT METHODS -------- //
 
-export function printGroupEnd(this: Log, cfg: Defaults, _: string, use_emoji: boolean, args: any[]):LogRender {
+export function printGroupEnd(this: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
   return toConsole(applyRender(this, 'groupEnd', []));
 }
 
-export function printTable(this: Log, cfg: Defaults, _: string, use_emoji: boolean, args: any[]):LogRender {
+export function printTable(this: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
   return toConsole(applyRender(this, 'table', args), false);
 }
 
-export function printDir(this: Log, cfg: Defaults, _: string, use_emoji: boolean, args: any[]):LogRender {
+export function printDir(this: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
   return toConsole(applyRender(this, 'dir', args), false);
 }
 
-export function printDirxml(this: Log, cfg: Defaults, _: string, use_emoji: boolean, args: any[]):LogRender {
+export function printDirxml(this: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
   return toConsole(applyRender(this, 'dirxml', args), false);
 }
 
-export function printTrace(this: Log, cfg: Defaults, _: string, use_emoji: boolean, args: any[]):LogRender {
+export function printTrace(this: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
   return toConsole(applyRender(this, 'trace', args));
 }
 

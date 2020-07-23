@@ -7,13 +7,13 @@ import { ConsoleMethod } from './src/_contracts';
 // adze().label("Test").info("Trying to create a labeled log without a store.");
 
 const log = adze({
-  log_level: 4,
+  log_level: 9,
   use_emoji: true,
   custom_levels: {
     andrew: {
       level: 9,
       method: 'info',
-      terminal: [],
+      terminal: ['green'],
       style: 'background: linear-gradient(to right, #fff, #00FF00); padding-right: 31px;',
       emoji: '🧙‍♂️',
     }
@@ -33,7 +33,7 @@ log.custom('andrew', 'falkdfjaldkfjadlkfjalsdkfj');
 
 // adze().label('TestTimer').time().log("This is the start of my timer log.");
 
-const wow = bundle(adze({ use_emoji: true, }).ns('wow!').seal());
+const wow = bundle(adze({ use_emoji: true }).ns('wow!').seal());
 
 wow().attention("This is an attention!", 'adsfadf', 'dfadfadf');
 wow().error("This is an error!", 'adsfadf', 'dfadfadf');
@@ -45,7 +45,7 @@ wow().log("This is a log!", 'adsfadf', 'dfadfadf');
 wow().debug("This is a debug!", 'adsfadf', 'adsfadf');
 wow().verbose("This is a verbose!", 'adsfadf', 'adsfadf');
 
-wow().log("----- ALL IN BUNDLE -----");
+adze().log("----- ALL IN BUNDLE -----");
 wow().all();
 
 // $inkwell.level = 5;

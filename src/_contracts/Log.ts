@@ -46,7 +46,7 @@ interface LogValues {
   namespaceVal?: string;
   labelVal?: Label;
   modifierQueue: Function[];
-  printer(this: Log, cfg: Defaults, levelName: string, use_emoji: boolean, args: any[]): LogRender;
+  printer(this: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]): LogRender;
 }
 
 export type Bundle = (user_cfg?: Configuration) => Log;
@@ -63,7 +63,7 @@ interface LogMethods {
   custom: CustomLogFunction;
   seal(this: Log): Log;
   cache(this: Log, args: any[]): void;
-  print(this: Log, cfg: Defaults, levelName: string, args: any[]): LogRender;
+  print(this: Log, def: LogLevelDefinition, args: any[]): LogRender;
   fireListeners(this: Log, args: any[]): void;
   
   // Modifier Functions

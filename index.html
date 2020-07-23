@@ -49,20 +49,20 @@
 
     adze().label('TestTimer').time().log("This is the start of my timer log.");
 
-    const wow = bundle(adze())().ns('wow!').seal();
+    const wow = bundle(adze().ns('wow!').seal());
 
-    wow.attention("This is an attention!", 'adsfadf', 'dfadfadf');
-    wow.error("This is an error!", 'adsfadf', 'dfadfadf');
-    wow.fail("This is a failure!", 'adsfadf', 'dfadfadf');
-    wow.warn("This is a warn!", 'adsfadf', 'dfadfadf');
-    wow.info("This is an info!", 'adsfadf', 'dfadfadf');
-    wow.success("This is a success!", 'adsfadf', 'adsfadf');
-    wow.log("This is a log!", 'adsfadf', 'dfadfadf');
-    wow.debug("This is a debug!", 'adsfadf', 'adsfadf');
-    wow.verbose("This is a verbose!", 'adsfadf', 'adsfadf');
+    wow().attention("This is an attention!", 'adsfadf', 'dfadfadf');
+    wow().error("This is an error!", 'adsfadf', 'dfadfadf');
+    wow().fail("This is a failure!", 'adsfadf', 'dfadfadf');
+    wow().warn("This is a warn!", 'adsfadf', 'dfadfadf');
+    wow().info("This is an info!", 'adsfadf', 'dfadfadf');
+    wow().success("This is a success!", 'adsfadf', 'adsfadf');
+    wow().log("This is a log!", 'adsfadf', 'dfadfadf');
+    wow().debug("This is a debug!", 'adsfadf', 'adsfadf');
+    wow().verbose("This is a verbose!", 'adsfadf', 'adsfadf');
 
-    wow.log("ALL BUNDLE");
-    wow.all();
+    adze().log("ALL BUNDLE");
+    wow().all();
 
     // $inkwell.level = 5;
     // adze().verbose("This shouldn't appear because the log level excludes it.");

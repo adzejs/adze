@@ -1,11 +1,8 @@
-import {
-  Log, Configuration,
-  TerminatingMethodKeys,
-} from '../_contracts';
+import { Log } from '../_contracts';
 
 export function all(ctxt: Log, bundle: Log[] = []) {
   bundle.forEach(log => {
-    const render = ctxt.render;
+    const render = log.render;
     if (render) {
       const [ method, args ] = render;
       console[method](...args);
