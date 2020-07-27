@@ -14,4 +14,5 @@ export {
 } from './Configuration';
 export { Label } from './Label';
 export { ChalkStyles } from './Styles';
+export { HrTime } from './HrTime';
 export { RecursivePartial } from './Utility';

@@ -6,8 +6,12 @@ import { adze, bundle } from './src';
 defaultLevels();
 defaultWithLabel();
 defaultWithNamespace();
-defaultTime();
-
+defaultWithTrace();
+defaultWithTime();
+defaultWithTable();
+defaultAsGroup();
+defaultAsGroupCollapsed();
+defaultEvaluation();
 
 // const log = adze({
 //   log_level: 9,
@@ -115,9 +119,44 @@ function defaultWithNamespace() {
   adze().ns('test').log('Testing a namespace using the ns() alias.');
 }
 
-function defaultTime() {
+function defaultWithTrace() {
+  adze().trace().log('Tracing...');
+}
+
+function defaultWithTime() {
   adze().time().log("Testing time with no store.");
   adze().timeEnd().log("Testing time with no store.");
   adze().timeNow().log("Testing timeNow with no store.");
+  adze({ use_emoji: true }).timeNow().log("Testing timeNow with no store and emoji's enabled.");
 }
 
+function defaultWithTable() {
+  const tabular_data = [
+    {firstName: 'Andrew', lastName: 'Stacy'},
+    {firstName: 'Jim', lastName: 'Bob'}
+  ];
+  adze().table().log(tabular_data);
+}
+
+function defaultAsGroup() {
+  adze().group().log("This is a group.");
+  adze().log("This is a child of a group log.");
+  adze().groupEnd().log();
+}
+
+function defaultAsGroupCollapsed() {
+  adze().groupCollapsed().log("This is a collapsed group.");
+  adze().log("This is a child of a collapsed group.");
+  adze().groupEnd().log();
+}
+
+function defaultEvaluation() {
+  // @ts-ignore
+  adze().assert(1 === 2).log("1 does not equal 2");
+  // @ts-ignore
+  adze().assert(2 === 2).log("This assertion passes so this log is hidden");
+  // @ts-ignore
+  adze().test(2 === 2).log("2 equals 2 so this log is allowed to print");
+  // @ts-ignore 
+  adze().test(1 === 2).log("1 does not equal 2 so this test fails and this log is hidden");
+}

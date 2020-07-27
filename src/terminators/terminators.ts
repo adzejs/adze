@@ -20,7 +20,7 @@ export function logMethod(cfg: Defaults, levelName: string):LogFunction {
   return function(this: Log, ...args: any[]):TerminatedLog {
     const definition = cfg.log_levels[levelName];
     const def: LogLevelDefinition = { ...definition, levelName };
-    if (allowed(this, cfg, def)) {
+    if (allowed(cfg, def)) {
       return executionPipeline(this, def, args);
     }
     return { log: this, render: null };
@@ -36,7 +36,7 @@ export function customMethod(cfg: Defaults):CustomLogFunction {
     const definition = cfg.custom_levels[levelName];
     if (definition) {
       const def = { ...definition, levelName };
-      if (allowed(this, cfg, def)) {
+      if (allowed(cfg, def)) {
         return executionPipeline(this, def, args);
       }
     }
@@ -48,15 +48,22 @@ export function customMethod(cfg: Defaults):CustomLogFunction {
  * The primary execution pipeline for terminating log methods.
  */
 function executionPipeline(log: Log, def: LogLevelDefinition, args: any[]):TerminatedLog {
-  // Save the args for recall purposes
-  log.args = args;
-  // Apply modifiers in the proper order
-  log.modifierQueue.forEach(func => func());
-  const render = log.print(def, args);
-  log.cache(args);
-  log.fireListeners(args);
 
-  return { log, render }
+  // Apply modifiers in the proper order.
+  log.modifierQueue.forEach(func => func());
+
+  // Check the test modifiers.
+  if (evalPasses(log)) {
+    // Save the args for recall purposes
+    log.args = args;
+    const render = log.print(def, args);
+    log.cache(args);
+    log.fireListeners(args);
+
+    return { log, render }
+  }
+
+  return { log, render: null };
 }
 
 /*----------------------------------------*\
@@ -66,12 +73,8 @@ function executionPipeline(log: Log, def: LogLevelDefinition, args: any[]):Termi
 /**
  * Determine the fate of whether this log will terminate.
  */
-function allowed(ctxt: Log, cfg: Defaults, def: LogLevelDefinition):boolean {
-  // For performance, check if the level is active before evaluating other conditions
-  if (levelActive(def, cfg.log_level)) {
-    return evalPasses(ctxt) && notTestEnv();
-  }
-  return false;
+function allowed(cfg: Defaults, def: LogLevelDefinition):boolean {
+  return levelActive(def, cfg.log_level) && notTestEnv();
 }
 
 /**
@@ -90,7 +93,7 @@ function evalPasses(ctxt: Log):boolean {
     return true;
   }
   if (ctxt.assertion !== undefined) {
-    return !(ctxt.assertion === false);
+    return ctxt.assertion === false;
   }
   if (ctxt.expression !== undefined) {
     return ctxt.expression === true;

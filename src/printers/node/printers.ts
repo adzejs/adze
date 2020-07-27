@@ -7,7 +7,7 @@ import { initialCaps } from '../../util';
 // ------- PRINT METHODS -------- //
 
 export function printLog(this: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
-  const [ method, leader, meta ] = [ def.method, fLeader(def, use_emoji, args), fMeta(this) ];
+  const [ method, leader, meta ] = [ def.method, fLeader(def, use_emoji, args), fMeta(this, use_emoji) ];
   const render_args = meta === '' ? [ leader, ...args ] : [ leader, meta, ...args ];
   return toConsole(applyRender(this, method, render_args ));
 }
@@ -56,13 +56,13 @@ function fName(name: string|undefined):string {
   return initialCaps(name ?? '');
 }
 
-export function fMeta(ctxt: Log):string {
-  return `${fNamespace(ctxt)}${fLabel(ctxt)}${fTime(ctxt)}${fCount(ctxt)}`;
+export function fMeta(ctxt: Log, use_emoji: boolean):string {
+  return `${fNamespace(ctxt)}${fLabel(ctxt)}${fTime(ctxt, use_emoji)}${fCount(ctxt)}`;
 }
 
-function fTime(ctxt: Log):string {
-  const label_txt = `${ctxt.labelVal?.timeNow ?? ctxt.labelVal?.timeEllapsed ?? ''}`;
-  return label_txt !== '' ? ` (${env.$shed?.cfg?.use_emoji ? '⏱' : ''}${label_txt}) ` : '';
+function fTime(ctxt: Log, use_emoji: boolean):string {
+  const label_txt = `${ctxt.timeNowVal ?? ctxt.labelVal?.timeEllapsed ?? ''}`;
+  return label_txt !== '' ? `(${env.$shed?.cfg?.use_emoji || use_emoji ? '⏱' : ''}${label_txt}) ` : '';
 }
 
 function fCount(ctxt: Log):string {

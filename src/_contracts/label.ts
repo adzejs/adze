@@ -3,8 +3,8 @@
  */
 export interface Label {
   name: string;
-  timeStart?: number;
-  timeNow?: number;
-  timeEllapsed?: number;
+  timeStart?: [number, number];
+  timeNow?: string;
+  timeEllapsed?: string;
   count?: number;
 }

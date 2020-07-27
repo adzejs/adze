@@ -45,6 +45,7 @@ interface LogValues {
   args?: any[];
   namespaceVal?: string;
   labelVal?: Label;
+  timeNowVal?: string;
   modifierQueue: Function[];
   printer(this: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]): LogRender;
 }
