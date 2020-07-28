@@ -57,7 +57,7 @@ function fName(name: string|undefined):string {
 }
 
 export function fMeta(ctxt: Log, use_emoji: boolean):string {
-  return `${fNamespace(ctxt)}${fLabel(ctxt)}${fTime(ctxt, use_emoji)}${fCount(ctxt)}`;
+  return `${fNamespace(ctxt)}${fLabel(ctxt)}${fTime(ctxt, use_emoji)}${fCount(ctxt)}${fTest(ctxt, use_emoji)}`;
 }
 
 function fTime(ctxt: Log, use_emoji: boolean):string {
@@ -76,4 +76,8 @@ function fNamespace(ctxt: Log):string {
 
 function fLabel(ctxt: Log):string {
   return ctxt.labelVal ? `[${ctxt.labelVal.name}] ` : '';
+}
+
+function fTest(ctxt: Log, use_emoji: boolean):string {
+  return ctxt.assertion === false ? `${use_emoji ? '❌ ' : ''}Assertion failed:` : '';
 }

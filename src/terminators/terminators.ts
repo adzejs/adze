@@ -3,13 +3,16 @@ import {
   CustomLogFunction,
   Defaults, LogLevelDefinition, TerminatedLog,
 } from '../_contracts';
-import { defaults } from '../_defaults';
 import { env, isBrowser } from '../global';
 
 /**
  * Take a Log and branch from it by providing new copied logs.
  */
 export function seal(this: Log):Log {
+  // Run the modifier queue to apply their results
+  runModifierQueue(this.modifierQueue);
+  // Clear the queue as to not repeat the actions when the subsequent logs are terminated.
+  this.modifierQueue = [];
   return { ...this };
 }
 
@@ -50,7 +53,7 @@ export function customMethod(cfg: Defaults):CustomLogFunction {
 function executionPipeline(log: Log, def: LogLevelDefinition, args: any[]):TerminatedLog {
 
   // Apply modifiers in the proper order.
-  log.modifierQueue.forEach(func => func());
+  runModifierQueue(log.modifierQueue);
 
   // Check the test modifiers.
   if (evalPasses(log)) {
@@ -64,6 +67,10 @@ function executionPipeline(log: Log, def: LogLevelDefinition, args: any[]):Termi
   }
 
   return { log, render: null };
+}
+
+function runModifierQueue(queue: Function[]) {
+  queue.forEach(func => func());
 }
 
 /*----------------------------------------*\

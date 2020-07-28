@@ -6,7 +6,7 @@ import { initialCaps } from '../../util';
 // ------- PRINT METHODS -------- //
 
 export function printLog(this: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
-  const [ method, leader, style, meta ] = [ def.method, fLeader(def, args), (this.cfg.base_style + def.style), fMeta(this) ];
+  const [ method, leader, style, meta ] = [ def.method, fLeader(def, args), (this.cfg.base_style + def.style), fMeta(this, use_emoji) ];
   const render_args = meta === '' ? [ leader, style, ...args ] : [ leader, style, meta, ...args ];
   return toConsole(applyRender(this, method, render_args ));
 }
@@ -37,13 +37,13 @@ function fName(name: string|undefined):string {
   return initialCaps(name ?? '');
 }
 
-export function fMeta(ctxt: Log):string {
-  return `${fNamespace(ctxt)}${fLabel(ctxt)}${fTime(ctxt)}${fCount(ctxt)}`;
+export function fMeta(ctxt: Log, use_emoji: boolean):string {
+  return `${fNamespace(ctxt)}${fLabel(ctxt)}${fTime(ctxt, use_emoji)}${fCount(ctxt)}${fTest(ctxt, use_emoji)}`;
 }
 
-function fTime(ctxt: Log):string {
+function fTime(ctxt: Log, use_emoji: boolean):string {
   const label_txt = `${ctxt.labelVal?.timeNow ?? ctxt.labelVal?.timeEllapsed ?? ''}`;
-  return label_txt !== '' ? ` (${env.$shed?.cfg?.use_emoji ? '⏱' : ''}${label_txt}) ` : '';
+  return label_txt !== '' ? ` (${env.$shed?.cfg?.use_emoji || use_emoji ? '⏱' : ''}${label_txt}) ` : '';
 }
 
 function fCount(ctxt: Log):string {
@@ -57,4 +57,8 @@ function fNamespace(ctxt: Log):string {
 
 function fLabel(ctxt: Log):string {
   return ctxt.labelVal ? `[${ctxt.labelVal.name}] ` : '';
+}
+
+function fTest(ctxt: Log, use_emoji: boolean):string {
+  return ctxt.assertion === false ? `${use_emoji ? '❌ ' : ''}Assertion failed:` : '';
 }
