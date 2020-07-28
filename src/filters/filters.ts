@@ -1,6 +1,6 @@
 import { Log } from '../_contracts';
 
-export function all(ctxt: Log, bundle: Log[] = []) {
+export function all(_: Log, bundle: Log[] = []) {
   bundle.forEach(log => {
     const render = log.render;
     if (render) {

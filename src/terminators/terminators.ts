@@ -3,6 +3,8 @@ import {
   CustomLogFunction,
   Defaults, LogLevelDefinition, TerminatedLog,
 } from '../_contracts';
+import { print } from '../printers';
+import { storeExists } from '../shed';
 import { env, isBrowser } from '../global';
 
 /**
@@ -59,9 +61,9 @@ function executionPipeline(log: Log, def: LogLevelDefinition, args: any[]):Termi
   if (evalPasses(log)) {
     // Save the args for recall purposes
     log.args = args;
-    const render = log.print(def, args);
-    log.cache(args);
-    log.fireListeners(args);
+    const render = print(log, def, args);
+    cache(log, args);
+    fireListeners(log, args);
 
     return { log, render }
   }
@@ -94,16 +96,16 @@ function levelActive(def: LogLevelDefinition, level: number):boolean {
 /**
  * Check if any assertions or expressions pass for this log to terminate.
  */
-function evalPasses(ctxt: Log):boolean {
-  if (ctxt.assertion !== undefined && ctxt.expression !== undefined) {
+function evalPasses(log: Log):boolean {
+  if (log.assertion !== undefined && log.expression !== undefined) {
     console.warn("You have declared both an assertion and test on the same log. Please only declare one or nefarious results may occur.");
     return true;
   }
-  if (ctxt.assertion !== undefined) {
-    return ctxt.assertion === false;
+  if (log.assertion !== undefined) {
+    return log.assertion === false;
   }
-  if (ctxt.expression !== undefined) {
-    return ctxt.expression === true;
+  if (log.expression !== undefined) {
+    return log.expression === true;
   }
   return true;
 }
@@ -117,4 +119,26 @@ function notTestEnv():boolean {
     return true;
   }
   return env?.ADZE_ENV !== 'test';
+}
+
+/*----------------------------------------*\
+ * Log Events
+\*----------------------------------------*/
+
+/**
+ * Caches this log to the Shed if it exists.
+ */
+export function cache(log: Log, args: any[]):void {
+  if (storeExists(env.$shed)) {
+    env.$shed.addToCache(log, args);
+  }
+}
+
+/**
+ * Fires listeners for this log instance if a Shed exists.
+ */
+export function fireListeners(log: Log, args: any[]):void {
+  if (storeExists(env.$shed)) {
+    env.$shed.fireListeners(log, args);
+  }
 }

@@ -11,8 +11,8 @@ export function bundle(log: Log):Bundle {
   };
 };
 
-function curryBundle(ctxt: Log, bundle: Log[], fn: Function, ...args: any[]):() => void {
+function curryBundle(log: Log, bundle: Log[], fn: Function, ...args: any[]):() => void {
   return () => {
-    fn(ctxt, bundle, ...args);
+    fn(log, bundle, ...args);
   };
 }

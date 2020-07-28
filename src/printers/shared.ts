@@ -3,38 +3,38 @@ import { env } from '../global';
 
 // ------- PRINT ENTRY -------- //
 
-export function print(this: Log, def: LogLevelDefinition, args: any[]):LogRender {
-  const use_emoji = env.$shed?.cfg?.use_emoji === true || this.cfg.use_emoji === true;
-  return this.printer(def, use_emoji, args);
+export function print(log: Log, def: LogLevelDefinition, args: any[]):LogRender {
+  const use_emoji = env.$shed?.cfg?.use_emoji === true || log.cfg.use_emoji === true;
+  return log.printer(log, def, use_emoji, args);
 }
 
 // ------- PRINT METHODS -------- //
 
-export function printGroupEnd(this: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
-  return toConsole(applyRender(this, 'groupEnd', []));
+export function printGroupEnd(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
+  return toConsole(applyRender(log, 'groupEnd', []));
 }
 
-export function printTable(this: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
-  return toConsole(applyRender(this, 'table', args), false);
+export function printTable(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
+  return toConsole(applyRender(log, 'table', args), false);
 }
 
-export function printDir(this: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
-  return toConsole(applyRender(this, 'dir', args), false);
+export function printDir(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
+  return toConsole(applyRender(log, 'dir', args), false);
 }
 
-export function printDirxml(this: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
-  return toConsole(applyRender(this, 'dirxml', args), false);
+export function printDirxml(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
+  return toConsole(applyRender(log, 'dirxml', args), false);
 }
 
-export function printTrace(this: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
-  return toConsole(applyRender(this, 'trace', args));
+export function printTrace(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
+  return toConsole(applyRender(log, 'trace', args));
 }
 
 // ------ Print to the console ------- //
 
-export function applyRender(ctxt: Log, method: ConsoleMethod, args: any[]):LogRender {
-  ctxt.render = [method, args];
-  return ctxt.render;
+export function applyRender(log: Log, method: ConsoleMethod, args: any[]):LogRender {
+  log.render = [method, args];
+  return log.render;
 }
 
 export function toConsole(render: LogRender, spread: boolean = true):LogRender {
