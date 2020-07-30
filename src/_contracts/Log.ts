@@ -42,6 +42,7 @@ interface LogFlags {
 interface LogValues {
   cfg: Configuration;
   render?: LogRender;
+  level?: number;
   args?: any[];
   namespaceVal?: string;
   labelVal?: Label;
@@ -50,19 +51,13 @@ interface LogValues {
   printer(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]): LogRender;
 }
 
-export type Bundle = (user_cfg?: Configuration) => Log;
-
-export interface Bundled {
-  all(): void;
-};
-
 /**
  * All of the user accessible methods that can be chained to
  * create a customized log.
  */
 interface LogMethods {
   custom: CustomLogFunction;
-  seal(this: Log): Log;
+  seal(this: Log): () => Log;
   
   // Modifier Functions
   count(): Log;
@@ -87,7 +82,7 @@ interface LogMethods {
 /**
  * The final Adze log object prototype interface.
  */
-export interface Log extends LogFlags, LogValues, LogMethods, TerminatingMethods, Bundled {};
+export interface Log extends LogFlags, LogValues, LogMethods, TerminatingMethods {};
 
 /**
  * The render value for a Log.

@@ -7,8 +7,7 @@ import {
   test,  group, groupCollapsed, groupEnd, label,
   namespace, ns, trace, time, timeNow, timeEnd,
 } from './modifiers';
-import { print, printLog } from './printers';
-import { cache, fireListeners } from './events';
+import { printLog } from './printers';
 import { defaults } from './_defaults';
 
 /**
@@ -47,9 +46,7 @@ export function adze(user_cfg: Configuration = {}):Log {
     verbose:    logMethod(cfg, 'verbose'),
     custom:     customMethod(cfg),
 
-    all: () => {},
-
-    seal, print, count, countReset,
+    seal, count, countReset,
     dir, dirxml, table, assert, test, group, groupCollapsed,
     groupEnd, label, namespace, ns, trace, time, timeNow, timeEnd,
   };

@@ -6,31 +6,31 @@ import { initialCaps } from '../../util';
 // ------- PRINT METHODS -------- //
 
 export function printLog(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
-  const [ method, leader, style, meta ] = [ def.method, fLeader(def, args), (log.cfg.base_style + def.style), fMeta(log, use_emoji) ];
+  const [ method, leader, style, meta ] = [ def.method, fLeader(def, use_emoji, args), (log.cfg.base_style + def.style), fMeta(log, use_emoji) ];
   const render_args = meta === '' ? [ leader, style, ...args ] : [ leader, style, meta, ...args ];
   return toConsole(applyRender(log, method, render_args ));
 }
 
 export function printGroup(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
-  const partial_args = [ fLeader(def, args), (log.cfg.base_style + def.style) ];
+  const partial_args = [ fLeader(def, use_emoji, args), (log.cfg.base_style + def.style) ];
   const render_args = typeof args[0] === "string" ? [ ...partial_args, args[0] ] : partial_args;
   return toConsole(applyRender(log, 'group', render_args));
 }
 
 export function printGroupCollapsed(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
-  const partial_args = [ fLeader(def, args), (log.cfg.base_style + def.style) ];
+  const partial_args = [ fLeader(def, use_emoji, args), (log.cfg.base_style + def.style) ];
   const render_args = typeof args[0] === "string" ? [ ...partial_args, args[0] ] : partial_args;
   return toConsole(applyRender(log, 'groupCollapsed', render_args));
 }
 
 // ------- PRINT FORMATTERS -------- //
 
-export function fLeader(def: LogLevelDefinition, args: any[]):string {
-  return ` %c${fEmoji(def)} ${fName(def.levelName)}(${args.length})`;
+export function fLeader(def: LogLevelDefinition, use_emoji: boolean, args: any[]):string {
+  return ` %c${fEmoji(def, use_emoji)} ${fName(def.levelName)}(${args.length})`;
 }
 
-function fEmoji(def: LogLevelDefinition):string {
-  return env.$shed?.cfg?.use_emoji === true ? ` ${def.emoji}` : '';
+function fEmoji(def: LogLevelDefinition, use_emoji: boolean):string {
+  return env.$shed?.cfg?.use_emoji || use_emoji ? ` ${def.emoji}` : '';
 }
 
 function fName(name: string|undefined):string {

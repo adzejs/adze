@@ -8,14 +8,22 @@ import { storeExists } from '../shed';
 import { env, isBrowser } from '../global';
 
 /**
- * Take a Log and branch from it by providing new copied logs.
+ * Seals the configuration of a log and provides a new instance
+ * with the modifiers applied.
+ * 
+ * **Example:**
+ * ```javascript
+ * const sealed = adze({ use_emoji: true }).ns('sealed').label('sealed-label').seal();
+ * sealed().success('Success!'); // -> prints "#sealed [sealed-label] Success!"
+ * sealed().log('Another log.'); // -> prints "#sealed [sealed-label] Another log."
+ * ```
  */
-export function seal(this: Log):Log {
+export function seal(this: Log):() => Log {
   // Run the modifier queue to apply their results
   runModifierQueue(this.modifierQueue);
   // Clear the queue as to not repeat the actions when the subsequent logs are terminated.
   this.modifierQueue = [];
-  return { ...this };
+  return () => ({ ...this });
 }
 
 /**
@@ -23,12 +31,7 @@ export function seal(this: Log):Log {
  */
 export function logMethod(cfg: Defaults, levelName: string):LogFunction {
   return function(this: Log, ...args: any[]):TerminatedLog {
-    const definition = cfg.log_levels[levelName];
-    const def: LogLevelDefinition = { ...definition, levelName };
-    if (allowed(cfg, def)) {
-      return executionPipeline(this, def, args);
-    }
-    return { log: this, render: null };
+    return executionPipeline(this, cfg, getDefinition(cfg, 'log_levels', levelName), args);
   };
 }
 
@@ -38,40 +41,53 @@ export function logMethod(cfg: Defaults, levelName: string):LogFunction {
  */
 export function customMethod(cfg: Defaults):CustomLogFunction {
   return function(this: Log, levelName: string, ...args: any[]):TerminatedLog {
-    const definition = cfg.custom_levels[levelName];
-    if (definition) {
-      const def = { ...definition, levelName };
-      if (allowed(cfg, def)) {
-        return executionPipeline(this, def, args);
-      }
-    }
-    return { log: this, render: null };
+    return executionPipeline(this, cfg, getDefinition(cfg, 'custom_levels', levelName), args);
   };
 };
 
 /**
+ * Gets the log level definition from the log configuration.
+ */
+function getDefinition(cfg: Defaults, type: "log_levels"|"custom_levels", levelName: string):LogLevelDefinition|undefined {
+  const definition = cfg[type][levelName];
+  return definition ? { ...definition, levelName } : undefined;
+}
+
+/**
  * The primary execution pipeline for terminating log methods.
  */
-function executionPipeline(log: Log, def: LogLevelDefinition, args: any[]):TerminatedLog {
+function executionPipeline(log: Log, cfg: Defaults, def: LogLevelDefinition|undefined, args: any[]):TerminatedLog {
 
-  // Apply modifiers in the proper order.
-  runModifierQueue(log.modifierQueue);
+  if (def && allowed(cfg, def)) {
+    // Apply modifiers in the proper order.
+    runModifierQueue(log.modifierQueue);
 
-  // Check the test modifiers.
-  if (evalPasses(log)) {
-    // Save the args for recall purposes
-    log.args = args;
-    const render = print(log, def, args);
-    cache(log, args);
-    fireListeners(log, args);
+    // Check the test modifiers.
+    if (evalPasses(log)) {
+      // Save props for recall purposes
+      log.args = args;
+      log.level = def.level;
 
-    return { log, render }
+      // Render the log
+      const render = print(log, def, args);
+    
+      // Fire log events
+      cache(log, args);
+      fireListeners(log, args);
+
+      // Return the terminated log object for testing purposes
+      return { log, render }
+    }
   }
 
+  // Return the terminated log object for testing purposes
   return { log, render: null };
 }
 
-function runModifierQueue(queue: Function[]) {
+/**
+ * Executes all of the log modifier functions within the queue.
+ */
+function runModifierQueue(queue: Function[]):void {
   queue.forEach(func => func());
 }
 

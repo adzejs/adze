@@ -1,1 +1,7 @@
-export { all } from './filters';
+export {
+  filterAll,
+  filterLabel,
+  filterNamespace,
+  filterLevelRange,
+  render,
+} from './filters';

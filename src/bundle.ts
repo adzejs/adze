@@ -1,18 +1,28 @@
-import { Adze, Configuration, Bundle, Log, TerminatingMethods, TerminatingMethodKeys } from './_contracts';
-import { all } from './filters';
+import { Bundle, Bundler, BundledLog, Log } from './_contracts';
 
-export function bundle(log: Log):Bundle {
-  const bundle = [] as Log[];
+/**
+ * Bundles all logs together by wrapping all subsequent logs in a Bundle callback
+ * that curries them into an array. This bundle array can be used to recall and
+ * filter logs.
+ * 
+ * **Example:**
+ * ```javascript
+ * const bundled = bundle(adze());
+ * bundled.log("This is a log.");
+ * bundled.log("This is another log.");
+ * bundle.all(); // -> reprints all "bundled" logs.
+ * ```
+ */
+export function bundle(log: Log):Bundler {
+  const bundle_arr = [] as Bundle;
   return () => {
-    let bundled_log: Log = { ...log };
-    bundled_log.all = curryBundle(bundled_log, bundle, all);
-    bundle.push(bundled_log);
+    let bundled_log: BundledLog = {
+      ...log,
+      get bundle() {
+        return bundle_arr;
+      }
+    };
+    bundle_arr.push(bundled_log);
     return bundled_log;
   };
 };
-
-function curryBundle(log: Log, bundle: Log[], fn: Function, ...args: any[]):() => void {
-  return () => {
-    fn(log, bundle, ...args);
-  };
-}

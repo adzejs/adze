@@ -1,9 +1,10 @@
 export { Adze, LogFactory } from './Adze';
 export {
-  Log, LogFunction, CustomLogFunction, Bundle,
+  Log, LogFunction, CustomLogFunction,
   TerminatingMethods, TerminatingMethodKeys,
   LogRender, TerminatedLog,
 } from './Log';
+export { Bundle, BundledLog, Bundler } from './Bundle';
 export {
   Shed, ListenerCallback, Listeners,
   ListenerLocations, ListenerData,
