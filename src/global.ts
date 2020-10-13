@@ -1,4 +1,4 @@
-import { Shed } from './_contracts';
+import { Shed } from './shed';
 
 declare global {
   interface Window {

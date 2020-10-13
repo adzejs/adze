@@ -1,36 +1,31 @@
-import {
-  Log,
-  Label,
-  LogLevelDefinition,
-  Defaults,
-} from '.';
+import { Log, FinalLog, Bundle, Label, LogLevelDefinition, Defaults } from '.';
 
-type LabelMap = Map<string, Label>;
+export type LabelMap = Map<string, Label>;
 
 export type ListenerLocations = Array<[number, number]>;
 
-export type Listeners = Map<number, Map<number, ListenerCallback>>;
+export type ListenerBuckets = Map<number, ListenerBucket>;
 
-export interface ListenerData extends Log, LogLevelDefinition {
-  args: any[];
+export type ListenerBucket = Map<number, ListenerCallback>;
+
+export type ListenerCallback = (log: Log) => void;
+
+export interface AdzeFilters {
+  hideAll: boolean;
+  level?: FilterOptions<number>;
+  label?: FilterOptions<string>;
+  namespace?: FilterOptions<string>;
 }
 
-export type ListenerCallback = (log: ListenerData) => void;
-
-interface ShedProps {
-  cfg: Defaults;
-  cache: Array<[Log, LogLevelDefinition, any[]]>;
-  id_counter: number;
-  listeners: Listeners;
-  labels: LabelMap;
+export interface FilterOptions<T> {
+  include: Array<T>;
+  exclude: Array<T>;
 }
 
-interface ShedMethods {
-  assignId(this: Shed): number;
-  addToCache(this: Shed, loog: Log, args: any[]): void;
-  addListener(this: Shed, levels: number[], cb: ListenerCallback): void;
-  removeListener(this: Shed, locations: ListenerLocations): void;
-  fireListeners(this: Shed, log: Log, args: any[]): void;
+export interface ShedConfig {
+  cache_limit: number;
+  global_cfg: Defaults|null;
+  filters: AdzeFilters;
 }
 
-export interface Shed extends ShedProps, ShedMethods {}
+export interface ShedUserConfig extends Partial<ShedConfig> {}

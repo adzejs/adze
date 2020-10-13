@@ -1,6 +1,7 @@
 import { isChrome, isFirefox, isSafari } from '../global';
 import { Defaults } from "../_contracts";
 
+// TODO: Make styling of log browser CSS configurable per property rather than a single string.
 export const defaults: Defaults = {
   log_level: 8,
   log_cache_size: 300,
@@ -38,7 +39,7 @@ export const defaults: Defaults = {
     },
     fail: {
       level: 4,
-      style: `padding-right: ${ isChrome ? '34' : '32' }px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;`,
+      style: `padding-right: ${ isChrome ? '42' : '44' }px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;`,
       terminal: ['bgRed', 'white'],
       method: 'info',
       emoji: '❌'

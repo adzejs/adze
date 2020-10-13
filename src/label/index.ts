@@ -1,1 +1,1 @@
-export { getLabel, addLabel, hasLabel } from './label';
+export { getLabel, addLabel } from './label';

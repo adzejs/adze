@@ -2,6 +2,7 @@
 export default function runDemo(lib, el) {
   defaultLevels(lib);
   defaultLevelsWithEmoji(lib);
+  defaultLevelsWithGlobalOverride(lib);
   customLevels(lib);
   customLevelsWithEmoji(lib);
   logLevelOf2(lib);
@@ -44,6 +45,24 @@ function defaultLevelsWithEmoji({ adze }) {
   log.log("This is a log!");
   log.debug("This is a debug!");
   log.verbose("This is a verbose!");
+}
+
+function defaultLevelsWithGlobalOverride({ adze, createShed, teardownShed }) {
+  console.log('\n----- Default Verbose Level w/ Global Overrides -----\n');
+  createShed({
+    global_cfg: {
+      use_emoji: true,
+      log_levels: {
+        verbose: {
+          style: 'padding-right: 26px; background-color: CornflowerBlue; border-color: 1px solid black; color: white; border-color: #cbc9c9;',
+          terminal: ['bgBlue', 'white']
+        }
+      }
+    }
+  });
+  const log = adze();
+  log.verbose("This is a verbose with styling overrides from the shed.");
+  teardownShed();
 }
 
 function customLevels({ adze }) {
@@ -137,21 +156,22 @@ function logLevelOf2({ adze }) {
 function bundleLogs({ adze, bundle, filterAll, filterNamespace, filterLabel, filterLevelRange }) {
   console.log('\n----- Bundle Logs & Recall All -----\n');
   const log = bundle(adze({ use_emoji: true }));
+  const divider = adze({use_emoji: true});
 
   log().ns('SPACE').error('This is an error!');
   log().label('i-am-label').success('Successfully bundled this log!');
   log().log('Here is another log in the bundle.');
 
-  adze({ use_emoji: true }).log("---- Next is a recall of all logs in the bundle ----");
+  divider.info("---- Next is a recall of all logs in the bundle ----");
   filterAll(log().bundle);
 
-  adze({ use_emoji: true }).log("---- Next is a recall of all logs with the label of i-am-label ----");
+  divider.info("---- Next is a recall of all logs with the label of i-am-label ----");
   filterLabel(log().bundle, 'i-am-label');
 
-  adze({ use_emoji: true }).log("---- Next is a recall of all logs with the namespace of SPACE ----");
+  divider.info("---- Next is a recall of all logs with the namespace of SPACE ----");
   filterNamespace(log().bundle, 'SPACE');
 
-  adze({ use_emoji: true }).log("---- Next is a recall of all logs with a level in the range of 4 to 8 ----");
+  divider.info("---- Next is a recall of all logs with a level in the range of 4 to 8 ----");
   filterLevelRange(log().bundle, 4, 8);
 }
 

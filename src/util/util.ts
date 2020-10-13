@@ -1,15 +1,14 @@
+/**
+ * Capitalizes the first character of the provided string.
+ */
 export function initialCaps(str: string):string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function applyMixins(derivedCtor: any, baseCtors: any[]) {
-  baseCtors.forEach(baseCtor => {
-    Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
-      Object.defineProperty(
-        derivedCtor.prototype,
-        name,
-        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) ?? ''
-      );
-    });
-  });
+/**
+ * Applies property mutations to the provided object.
+ */
+export function mutateProps<O>(obj: any, mutations: Array<[string, any]>):O {
+  mutations.forEach(([prop, val]) => obj[prop] = val);
+  return obj;
 }

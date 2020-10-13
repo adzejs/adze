@@ -47,6 +47,7 @@ interface LogValues {
   namespaceVal?: string;
   labelVal?: Label;
   timeNowVal?: string;
+  meta?: any;
   modifierQueue: Function[];
   printer(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]): LogRender;
 }
@@ -84,6 +85,11 @@ interface LogMethods {
  */
 export interface Log extends LogFlags, LogValues, LogMethods, TerminatingMethods {};
 
+export interface FinalLog extends Log {
+  level: number;
+  args: any[];
+}
+
 /**
  * The render value for a Log.
  */
@@ -96,6 +102,6 @@ export type LogRender = [ConsoleMethod, Arguments];
  * unit testing purposes.
  */
 export interface TerminatedLog {
-  log: Log;
+  log: Log|FinalLog;
   render: LogRender|null;
 };

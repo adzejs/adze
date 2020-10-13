@@ -10,12 +10,24 @@ import {
 import { printLog } from './printers';
 import { defaults } from './_defaults';
 
+/*
+ * Future planned features:
+ * 
+ * 1. URL Param to control the Adze environment (param name is configurable).
+ * 2. Analytics and Reporting support.
+ * 3. Remote server for receiving and analyzing logs.
+ * 4. Attach meta data to logs (for listeners to take advantage of).
+ * 5. Add default meta data to the configuration of the log.
+ * 6. Persist logs in localStorage (configurable, off by default).
+ */
+
 /**
  * The entry point for creating Adze logs. This factory method can be used directly or configuration
  * can be provided and the result can be assigned to a new variable. This allows for multiple
  * logging instances with different configurations.
  * 
  * --- Default levels ---
+ * 
  * 0. attention
  * 1. error
  * 2. warn
@@ -24,7 +36,7 @@ import { defaults } from './_defaults';
  * 5. success
  * 6. log
  * 7. debug
- * 8. verbose
+ * 8. verbose 
  */
 export function adze(user_cfg: Configuration = {}):Log {
   const cfg = defaultsDeep(user_cfg, defaults) as Defaults;

@@ -62,7 +62,7 @@ export function fMeta(log: Log, use_emoji: boolean):string {
 
 function fTime(log: Log, use_emoji: boolean):string {
   const label_txt = `${log.timeNowVal ?? log.labelVal?.timeEllapsed ?? ''}`;
-  return label_txt !== '' ? `(${env.$shed?.cfg?.use_emoji || use_emoji ? '⏱' : ''}${label_txt}) ` : '';
+  return label_txt !== '' ? `(${env.$shed?.cfg?.global_cfg?.use_emoji || use_emoji ? '⏱' : ''}${label_txt}) ` : '';
 }
 
 function fCount(log: Log):string {

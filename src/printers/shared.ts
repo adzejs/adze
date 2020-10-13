@@ -4,7 +4,7 @@ import { env } from '../global';
 // ------- PRINT ENTRY -------- //
 
 export function print(log: Log, def: LogLevelDefinition, args: any[]):LogRender {
-  const use_emoji = env.$shed?.cfg?.use_emoji === true || log.cfg.use_emoji === true;
+  const use_emoji = env.$shed?.overrides?.use_emoji === true || log.cfg.use_emoji === true;
   return log.printer(log, def, use_emoji, args);
 }
 

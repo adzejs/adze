@@ -30,7 +30,7 @@ export function fLeader(def: LogLevelDefinition, use_emoji: boolean, args: any[]
 }
 
 function fEmoji(def: LogLevelDefinition, use_emoji: boolean):string {
-  return env.$shed?.cfg?.use_emoji || use_emoji ? ` ${def.emoji}` : '';
+  return env.$shed?.overrides?.use_emoji || use_emoji ? ` ${def.emoji}` : '';
 }
 
 function fName(name: string|undefined):string {
@@ -43,7 +43,7 @@ export function fMeta(log: Log, use_emoji: boolean):string {
 
 function fTime(log: Log, use_emoji: boolean):string {
   const label_txt = `${log.labelVal?.timeNow ?? log.labelVal?.timeEllapsed ?? ''}`;
-  return label_txt !== '' ? ` (${env.$shed?.cfg?.use_emoji || use_emoji ? '⏱' : ''}${label_txt}) ` : '';
+  return label_txt !== '' ? ` (${env.$shed?.overrides?.use_emoji || use_emoji ? '⏱' : ''}${label_txt}) ` : '';
 }
 
 function fCount(log: Log):string {

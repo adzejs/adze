@@ -20,7 +20,7 @@ export function time(this: Log):Log {
 /**
  * Modifies the log render to show the current high-resolution real time.
  * 
- * !! This is not a standard method. !!
+ * This is a non-standard method.
  */
 export function timeNow(this: Log):Log {
   return modifier(this, () => {

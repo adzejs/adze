@@ -1,4 +1,4 @@
-import { Log } from '.';
+import { Log, FinalLog } from '.';
 
 /**
  * An extension of a Log that adds a getter for the log bundle.
@@ -15,4 +15,4 @@ export type Bundler = () => BundledLog;
 /**
  * Array of bundled logs.
  */
-export type Bundle = BundledLog[];
+export type Bundle = Array<BundledLog|FinalLog>;

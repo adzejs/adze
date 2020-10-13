@@ -1,119 +1,283 @@
 import defaultsDeep from 'lodash.defaultsdeep';
 import {
-  Shed, Log,
-  Configuration, Defaults,
+  ShedConfig, Defaults, Label,
+  ShedUserConfig, FinalLog, Bundle,
   LogLevelDefinition, ListenerLocations,
-  Listeners, ListenerCallback, Adze
+  ListenerBucket, ListenerCallback, LabelMap, ListenerBuckets
 } from './_contracts';
-import { defaults } from './_defaults';
+import { defaults, shed_defaults } from './_defaults';
 
 import { env } from './global';
 
-export function storeExists(store: Shed|undefined):store is Shed {
+type GlobalFilters = "label"|"namespace"|"level";
+
+/**
+ * A typeguard that indicates that a global shed store exists.
+ */
+export function shedExists(store: Shed|undefined):store is Shed {
   return store !== undefined;
 }
-
-export function createShed(config: Configuration):void {
-  // const cfg: Defaults = defaultsDeep(config, defaults);
-  // env.$shed = {
-  //   cfg,
-  //   cache: [],
-  //   labels: new Map(),
-  //   id_counter: -1,
-  //   listeners: initListenerLocations(cfg),
-
-  //   assignId,
-  //   addToCache,
-  //   addListener,
-  //   removeListener,
-  //   fireListeners,
-  // };
+/**
+ * Creates a new shed instance in your environment's global context.
+ */
+export function createShed(config: ShedUserConfig):void {
+  env.$shed = new Shed(config);
 }
 
-// function initListenerLocations(cfg: Defaults):Listeners {
-//   const listeners: Listeners = new Map();
-//   Object.values(cfg.log_levels).forEach((def) => {
-//     listeners.set(def.level, new Map());
-//   });
-//   return listeners;
-// }
+/**
+ * Removes the shed from the environment's global context.
+ */
+export function teardownShed():void {
+  delete env.$shed;
+}
 
-// function addToCache(this: Shed, log: Log, def: LogLevelDefinition, args: any[]):void {
-//   if (this.cache.length < this.cfg.log_cache_size) {
-//     this.cache = this.cache.concat([[log, def, args]]);
-//   }
-// }
+/**
+ * A global store for caching, listening, and recalling Adze logs.
+ */
+export class Shed {
 
-// /**
-//  * Takes an instance of a log and returns a boolean indicating whether or
-//  * not it should be hidden according to the configured global filter rules. 
-//  * @param log Instance of a log.
-//  */
-// public globalFilter(log: LogBrowser|LogNode):boolean {
-//   if (this.all_hidden && log.namespace === null && log.Label === null) {
-//     return true;
-//   }
-//   return this.globalFilterNamespace(log) || this.globalFilterLabel(log);
-// }
+  /**
+   * The configuration for Shed. Shed is constructed with a set of 
+   * defaults that can overriden by the configuration supplied by the user.
+   */
+  private cfg: ShedConfig;
 
-// /**
-//  * Takes an instance of a log and returns a boolean indicating whether or
-//  * not it should be hidden according to the configured global **label** filter rules. 
-//  * @param log Instance of a log.
-//  */
-// private globalFilterNamespace(log: LogBrowser|LogNode):boolean {
-//   if (log.namespace) {
-//     if (this.included_namespaces.includes(log.namespace)) {
-//       return false;
-//     }
-//     if (this.excluded_namespaces.includes(log.namespace) || this.namespaces_hidden === true || this.all_hidden === true) {
-//       return true;
-//     }
-//   }
-//   return false;
-// }
+  /**
+   * Cache of finalized logs (terminated and have meta data applied to them). This
+   * is mainly used for recalling logs and filtering them.
+   */
+  private cache: FinalLog[] = [];
 
-// /**
-//  * Takes an instance of a log and returns a boolean indicating whether or
-//  * not it should be hidden according to the configured global **namespace** filter rules. 
-//  * @param log Instance of a log.
-//  */
-// private globalFilterLabel(log: LogBrowser|LogNode):boolean {
-//   if (log.Label) {
-//     if (this.included_labels.includes(log.Label.name)) {
-//       return false;
-//     }
-//     if (this.excluded_labels.includes(log.Label.name) || this.labels_hidden === true || this.all_hidden === true) {
-//       return true;
-//     }
-//   }
-//   return false;
-// }
+  /**
+   * Cache of label instances. Useful for globally linking labelled logs.
+   */
+  private labels: LabelMap = new Map();
 
-// function addListener(this: Shed, levels: number[], cb: ListenerCallback):ListenerLocations {
-//   return levels.map((lvl: number) => {
-//     const level_map = this.listeners.get(lvl);
-//     const id = this.assignId();
-//     level_map?.set(id, cb);
-//     this.listeners.set(lvl, level_map ?? new Map());
-//     return [lvl, id];
-//   });
-// }
+  /**
+   * Counter for generating ID's for listeners.
+   */
+  private id_counter: number = -1;
 
-// function removeListener(this: Shed, locations: ListenerLocations):void {
-//   locations.forEach(([lvl_id, id]) => {
-//     const level = this.listeners.get(lvl_id);
-//     level?.delete(id);
-//   });
-// }
+  /**
+   * Cache of log listeners. These are fire when specified log levels
+   * are printed.
+   */
+  private listeners: ListenerBuckets = new Map();
 
-// function fireListeners(this: Shed, ctxt: Log, def: LogLevelDefinition, args: any[]):void {
-//   this.listeners.get(def.level)?.forEach(listener => {
-//     listener({ ...ctxt, ...def, args });
-//   });
-// }
+  constructor(config: ShedUserConfig) {
+    this.cfg = defaultsDeep(config, shed_defaults);
+    this.cfg = this.cfg.global_cfg;
+  }
 
-// function assignId(this: Shed):number {
-//   this.id_counter = this.id_counter + 1; // Written for clarity
-//   return this.id_counter;
-// }
+  /*************************************\
+   * GET/SET METHODS
+  \*************************************/
+
+  /**
+   * Store a log in the shed for later recall.
+   */
+  public store(log: FinalLog):void {
+    if (this.cache.length < this.cfg.cache_limit) {
+      this.cache = this.cache.concat([log]);
+    }
+  }
+
+  /**
+   * Sets the limit for the maximum number of logs that Shed will cache.
+   */
+  public set cacheLimit(limit: number) {
+    this.cfg.cache_limit = limit;
+  }
+
+  /**
+   * Gets the limit for the maximum number of logs that Shed will cache.
+   */
+  public get cacheLimit():number {
+    return this.cfg.cache_limit;
+  }
+
+  /**
+   * Returns all of the cached logs of the provided levels as a bundle.
+   * This is useful for recalling logs and applying filters.
+   */
+  public getBundle(levels: number[]):Bundle {
+    return this.cache.reduce((acc, log) => {
+      return acc.concat(levels.includes(log.level) ? [ log ] : []);
+    }, [] as Bundle);
+  }
+
+  /**
+   * Indicates whether this shed instance has global Adze config overrides set.
+   */
+  public get hasOverrides():boolean {
+    return this.cfg.global_cfg !== null;
+  }
+
+  /**
+   * Returns the current value of the global Adze configuration overrides.
+   */
+  public get overrides():Defaults|null {
+    return this.cfg.global_cfg;
+  }
+
+  /**
+   * Getter for configuration of the hideAll filter property.
+   */
+  private get hideAll():boolean {
+    return this.cfg?.filters.hideAll;
+  }
+
+  /**
+   * Sets the current value of the global Adze configuration overrides.
+   */
+  public set config(cfg: Defaults|null) {
+    const defaulted = cfg ? defaultsDeep(cfg, defaults) : cfg;
+    this.cfg.global_cfg = defaulted;
+  }
+
+  /**
+   * Get a label from the Shed by name.
+   */
+  public getLabel(name: string):Label|undefined {
+    return this.labels.get(name);
+  }
+  
+  /**
+   * Adds a label to the Shed to be tracked globally.
+   */
+  public addLabel(label: Label):void {
+    if (!this.hasLabel(label.name)) {
+      this.labels.set(label.name, label);
+    }
+  }
+
+  /**
+   * Validates whether a label with the given name exists in the Shed label cache.
+   */
+  public hasLabel(name: string):boolean {
+    return this.labels.has(name);
+  }
+
+  /*************************************\
+   * LISTENER METHODS
+  \*************************************/
+
+  /**
+   * Add a listener callback that fires any time a log of one of the provided levels is generated.
+   */
+  public addListener(levels: number[], cb: ListenerCallback):ListenerLocations {
+    return levels.map((lvl: number) => {
+
+      // Get the map for the listeners of the given log level.
+      const level_map = this.listenerBucket(lvl);
+      // Generate a new ID for the listener.
+      const id = this.assignId();
+
+      // Assign an ID to the listener for later teardown.
+      level_map.set(id, cb);
+      this.listeners.set(lvl, level_map);
+
+      // Return the listener location tuple
+      return [lvl, id];
+    });
+  }
+
+  /**
+   * Remove log listeners at the given bucket locations.
+   */ 
+  public removeListener(locations: ListenerLocations):void {
+    locations.forEach(([lvl_id, id]) => {
+      const level = this.listeners.get(lvl_id);
+      level?.delete(id);
+    });
+  }
+
+  /**
+   * Fire any log listeners for the provided log.
+   */
+  public fireListeners(log: FinalLog, def: LogLevelDefinition):void {
+    this.listeners.get(log.level)?.forEach(listener => {
+      listener({ ...log, ...def });
+    });
+  }
+
+  /*************************************\
+   * GLOBAL FILTER METHODS
+  \*************************************/
+
+  /**
+   * Returns a boolean indicating if this log instance should be 
+   * allowed to print.
+   */
+  public logGloballyAllowed(log: FinalLog):boolean {
+    return !this.hideAll
+      && this.logAllowedLogic('label', log?.labelVal?.name)
+      && this.logAllowedLogic('level', log.level)
+      && this.logAllowedLogic('namespace', log.namespaceVal);
+  }
+
+  /**
+   * Determines if provided value passes user configured
+   * global filters.
+   */
+  private logAllowedLogic(category: GlobalFilters, value: string|number|undefined):boolean {
+    // If the value is undefined we cannot determine if it should hide the log
+    if (value === undefined) {
+      return true;
+    }
+    if (this.filterIsSet('include', category)) {
+      return this.isIncluded(category, value);
+    }
+    if (this.filterIsSet('exclude', category)) {
+      return this.isNotExcluded(category, value);
+    }
+    return true;
+  }
+
+  /**
+   * Has the user has defined rules for a specific filter?
+   */
+  private filterIsSet(type: "include"|"exclude", filter: GlobalFilters):boolean {
+    const include_prop = this.cfg?.filters?.[filter]?.include ?? [];
+    return include_prop.length > 0;
+  }
+
+  /**
+   * Is the log in the included filter?
+   */
+  private isIncluded(filter: GlobalFilters, value: string|number):boolean {
+    const filter_vals = this.cfg?.filters?.[filter]?.include ?? <any>[];
+    return filter_vals.length > 0 && filter_vals.indexOf(value) !== -1;
+  }
+
+  /**
+   * Is the log not in the excluded filter?
+   */
+  private isNotExcluded(filter: GlobalFilters, value: string|number):boolean {
+    const filter_vals = this.cfg?.filters?.[filter]?.exclude ?? <any>[];
+    return filter_vals.length > 0 && filter_vals.indexOf(value) === -1;
+  }
+
+  /*************************************\
+   * HELPER METHODS
+  \*************************************/
+
+  /**
+   * Guarantee that a listener bucket exists for the given log level and return the bucket.
+   */
+  private listenerBucket(lvl: number):ListenerBucket {
+    if (!this.listeners.has(lvl)) {
+      this.listeners.set(lvl, new Map());
+    }
+    // Override TS because the ListenerBucket is guaranteed by the condition above.
+    return this.listeners.get(lvl) as ListenerBucket;
+  }
+
+  /**
+   * Increment the ID counter and return the new value.
+   */
+  private assignId():number {
+    return (this.id_counter += 1);
+  }
+
+}

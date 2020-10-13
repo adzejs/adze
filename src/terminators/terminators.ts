@@ -1,15 +1,17 @@
 import {
-  Log, LogFunction,
+  Log, FinalLog, LogFunction,
   CustomLogFunction,
   Defaults, LogLevelDefinition, TerminatedLog,
 } from '../_contracts';
 import { print } from '../printers';
-import { storeExists } from '../shed';
-import { env, isBrowser } from '../global';
+import { allowed, evalPasses } from '../conditions';
+import { mutateProps } from '../util';
+import { shedExists } from '../shed';
+import { env } from '../global';
 
 /**
- * Seals the configuration of a log and provides a new instance
- * with the modifiers applied.
+ * Seals the configuration of a log and returns a function that
+ * constructs a new log with the same configuration.
  * 
  * **Example:**
  * ```javascript
@@ -49,7 +51,15 @@ export function customMethod(cfg: Defaults):CustomLogFunction {
  * Gets the log level definition from the log configuration.
  */
 function getDefinition(cfg: Defaults, type: "log_levels"|"custom_levels", levelName: string):LogLevelDefinition|undefined {
-  const definition = cfg[type][levelName];
+  const shed = env.$shed;
+  let definition = undefined;
+
+  if (shedExists(shed) && shed.hasOverrides) {
+    definition = shed.overrides?.[type]?.[levelName];
+  } else {
+    definition = cfg[type][levelName];
+  }
+  
   return definition ? { ...definition, levelName } : undefined;
 }
 
@@ -64,19 +74,19 @@ function executionPipeline(log: Log, cfg: Defaults, def: LogLevelDefinition|unde
 
     // Check the test modifiers.
     if (evalPasses(log)) {
-      // Save props for recall purposes
-      log.args = args;
-      log.level = def.level;
+
+      // Save terminator props for recall purposes
+      const final_log = mutateProps<FinalLog>(log, [ ['args', args], ['level', def.level] ]);
 
       // Render the log
-      const render = print(log, def, args);
+      const render = print(final_log, def, args);
     
       // Fire log events
-      cache(log, args);
-      fireListeners(log, args);
+      store(final_log);
+      fireListeners(final_log, def);
 
       // Return the terminated log object for testing purposes
-      return { log, render }
+      return { log: final_log, render };
     }
   }
 
@@ -92,69 +102,25 @@ function runModifierQueue(queue: Function[]):void {
 }
 
 /*----------------------------------------*\
- * Terminator Conditions
-\*----------------------------------------*/
-
-/**
- * Determine the fate of whether this log will terminate.
- */
-function allowed(cfg: Defaults, def: LogLevelDefinition):boolean {
-  return levelActive(def, cfg.log_level) && notTestEnv();
-}
-
-/**
- * Check if the log level is high enough for the log to terminate.
- */
-function levelActive(def: LogLevelDefinition, level: number):boolean {
-  return def.level <= level;
-}
-
-/**
- * Check if any assertions or expressions pass for this log to terminate.
- */
-function evalPasses(log: Log):boolean {
-  if (log.assertion !== undefined && log.expression !== undefined) {
-    console.warn("You have declared both an assertion and test on the same log. Please only declare one or nefarious results may occur.");
-    return true;
-  }
-  if (log.assertion !== undefined) {
-    return log.assertion === false;
-  }
-  if (log.expression !== undefined) {
-    return log.expression === true;
-  }
-  return true;
-}
-
-/**
- * Verify that this log is not in a test environment and prevent
- * termination if it is.
- */
-function notTestEnv():boolean {
-  if (isBrowser) {
-    return true;
-  }
-  return env?.ADZE_ENV !== 'test';
-}
-
-/*----------------------------------------*\
  * Log Events
 \*----------------------------------------*/
 
 /**
- * Caches this log to the Shed if it exists.
+ * Stores this log in the Shed if the Shed exists.
  */
-export function cache(log: Log, args: any[]):void {
-  if (storeExists(env.$shed)) {
-    env.$shed.addToCache(log, args);
+export function store(log: FinalLog):void {
+  const shed = env.$shed;
+  if (shedExists(shed)) {
+    shed.store(log);
   }
 }
 
 /**
  * Fires listeners for this log instance if a Shed exists.
  */
-export function fireListeners(log: Log, args: any[]):void {
-  if (storeExists(env.$shed)) {
-    env.$shed.fireListeners(log, args);
+export function fireListeners(log: FinalLog, def: LogLevelDefinition):void {
+  const shed = env.$shed;
+  if (shedExists(shed)) {
+    shed.fireListeners(log, def);
   }
 }
