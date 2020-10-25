@@ -7,8 +7,8 @@ import { initialCaps } from '../../util';
 // ------- PRINT METHODS -------- //
 
 export function printLog(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
-  const [ method, leader, meta ] = [ def.method, fLeader(def, use_emoji, args), fMeta(log, use_emoji) ];
-  const render_args = meta === '' ? [ leader, ...args ] : [ leader, meta, ...args ];
+  const [ method, leader, style, meta ] = [ def.method, fLeader(def, use_emoji, args), def.terminal, fMeta(log, use_emoji) ];
+  const render_args = meta === '' ? [ leader, ...args ] : [ leader, style, meta, ...args ];
   return toConsole(applyRender(log, method, render_args ));
 }
 
@@ -39,6 +39,9 @@ export function fLeader(def: LogLevelDefinition, use_emoji: boolean, args: any[]
   }, padded_leader);
 }
 
+/**
+ * Add spaces to the end of a log title to make them all align.
+ */
 function addPadding(str: string, len: number):string {
   const diff = len - str.length;
   let padded = str;
@@ -62,7 +65,7 @@ export function fMeta(log: Log, use_emoji: boolean):string {
 
 function fTime(log: Log, use_emoji: boolean):string {
   const label_txt = `${log.timeNowVal ?? log.labelVal?.timeEllapsed ?? ''}`;
-  return label_txt !== '' ? `(${env.$shed?.cfg?.global_cfg?.use_emoji || use_emoji ? '⏱' : ''}${label_txt}) ` : '';
+  return label_txt !== '' ? `(${env.$shed?.overrides?.use_emoji || use_emoji ? '⏱' : ''}${label_txt}) ` : '';
 }
 
 function fCount(log: Log):string {

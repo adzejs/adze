@@ -22,7 +22,7 @@ import { defaults } from './_defaults';
  */
 
 /**
- * The entry point for creating Adze logs. This factory method can be used directly or configuration
+ * The entry point for creating Adze logs. This factory function can be used directly or configuration
  * can be provided and the result can be assigned to a new variable. This allows for multiple
  * logging instances with different configurations.
  * 

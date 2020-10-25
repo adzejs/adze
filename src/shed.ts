@@ -66,7 +66,6 @@ export class Shed {
 
   constructor(config: ShedUserConfig) {
     this.cfg = defaultsDeep(config, shed_defaults);
-    this.cfg = this.cfg.global_cfg;
   }
 
   /*************************************\
@@ -124,7 +123,7 @@ export class Shed {
    * Getter for configuration of the hideAll filter property.
    */
   private get hideAll():boolean {
-    return this.cfg?.filters.hideAll;
+    return this.cfg?.filters.hideAll ?? false;
   }
 
   /**

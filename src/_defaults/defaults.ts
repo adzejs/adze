@@ -1,7 +1,6 @@
 import { isChrome, isFirefox, isSafari } from '../global';
 import { Defaults } from "../_contracts";
 
-// TODO: Make styling of log browser CSS configurable per property rather than a single string.
 export const defaults: Defaults = {
   log_level: 8,
   log_cache_size: 300,

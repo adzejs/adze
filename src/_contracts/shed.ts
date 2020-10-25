@@ -11,7 +11,7 @@ export type ListenerBucket = Map<number, ListenerCallback>;
 export type ListenerCallback = (log: Log) => void;
 
 export interface AdzeFilters {
-  hideAll: boolean;
+  hideAll?: boolean;
   level?: FilterOptions<number>;
   label?: FilterOptions<string>;
   namespace?: FilterOptions<string>;
