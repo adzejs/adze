@@ -46,7 +46,7 @@ interface LogFlags {
  */
 interface LogValues {
   cfg: Configuration;
-  timestamp: LogTimestamp;
+  timestamp?: LogTimestamp;
   render?: LogRender;
   level?: number;
   args?: any[];
