@@ -19,6 +19,10 @@ import { defaults } from './_defaults';
  * 4. Attach meta data to logs (for listeners to take advantage of).
  * 5. Add default meta data to the configuration of the log.
  * 6. Persist logs in localStorage (configurable, off by default).
+ * 7. Add easy functions for transporting logging data to various sources.
+ *     a. Write to a file.
+ *     b. Write to local storage.
+ *     c. Push to an API endpoint.
  */
 
 /**

@@ -2,7 +2,7 @@ export { Adze, LogFactory } from './Adze';
 export {
   Log, FinalLog, LogFunction, CustomLogFunction,
   TerminatingMethods, TerminatingMethodKeys,
-  LogRender, TerminatedLog,
+  LogRender, TerminatedLog, LogTimestamp,
 } from './Log';
 export { Bundle, BundledLog, Bundler } from './Bundle';
 export {

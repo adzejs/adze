@@ -25,6 +25,11 @@ export type TerminatingMethods = {
   [method in TerminatingMethodKeys]: LogFunction;
 };
 
+export interface LogTimestamp {
+  unixMilli: number;
+  utc: string;
+}
+
 /**
  * Boolean flags that represent various states of how the log
  * should be printed.
@@ -41,6 +46,7 @@ interface LogFlags {
  */
 interface LogValues {
   cfg: Configuration;
+  timestamp: LogTimestamp;
   render?: LogRender;
   level?: number;
   args?: any[];
