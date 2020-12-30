@@ -1,9 +1,5 @@
-import {
-  Log, LogFunction,
-  CustomLogFunction,
-  Defaults, LogLevelDefinition, TerminatedLog,
-} from '../_contracts';
-import { env, isBrowser } from '../global';
+import { Log, Defaults, LogLevelDefinition } from '~/_contracts';
+import { env, isBrowser } from '~/global';
 
 /**
  * Determine the fate of whether this log will terminate.

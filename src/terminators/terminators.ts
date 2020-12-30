@@ -2,12 +2,12 @@ import {
   Log, FinalLog, LogFunction,
   CustomLogFunction,
   Defaults, LogLevelDefinition, TerminatedLog,
-} from '../_contracts';
-import { print } from '../printers';
-import { allowed, evalPasses } from '../conditions';
-import { mutateProps } from '../util';
-import { shedExists } from '../shed';
-import { env } from '../global';
+} from '~/_contracts';
+import { print } from '~/printers';
+import { allowed, evalPasses } from '~/conditions';
+import { mutateProps } from '~/util';
+import { shedExists } from '~/shed';
+import { env } from '~/global';
 
 /**
  * Seals the configuration of a log and returns a function that

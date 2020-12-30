@@ -1,14 +1,14 @@
 const defaultsDeep = require('lodash.defaultsdeep');
 
-import { Log, Configuration, Defaults } from './_contracts';
-import { logMethod, customMethod, seal } from './terminators';
+import { Log, Configuration, Defaults } from '~/_contracts';
+import { logMethod, customMethod, seal } from '~/terminators';
 import {
   count, countReset, dir, dirxml, table, assert,
   test,  group, groupCollapsed, groupEnd, label,
   namespace, ns, trace, time, timeNow, timeEnd,
-} from './modifiers';
-import { printLog } from './printers';
-import { defaults } from './_defaults';
+} from '~/modifiers';
+import { printLog } from '~/printers';
+import { defaults } from '~/_defaults';
 
 /*
  * Future planned features:

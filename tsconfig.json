@@ -10,7 +10,11 @@
     "declaration": true,
     "declarationDir": "types",
     "emitDeclarationOnly": true,
-    "preserveConstEnums": true
+    "preserveConstEnums": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"]
+    }
   },
   "include": [
     "./src/**/*"

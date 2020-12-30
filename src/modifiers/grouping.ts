@@ -1,6 +1,6 @@
-import { Log } from '../_contracts';
+import { Log } from '~/_contracts';
+import { printGroup, printGroupCollapsed, printGroupEnd } from '~/printers';
 import { modifier } from './modifier';
-import { printGroup, printGroupCollapsed, printGroupEnd } from '../printers';
 
 /**
  * Starts a log group.

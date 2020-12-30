@@ -1,6 +1,1 @@
-export {
-  allowed,
-  levelActive,
-  evalPasses,
-  notTestEnv,
-} from './conditions';
+export * from './conditions';

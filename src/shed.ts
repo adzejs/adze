@@ -4,10 +4,10 @@ import {
   ShedUserConfig, FinalLog, Bundle,
   LogLevelDefinition, ListenerLocations,
   ListenerBucket, ListenerCallback, LabelMap, ListenerBuckets
-} from './_contracts';
-import { defaults, shed_defaults } from './_defaults';
+} from '~/_contracts';
+import { defaults, shed_defaults } from '~/_defaults';
 
-import { env } from './global';
+import { env } from '~/global';
 
 type GlobalFilters = "label"|"namespace"|"level";
 

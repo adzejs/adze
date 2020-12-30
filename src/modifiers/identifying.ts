@@ -1,7 +1,7 @@
-import { Log } from '../_contracts';
-import { getLabel, addLabel } from '../label';
+import { Log } from '~/_contracts';
+import { getLabel, addLabel } from '~/label';
+import { printTrace } from '~/printers';
 import { prependModifier, modifier } from './modifier';
-import { printTrace } from '../printers';
 
 /**
  * Adds a label to the log. Label's can be used for log identification

@@ -1,7 +1,7 @@
-import { Log, LogLevelDefinition, LogRender } from '../../_contracts';
+import { Log, LogLevelDefinition, LogRender } from '~/_contracts';
 import { applyRender, toConsole } from '../shared';
-import { env } from '../../global';
-import { initialCaps } from '../../util';
+import { env } from '~/global';
+import { initialCaps } from '~/util';
 
 // ------- PRINT METHODS -------- //
 

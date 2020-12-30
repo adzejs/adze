@@ -1,6 +1,6 @@
-import { Log } from '../_contracts';
+import { Log } from '~/_contracts';
+import { printDir, printDirxml, printTable } from '~/printers';
 import { modifier } from './modifier';
-import { printDir, printDirxml, printTable } from '../printers';
 
 /**
  * Instructs this log to print in the dir format. Typically this is useful

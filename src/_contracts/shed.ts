@@ -12,12 +12,12 @@ export type ListenerCallback = (log: Log) => void;
 
 export interface AdzeFilters {
   hideAll?: boolean;
-  level?: FilterOptions<number>;
-  label?: FilterOptions<string>;
-  namespace?: FilterOptions<string>;
+  level?: GlobalFilterOptions<number>;
+  label?: GlobalFilterOptions<string>;
+  namespace?: GlobalFilterOptions<string>;
 }
 
-export interface FilterOptions<T> {
+export interface GlobalFilterOptions<T> {
   include: Array<T>;
   exclude: Array<T>;
 }

@@ -1,4 +1,4 @@
-import { LogTimestamp } from '../_contracts';
+import { LogTimestamp } from '~/_contracts';
 
 /**
  * Capitalizes the first character of the provided string.

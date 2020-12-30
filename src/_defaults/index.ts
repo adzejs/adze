@@ -1,3 +1,3 @@
-export { defaults } from './defaults';
-export { shed_defaults } from './shed_defaults';
+export * from './defaults';
+export * from './shed_defaults';
 

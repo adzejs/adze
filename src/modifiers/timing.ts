@@ -1,6 +1,6 @@
 const hrtime = require('browser-process-hrtime');
 
-import { Log, HrTime } from '../_contracts';
+import { Log, HrTime } from '~/_contracts';
 import { modifier } from './modifier';
 
 /**

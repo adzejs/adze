@@ -1,4 +1,4 @@
-import { isBrowser } from '../global';
+import { isBrowser } from '~/global';
 import {
   printLog as printLogBrowser,
   printGroup as printGroupBrowser,

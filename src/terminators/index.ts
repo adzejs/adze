@@ -1,1 +1,1 @@
-export { logMethod, customMethod, seal } from './terminators';
+export * from './terminators';

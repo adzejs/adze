@@ -1,8 +1,8 @@
-export { time, timeNow, timeEnd } from './timing';
-export { count, countReset } from './counting';
-export { dir, dirxml, table } from './formatting';
-export { group, groupCollapsed, groupEnd } from './grouping';
-export { label, namespace, ns, trace } from './identifying';
-export { modifier, prependModifier } from './modifier';
-export { assert, test } from './testing';
+export * from './timing';
+export * from './counting';
+export * from './formatting';
+export * from './grouping';
+export * from './identifying';
+export * from './modifier';
+export * from './testing';
 
