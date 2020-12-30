@@ -47,7 +47,7 @@ function defaultLevelsWithEmoji({ adze }) {
   log.verbose("This is a verbose!");
 }
 
-function defaultLevelsWithGlobalOverride({ adze, createShed, teardownShed }) {
+function defaultLevelsWithGlobalOverride({ adze, createShed, removeShed }) {
   console.log('\n----- Default Verbose Level w/ Global Overrides -----\n');
   createShed({
     global_cfg: {
@@ -62,7 +62,7 @@ function defaultLevelsWithGlobalOverride({ adze, createShed, teardownShed }) {
   });
   const log = adze();
   log.verbose("This is a verbose with styling overrides from the shed.");
-  teardownShed();
+  removeShed();
 }
 
 function customLevels({ adze }) {

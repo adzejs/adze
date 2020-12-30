@@ -1,4 +1,3 @@
-import { env } from '../global';
 import { LogTimestamp } from '../_contracts';
 
 /**
@@ -19,9 +18,16 @@ export function mutateProps<O>(obj: any, mutations: Array<[string, any]>):O {
 /**
  * Generate a unique ID for your log.
  */
-export function timestamp(): LogTimestamp{
+export function timestamp():LogTimestamp {
   const unixMilli = Date.now();
   const date = new Date(unixMilli);
   const utc = date.toUTCString();
   return { unixMilli, utc };
+}
+
+/**
+ * Gets a URLSearchParams object of the current URL.
+ */
+export function getSearchParams(): URLSearchParams {
+  return new URLSearchParams(document.location.search.substring(1));
 }

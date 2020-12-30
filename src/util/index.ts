@@ -1,1 +1,1 @@
-export { initialCaps, mutateProps } from './util';
+export * from './util';

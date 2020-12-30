@@ -27,7 +27,7 @@ export function createShed(config: ShedUserConfig):void {
 /**
  * Removes the shed from the environment's global context.
  */
-export function teardownShed():void {
+export function removeShed():void {
   delete env.$shed;
 }
 
