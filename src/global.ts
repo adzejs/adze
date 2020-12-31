@@ -4,12 +4,12 @@ import { getSearchParams } from '~/util';
 declare global {
   interface Window {
     $shed?: Shed;
-    ADZE_ENV?: string;
+    ADZE_ENV?: "test"|"dev";
   }
   namespace NodeJS {
     export interface Global {
       $shed?: Shed;
-      ADZE_ENV?: string;
+      ADZE_ENV?: "test"|"dev";
     }
   }
 }

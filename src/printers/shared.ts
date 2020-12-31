@@ -37,7 +37,11 @@ export function applyRender(log: Log, method: ConsoleMethod, args: any[]):LogRen
   return log.render;
 }
 
-export function toConsole(render: LogRender, spread: boolean = true):LogRender {
+/**
+ * Render the log. If the ADZE_ENV is set to "dev" the log will not render and 
+ * will be returned for unit library development purposes.
+ */
+export function toConsole(render: LogRender, spread = true):LogRender {
   const [method, args] = render;
   if (env.ADZE_ENV !== 'dev') {
     if (spread) {
