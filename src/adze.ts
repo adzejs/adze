@@ -1,9 +1,9 @@
 const defaultsDeep = require('lodash.defaultsdeep');
 
 import { Log, Configuration, Defaults } from '~/_contracts';
-import { logMethod, customMethod, seal } from '~/terminators';
+import { logMethod, customMethod, seal, thread, close } from '~/terminators';
 import {
-  count, countReset, dir, dirxml, table, assert,
+  count, countReset, dir, dirxml, dump, table, assert,
   test,  group, groupCollapsed, groupEnd, label,
   namespace, ns, trace, time, timeNow, timeEnd,
 } from '~/modifiers';
@@ -13,16 +13,19 @@ import { defaults } from '~/_defaults';
 /*
  * Future planned features:
  * 
- * 1. URL Param to control the Adze environment (param name is configurable).
- * 2. Analytics and Reporting support.
- * 3. Remote server for receiving and analyzing logs.
- * 4. Attach meta data to logs (for listeners to take advantage of).
- * 5. Add default meta data to the configuration of the log.
- * 6. Persist logs in localStorage (configurable, off by default).
- * 7. Add easy functions for transporting logging data to various sources.
- *     a. Write to a file.
- *     b. Write to local storage.
- *     c. Push to an API endpoint.
+ * - Allow for multiple namespaces.
+ * - Select log levels optionally by name in listener creation.
+ * - Allow for '*' to select all log levels in listener creation.
+ * - Create `silent()` terminator which doesn't print anything to the console but still fires listeners.
+ * - Analytics and Reporting support.
+ * - Remote server for receiving and analyzing logs.
+ * - Attach meta data to logs (for listeners to take advantage of).
+ * - Add default meta data to the configuration of the log.
+ * - Persist logs in localStorage (configurable, off by default).
+ * - Add easy functions for transporting logging data to various sources.
+ *     - Write to a file.
+ *     - Write to local storage.
+ *     - Push to an API endpoint.
  */
 
 /**
@@ -48,6 +51,7 @@ export function adze(user_cfg: Configuration = {}):Log {
   return {
     cfg,
     traceable: false,
+    dumpContext: false,
     modifierQueue: [],
     printer: printLog,
 
@@ -62,8 +66,13 @@ export function adze(user_cfg: Configuration = {}):Log {
     verbose:    logMethod(cfg, 'verbose'),
     custom:     customMethod(cfg),
 
-    seal, count, countReset,
+    seal, count, countReset, thread, dump, close,
     dir, dirxml, table, assert, test, group, groupCollapsed,
     groupEnd, label, namespace, ns, trace, time, timeNow, timeEnd,
+
+    // A shortcut accessor for grabbing the thread context from the label object.
+    get context() {
+      return this.labelVal?.context;
+    }
   };
 }

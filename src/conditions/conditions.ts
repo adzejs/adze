@@ -1,5 +1,6 @@
 import { Log, Defaults, LogLevelDefinition } from '~/_contracts';
 import { env, isBrowser } from '~/global';
+import { getSearchParams } from '~/util';
 
 /**
  * Determine the fate of whether this log will terminate.
@@ -33,12 +34,10 @@ export function evalPasses(log: Log):boolean {
 }
 
 /**
- * Verify that this log is not in a test environment and prevent
- * termination if it is.
+ * Verify that this log is not in a test environment by checking the environment context
+ * or URL params if within a browser context. Prevent termination of the log if it is 'test'.
  */
 export function notTestEnv():boolean {
-  if (isBrowser) {
-    return true;
-  }
-  return env?.ADZE_ENV !== 'test';
+  // Allow for URL Param of ADZE_ENV when in the browser.
+  return (env?.ADZE_ENV ?? getSearchParams().get('ADZE_ENV')) !== 'test';
 }

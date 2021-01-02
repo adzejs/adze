@@ -7,4 +7,5 @@ export interface Label {
   timeNow?: string;
   timeEllapsed?: string;
   count?: number;
+  context: any;
 }

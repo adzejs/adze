@@ -20,8 +20,9 @@ export function shedExists(store: Shed|undefined):store is Shed {
 /**
  * Creates a new shed instance in your environment's global context.
  */
-export function createShed(config: ShedUserConfig):void {
+export function createShed(config: ShedUserConfig): Shed {
   env.$shed = new Shed(config);
+  return env.$shed;
 }
 
 /**
@@ -65,7 +66,9 @@ export class Shed {
   private listeners: ListenerBuckets = new Map();
 
   constructor(config: ShedUserConfig) {
-    this.cfg = defaultsDeep(config, shed_defaults);
+    const global_cfg = config?.global_cfg ? defaultsDeep(config.global_cfg, defaults) : null;
+    const cfg_global_defaults = { ...config, global_cfg };
+    this.cfg = defaultsDeep(cfg_global_defaults, shed_defaults);
   }
 
   /*************************************\

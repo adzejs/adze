@@ -38,6 +38,7 @@ interface LogFlags {
   traceable: boolean;
   assertion?: boolean;
   expression?: boolean;
+  dumpContext: boolean;
 }
 
 /**
@@ -65,12 +66,15 @@ interface LogValues {
 interface LogMethods {
   custom: CustomLogFunction;
   seal(this: Log): () => Log;
+  context<T>(): T;
   
   // Modifier Functions
   count(): Log;
   countReset(): Log;
+  close(): void;
   dir(): Log;
   dirxml(): Log;
+  dump(): Log;
   table(): Log;
   assert(assertion: boolean): Log;
   test(expression: boolean): Log;
@@ -81,6 +85,7 @@ interface LogMethods {
   ns(ns: string): Log;
   namespace(ns: string): Log;
   trace(): Log;
+  thread(key: string, value: any): void;
   time(): Log;
   timeNow(): Log;
   timeEnd(): Log;

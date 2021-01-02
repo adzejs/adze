@@ -33,7 +33,8 @@ export function printTrace(log: Log, def: LogLevelDefinition, use_emoji: boolean
 // ------ Print to the console ------- //
 
 export function applyRender(log: Log, method: ConsoleMethod, args: any[]):LogRender {
-  log.render = [method, args];
+  const expanded_args = log.dumpContext ? args.concat([log.context]) : args;
+  log.render = [method, expanded_args];
   return log.render;
 }
 
@@ -44,11 +45,7 @@ export function applyRender(log: Log, method: ConsoleMethod, args: any[]):LogRen
 export function toConsole(render: LogRender, spread = true):LogRender {
   const [method, args] = render;
   if (env.ADZE_ENV !== 'dev') {
-    if (spread) {
-      console[method](...args);
-    } else {
-      console[method](args);
-    }
+    spread ? console[method](...args) : console[method](args);
   }
   return render;
 }

@@ -1,5 +1,4 @@
 import { Shed } from '~/shed';
-import { getSearchParams } from '~/util';
 
 declare global {
   interface Window {

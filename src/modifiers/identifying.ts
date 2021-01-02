@@ -12,7 +12,7 @@ import { prependModifier, modifier } from './modifier';
  */
 export function label(this: Log, name: string):Log {
   return prependModifier(this, () => {
-    this.labelVal = addLabel(getLabel(name) ?? { name });
+    this.labelVal = addLabel(getLabel(name) ?? { name, context: {} });
   });
 }
 

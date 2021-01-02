@@ -5,6 +5,7 @@ export default function runDemo(lib, el) {
   defaultLevelsWithGlobalOverride(lib);
   customLevels(lib);
   customLevelsWithEmoji(lib);
+  thread(lib);
   logLevelOf2(lib);
   bundleLogs(lib);
   sealLogModifiers(lib);
@@ -60,8 +61,7 @@ function defaultLevelsWithGlobalOverride({ adze, createShed, removeShed }) {
       }
     }
   });
-  const log = adze();
-  log.verbose("This is a verbose with styling overrides from the shed.");
+  const log = adze().verbose("This is a verbose with styling overrides from the shed.");
   removeShed();
 }
 
@@ -114,6 +114,38 @@ function customLevelsWithEmoji({ adze }) {
 
   log.custom('special', 'This is a special log!');
   log.custom('important', 'This is an important log!');
+}
+
+function thread({ adze, createShed, removeShed }) {
+  console.log('\n----- Thread (MDC) -----\n');
+  const shed = createShed();
+  
+  // Creating a shed listener is a great way to get meta data from your
+  // threaded logs to write to disk or pass to another plugin, library, 
+  // or service.
+  shed.addListener([1,2,3,4,5,6,7,8], (log) => {
+    console.log("(MDC) Log Context from Listener", log.context);
+  });
+  
+  const add = (a, b) => {
+    const answer = a + b;
+    adze().label('foo').thread('added', { a, b, answer });
+    return answer;
+  };
+  
+  const subtract = (x, y) => {
+    const answer = x - y;
+    adze().label('foo').thread('subtracted', { x, y, answer });
+    return answer;
+  };
+  
+  add(1, 2);
+  subtract(4, 3);
+  
+  adze().label('foo').dump().info('Results from our thread');
+  adze().label('foo').close();
+  removeShed();
+  adze().label('foo').dump().info('(MDC) Context after closing the thread');
 }
 
 function logLevelOf2({ adze }) {

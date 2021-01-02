@@ -29,9 +29,69 @@ export function seal(this: Log):() => Log {
 }
 
 /**
+ * Following the MDC (Mapped Diagnostic Context) pattern this method enables you to create
+ * a thread for adding context from different scopes before finally terminating the log.
+ * 
+ * In order to create a thread, this log must specify a label that will be used to link the
+ * context and your environment must have a **shed** created.
+ * 
+ * **Example:**
+ * ```typescript
+ * import { adze, createShed } from 'adze';
+ * 
+ * const shed = createShed();
+ * 
+ * // Creating a shed listener is a great way to get meta data from your
+ * // threaded logs to write to disk or pass to another plugin, library, 
+ * // or service.
+ * shed.addListener([1,2,3,4,5,6,7,8], (log) => {
+ *   // Do something with `log.context.added` or `log.context.subtracted`.
+ * });
+ * 
+ * function add(a, b) {
+ *   const answer = a + b;
+ *   adze().label('foo').thread('added', { a, b, answer });
+ *   return answer;
+ * }
+ * 
+ * function subtract(x, y) {
+ *   const answer = x - y;
+ *   adze().label('foo').thread('subtracted', { x, y, answer });
+ *   return answer;
+ * }
+ * 
+ * add(1, 2);
+ * subtract(4, 3);
+ * 
+ * adze().label('foo').dump().info('Results from our thread');
+ * // Info => Results from our thread, { a: 1, b: 2, answer: 3 }, { x: 4, y: 3, answer: 1 }
+ * 
+ * ```
+ */
+export function thread(this: Log, key: string, value: any): void {
+  // Check if the log has a label. If not, console.warn the user.
+  // If the log has a label, attach the context to the label.
+  runModifierQueue(this.modifierQueue);
+  if (this.labelVal) {
+    this.labelVal.context[key] = value;
+  } else {
+    console.warn('Thread context was not added! Threads must have a label.');
+  }
+}
+
+/**
+ * Closes a thread assigned to the log by clearing the context values.
+ */
+export function close(this: Log): void {
+  if (this.labelVal) {
+    this.labelVal.context = {};
+  }
+}
+
+/**
  * Generates a terminating log method the specified log level name.
  */
-export function logMethod(cfg: Defaults, levelName: string):LogFunction {
+export function logMethod(cfg: Defaults, levelName: string): LogFunction {
   return function(this: Log, ...args: any[]):TerminatedLog {
     return executionPipeline(this, cfg, getDefinition(cfg, 'log_levels', levelName), args);
   };
@@ -42,7 +102,7 @@ export function logMethod(cfg: Defaults, levelName: string):LogFunction {
  * log level by key as the format for the log.
  */
 export function customMethod(cfg: Defaults):CustomLogFunction {
-  return function(this: Log, levelName: string, ...args: any[]):TerminatedLog {
+  return function(this: Log, levelName: string, ...args: any[]): TerminatedLog {
     return executionPipeline(this, cfg, getDefinition(cfg, 'custom_levels', levelName), args);
   };
 };
@@ -50,7 +110,7 @@ export function customMethod(cfg: Defaults):CustomLogFunction {
 /**
  * Gets the log level definition from the log configuration.
  */
-function getDefinition(cfg: Defaults, type: "log_levels"|"custom_levels", levelName: string):LogLevelDefinition|undefined {
+function getDefinition(cfg: Defaults, type: "log_levels"|"custom_levels", levelName: string): LogLevelDefinition|undefined {
   const shed = env.$shed;
   let definition = undefined;
 
@@ -66,9 +126,9 @@ function getDefinition(cfg: Defaults, type: "log_levels"|"custom_levels", levelN
 /**
  * The primary execution pipeline for terminating log methods.
  */
-function executionPipeline(log: Log, cfg: Defaults, def: LogLevelDefinition|undefined, args: any[]):TerminatedLog {
-
+function executionPipeline(log: Log, cfg: Defaults, def: LogLevelDefinition|undefined, args: any[]): TerminatedLog {
   if (def && allowed(cfg, def)) {
+
     // Apply modifiers in the proper order.
     runModifierQueue(log.modifierQueue);
 
@@ -97,7 +157,7 @@ function executionPipeline(log: Log, cfg: Defaults, def: LogLevelDefinition|unde
 /**
  * Executes all of the log modifier functions within the queue.
  */
-function runModifierQueue(queue: Function[]):void {
+function runModifierQueue(queue: Function[]): void {
   queue.forEach(func => func());
 }
 
@@ -108,7 +168,7 @@ function runModifierQueue(queue: Function[]):void {
 /**
  * Stores this log in the Shed if the Shed exists.
  */
-export function store(log: FinalLog):void {
+export function store(log: FinalLog): void {
   const shed = env.$shed;
   if (shedExists(shed)) {
     shed.store(log);
@@ -118,7 +178,7 @@ export function store(log: FinalLog):void {
 /**
  * Fires listeners for this log instance if a Shed exists.
  */
-export function fireListeners(log: FinalLog, def: LogLevelDefinition):void {
+export function fireListeners(log: FinalLog, def: LogLevelDefinition): void {
   const shed = env.$shed;
   if (shedExists(shed)) {
     shed.fireListeners(log, def);
