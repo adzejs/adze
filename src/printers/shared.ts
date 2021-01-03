@@ -1,5 +1,6 @@
-import { Log, LogRender, Defaults, ConsoleMethod, LogLevelDefinition } from "../_contracts";
-import { env } from '../global';
+import { Log, LogRender, ConsoleMethod, LogLevelDefinition } from "~/_contracts";
+import { env } from '~/global';
+import { isString } from '~/util';
 
 // ------- PRINT ENTRY -------- //
 
@@ -48,4 +49,22 @@ export function toConsole(render: LogRender, spread = true):LogRender {
     spread ? console[method](...args) : console[method](args);
   }
   return render;
+}
+
+// ------ Shared Formatters ------- //
+
+/**
+ * Formats the namespace on the log string based on the namespace
+ * modifier applied to this log.
+ */
+export function fNamespace(log: Log):string {
+  const ns = log.namespaceVal;
+  if (ns) {
+    if (isString(ns)) {
+      return `#${log.namespaceVal} `;
+    } else {
+      return ns.reduce((acc, name) => `${acc}#${name} `, '');
+    }
+  }
+  return '';
 }

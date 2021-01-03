@@ -22,7 +22,7 @@ export function label(this: Log, name: string):Log {
  * 
  * This is a non-standard API.
  */
-export function namespace(this: Log, ns: string):Log {
+export function namespace(this: Log, ns: string|string[]):Log {
   return modifier(this, () => {
     this.namespaceVal = ns;
   });
@@ -31,7 +31,7 @@ export function namespace(this: Log, ns: string):Log {
 /**
  * An alias for `namespace()`.
  */
-export function ns(this: Log, ns: string):Log {
+export function ns(this: Log, ns: string|string[]):Log {
   return this.namespace(ns);
 }
 

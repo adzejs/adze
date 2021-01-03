@@ -51,7 +51,7 @@ interface LogValues {
   render?: LogRender;
   level?: number;
   args?: any[];
-  namespaceVal?: string;
+  namespaceVal?: string|string[];
   labelVal?: Label;
   timeNowVal?: string;
   meta?: any;
@@ -83,7 +83,7 @@ interface LogMethods {
   groupEnd(): Log;
   label(name: string): Log;
   ns(ns: string): Log;
-  namespace(ns: string): Log;
+  namespace(ns: string|string[]): Log;
   trace(): Log;
   thread(key: string, value: any): void;
   time(): Log;

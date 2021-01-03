@@ -1,8 +1,8 @@
 import * as chalk from 'chalk';
 import { Log, LogLevelDefinition, LogRender } from '~/_contracts';
-import { toConsole, applyRender } from '../shared';
+import { toConsole, applyRender, fNamespace } from '../shared';
 import { env } from '~/global';
-import { initialCaps } from '~/util';
+import { initialCaps, isString } from '~/util';
 
 // ------- PRINT METHODS -------- //
 
@@ -104,14 +104,6 @@ function fTime(log: Log, use_emoji: boolean):string {
 function fCount(log: Log):string {
   const count = log.labelVal?.count;
   return count !== undefined ? `(Count: ${count})` : '';
-}
-
-/**
- * Formats the namespace on the log string based on the namespace
- * modifier applied to this log.
- */
-function fNamespace(log: Log):string {
-  return log.namespaceVal ? `#${log.namespaceVal} ` : '';
 }
 
 /**

@@ -31,3 +31,17 @@ export function timestamp():LogTimestamp {
 export function getSearchParams(): URLSearchParams {
   return new URLSearchParams(document.location.search.substring(1));
 }
+
+/**
+ * Type Guard to check if the given value is a String.
+ */
+export function isString(val: any): val is string {
+  return typeof val === 'string';
+}
+
+/**
+ * Type Guard to check if the given value is an Array.
+ */
+export function isArray(val: any): val is [] {
+  return Array.isArray(val);
+}

@@ -1,4 +1,5 @@
 import { Log, LogRender } from '~/_contracts';
+import { isString } from '~/util';
 
 // CONVERT API TO EXPORT FILTER FUNCS
 
@@ -12,8 +13,21 @@ export function filterAll(bundle: Log[] = []):void {
 /**
  * Filter the bundle of logs by the namespace.
  */
-export function filterNamespace(bundle: Log[] = [], ns: string):void {
-  loopBundle(bundle, (log) => log.namespaceVal === ns);
+export function filterNamespace(bundle: Log[] = [], ns: string|string[]):void {
+  loopBundle(bundle, (log) => {
+    const log_ns = log.namespaceVal;
+    if (log_ns) {
+      if (isString(log_ns)) {
+        return isString(ns) ? log_ns === ns : ns.includes(log_ns) ?? false;
+      } else {
+        // Loop over each log ns value and see if any match any ns value.
+        return log_ns.map(val => {
+          return isString(ns) ? val === ns : ns.includes(val);
+        }).includes(true);
+      }
+    }
+    return false;
+  });
 }
 
 /**

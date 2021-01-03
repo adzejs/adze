@@ -11,6 +11,7 @@ export default function runDemo(lib, el) {
   sealLogModifiers(lib);
   withLabel(lib);
   withNamespace(lib);
+  withMultiNamespace(lib);
   withTime(lib);
   asTable(lib);
   asDir(lib);
@@ -61,7 +62,7 @@ function defaultLevelsWithGlobalOverride({ adze, createShed, removeShed }) {
       }
     }
   });
-  const log = adze().verbose("This is a verbose with styling overrides from the shed.");
+  adze().verbose("This is a verbose with styling overrides from the shed.");
   removeShed();
 }
 
@@ -191,6 +192,7 @@ function bundleLogs({ adze, bundle, filterAll, filterNamespace, filterLabel, fil
   const divider = adze({use_emoji: true});
 
   log().ns('SPACE').error('This is an error!');
+  log().ns(['foo','SPACE']).info('A bundled log with multiple namespaces.');
   log().label('i-am-label').success('Successfully bundled this log!');
   log().log('Here is another log in the bundle.');
 
@@ -224,6 +226,12 @@ function withNamespace({ adze }) {
   console.log('\n----- Default Namespace Log w/ No Store -----\n');
   adze().namespace('test').log('Testing a namespace with no store.');
   adze().ns('test').log('Testing a namespace using the ns() alias.');
+}
+
+function withMultiNamespace({ adze }) {
+  console.log('\n----- Default Multiple Namespace Log w/ No Store -----\n');
+  adze().ns(['foo','bar']).info("This log has multiple namespaces.");
+
 }
 
 function withTime({ adze }) {
