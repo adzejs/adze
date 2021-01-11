@@ -8,7 +8,7 @@ import {
 import {
   count, countReset, dir, dirxml, dump, table, assert,
   test,  group, groupCollapsed, groupEnd, label,
-  namespace, ns, trace, time, timeNow, timeEnd,
+  namespace, silent, ns, trace, time, timeNow, timeEnd,
 } from '~/modifiers';
 import { printLog } from '~/printers';
 import { defaults } from '~/_defaults';
@@ -17,7 +17,6 @@ import { defaults } from '~/_defaults';
  * Future planned features:
  * 
  * - Select log levels optionally by name in listener creation.
- * - Allow for '*' to select all log levels in listener creation.
  * - Create `silent()` terminator which doesn't print anything to the console but still fires listeners.
  * - Analytics and Reporting support.
  * - Remote server for receiving and analyzing logs.
@@ -54,23 +53,25 @@ export function adze(user_cfg: Configuration = {}):Log {
     cfg,
     traceable: false,
     dumpContext: false,
+    isSilent: false,
     modifierQueue: [],
     printer: printLog,
 
-    attention:  logMethod(cfg, 'attention'),
-    error:      logMethod(cfg, 'error'),
-    warn:       logMethod(cfg, 'warn'),
-    info:       logMethod(cfg, 'info'),
-    fail:       logMethod(cfg, 'fail'),
-    success:    logMethod(cfg, 'success'),
-    log:        logMethod(cfg, 'log'),
-    debug:      logMethod(cfg, 'debug'),
-    verbose:    logMethod(cfg, 'verbose'),
-    custom:     customMethod(cfg),
+    attention:  logMethod('attention'),
+    error:      logMethod('error'),
+    warn:       logMethod('warn'),
+    info:       logMethod('info'),
+    fail:       logMethod('fail'),
+    success:    logMethod('success'),
+    log:        logMethod('log'),
+    debug:      logMethod('debug'),
+    verbose:    logMethod('verbose'),
+    custom:     customMethod(),
 
     seal, count, countReset, thread, dump, close, clear, clr,
     dir, dirxml, table, assert, test, group, groupCollapsed,
-    groupEnd, label, namespace, ns, trace, time, timeNow, timeEnd,
+    groupEnd, label, namespace, ns, silent, trace,
+    time, timeNow, timeEnd,
 
     // A shortcut accessor for grabbing the thread context from the label object.
     get context() {

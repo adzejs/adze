@@ -38,6 +38,7 @@ interface LogFlags {
   traceable: boolean;
   assertion?: boolean;
   expression?: boolean;
+  isSilent: boolean;
   dumpContext: boolean;
 }
 
@@ -46,7 +47,7 @@ interface LogFlags {
  * be printed.
  */
 interface LogValues {
-  cfg: Configuration;
+  cfg: Defaults;
   timestamp?: LogTimestamp;
   render?: LogRender;
   level?: number;
@@ -87,6 +88,7 @@ interface LogMethods {
   label(name: string): Log;
   ns(ns: string): Log;
   namespace(ns: string|string[]): Log;
+  silent(): void;
   trace(): Log;
   time(): Log;
   timeNow(): Log;

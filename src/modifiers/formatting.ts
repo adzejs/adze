@@ -36,3 +36,13 @@ export function table(this: Log):Log {
     this.printer = printTable;
   });
 }
+
+/**
+ * This modifier method allows the log to execute normally but
+ * prevent it from printing to the console.
+ */
+export function silent(this: Log):Log {
+  return modifier(this, () => {
+    this.isSilent = true;
+  });
+}

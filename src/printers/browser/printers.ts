@@ -11,7 +11,7 @@ import { initialCaps } from '~/util';
 export function printLog(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
   const [ method, leader, style, meta ] = [ def.method, fLeader(def, use_emoji, args), (log.cfg.base_style + def.style), fMeta(log, use_emoji) ];
   const render_args = meta === '' ? [ leader, style, ...args ] : [ leader, style, meta, ...args ];
-  return toConsole(applyRender(log, method, render_args ));
+  return toConsole(applyRender(log, method, render_args ), log.isSilent);
 }
 
 /**
@@ -20,7 +20,7 @@ export function printLog(log: Log, def: LogLevelDefinition, use_emoji: boolean, 
 export function printGroup(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
   const partial_args = [ fLeader(def, use_emoji, args), (log.cfg.base_style + def.style) ];
   const render_args = typeof args[0] === "string" ? [ ...partial_args, args[0] ] : partial_args;
-  return toConsole(applyRender(log, 'group', render_args));
+  return toConsole(applyRender(log, 'group', render_args), log.isSilent);
 }
 
 /**
@@ -29,7 +29,7 @@ export function printGroup(log: Log, def: LogLevelDefinition, use_emoji: boolean
 export function printGroupCollapsed(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
   const partial_args = [ fLeader(def, use_emoji, args), (log.cfg.base_style + def.style) ];
   const render_args = typeof args[0] === "string" ? [ ...partial_args, args[0] ] : partial_args;
-  return toConsole(applyRender(log, 'groupCollapsed', render_args));
+  return toConsole(applyRender(log, 'groupCollapsed', render_args), log.isSilent);
 }
 
 // ------- PRINT FORMATTERS -------- //

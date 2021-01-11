@@ -12,7 +12,7 @@ import { initialCaps, isString } from '~/util';
 export function printLog(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
   const [ method, leader, style, meta ] = [ def.method, fLeader(def, use_emoji, args), def.terminal, fMeta(log, use_emoji) ];
   const render_args = meta === '' ? [ leader, ...args ] : [ leader, style, meta, ...args ];
-  return toConsole(applyRender(log, method, render_args ));
+  return toConsole(applyRender(log, method, render_args ), log.isSilent);
 }
 
 /**
@@ -20,7 +20,7 @@ export function printLog(log: Log, def: LogLevelDefinition, use_emoji: boolean, 
  */
 export function printGroup(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
   const render_args = setupPrintGroup(def, use_emoji, args);
-  return toConsole(applyRender(log, 'group', render_args));
+  return toConsole(applyRender(log, 'group', render_args), log.isSilent);
 }
 
 /**
@@ -28,7 +28,7 @@ export function printGroup(log: Log, def: LogLevelDefinition, use_emoji: boolean
  */
 export function printGroupCollapsed(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]):LogRender {
   const render_args = setupPrintGroup(def, use_emoji, args);
-  return toConsole(applyRender(log, 'groupCollapsed', render_args));
+  return toConsole(applyRender(log, 'groupCollapsed', render_args), log.isSilent);
 }
 
 function setupPrintGroup(def: LogLevelDefinition, use_emoji: boolean, args: any[]):any[] {

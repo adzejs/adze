@@ -105,9 +105,9 @@ export function clr(this: Log): void {
 /**
  * Generates a terminating log method the specified log level name.
  */
-export function logMethod(cfg: Defaults, levelName: string): LogFunction {
+export function logMethod(levelName: string): LogFunction {
   return function(this: Log, ...args: any[]):TerminatedLog {
-    return executionPipeline(this, cfg, getDefinition(cfg, 'log_levels', levelName), args);
+    return executionPipeline(this, this.cfg, getDefinition(this.cfg, 'log_levels', levelName), args);
   };
 }
 
@@ -115,9 +115,9 @@ export function logMethod(cfg: Defaults, levelName: string): LogFunction {
  * Generates a terminating log method that enables the user to specify a custom
  * log level by key as the format for the log.
  */
-export function customMethod(cfg: Defaults):CustomLogFunction {
+export function customMethod():CustomLogFunction {
   return function(this: Log, levelName: string, ...args: any[]): TerminatedLog {
-    return executionPipeline(this, cfg, getDefinition(cfg, 'custom_levels', levelName), args);
+    return executionPipeline(this, this.cfg, getDefinition(this.cfg, 'custom_levels', levelName), args);
   };
 };
 
