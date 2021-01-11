@@ -1,7 +1,10 @@
 const defaultsDeep = require('lodash.defaultsdeep');
 
 import { Log, Configuration, Defaults } from '~/_contracts';
-import { logMethod, customMethod, seal, thread, close } from '~/terminators';
+import {
+  logMethod, customMethod, seal, thread,
+  close, clear, clr,
+} from '~/terminators';
 import {
   count, countReset, dir, dirxml, dump, table, assert,
   test,  group, groupCollapsed, groupEnd, label,
@@ -13,7 +16,6 @@ import { defaults } from '~/_defaults';
 /*
  * Future planned features:
  * 
- * - Allow for multiple namespaces.
  * - Select log levels optionally by name in listener creation.
  * - Allow for '*' to select all log levels in listener creation.
  * - Create `silent()` terminator which doesn't print anything to the console but still fires listeners.
@@ -66,7 +68,7 @@ export function adze(user_cfg: Configuration = {}):Log {
     verbose:    logMethod(cfg, 'verbose'),
     custom:     customMethod(cfg),
 
-    seal, count, countReset, thread, dump, close,
+    seal, count, countReset, thread, dump, close, clear, clr,
     dir, dirxml, table, assert, test, group, groupCollapsed,
     groupEnd, label, namespace, ns, trace, time, timeNow, timeEnd,
 

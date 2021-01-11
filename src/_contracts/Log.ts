@@ -67,11 +67,14 @@ interface LogMethods {
   custom: CustomLogFunction;
   seal(this: Log): () => Log;
   context<T>(): T;
+  thread(key: string, value: any): void;
+  close(): void;
+  clear(): void;
+  clr(): void;
   
   // Modifier Functions
   count(): Log;
   countReset(): Log;
-  close(): void;
   dir(): Log;
   dirxml(): Log;
   dump(): Log;
@@ -85,7 +88,6 @@ interface LogMethods {
   ns(ns: string): Log;
   namespace(ns: string|string[]): Log;
   trace(): Log;
-  thread(key: string, value: any): void;
   time(): Log;
   timeNow(): Log;
   timeEnd(): Log;

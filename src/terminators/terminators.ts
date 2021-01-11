@@ -89,6 +89,20 @@ export function close(this: Log): void {
 }
 
 /**
+ * Alias for console.clear().
+ */
+export function clear(this: Log): void {
+  console.clear();
+}
+
+/**
+ * Alias for clear() which is an alias for console.clear().
+ */
+export function clr(this: Log): void {
+  this.clear();
+}
+
+/**
  * Generates a terminating log method the specified log level name.
  */
 export function logMethod(cfg: Defaults, levelName: string): LogFunction {
@@ -138,15 +152,20 @@ function executionPipeline(log: Log, cfg: Defaults, def: LogLevelDefinition|unde
       // Save terminator props for recall purposes
       const final_log = mutateProps<FinalLog>(log, [ ['args', args], ['level', def.level] ]);
 
-      // Render the log
-      const render = print(final_log, def, args);
-    
-      // Fire log events
-      store(final_log);
-      fireListeners(final_log, def);
+      // If a global context exists, check if this log is allowed.
+      const globally_allowed = env.$shed?.logGloballyAllowed(final_log) ?? true;
 
-      // Return the terminated log object for testing purposes
-      return { log: final_log, render };
+      if (globally_allowed) {
+        // Render the log
+        const render = print(final_log, def, args);
+      
+        // Fire log events
+        store(final_log);
+        fireListeners(final_log, def);
+
+        // Return the terminated log object for testing purposes
+        return { log: final_log, render };
+      }
     }
   }
 

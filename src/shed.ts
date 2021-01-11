@@ -1,16 +1,18 @@
 import defaultsDeep from 'lodash.defaultsdeep';
 import {
-  ShedConfig, Defaults, Label,
-  ShedUserConfig, FinalLog, Bundle,
-  LogLevelDefinition, ListenerLocations,
+  ShedConfig, Defaults, Label, Levels,
+  ShedUserConfig, FinalLog, Bundle, FilterValue,
+  GlobalFilter, LogLevelDefinition, ListenerLocations,
   ListenerBucket, ListenerCallback, LabelMap, ListenerBuckets
 } from '~/_contracts';
 import { defaults, shed_defaults } from '~/_defaults';
+import { isString, formatLevels, allLevels } from '~/util';
 
 import { env } from '~/global';
 
-type GlobalFilters = "label"|"namespace"|"level";
-
+type FilterType = "include"|"exclude";
+type FilterFunction = "isIncluded"|"isNotExcluded";
+type FilterAllowedCallback = (filter: FilterType, func: FilterFunction) => boolean|undefined;
 /**
  * A typeguard that indicates that a global shed store exists.
  */
@@ -102,9 +104,10 @@ export class Shed {
    * Returns all of the cached logs of the provided levels as a bundle.
    * This is useful for recalling logs and applying filters.
    */
-  public getBundle(levels: number[]):Bundle {
+  public getBundle(levels: Levels):Bundle {
+    const lvls = formatLevels(this.cfg.global_cfg, levels);
     return this.cache.reduce((acc, log) => {
-      return acc.concat(levels.includes(log.level) ? [ log ] : []);
+      return acc.concat(lvls.includes(log.level) ? [ log ] : []);
     }, [] as Bundle);
   }
 
@@ -167,8 +170,9 @@ export class Shed {
   /**
    * Add a listener callback that fires any time a log of one of the provided levels is generated.
    */
-  public addListener(levels: number[], cb: ListenerCallback):ListenerLocations {
-    return levels.map((lvl: number) => {
+  public addListener(levels: Levels, cb: ListenerCallback):ListenerLocations {
+    const lvls = formatLevels(this.cfg.global_cfg, levels);
+    return lvls.map((lvl: number) => {
 
       // Get the map for the listeners of the given log level.
       const level_map = this.listenerBucket(lvl);
@@ -211,53 +215,101 @@ export class Shed {
    * Returns a boolean indicating if this log instance should be 
    * allowed to print.
    */
-  public logGloballyAllowed(log: FinalLog):boolean {
+  public logGloballyAllowed(log: FinalLog): boolean {
     return !this.hideAll
-      && this.logAllowedLogic('label', log?.labelVal?.name)
-      && this.logAllowedLogic('level', log.level)
-      && this.logAllowedLogic('namespace', log.namespaceVal);
+      && this.levelAllowed(log)
+      && this.labelAllowed(log)
+      && this.namespaceAllowed(log);
   }
 
   /**
-   * Determines if provided value passes user configured
-   * global filters.
+   * Validate that the current level set on the log is allowed based on
+   * the global filter rules.
    */
-  private logAllowedLogic(category: GlobalFilters, value: string|number|undefined):boolean {
-    // If the value is undefined we cannot determine if it should hide the log
-    if (value === undefined) {
-      return true;
-    }
-    if (this.filterIsSet('include', category)) {
-      return this.isIncluded(category, value);
-    }
-    if (this.filterIsSet('exclude', category)) {
-      return this.isNotExcluded(category, value);
+  private levelAllowed(log: FinalLog): boolean {
+    return this.filterAllowed('level', (filter, func) => {
+      const raw_source = this.cfg.filters?.level?.[filter] ?? [] as number[];
+      const source = raw_source === '*' ? allLevels(this.cfg.global_cfg) : raw_source;
+      return this[func]<number>(source, log.level);
+    });
+  }
+
+  /**
+   * Validate that the current label set on the log is allowed based on
+   * the global filter rules.
+   */
+  private labelAllowed(log: FinalLog): boolean {
+    return this.filterAllowed('label', (filter, func) => {
+      const source = this.cfg.filters?.label?.[filter] ?? [] as string[];
+      return this[func]<string>(source, log?.labelVal?.name ?? '');
+    });
+  }
+
+  /**
+   * Validate that at least one of the current namespaces set on the log
+   * is allowed based on the global filter rules.
+   */
+  private namespaceAllowed(log: FinalLog): boolean {
+    return this.filterAllowed('namespace', (filter, func) => {
+      const source = this.cfg.filters?.namespace?.[filter] ?? [] as string[];
+      const target = log.namespaceVal;
+      if (target) {
+        if (isString(target)) {
+          return this[func]<string>(source, target);
+        } else {
+          // Namespace log value is an array. Check each namespace value.
+          return target.map(val => this[func]<string>(source, val)).includes(true);
+        }
+      }
+    });
+  }
+
+  /**
+   * Wrapper around the filter methods to handle some basic setup for validating
+   * the filter values.
+   */
+  private filterAllowed(category: GlobalFilter, cb: FilterAllowedCallback): boolean {
+    const filter_type = this.filterType(category);
+    if (filter_type) {
+      const [ filter, func ] = filter_type;
+      const result = cb(filter, func);
+      if (result !== undefined) {
+        return result;
+      }
     }
     return true;
   }
 
   /**
-   * Has the user has defined rules for a specific filter?
+   * Returns tuples indicating what filter type is active. Include gets precedence over exclude.
    */
-  private filterIsSet(type: "include"|"exclude", filter: GlobalFilters):boolean {
-    const include_prop = this.cfg?.filters?.[filter]?.include ?? [];
-    return include_prop.length > 0;
+  private filterType(category: GlobalFilter): ["include","isIncluded"]|["exclude","isNotExcluded"]|undefined {
+    switch (true) {
+      case this.filterIsSet('include', category)  : return ['include','isIncluded'];
+      case this.filterIsSet('exclude', category)  : return ['exclude','isNotExcluded'];
+    }
   }
 
   /**
    * Is the log in the included filter?
    */
-  private isIncluded(filter: GlobalFilters, value: string|number):boolean {
-    const filter_vals = this.cfg?.filters?.[filter]?.include ?? <any>[];
-    return filter_vals.length > 0 && filter_vals.indexOf(value) !== -1;
+  private isIncluded<T>(source: T[], value: T): boolean {
+    return source.length > 0 && source.indexOf(value) !== -1;
   }
 
   /**
    * Is the log not in the excluded filter?
    */
-  private isNotExcluded(filter: GlobalFilters, value: string|number):boolean {
-    const filter_vals = this.cfg?.filters?.[filter]?.exclude ?? <any>[];
-    return filter_vals.length > 0 && filter_vals.indexOf(value) === -1;
+  private isNotExcluded<T>(source: T[], value: T): boolean {
+    return source.length > 0 && source.indexOf(value) === -1;
+  }
+
+  /**
+   * Has the user defined rules for a specific filter?
+   */
+  private filterIsSet(type: "include"|"exclude", filter: GlobalFilter):boolean {
+    const include_prop = this.cfg?.filters?.[filter]?.[type] ?? [];
+    return include_prop.length > 0;
   }
 
   /*************************************\

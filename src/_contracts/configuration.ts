@@ -46,3 +46,5 @@ export interface FilterOptions {
 }
 
 export interface Configuration extends RecursivePartial<Defaults> {};
+
+export type Levels = number[] | "*";
