@@ -1,4 +1,10 @@
-import { LogTimestamp, Defaults, LogLevels, FilterValue } from '~/_contracts';
+import {
+  LogTimestamp,
+  Defaults,
+  LogLevels,
+  Range,
+  LevelFilter,
+} from '~/_contracts';
 
 /**
  * Capitalizes the first character of the provided string.
@@ -37,20 +43,32 @@ export function getSearchParams(): URLSearchParams {
  * value defined by the user configuration. If levels is already a number array
  * it is returned unchanged.
  */
-export function formatLevels(cfg: Defaults|null, levels: "*"|number[]|undefined): number[] {
+export function formatLevels(cfg: Defaults|null, levels: LevelFilter): number[] {
   if (levels === "*") {
-    return allLevels(cfg);
+    return createArrayOfNumbers(0, getMaxLevel(cfg));
+  }
+  else if (isString(levels)) {
+    if (isRange(levels)) {
+      return createArrayOfNumbers(...parseRange(levels));
+    }
+    console.warn("The provided level filter string is invalid. This will cause logs to stop printing.");
   }
   return levels ?? <number[]>[];
 }
 
 /**
- * Creates an array of numbers from 0 to the highest value found in the 
- * provided configuration.
+ * Returns the highest level from the provided configuration.
  */
-export function allLevels(cfg: Defaults|null): number[] {
-  const max = Math.max(...[8, ...levelsFromConfig(cfg?.custom_levels ?? {})]);
-  return createArrayOfNumbers(0, max);
+export function getMaxLevel(cfg: Defaults|null): number {
+  return Math.max(...[8, ...levelsFromConfig(cfg?.custom_levels ?? {})]);
+}
+
+/**
+ * Parse a range string into a tuple of numbers containing low and high.
+ */
+export function parseRange(range: Range): [number, number] {
+  const [ low, high ] = range.split('-');
+  return [ Number(low), Number(high) ];
 }
 
 /**
@@ -90,4 +108,14 @@ export function isArray(val: any): val is [] {
  */
 export function isDefined<T>(val: T|undefined): val is T {
   return val !== undefined;
+}
+
+/**
+ * Type Guard that validates that a given string represents a
+ * range of numbers.
+ */
+export function isRange(val: string): val is Range {
+  const vals = val.split('-');
+  const [ low, high ] = vals;
+  return vals.length === 2 && Number(low) !== NaN && Number(high) !== NaN;
 }

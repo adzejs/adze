@@ -17,7 +17,6 @@ import { defaults } from '~/_defaults';
  * Future planned features:
  * 
  * - Select log levels optionally by name in listener creation.
- * - Create `silent()` terminator which doesn't print anything to the console but still fires listeners.
  * - Analytics and Reporting support.
  * - Remote server for receiving and analyzing logs.
  * - Attach meta data to logs (for listeners to take advantage of).

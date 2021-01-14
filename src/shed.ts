@@ -1,18 +1,16 @@
 import defaultsDeep from 'lodash.defaultsdeep';
 import {
-  ShedConfig, Defaults, Label, Levels,
-  ShedUserConfig, FinalLog, Bundle, FilterValue,
+  ShedConfig, Defaults, Label,
+  ShedUserConfig, FinalLog, Bundle, LevelFilter,
   GlobalFilter, LogLevelDefinition, ListenerLocations,
-  ListenerBucket, ListenerCallback, LabelMap, ListenerBuckets
+  ListenerBucket, ListenerCallback, LabelMap, ListenerBuckets,
+  FilterType, FilterFunction, FilterAllowedCallback,
 } from '~/_contracts';
 import { defaults, shed_defaults } from '~/_defaults';
-import { isString, formatLevels, allLevels } from '~/util';
+import { isString, formatLevels } from '~/util';
 
 import { env } from '~/global';
 
-type FilterType = "include"|"exclude";
-type FilterFunction = "isIncluded"|"isNotExcluded";
-type FilterAllowedCallback = (filter: FilterType, func: FilterFunction) => boolean|undefined;
 /**
  * A typeguard that indicates that a global shed store exists.
  */
@@ -70,7 +68,24 @@ export class Shed {
   constructor(config: ShedUserConfig) {
     const global_cfg = config?.global_cfg ? defaultsDeep(config.global_cfg, defaults) : null;
     const cfg_global_defaults = { ...config, global_cfg };
-    this.cfg = defaultsDeep(cfg_global_defaults, shed_defaults);
+    const cfg_global_parsed = this.parseFilterLevels(cfg_global_defaults);
+    this.cfg = defaultsDeep(cfg_global_parsed, shed_defaults);
+  }
+
+  /**
+   * Parses the level filter on the configuration and reassigns it.
+   * This is for increased performance so this calculation isn't done each
+   * time a log is checking against the filter.
+   */
+  private parseFilterLevels(cfg: ShedConfig) {
+    let updated_cfg: ShedConfig = { ...cfg };
+    if (this.filterIsSet(cfg, 'include', 'level')) {
+      updated_cfg.filters.level.include = formatLevels(cfg, updated_cfg.filters.level.include);
+    }
+    if (this.filterIsSet(cfg, 'exclude', 'level')) {
+      updated_cfg.filters.level.exclude = formatLevels(cfg, updated_cfg.filters.level.exclude);
+    }
+    return updated_cfg;
   }
 
   /*************************************\
@@ -104,7 +119,7 @@ export class Shed {
    * Returns all of the cached logs of the provided levels as a bundle.
    * This is useful for recalling logs and applying filters.
    */
-  public getBundle(levels: Levels):Bundle {
+  public getBundle(levels: LevelFilter):Bundle {
     const lvls = formatLevels(this.cfg.global_cfg, levels);
     return this.cache.reduce((acc, log) => {
       return acc.concat(lvls.includes(log.level) ? [ log ] : []);
@@ -228,8 +243,7 @@ export class Shed {
    */
   private levelAllowed(log: FinalLog): boolean {
     return this.filterAllowed('level', (filter, func) => {
-      const raw_source = this.cfg.filters?.level?.[filter] ?? [] as number[];
-      const source = raw_source === '*' ? allLevels(this.cfg.global_cfg) : raw_source;
+      const source = this.cfg.filters?.level?.[filter];
       return this[func]<number>(source, log.level);
     });
   }
@@ -285,8 +299,8 @@ export class Shed {
    */
   private filterType(category: GlobalFilter): ["include","isIncluded"]|["exclude","isNotExcluded"]|undefined {
     switch (true) {
-      case this.filterIsSet('include', category)  : return ['include','isIncluded'];
-      case this.filterIsSet('exclude', category)  : return ['exclude','isNotExcluded'];
+      case this.filterIsSet(this.cfg, 'include', category)  : return ['include','isIncluded'];
+      case this.filterIsSet(this.cfg, 'exclude', category)  : return ['exclude','isNotExcluded'];
     }
   }
 
@@ -307,8 +321,8 @@ export class Shed {
   /**
    * Has the user defined rules for a specific filter?
    */
-  private filterIsSet(type: "include"|"exclude", filter: GlobalFilter):boolean {
-    const include_prop = this.cfg?.filters?.[filter]?.[type] ?? [];
+  private filterIsSet(cfg: ShedConfig, type: "include"|"exclude", filter: GlobalFilter):boolean {
+    const include_prop = cfg?.filters?.[filter]?.[type] ?? [];
     return include_prop.length > 0;
   }
 
