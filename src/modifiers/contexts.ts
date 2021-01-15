@@ -10,3 +10,9 @@ export function dump(this: Log): Log {
     this.dumpContext = true;
   });
 }
+
+export function meta<T>(this: Log, key: string, val: T): Log {
+  return modifier(this, () => {
+    this.metaData[key] = val;
+  });
+}

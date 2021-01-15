@@ -55,7 +55,9 @@ interface LogValues {
   namespaceVal?: string|string[];
   labelVal?: Label;
   timeNowVal?: string;
-  meta?: any;
+  metaData: {
+    [key: string]: any;
+  };
   modifierQueue: Function[];
   printer(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]): LogRender;
 }
@@ -86,6 +88,7 @@ interface LogMethods {
   groupCollapsed(): Log;
   groupEnd(): Log;
   label(name: string): Log;
+  meta<T>(key: string, val: T): Log;
   ns(ns: string): Log;
   namespace(ns: string|string[]): Log;
   silent(): void;

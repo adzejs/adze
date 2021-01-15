@@ -45,13 +45,3 @@ export function trace(this: Log):Log {
     this.printer = printTrace;
   })
 }
-
-/**
- * Adds custom meta data to the log instance. This is useful
- * for scraping extra data from a log from a log listener.
- */
-export function meta(this: Log, data: any):Log {
-  return modifier(this, () => {
-    this.meta = data;
-  });
-}

@@ -7,7 +7,7 @@ import {
 } from '~/terminators';
 import {
   count, countReset, dir, dirxml, dump, table, assert,
-  test,  group, groupCollapsed, groupEnd, label,
+  test,  group, groupCollapsed, groupEnd, label, meta,
   namespace, silent, ns, trace, time, timeNow, timeEnd,
 } from '~/modifiers';
 import { printLog } from '~/printers';
@@ -19,7 +19,6 @@ import { defaults } from '~/_defaults';
  * - Select log levels optionally by name in listener creation.
  * - Analytics and Reporting support.
  * - Remote server for receiving and analyzing logs.
- * - Attach meta data to logs (for listeners to take advantage of).
  * - Add default meta data to the configuration of the log.
  * - Persist logs in localStorage (configurable, off by default).
  * - Add easy functions for transporting logging data to various sources.
@@ -55,6 +54,7 @@ export function adze(user_cfg: Configuration = {}):Log {
     isSilent: false,
     modifierQueue: [],
     printer: printLog,
+    metaData: {},
 
     attention:  logMethod('attention'),
     error:      logMethod('error'),
@@ -69,7 +69,7 @@ export function adze(user_cfg: Configuration = {}):Log {
 
     seal, count, countReset, thread, dump, close, clear, clr,
     dir, dirxml, table, assert, test, group, groupCollapsed,
-    groupEnd, label, namespace, ns, silent, trace,
+    groupEnd, label, meta, namespace, ns, silent, trace,
     time, timeNow, timeEnd,
 
     // A shortcut accessor for grabbing the thread context from the label object.

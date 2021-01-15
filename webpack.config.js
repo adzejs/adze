@@ -14,13 +14,9 @@ module.exports = env => ({
 
   output: {
     path: rootPath('dist'),
-
     library: 'AdzeLib',
-
     libraryExport: '',
-
     libraryTarget: 'umd',
-
     globalObject: 'this',
   },
 
