@@ -1,4 +1,4 @@
-import { Log, Label, Defaults, Range } from '.';
+import { Log, Label, Defaults } from '.';
 
 export type LabelMap = Map<string, Label>;
 
@@ -18,9 +18,13 @@ export interface ShedConfig {
 
 export interface AdzeFilters {
   hideAll?: boolean;
-  level?: GlobalFilterOptions<LevelFilter>;
+  level?: GlobalFilterOptions<number[]>;
   label?: GlobalFilterOptions<string[]>;
   namespace?: GlobalFilterOptions<string[]>;
+}
+
+export interface UserAdzeFilters extends Omit<AdzeFilters, "level"> {
+  level?: GlobalFilterOptions<LevelFilter>
 }
 
 export interface GlobalFilterOptions<T> {
@@ -28,11 +32,13 @@ export interface GlobalFilterOptions<T> {
   exclude?: T;
 }
 
-export interface ShedUserConfig extends Partial<ShedConfig> {}
+export interface ShedUserConfig extends Partial<Omit<ShedConfig, "filters">> {
+  filters: UserAdzeFilters;
+}
 
 export type GlobalFilter = "label"|"namespace"|"level";
 
-export type LevelFilter = "*"|Range|number[];
+export type LevelFilter = string|number[];
 
 export type FilterType = "include"|"exclude";
 

@@ -4,7 +4,7 @@ import {
   ShedUserConfig, FinalLog, Bundle, LevelFilter,
   GlobalFilter, LogLevelDefinition, ListenerLocations,
   ListenerBucket, ListenerCallback, LabelMap, ListenerBuckets,
-  FilterType, FilterFunction, FilterAllowedCallback,
+  FilterAllowedCallback,
 } from '~/_contracts';
 import { defaults, shed_defaults } from '~/_defaults';
 import { isString, formatLevels } from '~/util';
@@ -66,10 +66,11 @@ export class Shed {
   private listeners: ListenerBuckets = new Map();
 
   constructor(config: ShedUserConfig) {
-    const global_cfg = config?.global_cfg ? defaultsDeep(config.global_cfg, defaults) : null;
+    const global_cfg = config?.global_cfg ? defaultsDeep(config.global_cfg, defaults) as Defaults : null;
     const cfg_global_defaults = { ...config, global_cfg };
-    const cfg_global_parsed = this.parseFilterLevels(cfg_global_defaults);
-    this.cfg = defaultsDeep(cfg_global_parsed, shed_defaults);
+    const cfg_defaults = defaultsDeep(cfg_global_defaults, shed_defaults);
+    const cfg_global_parsed = this.parseFilterLevels(cfg_defaults);
+    this.cfg = cfg_global_parsed;
   }
 
   /**
@@ -78,14 +79,14 @@ export class Shed {
    * time a log is checking against the filter.
    */
   private parseFilterLevels(cfg: ShedConfig) {
-    let updated_cfg: ShedConfig = { ...cfg };
-    if (this.filterIsSet(cfg, 'include', 'level')) {
-      updated_cfg.filters.level.include = formatLevels(cfg, updated_cfg.filters.level.include);
+    let new_cfg: ShedConfig = { ...cfg };
+    if (this.filterIsSet(cfg, 'include', 'level') && new_cfg.filters.level?.include) {
+      new_cfg.filters.level.include = formatLevels(new_cfg.global_cfg, new_cfg.filters.level.include);
     }
-    if (this.filterIsSet(cfg, 'exclude', 'level')) {
-      updated_cfg.filters.level.exclude = formatLevels(cfg, updated_cfg.filters.level.exclude);
+    if (this.filterIsSet(cfg, 'exclude', 'level') && new_cfg.filters.level?.exclude) {
+      new_cfg.filters.level.exclude = formatLevels(new_cfg.global_cfg, new_cfg.filters.level.exclude);
     }
-    return updated_cfg;
+    return new_cfg;
   }
 
   /*************************************\
@@ -185,7 +186,7 @@ export class Shed {
   /**
    * Add a listener callback that fires any time a log of one of the provided levels is generated.
    */
-  public addListener(levels: Levels, cb: ListenerCallback):ListenerLocations {
+  public addListener(levels: LevelFilter, cb: ListenerCallback):ListenerLocations {
     const lvls = formatLevels(this.cfg.global_cfg, levels);
     return lvls.map((lvl: number) => {
 
@@ -243,7 +244,7 @@ export class Shed {
    */
   private levelAllowed(log: FinalLog): boolean {
     return this.filterAllowed('level', (filter, func) => {
-      const source = this.cfg.filters?.level?.[filter];
+      const source = this.cfg.filters?.level?.[filter] ?? [] as number[];
       return this[func]<number>(source, log.level);
     });
   }

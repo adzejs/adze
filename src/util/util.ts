@@ -2,7 +2,6 @@ import {
   LogTimestamp,
   Defaults,
   LogLevels,
-  Range,
   LevelFilter,
 } from '~/_contracts';
 
@@ -44,16 +43,28 @@ export function getSearchParams(): URLSearchParams {
  * it is returned unchanged.
  */
 export function formatLevels(cfg: Defaults|null, levels: LevelFilter): number[] {
-  if (levels === "*") {
-    return createArrayOfNumbers(0, getMaxLevel(cfg));
-  }
-  else if (isString(levels)) {
+  if (isString(levels)) {
+    if (levels === "*") {
+      return createArrayOfNumbers(0, getMaxLevel(cfg));
+    }
     if (isRange(levels)) {
       return createArrayOfNumbers(...parseRange(levels));
     }
     console.warn("The provided level filter string is invalid. This will cause logs to stop printing.");
+  } else if (isArray(levels)) {
+    return levels;
   }
-  return levels ?? <number[]>[];
+  return [] as number[];
+}
+
+/**
+ * Type Guard that validates that a given string represents a
+ * range of numbers.
+ */
+export function isRange(val: string): boolean {
+  const vals = val.split('-');
+  const [ low, high ] = vals;
+  return vals.length === 2 && Number(low) !== NaN && Number(high) !== NaN;
 }
 
 /**
@@ -66,7 +77,7 @@ export function getMaxLevel(cfg: Defaults|null): number {
 /**
  * Parse a range string into a tuple of numbers containing low and high.
  */
-export function parseRange(range: Range): [number, number] {
+export function parseRange(range: string): [number, number] {
   const [ low, high ] = range.split('-');
   return [ Number(low), Number(high) ];
 }
@@ -108,14 +119,4 @@ export function isArray(val: any): val is [] {
  */
 export function isDefined<T>(val: T|undefined): val is T {
   return val !== undefined;
-}
-
-/**
- * Type Guard that validates that a given string represents a
- * range of numbers.
- */
-export function isRange(val: string): val is Range {
-  const vals = val.split('-');
-  const [ low, high ] = vals;
-  return vals.length === 2 && Number(low) !== NaN && Number(high) !== NaN;
 }

@@ -1,6 +1,4 @@
-import { Log, Label, RecursivePartial, ChalkStyles } from '.';
-
-type LabelMap = Map<string, Label>;
+import { RecursivePartial, ChalkStyles } from '.';
 
 export type ConsoleMethod = "error"|"warn"|"info"|"log"|"debug"|"trace"|"group"|"groupCollapsed"|"groupEnd"|"table"|"dir"|"dirxml";
 
