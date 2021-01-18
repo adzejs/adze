@@ -1,6 +1,6 @@
-import { Log } from '~/_contracts';
-import { getLabel, addLabel } from '~/label';
-import { printTrace } from '~/printers';
+import { Log } from '../_contracts';
+import { getLabel, addLabel } from '../label';
+import { printTrace } from '../printers';
 import { prependModifier, modifier } from './modifier';
 
 /**

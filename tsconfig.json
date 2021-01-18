@@ -11,20 +11,17 @@
     "declarationDir": "types",
     "emitDeclarationOnly": true,
     "preserveConstEnums": true,
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["src/*"]
-    }
+    "baseUrl": "."
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "./demo.ts"
   ],
   "exclude": [
     "./old",
     "./dist",
     "./node_modules",
     "demo.js",
-    "./types",
     "./img",
     "./webpack.config.js",
     "./ava.config.js"

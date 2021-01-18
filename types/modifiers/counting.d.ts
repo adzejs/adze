@@ -1,4 +1,4 @@
-import { Log } from '~/_contracts';
+import { Log } from '../_contracts';
 /**
  * Adds to the log count for log instances that share this log's label.
  *

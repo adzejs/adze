@@ -1,4 +1,4 @@
-import { Label } from '~/_contracts';
+import { Label } from '../_contracts';
 /**
  * Attempts to get a label by the given name from the shed if it exists.
  */

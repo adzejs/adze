@@ -3,7 +3,8 @@ import {
   Defaults,
   LogLevels,
   LevelFilter,
-} from '~/_contracts';
+} from '../_contracts';
+import { env, envIsWindow } from '../global';
 
 /**
  * Capitalizes the first character of the provided string.
@@ -33,8 +34,10 @@ export function timestamp():LogTimestamp {
 /**
  * Gets a URLSearchParams object of the current URL.
  */
-export function getSearchParams(): URLSearchParams {
-  return new URLSearchParams(document.location.search.substring(1));
+export function getSearchParams(): URLSearchParams | undefined {
+  if (envIsWindow(env)) {
+    return new URLSearchParams(env.document.location.search.substring(1));
+  }
 }
 
 /**

@@ -1,6 +1,6 @@
-import { Log, LogRender, ConsoleMethod, LogLevelDefinition } from "~/_contracts";
-import { env } from '~/global';
-import { isString } from '~/util';
+import { Log, LogRender, ConsoleMethod, LogLevelDefinition } from "../_contracts";
+import { env } from '../global';
+import { isString } from '../util';
 
 // ------- PRINT ENTRY -------- //
 

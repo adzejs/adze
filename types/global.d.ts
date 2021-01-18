@@ -1,4 +1,4 @@
-import { Shed } from '~/shed';
+import { Shed } from './shed';
 declare global {
     interface Window {
         $shed?: Shed;

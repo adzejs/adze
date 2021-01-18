@@ -1,5 +1,5 @@
-import { isChrome, isFirefox, isSafari } from '~/global';
-import { Defaults } from "~/_contracts";
+import { isChrome, isSafari } from '../global';
+import { Defaults } from "../_contracts";
 
 export const defaults: Defaults = {
   log_level: 8,

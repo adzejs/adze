@@ -1,5 +1,5 @@
-import { Log, LogRender } from '~/_contracts';
-import { isString } from '~/util';
+import { Log, LogRender } from '../_contracts';
+import { isString } from '../util';
 
 // CONVERT API TO EXPORT FILTER FUNCS
 

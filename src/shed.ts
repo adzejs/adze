@@ -1,15 +1,15 @@
-import defaultsDeep from 'lodash.defaultsdeep';
+const defaultsDeep = require('lodash.defaultsdeep');
 import {
   ShedConfig, Defaults, Label,
   ShedUserConfig, FinalLog, Bundle, LevelFilter,
   GlobalFilter, LogLevelDefinition, ListenerLocations,
   ListenerBucket, ListenerCallback, LabelMap, ListenerBuckets,
   FilterAllowedCallback,
-} from '~/_contracts';
-import { defaults, shed_defaults } from '~/_defaults';
-import { isString, formatLevels } from '~/util';
+} from './_contracts';
+import { defaults, shed_defaults } from './_defaults';
+import { isString, formatLevels } from './util';
 
-import { env } from '~/global';
+import { env } from './global';
 
 /**
  * A typeguard that indicates that a global shed store exists.

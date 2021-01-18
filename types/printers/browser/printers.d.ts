@@ -1,4 +1,4 @@
-import { Log, LogLevelDefinition, LogRender } from '~/_contracts';
+import { Log, LogLevelDefinition, LogRender } from '../../_contracts';
 /**
  * The primary method for printing logs to the browser console.
  */

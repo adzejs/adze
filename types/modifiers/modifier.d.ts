@@ -1,4 +1,4 @@
-import { Log } from '~/_contracts';
+import { Log } from '../_contracts';
 /**
  * Queues a modifier method for execution when the log is terminated.
  */

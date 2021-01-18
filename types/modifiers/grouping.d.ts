@@ -1,4 +1,4 @@
-import { Log } from '~/_contracts';
+import { Log } from '../_contracts';
 /**
  * Starts a log group.
  *

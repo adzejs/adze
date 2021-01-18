@@ -1,4 +1,4 @@
-import { Log } from '~/_contracts';
+import { Log } from '../_contracts';
 /**
  * Adds a label to the log. Label's can be used for log identification
  * and grouping. Label's also link log instances together.

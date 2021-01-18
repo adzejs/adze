@@ -1,5 +1,5 @@
-import { Log } from '~/_contracts';
-import { printDir, printDirxml, printTable } from '~/printers';
+import { Log } from '../_contracts';
+import { printDir, printDirxml, printTable } from '../printers';
 import { modifier } from './modifier';
 
 /**

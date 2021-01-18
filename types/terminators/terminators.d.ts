@@ -1,4 +1,4 @@
-import { Log, FinalLog, LogFunction, CustomLogFunction, LogLevelDefinition } from '~/_contracts';
+import { Log, FinalLog, LogFunction, CustomLogFunction, LogLevelDefinition } from '../_contracts';
 /**
  * Seals the configuration of a log and returns a function that
  * constructs a new log with the same configuration.

@@ -1,5 +1,6 @@
 const { resolve } = require('path');
 
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const IfPlugin = require('if-webpack-plugin')
 
@@ -23,10 +24,6 @@ module.exports = env => ({
   devtool: env && env.production ? '' : 'inline-source-map',
 
   resolve: {
-    alias: {
-      '~': resolve(__dirname, 'src'),
-    },
-
     extensions: ['.js', '.ts'],
   },
 

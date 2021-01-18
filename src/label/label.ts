@@ -1,6 +1,6 @@
-import { Label } from '~/_contracts';
-import { env } from '~/global';
-import { shedExists } from '~/shed';
+import { Label } from '../_contracts';
+import { env } from '../global';
+import { shedExists } from '../shed';
 
 /**
  * Attempts to get a label by the given name from the shed if it exists.

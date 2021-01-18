@@ -1,4 +1,4 @@
-import { Log } from '~/_contracts';
+import { Log } from '../_contracts';
 /**
  * Instructs the log terminator to add the key/value pairs from the
  * thread context to the console output.

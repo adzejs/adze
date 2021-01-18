@@ -1,6 +1,6 @@
-import { Log, Defaults, LogLevelDefinition } from '~/_contracts';
-import { env, isBrowser } from '~/global';
-import { getSearchParams } from '~/util';
+import { Log, Defaults, LogLevelDefinition } from '../_contracts';
+import { env } from '../global';
+import { getSearchParams } from '../util';
 
 /**
  * Determine the fate of whether this log will terminate.
@@ -39,5 +39,5 @@ export function evalPasses(log: Log):boolean {
  */
 export function notTestEnv():boolean {
   // Allow for URL Param of ADZE_ENV when in the browser.
-  return (env?.ADZE_ENV ?? getSearchParams().get('ADZE_ENV')) !== 'test';
+  return (env?.ADZE_ENV ?? getSearchParams()?.get('ADZE_ENV') ?? '') !== 'test';
 }

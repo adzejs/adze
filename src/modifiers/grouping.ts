@@ -1,5 +1,5 @@
-import { Log } from '~/_contracts';
-import { printGroup, printGroupCollapsed, printGroupEnd } from '~/printers';
+import { Log } from '../_contracts';
+import { printGroup, printGroupCollapsed, printGroupEnd } from '../printers';
 import { modifier } from './modifier';
 
 /**

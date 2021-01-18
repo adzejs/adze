@@ -1,4 +1,4 @@
-import { Defaults, Label, ShedUserConfig, FinalLog, Bundle, LevelFilter, LogLevelDefinition, ListenerLocations, ListenerCallback } from '~/_contracts';
+import { Defaults, Label, ShedUserConfig, FinalLog, Bundle, LevelFilter, LogLevelDefinition, ListenerLocations, ListenerCallback } from './_contracts';
 /**
  * A typeguard that indicates that a global shed store exists.
  */

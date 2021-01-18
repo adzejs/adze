@@ -1,4 +1,4 @@
-import { Log, Defaults, LogLevelDefinition } from '~/_contracts';
+import { Log, Defaults, LogLevelDefinition } from '../_contracts';
 /**
  * Determine the fate of whether this log will terminate.
  */

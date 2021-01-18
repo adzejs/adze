@@ -1,4 +1,4 @@
-import { Log } from '~/_contracts';
+import { Log } from '../_contracts';
 /**
  * Instructs this log to print in the dir format. Typically this is useful
  * for rendering deeply nested objects in the console.

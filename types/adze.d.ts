@@ -1,4 +1,4 @@
-import { Log, Configuration } from '~/_contracts';
+import { Log, Configuration } from './_contracts';
 /**
  * The entry point for creating Adze logs. This factory function can be used directly or configuration
  * can be provided and the result can be assigned to a new variable. This allows for multiple

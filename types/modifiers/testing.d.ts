@@ -1,4 +1,4 @@
-import { Log } from '~/_contracts';
+import { Log } from '../_contracts';
 /**
  * Prints a log warning that the assertion failed if the assertion is false.
  *

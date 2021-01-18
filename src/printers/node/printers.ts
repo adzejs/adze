@@ -1,8 +1,8 @@
 import * as chalk from 'chalk';
-import { Log, LogLevelDefinition, LogRender } from '~/_contracts';
+import { Log, LogLevelDefinition, LogRender } from '../../_contracts';
 import { toConsole, applyRender, fNamespace } from '../shared';
-import { env } from '~/global';
-import { initialCaps, isString } from '~/util';
+import { env } from '../../global';
+import { initialCaps, isString } from '../../util';
 
 // ------- PRINT METHODS -------- //
 

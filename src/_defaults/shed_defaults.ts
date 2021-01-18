@@ -1,5 +1,4 @@
-import { ShedConfig } from '~/_contracts';
-import { defaults } from '~/_defaults';
+import { ShedConfig } from '../_contracts';
 
 export const shed_defaults: ShedConfig = {
   cache_limit: 300,

@@ -1,4 +1,4 @@
-import { LogTimestamp, Defaults, LogLevels, LevelFilter } from '~/_contracts';
+import { LogTimestamp, Defaults, LogLevels, LevelFilter } from '../_contracts';
 /**
  * Capitalizes the first character of the provided string.
  */
@@ -14,7 +14,7 @@ export declare function timestamp(): LogTimestamp;
 /**
  * Gets a URLSearchParams object of the current URL.
  */
-export declare function getSearchParams(): URLSearchParams;
+export declare function getSearchParams(): URLSearchParams | undefined;
 /**
  * Converts a level value of '*' to an array of numbers up to the highest
  * value defined by the user configuration. If levels is already a number array

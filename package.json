@@ -7,10 +7,10 @@
   "scripts": {
     "test": "ava",
     "demo:browser": "http-server -o -p 8082",
-    "demo:node": "ts-node ./demo",
+    "demo:node": "ts-node -r tsconfig-paths/register ./demo.ts",
     "watch": "webpack --env.development --watch",
-    "build": "webpack --env.development",
-    "build:production": "webpack --env.production"
+    "build": "tsc; webpack --env.development",
+    "build:production": "tsc; webpack --env.production"
   },
   "repository": {
     "type": "git",
@@ -20,9 +20,9 @@
     "log",
     "logging"
   ],
+  "types": "types/index.d.ts",
   "author": "Andrew Stacy",
   "license": "Apache-2.0",
-  "types": "types/index.d.ts",
   "devDependencies": {
     "@ava/babel": "^1.0.1",
     "@babel/core": "^7.12.10",
@@ -41,6 +41,8 @@
     "if-webpack-plugin": "^1.0.5",
     "jsdom": "^16.3.0",
     "ts-node": "^9.1.1",
+    "tsconfig-paths": "^3.9.0",
+    "tsconfig-paths-webpack-plugin": "^3.3.0",
     "typescript": "^4.1.3",
     "webpack": "^4.29.6",
     "webpack-bundle-analyzer": "^3.8.0",

@@ -1,4 +1,4 @@
-import { Log, LogRender, ConsoleMethod, LogLevelDefinition } from "~/_contracts";
+import { Log, LogRender, ConsoleMethod, LogLevelDefinition } from "../_contracts";
 export declare function print(log: Log, def: LogLevelDefinition, args: any[]): LogRender;
 export declare function printGroupEnd(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]): LogRender;
 export declare function printTable(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]): LogRender;

@@ -1,4 +1,4 @@
-import { Log } from '~/_contracts';
+import { Log } from '../_contracts';
 /**
  * Starts a timer associated with this log's *label*. This will do nothing if
  * this log has no label.

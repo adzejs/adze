@@ -1,4 +1,4 @@
-import { Log, LogRender } from '~/_contracts';
+import { Log, LogRender } from '../_contracts';
 /**
  * Re-render the bundle of logs.
  */
