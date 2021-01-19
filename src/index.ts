@@ -3,7 +3,15 @@ import { adze } from './adze';
 import { bundle } from './bundle';
 import { shedExists, createShed, removeShed } from './shed';
 import { defaults } from './_defaults';
-import { filterAll, filterLabel, filterLevelRange, filterNamespace, render } from './filters';
+import { fireListeners } from './terminators';
+import {
+  filterLabel,
+  filterLevelRange,
+  filterNamespace,
+  loopCollection,
+  render,
+  rerender,
+} from './filters';
 
 export {
   adze,
@@ -14,9 +22,11 @@ export {
   Log,
   LogFunction,
   bundle,
-  filterAll,
   filterLabel,
   filterLevelRange,
   filterNamespace,
+  loopCollection,
   render,
+  rerender,
+  fireListeners,
 };

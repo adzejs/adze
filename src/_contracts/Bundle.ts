@@ -15,4 +15,4 @@ export type Bundler = () => BundledLog;
 /**
  * Array of bundled logs.
  */
-export type Bundle = Array<BundledLog|FinalLog>;
+export type Bundle = BundledLog[];

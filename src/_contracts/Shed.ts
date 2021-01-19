@@ -1,4 +1,7 @@
 import { Log, Label, Defaults } from '.';
+import { Configuration } from './Configuration';
+
+export type CacheLocation = "memory"|"localStorage";
 
 export type LabelMap = Map<string, Label>;
 
@@ -11,6 +14,7 @@ export type ListenerBucket = Map<number, ListenerCallback>;
 export type ListenerCallback = (log: Log) => void;
 
 export interface ShedConfig {
+  cache_location: CacheLocation;
   cache_limit: number;
   global_cfg: Defaults|null;
   filters: AdzeFilters;
@@ -32,8 +36,9 @@ export interface GlobalFilterOptions<T> {
   exclude?: T;
 }
 
-export interface ShedUserConfig extends Partial<Omit<ShedConfig, "filters">> {
+export interface ShedUserConfig extends Partial<Omit<ShedConfig, "filters"|"global_cfg">> {
   filters: UserAdzeFilters;
+  global_cfg: Configuration|null;
 }
 
 export type GlobalFilter = "label"|"namespace"|"level";

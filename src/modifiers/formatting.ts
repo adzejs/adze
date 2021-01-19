@@ -8,7 +8,7 @@ import { modifier } from './modifier';
  * 
  * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
  */
-export function dir(this: Log):Log {
+export function dir(this: Log): Log {
   return modifier(this, () => {
     this.printer = printDir;
   });
@@ -20,7 +20,7 @@ export function dir(this: Log):Log {
  * 
  * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml)
  */
-export function dirxml(this: Log):Log {
+export function dirxml(this: Log): Log {
   return modifier(this, () => {
     this.printer = printDirxml;
   });
@@ -31,7 +31,7 @@ export function dirxml(this: Log):Log {
  * 
  * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/table)
  */
-export function table(this: Log):Log {
+export function table(this: Log): Log {
   return modifier(this, () => {
     this.printer = printTable;
   });
@@ -41,7 +41,7 @@ export function table(this: Log):Log {
  * This modifier method allows the log to execute normally but
  * prevent it from printing to the console.
  */
-export function silent(this: Log):Log {
+export function silent(this: Log): Log {
   return modifier(this, () => {
     this.isSilent = true;
   });

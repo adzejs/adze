@@ -1,20 +1,11 @@
-import { Log, LogRender } from '../_contracts';
+import { Log, LogRender, FinalLog, Bundle, Collection } from '../_contracts';
 import { isString } from '../util';
 
-// CONVERT API TO EXPORT FILTER FUNCS
-
 /**
- * Re-render the bundle of logs.
+ * Filter a collection of logs by the namespace.
  */
-export function filterAll(bundle: Log[] = []):void {
-  loopBundle(bundle, (log) => true);
-}
-
-/**
- * Filter the bundle of logs by the namespace.
- */
-export function filterNamespace(bundle: Log[] = [], ns: string|string[]):void {
-  loopBundle(bundle, (log) => {
+export function filterNamespace(collection: Collection = [], ns: string | string[]): Collection {
+  return loopCollection(collection, (log) => {
     const log_ns = log.namespaceVal;
     if (log_ns) {
       if (isString(log_ns)) {
@@ -33,15 +24,15 @@ export function filterNamespace(bundle: Log[] = [], ns: string|string[]):void {
 /**
  * Filter and render the bundle of logs by the label.
  */
-export function filterLabel(bundle: Log[] = [], lbl: string):void {
-  loopBundle(bundle, (log) => log.labelVal?.name === lbl);
+export function filterLabel(collection: Collection = [], lbl: string): Collection {
+  return loopCollection(collection, (log) => log.labelVal?.name === lbl);
 }
 
 /**
  * Filter the bundle of logs by their log level.
  */
-export function filterLevelRange(bundle: Log[] = [], low: number, high: number):void {
-  loopBundle(bundle, (log, rndr) => {
+export function filterLevelRange(collection: Collection = [], low: number, high: number): Collection {
+  return loopCollection(collection, (log) => {
     const level = (log.level ?? Infinity);
     return level >= low && level <= high;
   });
@@ -51,18 +42,26 @@ export function filterLevelRange(bundle: Log[] = [], low: number, high: number):
  * Loops over a bundle of logs and executes the callback for each log that 
  * has a render value.
  */
-function loopBundle(bundle: Log[], cb: (log: Log, rndr: LogRender) => boolean):void {
-  bundle.forEach(log => {
-    if (log.render) {
-      const result = cb(log, log.render);
-      if (result) render(log.render);
-    }
-  });
+export function loopCollection(collection: Collection, cb: (log: Log|FinalLog) => boolean): Collection {
+  return collection.reduce((acc, log) => {
+    const result = cb(log);
+    return result ? acc.concat([log]) : acc;
+  }, [] as Collection);
 }
 
 /**
- * Render a log based on a render object.
+ * If the provided log has been previously rendered, this function
+ * re-renders it to the console.
  */
-export function render([ method, args ]: LogRender):void {
+export function rerender(log: FinalLog): void {
+  if (log.render) {
+    render(log.render);
+  }
+}
+
+/**
+ * Render a log to the console based on a render object.
+ */
+export function render([ method, args ]: LogRender): void {
   console[method](...args);
 }

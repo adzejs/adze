@@ -13,7 +13,7 @@ import { Bundle, Bundler, BundledLog, Log } from './_contracts';
  * bundle.all(); // -> reprints all "bundled" logs.
  * ```
  */
-export function bundle(log: Log):Bundler {
+export function bundle(log: Log): Bundler {
   const bundle_arr = [] as Bundle;
   return () => {
     let bundled_log: BundledLog = {

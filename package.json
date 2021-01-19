@@ -53,6 +53,7 @@
     "@babel/runtime": "^7.3.4",
     "browser-process-hrtime": "^1.0.0",
     "chalk": "^4.0.0",
-    "lodash.defaultsdeep": "^4.6.1"
+    "lodash.defaultsdeep": "^4.6.1",
+    "node-localstorage": "^2.1.6"
   }
 }

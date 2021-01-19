@@ -1,5 +1,5 @@
 import { Label } from "./Label";
-import { LogLevelDefinition, Configuration, ConsoleMethod, Defaults } from ".";
+import { LogLevelDefinition, ConsoleMethod, Defaults, Bundle } from ".";
 
 /**
  * Fingerprint of the function that is called when you execute
@@ -91,7 +91,7 @@ interface LogMethods {
   meta<T>(key: string, val: T): Log;
   ns(ns: string): Log;
   namespace(ns: string|string[]): Log;
-  silent(): void;
+  silent(): Log;
   trace(): Log;
   time(): Log;
   timeNow(): Log;
@@ -106,6 +106,7 @@ export interface Log extends LogFlags, LogValues, LogMethods, TerminatingMethods
 export interface FinalLog extends Log {
   level: number;
   args: any[];
+  definition(): LogLevelDefinition;
 }
 
 /**
@@ -123,3 +124,5 @@ export interface TerminatedLog {
   log: Log|FinalLog;
   render: LogRender|null;
 };
+
+export type Collection = FinalLog[];
