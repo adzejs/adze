@@ -20,15 +20,11 @@ import { defaults } from './_defaults';
  * - Analytics and Reporting support.
  * - Remote server for receiving and analyzing logs.
  * - Add default meta data to the configuration of the log.
- * - Persist logs in localStorage (configurable, off by default). REMOVE THIS FEATURE
  * - Add easy functions for transporting logging data to various sources.
  *     - Write to a file.
  *     - Write to local storage.
  *     - Push to an API endpoint.
  */
-
- // TODO: Polyfill localStorage for node
- // For package size reduction, consider moving localStorage persistence to a listener module.
 
 /**
  * The entry point for creating Adze logs. This factory function can be used directly or configuration

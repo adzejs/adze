@@ -2,12 +2,12 @@ const defaultsDeep = require('lodash.defaultsdeep');
 import {
   ShedConfig, Defaults, Label,
   ShedUserConfig, FinalLog, Collection, LevelFilter,
-  GlobalFilter, LogLevelDefinition, ListenerLocations,
-  ListenerBucket, ListenerCallback, LabelMap, ListenerBuckets,
+  GlobalFilter, ListenerLocations, ListenerBuckets,
+  ListenerBucket, ListenerCallback, LabelMap, 
   FilterAllowedCallback,
 } from './_contracts';
 import { defaults, shed_defaults } from './_defaults';
-import { isString, formatLevels, diskCache } from './util';
+import { isString, formatLevels } from './util';
 
 import { env } from './global';
 
@@ -49,7 +49,7 @@ export class Shed {
    * 
    * Do not access this value directly. Use the `cache()` setter and getter.
    */
-  private mem_cache: Collection = [];
+  private cache: Collection = [];
 
   /**
    * Cache of label instances. Useful for globally linking labelled logs.
@@ -102,26 +102,6 @@ export class Shed {
     if (this.cache.length < this.cfg.cache_limit) {
       this.cache = this.cache.concat([log]);
     }
-  }
-
-  /**
-   * Read a set of logs from the cache dependent on the configured cache location.
-   */
-  private get cache(): Collection {
-    if (this.cfg.cache_location === "localStorage") {
-      return diskCache().getItem<Collection>('$ADZE_SHED_CACHE') ?? [] as Collection;
-    }
-    return this.mem_cache;
-  }
-
-  /**
-   * Write a set of logs to the cache dependent on the configured cache location.
-   */
-  private set cache(logs: Collection) {
-    if (this.cfg.cache_location === "localStorage") {
-      diskCache().setItem('$ADZE_SHED_CACHE', logs);
-    }
-    this.mem_cache = logs;
   }
 
   /**

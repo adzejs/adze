@@ -123,23 +123,3 @@ export function isArray(val: any): val is [] {
 export function isDefined<T>(val: T | undefined): val is T {
   return val !== undefined;
 }
-
-// =======================
-// Local Storage
-// =======================
-
-export function diskCache() {
-  return {
-    getItem<T>(key: string): T | undefined {
-      const raw = localStorage.getItem(key);
-      if (raw !== null) {
-        const parsed = JSON.parse(raw) as { [key: string]: any; };
-        return parsed[key] as T;
-      }
-    },
-    setItem(key: string, val: any): void {
-      const store_str = JSON.stringify({ [key]: val });
-      localStorage.setItem(key, store_str);
-    }
-  };
-}
