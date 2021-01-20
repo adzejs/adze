@@ -1,5 +1,5 @@
-import { Label } from "./Label";
-import { LogLevelDefinition, ConsoleMethod, Defaults, Bundle } from ".";
+import { Label } from './Label';
+import { LogLevelDefinition, ConsoleMethod, Defaults, Bundle } from '.';
 
 /**
  * Fingerprint of the function that is called when you execute
@@ -11,12 +11,24 @@ export type LogFunction = (...args: any[]) => TerminatedLog;
  * Fingerprint of the function that is called when you execute
  * a custom log method defined in the configuration.
  */
-export type CustomLogFunction = (levelName: string, ...args: any[]) => TerminatedLog;
+export type CustomLogFunction = (
+  levelName: string,
+  ...args: any[]
+) => TerminatedLog;
 
 /**
  * The keys of the default terminating log methods included with Adze.
  */
-export type TerminatingMethodKeys = "attention"|"error"|"warn"|"fail"|"success"|"info"|"log"|"debug"|"verbose";
+export type TerminatingMethodKeys =
+  | 'attention'
+  | 'error'
+  | 'warn'
+  | 'fail'
+  | 'success'
+  | 'info'
+  | 'log'
+  | 'debug'
+  | 'verbose';
 
 /**
  * The configuration interface for the default Adze terminating log methods.
@@ -52,14 +64,19 @@ interface LogValues {
   render?: LogRender;
   level?: number;
   args?: any[];
-  namespaceVal?: string|string[];
+  namespaceVal?: string | string[];
   labelVal?: Label;
   timeNowVal?: string;
   metaData: {
     [key: string]: any;
   };
-  modifierQueue: Function[];
-  printer(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]): LogRender;
+  modifierQueue: Array<() => void>;
+  printer(
+    log: Log,
+    def: LogLevelDefinition,
+    use_emoji: boolean,
+    args: any[]
+  ): LogRender;
 }
 
 /**
@@ -74,7 +91,6 @@ interface LogMethods {
   close(): void;
   clear(): void;
   clr(): void;
-  
   // Modifier Functions
   count(): Log;
   countReset(): Log;
@@ -90,7 +106,7 @@ interface LogMethods {
   label(name: string): Log;
   meta<T>(key: string, val: T): Log;
   ns(ns: string): Log;
-  namespace(ns: string|string[]): Log;
+  namespace(ns: string | string[]): Log;
   silent(): Log;
   trace(): Log;
   time(): Log;
@@ -101,7 +117,11 @@ interface LogMethods {
 /**
  * The final Adze log object prototype interface.
  */
-export interface Log extends LogFlags, LogValues, LogMethods, TerminatingMethods {};
+export interface Log
+  extends LogFlags,
+    LogValues,
+    LogMethods,
+    TerminatingMethods {}
 
 export interface FinalLog extends Log {
   level: number;
@@ -116,13 +136,13 @@ type Arguments = any[];
 export type LogRender = [ConsoleMethod, Arguments];
 
 /**
- * The final value of a log after it has been terminated. This is useful for 
- * gleaning the final render information and getting the Log instance for 
+ * The final value of a log after it has been terminated. This is useful for
+ * gleaning the final render information and getting the Log instance for
  * unit testing purposes.
  */
 export interface TerminatedLog {
-  log: Log|FinalLog;
-  render: LogRender|null;
-};
+  log: Log | FinalLog;
+  render: LogRender | null;
+}
 
 export type Collection = FinalLog[];

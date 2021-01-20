@@ -10,7 +10,9 @@
     "demo:node": "ts-node -r tsconfig-paths/register ./demo.ts",
     "watch": "webpack --env.development --watch",
     "build": "tsc; webpack --env.development",
-    "build:production": "tsc; webpack --env.production"
+    "build:production": "tsc; webpack --env.production",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",
@@ -35,11 +37,17 @@
     "@types/jsdom": "^16.2.3",
     "@types/lodash.defaultsdeep": "^4.6.6",
     "@types/node": "^12.7.5",
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
     "ava": "^3.10.1",
     "babel-loader": "^8.2.2",
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "http-server": "^0.11.1",
     "if-webpack-plugin": "^1.0.5",
     "jsdom": "^16.3.0",
+    "prettier": "2.2.1",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.9.0",
     "tsconfig-paths-webpack-plugin": "^3.3.0",
@@ -53,7 +61,6 @@
     "@babel/runtime": "^7.3.4",
     "browser-process-hrtime": "^1.0.0",
     "chalk": "^4.0.0",
-    "lodash.defaultsdeep": "^4.6.1",
-    "node-localstorage": "^2.1.6"
+    "lodash.defaultsdeep": "^4.6.1"
   }
 }

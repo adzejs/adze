@@ -1,6 +1,18 @@
 import { RecursivePartial, ChalkStyles } from '.';
 
-export type ConsoleMethod = "error"|"warn"|"info"|"log"|"debug"|"trace"|"group"|"groupCollapsed"|"groupEnd"|"table"|"dir"|"dirxml";
+export type ConsoleMethod =
+  | 'error'
+  | 'warn'
+  | 'info'
+  | 'log'
+  | 'debug'
+  | 'trace'
+  | 'group'
+  | 'groupCollapsed'
+  | 'groupEnd'
+  | 'table'
+  | 'dir'
+  | 'dirxml';
 
 export interface Defaults {
   log_level: number;
@@ -10,11 +22,11 @@ export interface Defaults {
   log_levels: LogLevels;
   custom_levels: Partial<LogLevels>;
   filters: Filters;
-};
+}
 
 export type LogLevels = {
   [method: string]: LogLevelDefinition;
-}
+};
 
 export interface LogLevelDefinition {
   level: number;
@@ -37,4 +49,5 @@ export interface FilterOptions {
   include: string[];
 }
 
-export interface Configuration extends RecursivePartial<Defaults> {};
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface Configuration extends RecursivePartial<Defaults> {}

@@ -20,7 +20,9 @@ import {
 
 const printLog = isBrowser ? printLogBrowser : printLogNode;
 const printGroup = isBrowser ? printGroupBrowser : printGroupNode;
-const printGroupCollapsed = isBrowser ? printGroupCollapsedBrowser : printGroupCollapsedNode;
+const printGroupCollapsed = isBrowser
+  ? printGroupCollapsedBrowser
+  : printGroupCollapsedNode;
 
 export {
   print,

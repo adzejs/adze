@@ -1,4 +1,4 @@
-import { Log, FinalLog } from '.';
+import { Log } from '.';
 
 /**
  * An extension of a Log that adds a getter for the log bundle.

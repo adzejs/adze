@@ -1,7 +1,7 @@
 import { Log, Label, Defaults } from '.';
 import { Configuration } from './Configuration';
 
-export type CacheLocation = "memory"|"localStorage";
+export type CacheLocation = 'memory' | 'localStorage';
 
 export type LabelMap = Map<string, Label>;
 
@@ -16,7 +16,7 @@ export type ListenerCallback = (log: Log) => void;
 export interface ShedConfig {
   cache_location: CacheLocation;
   cache_limit: number;
-  global_cfg: Defaults|null;
+  global_cfg: Defaults | null;
   filters: AdzeFilters;
 }
 
@@ -27,8 +27,8 @@ export interface AdzeFilters {
   namespace?: GlobalFilterOptions<string[]>;
 }
 
-export interface UserAdzeFilters extends Omit<AdzeFilters, "level"> {
-  level?: GlobalFilterOptions<LevelFilter>
+export interface UserAdzeFilters extends Omit<AdzeFilters, 'level'> {
+  level?: GlobalFilterOptions<LevelFilter>;
 }
 
 export interface GlobalFilterOptions<T> {
@@ -36,17 +36,21 @@ export interface GlobalFilterOptions<T> {
   exclude?: T;
 }
 
-export interface ShedUserConfig extends Partial<Omit<ShedConfig, "filters"|"global_cfg">> {
+export interface ShedUserConfig
+  extends Partial<Omit<ShedConfig, 'filters' | 'global_cfg'>> {
   filters: UserAdzeFilters;
-  global_cfg: Configuration|null;
+  global_cfg: Configuration | null;
 }
 
-export type GlobalFilter = "label"|"namespace"|"level";
+export type GlobalFilter = 'label' | 'namespace' | 'level';
 
-export type LevelFilter = string|number[];
+export type LevelFilter = string | number[];
 
-export type FilterType = "include"|"exclude";
+export type FilterType = 'include' | 'exclude';
 
-export type FilterFunction = "isIncluded"|"isNotExcluded";
+export type FilterFunction = 'isIncluded' | 'isNotExcluded';
 
-export type FilterAllowedCallback = (filter: FilterType, func: FilterFunction) => boolean|undefined;
+export type FilterAllowedCallback = (
+  filter: FilterType,
+  func: FilterFunction
+) => boolean | undefined;

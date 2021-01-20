@@ -15,7 +15,8 @@
   },
   "include": [
     "./src/**/*",
-    "./demo.ts"
+    "./demo.ts",
+    "types"
   ],
   "exclude": [
     "./old",

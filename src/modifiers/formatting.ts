@@ -5,7 +5,7 @@ import { modifier } from './modifier';
 /**
  * Instructs this log to print in the dir format. Typically this is useful
  * for rendering deeply nested objects in the console.
- * 
+ *
  * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
  */
 export function dir(this: Log): Log {
@@ -17,7 +17,7 @@ export function dir(this: Log): Log {
 /**
  * Instructs this log to print in the dirxml format. Typically this is useful
  * for rendering HTML/DOM or XML Elements in the console.
- * 
+ *
  * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml)
  */
 export function dirxml(this: Log): Log {
@@ -28,7 +28,7 @@ export function dirxml(this: Log): Log {
 
 /**
  * Instructs this log to print its argument in a table format.
- * 
+ *
  * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/table)
  */
 export function table(this: Log): Log {
