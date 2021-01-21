@@ -71,12 +71,7 @@ interface LogValues {
   timeNowVal?: string;
   metaData: MetaData;
   modifierQueue: Array<() => void>;
-  printer(
-    log: Log,
-    def: LogLevelDefinition,
-    use_emoji: boolean,
-    args: any[]
-  ): LogRender;
+  printer(log: FinalLog, use_emoji: boolean): LogRender;
 }
 
 export interface MetaData {
@@ -132,6 +127,7 @@ export interface Log
 export interface FinalLog extends Log {
   level: number;
   timestamp: LogTimestamp;
+  render: LogRender;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   args: any[];
   definition: LogLevelDefinition;

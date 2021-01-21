@@ -16,6 +16,7 @@ import {
   printDir,
   printDirxml,
   printTrace,
+  toConsole,
 } from './shared';
 
 const printLog = isBrowser ? printLogBrowser : printLogNode;
@@ -34,4 +35,5 @@ export {
   printDir,
   printDirxml,
   printTrace,
+  toConsole,
 };

@@ -1,5 +1,5 @@
-import { Log, LogLevelDefinition, LogRender } from '../../_contracts';
-import { applyRender, toConsole, fNamespace } from '../shared';
+import { FinalLog, LogLevelDefinition, LogRender } from '../../_contracts';
+import { applyRender, fNamespace } from '../shared';
 import { env } from '../../global';
 import { initialCaps } from '../../util';
 
@@ -8,60 +8,54 @@ import { initialCaps } from '../../util';
 /**
  * The primary method for printing logs to the browser console.
  */
-export function printLog(
-  log: Log,
-  def: LogLevelDefinition,
-  use_emoji: boolean,
-  args: any[]
-): LogRender {
+export function printLog(log: FinalLog, use_emoji: boolean): LogRender {
   const [method, leader, style, meta] = [
-    def.method,
-    fLeader(def, use_emoji, args),
-    log.cfg.base_style + def.style,
+    log.definition.method,
+    fLeader(log.definition, use_emoji, log.args),
+    log.cfg.base_style + log.definition.style,
     fMeta(log, use_emoji),
   ];
   const render_args =
-    meta === '' ? [leader, style, ...args] : [leader, style, meta, ...args];
-  return toConsole(applyRender(log, method, render_args), log.isSilent);
+    meta === ''
+      ? [leader, style, ...log.args]
+      : [leader, style, meta, ...log.args];
+
+  return applyRender(log, method, render_args);
 }
 
 /**
  * The method for printing group logs to the browser console.
  */
-export function printGroup(
-  log: Log,
-  def: LogLevelDefinition,
-  use_emoji: boolean,
-  args: any[]
-): LogRender {
+export function printGroup(log: FinalLog, use_emoji: boolean): LogRender {
   const partial_args = [
-    fLeader(def, use_emoji, args),
-    log.cfg.base_style + def.style,
+    fLeader(log.definition, use_emoji, log.args),
+    log.cfg.base_style + log.definition.style,
   ];
   const render_args =
-    typeof args[0] === 'string' ? [...partial_args, args[0]] : partial_args;
-  return toConsole(applyRender(log, 'group', render_args), log.isSilent);
+    typeof log.args[0] === 'string'
+      ? [...partial_args, log.args[0]]
+      : partial_args;
+
+  return applyRender(log, 'group', render_args);
 }
 
 /**
  * The method for printing collapsed group logs to the browser console.
  */
 export function printGroupCollapsed(
-  log: Log,
-  def: LogLevelDefinition,
-  use_emoji: boolean,
-  args: any[]
+  log: FinalLog,
+  use_emoji: boolean
 ): LogRender {
   const partial_args = [
-    fLeader(def, use_emoji, args),
-    log.cfg.base_style + def.style,
+    fLeader(log.definition, use_emoji, log.args),
+    log.cfg.base_style + log.definition.style,
   ];
   const render_args =
-    typeof args[0] === 'string' ? [...partial_args, args[0]] : partial_args;
-  return toConsole(
-    applyRender(log, 'groupCollapsed', render_args),
-    log.isSilent
-  );
+    typeof log.args[0] === 'string'
+      ? [...partial_args, log.args[0]]
+      : partial_args;
+
+  return applyRender(log, 'groupCollapsed', render_args);
 }
 
 // ------- PRINT FORMATTERS -------- //
@@ -98,7 +92,7 @@ function fName(name: string | undefined): string {
  * from the counter, or the test result from any assertions if any of
  * these modifiers were applied to this log.
  */
-export function fMeta(log: Log, use_emoji: boolean): string {
+export function fMeta(log: FinalLog, use_emoji: boolean): string {
   return `${fNamespace(log)}${fLabel(log)}${fTime(log, use_emoji)}${fCount(
     log
   )}${fTest(log, use_emoji)}`;
@@ -108,7 +102,7 @@ export function fMeta(log: Log, use_emoji: boolean): string {
  * Formats the time on the log string based on any time modifiers
  * that have been applied to this log.
  */
-function fTime(log: Log, use_emoji: boolean): string {
+function fTime(log: FinalLog, use_emoji: boolean): string {
   const label_txt = `${
     log.labelVal?.timeNow ?? log.labelVal?.timeEllapsed ?? ''
   }`;
@@ -123,7 +117,7 @@ function fTime(log: Log, use_emoji: boolean): string {
  * Formats the count on the log string based on any counter modifiers
  * that have been applied to this log.
  */
-function fCount(log: Log): string {
+function fCount(log: FinalLog): string {
   const count = log.labelVal?.count;
   return count !== undefined ? `(Count: ${count})` : '';
 }
@@ -132,7 +126,7 @@ function fCount(log: Log): string {
  * Formats the label on the log string based on the label
  * modifier applied to this log.
  */
-function fLabel(log: Log): string {
+function fLabel(log: FinalLog): string {
   return log.labelVal ? `[${log.labelVal.name}] ` : '';
 }
 
@@ -140,7 +134,7 @@ function fLabel(log: Log): string {
  * Formats the assertion or test on the log string based on
  * any testing modifiers applied to this log.
  */
-function fTest(log: Log, use_emoji: boolean): string {
+function fTest(log: FinalLog, use_emoji: boolean): string {
   return log.assertion === false
     ? `${use_emoji ? '❌ ' : ''}Assertion failed:`
     : '';

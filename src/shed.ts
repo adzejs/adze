@@ -147,6 +147,7 @@ export class Shed {
    */
   public getCollection(levels: LevelFilter): Collection {
     const lvls = formatLevels(this.cfg.global_cfg, levels);
+    console.log('CACHE', this.cache);
     return this.cache.reduce((acc, log) => {
       return acc.concat(lvls.includes(log.level) ? [log] : []);
     }, [] as Collection);
@@ -245,10 +246,10 @@ export class Shed {
    * Fire any log listeners for the provided log. Passes the log render
    * and a slimmed down log data object.
    */
-  public fireListeners(render: LogRender, log: FinalLog): void {
+  public fireListeners(log: FinalLog): void {
     const log_data = this.makeLogData(log);
     this.listeners.get(log.level)?.forEach((listener) => {
-      listener(render, log_data);
+      listener(log_data, log.render);
     });
   }
 

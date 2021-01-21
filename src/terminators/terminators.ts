@@ -9,7 +9,7 @@ import {
   LogRender,
   LogTimestamp,
 } from '../_contracts';
-import { print } from '../printers';
+import { print, toConsole } from '../printers';
 import { allowed, evalPasses } from '../conditions';
 import { mutateProps, timestamp } from '../util';
 import { shedExists } from '../shed';
@@ -183,13 +183,12 @@ function executionPipeline(
       const globally_allowed = env.$shed?.logGloballyAllowed(final_log) ?? true;
 
       if (globally_allowed) {
-        // Render the log
-        const render = print(final_log, def, args);
-        // TODO: print doesn't need to accept def and args as they're on final_log
+        // Render the log and print to the console
+        const render = toConsole(print(final_log), final_log.isSilent);
 
         // Fire log events
         store(final_log);
-        fireListeners(render, final_log);
+        fireListeners(final_log);
 
         // Return the terminated log object for testing purposes
         return { log: final_log, render };
@@ -225,10 +224,11 @@ export function store(log: FinalLog): void {
 /**
  * Fires listeners for this log instance if a Shed exists.
  */
-export function fireListeners(render: LogRender, log: FinalLog): void {
+// TODO: Determine how to handle render for recalling logs from bundles
+export function fireListeners(log: FinalLog): void {
   const shed = env.$shed;
   if (shedExists(shed)) {
-    shed.fireListeners(render, log);
+    shed.fireListeners(log);
   }
 }
 

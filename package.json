@@ -36,6 +36,7 @@
     "@babel/preset-typescript": "^7.12.7",
     "@types/jsdom": "^16.2.3",
     "@types/lodash.defaultsdeep": "^4.6.6",
+    "@types/lodash-es": "^4.17.4",
     "@types/node": "^12.7.5",
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
@@ -61,6 +62,7 @@
     "@babel/runtime": "^7.3.4",
     "browser-process-hrtime": "^1.0.0",
     "chalk": "^4.0.0",
+    "lodash-es": "^4.17.20",
     "lodash.defaultsdeep": "^4.6.1"
   }
 }

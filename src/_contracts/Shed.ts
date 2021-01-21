@@ -12,7 +12,7 @@ export type ListenerBuckets = Map<number, ListenerBucket>;
 
 export type ListenerBucket = Map<number, ListenerCallback>;
 
-export type ListenerCallback = (render: LogRender, LogData: LogData) => void;
+export type ListenerCallback = (LogData: LogData, render: LogRender) => void;
 
 export interface ShedConfig {
   cache_location: CacheLocation;
