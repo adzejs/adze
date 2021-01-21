@@ -41,7 +41,6 @@ import { defaults } from './_defaults';
  * - Select log levels optionally by name in listener creation.
  * - Analytics and Reporting support.
  * - Remote server for receiving and analyzing logs.
- * - Add default meta data to the configuration of the log.
  * - Add easy functions for transporting logging data to various sources.
  *     - Write to a file.
  *     - Write to local storage.
@@ -67,6 +66,8 @@ import { defaults } from './_defaults';
  */
 export function adze(user_cfg: Configuration = {}): Log {
   const cfg = defaultsDeep(user_cfg, defaults) as Defaults;
+  // Allow the user to attach default meta data that all child logs will inherit.
+  const metaData = cfg.meta;
 
   return {
     cfg,
@@ -75,7 +76,7 @@ export function adze(user_cfg: Configuration = {}): Log {
     isSilent: false,
     modifierQueue: [],
     printer: printLog,
-    metaData: {},
+    metaData,
 
     attention: logMethod('attention'),
     error: logMethod('error'),

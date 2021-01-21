@@ -8,6 +8,7 @@ export const defaults: Defaults = {
   base_style:
     'font-size: 10px; font-weight: bold; border-radius: 0 10px 10px 0; border-width: 1px; border-style: solid;',
   custom_levels: {},
+  meta: {},
   log_levels: {
     verbose: {
       level: 8,

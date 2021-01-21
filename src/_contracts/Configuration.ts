@@ -22,6 +22,10 @@ export interface Defaults {
   log_levels: LogLevels;
   custom_levels: Partial<LogLevels>;
   filters: Filters;
+  meta: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  };
 }
 
 export type LogLevels = {

@@ -1,5 +1,5 @@
 import { Label } from './Label';
-import { LogLevelDefinition, ConsoleMethod, Defaults, Bundle } from '.';
+import { LogLevelDefinition, ConsoleMethod, Defaults } from '.';
 
 /**
  * Fingerprint of the function that is called when you execute
@@ -13,6 +13,7 @@ export type LogFunction = (...args: any[]) => TerminatedLog;
  */
 export type CustomLogFunction = (
   levelName: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ...args: any[]
 ) => TerminatedLog;
 
@@ -63,6 +64,7 @@ interface LogValues {
   timestamp?: LogTimestamp;
   render?: LogRender;
   level?: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   args?: any[];
   namespaceVal?: string | string[];
   labelVal?: Label;
@@ -87,6 +89,7 @@ interface LogMethods {
   custom: CustomLogFunction;
   seal(this: Log): () => Log;
   context<T>(): T;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   thread(key: string, value: any): void;
   close(): void;
   clear(): void;
@@ -125,6 +128,7 @@ export interface Log
 
 export interface FinalLog extends Log {
   level: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   args: any[];
   definition(): LogLevelDefinition;
 }
@@ -132,6 +136,7 @@ export interface FinalLog extends Log {
 /**
  * The render value for a Log.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Arguments = any[];
 export type LogRender = [ConsoleMethod, Arguments];
 
