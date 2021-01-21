@@ -1,5 +1,6 @@
-import { Log, Label, Defaults } from '.';
-import { Configuration } from './Configuration';
+import { Log, Label, Defaults, MetaData } from '.';
+import { Configuration, LogLevelDefinition } from './Configuration';
+import { LogRender, LogTimestamp } from './Log';
 
 export type CacheLocation = 'memory' | 'localStorage';
 
@@ -11,7 +12,7 @@ export type ListenerBuckets = Map<number, ListenerBucket>;
 
 export type ListenerBucket = Map<number, ListenerCallback>;
 
-export type ListenerCallback = (log: Log) => void;
+export type ListenerCallback = (render: LogRender, LogData: LogData) => void;
 
 export interface ShedConfig {
   cache_location: CacheLocation;
@@ -54,3 +55,16 @@ export type FilterAllowedCallback = (
   filter: FilterType,
   func: FilterFunction
 ) => boolean | undefined;
+
+export interface LogData {
+  cfg: Defaults;
+  timestamp: LogTimestamp;
+  level: number;
+  definition: LogLevelDefinition;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  args: any[];
+  namespace: string | string[] | null;
+  label: Label | null;
+  timeNow: string | null;
+  meta: MetaData;
+}

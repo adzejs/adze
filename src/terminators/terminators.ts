@@ -6,10 +6,12 @@ import {
   Defaults,
   LogLevelDefinition,
   TerminatedLog,
+  LogRender,
+  LogTimestamp,
 } from '../_contracts';
 import { print } from '../printers';
 import { allowed, evalPasses } from '../conditions';
-import { mutateProps } from '../util';
+import { mutateProps, timestamp } from '../util';
 import { shedExists } from '../shed';
 import { env } from '../global';
 
@@ -175,7 +177,7 @@ function executionPipeline(
     // Check the test modifiers.
     if (evalPasses(log)) {
       // Save terminator props for recall purposes
-      const final_log = finalizeLog(log, def, args);
+      const final_log = finalizeLog(log, def, args, timestamp());
 
       // If a global context exists, check if this log is allowed.
       const globally_allowed = env.$shed?.logGloballyAllowed(final_log) ?? true;
@@ -183,10 +185,11 @@ function executionPipeline(
       if (globally_allowed) {
         // Render the log
         const render = print(final_log, def, args);
+        // TODO: print doesn't need to accept def and args as they're on final_log
 
         // Fire log events
         store(final_log);
-        fireListeners(final_log);
+        fireListeners(render, final_log);
 
         // Return the terminated log object for testing purposes
         return { log: final_log, render };
@@ -222,10 +225,10 @@ export function store(log: FinalLog): void {
 /**
  * Fires listeners for this log instance if a Shed exists.
  */
-export function fireListeners(log: FinalLog): void {
+export function fireListeners(render: LogRender, log: FinalLog): void {
   const shed = env.$shed;
   if (shedExists(shed)) {
-    shed.fireListeners(log);
+    shed.fireListeners(render, log);
   }
 }
 
@@ -233,10 +236,16 @@ export function fireListeners(log: FinalLog): void {
  * Log Helpers
 \*----------------------------------------*/
 
-function finalizeLog(log: Log, def: LogLevelDefinition, args: any[]): FinalLog {
+function finalizeLog(
+  log: Log,
+  def: LogLevelDefinition,
+  args: any[],
+  timestamp: LogTimestamp
+): FinalLog {
   return mutateProps<FinalLog>(log, [
     ['args', args],
     ['level', def.level],
     ['definition', def],
+    ['timestamp', timestamp],
   ]);
 }

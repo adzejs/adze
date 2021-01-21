@@ -69,9 +69,7 @@ interface LogValues {
   namespaceVal?: string | string[];
   labelVal?: Label;
   timeNowVal?: string;
-  metaData: {
-    [key: string]: any;
-  };
+  metaData: MetaData;
   modifierQueue: Array<() => void>;
   printer(
     log: Log,
@@ -79,6 +77,11 @@ interface LogValues {
     use_emoji: boolean,
     args: any[]
   ): LogRender;
+}
+
+export interface MetaData {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
 }
 
 /**
@@ -128,9 +131,10 @@ export interface Log
 
 export interface FinalLog extends Log {
   level: number;
+  timestamp: LogTimestamp;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   args: any[];
-  definition(): LogLevelDefinition;
+  definition: LogLevelDefinition;
 }
 
 /**
