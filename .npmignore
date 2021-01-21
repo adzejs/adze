@@ -1,0 +1,11 @@
+.babelrc
+.eslintrc.yaml
+.nvmrc
+.prettierrc.yaml
+ava.config.js
+demo_funcs.js
+demo.ts
+index.html
+webpack.config.js
+test
+img
