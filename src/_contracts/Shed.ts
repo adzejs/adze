@@ -64,7 +64,15 @@ export interface LogData {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   args: any[];
   namespace: string | string[] | null;
-  label: Label | null;
+  label: LabelData;
   timeNow: string | null;
   meta: MetaData;
+  context: MetaData;
+}
+
+export interface LabelData {
+  name: string | null;
+  timeNow: string | null;
+  timeEllapsed: string | null;
+  count: number | null;
 }

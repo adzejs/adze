@@ -14,11 +14,9 @@ import {
   ListenerCallback,
   LabelMap,
   FilterAllowedCallback,
-  LogRender,
-  LogData,
 } from './_contracts';
 import { defaults, shed_defaults } from './_defaults';
-import { isString, formatLevels } from './util';
+import { isString, formatLevels, makeLogData } from './util';
 import { env } from './global';
 
 /**
@@ -247,39 +245,10 @@ export class Shed {
    * and a slimmed down log data object.
    */
   public fireListeners(log: FinalLog): void {
-    const log_data = this.makeLogData(log);
+    const log_data = makeLogData(log);
     this.listeners.get(log.level)?.forEach((listener) => {
       listener(log_data, log.render);
     });
-  }
-
-  /**
-   * Creates a slimmed down object comprised of data from
-   * the final log.
-   */
-  private makeLogData(log: FinalLog): LogData {
-    const {
-      cfg,
-      level,
-      timestamp,
-      definition,
-      args,
-      namespaceVal: namespace = null,
-      labelVal: label = null,
-      timeNowVal: timeNow = null,
-      metaData: meta = {},
-    } = log;
-    return {
-      cfg,
-      level,
-      timestamp,
-      definition,
-      args,
-      namespace,
-      label,
-      timeNow,
-      meta,
-    };
   }
 
   /*************************************\

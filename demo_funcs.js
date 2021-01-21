@@ -129,8 +129,8 @@ function thread({ adze, createShed, removeShed }) {
   // Creating a shed listener is a great way to get meta data from your
   // threaded logs to write to disk or pass to another plugin, library,
   // or service.
-  shed.addListener([1, 2, 3, 4, 5, 6, 7, 8], (log) => {
-    console.log('(MDC) Log Context from Listener', log.context);
+  shed.addListener([1, 2, 3, 4, 5, 6, 7, 8], (data, render) => {
+    console.log('(MDC) Log Context from Listener', data.meta, render);
   });
 
   const add = (a, b) => {

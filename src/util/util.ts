@@ -1,4 +1,12 @@
-import { LogTimestamp, Defaults, LogLevels, LevelFilter } from '../_contracts';
+import {
+  LogTimestamp,
+  Defaults,
+  LogLevels,
+  LevelFilter,
+  FinalLog,
+  LogData,
+  LabelData,
+} from '../_contracts';
 import { env, envIsWindow } from '../global';
 
 /**
@@ -58,6 +66,46 @@ export function formatLevels(
     return levels;
   }
   return [] as number[];
+}
+
+/**
+ * Creates a slimmed down object comprised of data from
+ * the final log.
+ */
+export function makeLogData(log: FinalLog): LogData {
+  const {
+    cfg,
+    level,
+    timestamp,
+    definition,
+    args,
+    namespaceVal: namespace = null,
+    labelVal = null,
+    timeNowVal: timeNow = null,
+    metaData: meta = {},
+  } = log;
+
+  const label: LabelData = {
+    name: labelVal?.name ?? null,
+    timeNow: labelVal?.timeNow ?? null,
+    timeEllapsed: labelVal?.timeEllapsed ?? null,
+    count: labelVal?.count ?? null,
+  };
+
+  const context = labelVal?.context ?? null;
+
+  return {
+    cfg,
+    level,
+    timestamp,
+    definition,
+    args,
+    namespace,
+    label,
+    timeNow,
+    meta,
+    context,
+  };
 }
 
 /**

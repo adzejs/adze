@@ -6,7 +6,7 @@ import runDemo from './demo_funcs.js';
 const dom = new JSDOM(`<!DOCTYPE html><div id="test">Hello world</div>`);
 const el = dom.window.document.querySelector('#test');
 
-var { adze, createShed, fireListeners, filterLabel, rerender } = AdzeLib;
+const { adze, createShed, fireListeners, filterLabel, rerender } = AdzeLib;
 
 createShed({
   cache_location: 'localStorage',
@@ -43,7 +43,7 @@ if (global?.$shed) {
     console.log('ERROR FIRED', log)
   );
 
-  var bundle = filterLabel(global.$shed.getCollection('*'), 'foo');
+  const bundle = filterLabel(global.$shed.getCollection('*'), 'foo');
   bundle.forEach(rerender);
   bundle.forEach(fireListeners);
 }
