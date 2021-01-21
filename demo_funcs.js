@@ -122,15 +122,16 @@ function customLevelsWithEmoji({ adze }) {
   log.custom('important', 'This is an important log!');
 }
 
-function thread({ adze, createShed, removeShed }) {
+function thread({ adze, createShed, removeShed, render }) {
   console.log('\n----- Thread (MDC) -----\n');
   const shed = createShed();
 
   // Creating a shed listener is a great way to get meta data from your
   // threaded logs to write to disk or pass to another plugin, library,
   // or service.
-  shed.addListener([1, 2, 3, 4, 5, 6, 7, 8], (data, render) => {
-    console.log('(MDC) Log Context from Listener', data.meta, render);
+  shed.addListener([1, 2, 3, 4, 5, 6, 7, 8], (data, render_val) => {
+    console.log('(MDC) Log Context from Listener', data.context, render_val);
+    render(render_val);
   });
 
   const add = (a, b) => {

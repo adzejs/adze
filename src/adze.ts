@@ -36,7 +36,7 @@ import { printLog } from './printers';
 import { defaults } from './_defaults';
 
 /*
- * Future planned features:
+ * Planned features:
  *
  * - Select log levels optionally by name in listener creation.
  * - Analytics and Reporting support.
