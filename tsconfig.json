@@ -13,18 +13,14 @@
     "preserveConstEnums": true,
     "baseUrl": "."
   },
-  "include": [
-    "./src/**/*",
-    "./demo.ts",
-    "types"
-  ],
+  "include": ["src/**/*", "demo.ts", "types", "test"],
   "exclude": [
-    "./old",
-    "./dist",
-    "./node_modules",
+    "old",
+    "dist",
+    "node_modules",
     "demo.js",
-    "./img",
-    "./webpack.config.js",
-    "./ava.config.js"
+    "img",
+    "webpack.config.js",
+    "ava.config.js"
   ]
 }
