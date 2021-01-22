@@ -11,6 +11,7 @@
     "watch": "webpack --env.development --watch",
     "build": "tsc; webpack --env.development",
     "build:production": "tsc; webpack --env.production",
+    "analyze": "tsc; webpack --env.production --env.withAnalysis",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "publish": "tsc; webpack --env.production; npm publish"
