@@ -1,4 +1,4 @@
-import { LogTimestamp, Defaults, LogLevels, LevelFilter } from '../_contracts';
+import { LogTimestamp, Defaults, LogLevels, LevelFilter, FinalLog, LogData } from '../_contracts';
 /**
  * Capitalizes the first character of the provided string.
  */
@@ -21,6 +21,11 @@ export declare function getSearchParams(): URLSearchParams | undefined;
  * it is returned unchanged.
  */
 export declare function formatLevels(cfg: Defaults | null, levels: LevelFilter): number[];
+/**
+ * Creates a slimmed down object comprised of data from
+ * the final log.
+ */
+export declare function makeLogData(log: FinalLog): LogData;
 /**
  * Type Guard that validates that a given string represents a
  * range of numbers.

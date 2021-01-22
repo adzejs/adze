@@ -6,7 +6,7 @@ export declare type LabelMap = Map<string, Label>;
 export declare type ListenerLocations = Array<[number, number]>;
 export declare type ListenerBuckets = Map<number, ListenerBucket>;
 export declare type ListenerBucket = Map<number, ListenerCallback>;
-export declare type ListenerCallback = (render: LogRender, LogData: LogData) => void;
+export declare type ListenerCallback = (LogData: LogData, render: LogRender) => void;
 export interface ShedConfig {
     cache_location: CacheLocation;
     cache_limit: number;
@@ -42,7 +42,14 @@ export interface LogData {
     definition: LogLevelDefinition;
     args: any[];
     namespace: string | string[] | null;
-    label: Label | null;
+    label: LabelData;
     timeNow: string | null;
     meta: MetaData;
+    context: MetaData;
+}
+export interface LabelData {
+    name: string | null;
+    timeNow: string | null;
+    timeEllapsed: string | null;
+    count: number | null;
 }

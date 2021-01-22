@@ -1,3 +1,16 @@
+import { Shed } from './shed';
+declare global {
+    interface Window {
+        $shed?: Shed;
+        ADZE_ENV?: 'test' | 'dev';
+    }
+    namespace NodeJS {
+        interface Global {
+            $shed?: Shed;
+            ADZE_ENV?: 'test' | 'dev';
+        }
+    }
+}
 export declare const env: Window | NodeJS.Global;
 export declare const isBrowser: boolean;
 /**

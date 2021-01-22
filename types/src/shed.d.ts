@@ -1,4 +1,4 @@
-import { Defaults, Label, ShedUserConfig, FinalLog, Collection, LevelFilter, ListenerLocations, ListenerCallback, LogRender } from './_contracts';
+import { Defaults, Label, ShedUserConfig, FinalLog, Collection, LevelFilter, ListenerLocations, ListenerCallback } from './_contracts';
 /**
  * A typeguard that indicates that a global shed store exists.
  */
@@ -110,12 +110,7 @@ export declare class Shed {
      * Fire any log listeners for the provided log. Passes the log render
      * and a slimmed down log data object.
      */
-    fireListeners(render: LogRender, log: FinalLog): void;
-    /**
-     * Creates a slimmed down object comprised of data from
-     * the final log.
-     */
-    private makeLogData;
+    fireListeners(log: FinalLog): void;
     /*************************************\
      * GLOBAL FILTER METHODS
     \*************************************/

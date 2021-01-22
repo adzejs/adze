@@ -1,4 +1,4 @@
-import defaultsDeep from 'lodash.defaultsdeep';
+import { defaultsDeep } from 'lodash-es';
 import {
   ShedConfig,
   Defaults,

@@ -12,7 +12,8 @@
     "build": "tsc; webpack --env.development",
     "build:production": "tsc; webpack --env.production",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "publish": "tsc; webpack --env.production; npm publish"
   },
   "repository": {
     "type": "git",
@@ -35,7 +36,6 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-typescript": "^7.12.7",
     "@types/jsdom": "^16.2.3",
-    "@types/lodash.defaultsdeep": "^4.6.6",
     "@types/lodash-es": "^4.17.4",
     "@types/node": "^12.7.5",
     "@typescript-eslint/eslint-plugin": "^4.14.0",
@@ -62,7 +62,6 @@
     "@babel/runtime": "^7.3.4",
     "browser-process-hrtime": "^1.0.0",
     "chalk": "^4.0.0",
-    "lodash-es": "^4.17.20",
-    "lodash.defaultsdeep": "^4.6.1"
+    "lodash-es": "^4.17.20"
   }
 }

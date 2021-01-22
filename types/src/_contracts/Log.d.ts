@@ -50,7 +50,7 @@ interface LogValues {
     timeNowVal?: string;
     metaData: MetaData;
     modifierQueue: Array<() => void>;
-    printer(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]): LogRender;
+    printer(log: FinalLog, use_emoji: boolean): LogRender;
 }
 export interface MetaData {
     [key: string]: any;
@@ -96,6 +96,7 @@ export interface Log extends LogFlags, LogValues, LogMethods, TerminatingMethods
 export interface FinalLog extends Log {
     level: number;
     timestamp: LogTimestamp;
+    render: LogRender;
     args: any[];
     definition: LogLevelDefinition;
 }
