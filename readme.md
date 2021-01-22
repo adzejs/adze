@@ -1,5 +1,3 @@
-# Adze - Smooth JS/TS Logging
-
 ![Adze Logo](img/logo.png)
 
 > Adze - [a cutting tool that ... is used chiefly for shaping wood](https://www.merriam-webster.com/dictionary/adze).
