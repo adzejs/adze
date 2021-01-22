@@ -16,4 +16,4 @@ import { Log, Configuration } from './_contracts';
  * 7. debug
  * 8. verbose
  */
-export declare function adze(user_cfg?: Configuration): Log;
+export declare function adze(user_cfg?: Configuration): () => Log;

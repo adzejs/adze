@@ -13,7 +13,7 @@
     "preserveConstEnums": true,
     "baseUrl": "."
   },
-  "include": ["src/**/*", "demo.ts", "test", "src/environment.d.ts"],
+  "include": ["src/**/*"],
   "exclude": [
     "old",
     "dist",

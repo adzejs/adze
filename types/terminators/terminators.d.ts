@@ -1,4 +1,4 @@
-import { Log, FinalLog, LogFunction, CustomLogFunction, LogLevelDefinition } from '../_contracts';
+import { Log, FinalLog, LogFunction, CustomLogFunction } from '../_contracts';
 /**
  * Seals the configuration of a log and returns a function that
  * constructs a new log with the same configuration.
@@ -80,4 +80,4 @@ export declare function store(log: FinalLog): void;
 /**
  * Fires listeners for this log instance if a Shed exists.
  */
-export declare function fireListeners(log: FinalLog, def: LogLevelDefinition): void;
+export declare function fireListeners(log: FinalLog): void;

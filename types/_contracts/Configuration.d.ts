@@ -1,5 +1,5 @@
 import { RecursivePartial, ChalkStyles } from '.';
-export declare type ConsoleMethod = "error" | "warn" | "info" | "log" | "debug" | "trace" | "group" | "groupCollapsed" | "groupEnd" | "table" | "dir" | "dirxml";
+export declare type ConsoleMethod = 'error' | 'warn' | 'info' | 'log' | 'debug' | 'trace' | 'group' | 'groupCollapsed' | 'groupEnd' | 'table' | 'dir' | 'dirxml';
 export interface Defaults {
     log_level: number;
     log_cache_size: number;
@@ -8,6 +8,9 @@ export interface Defaults {
     log_levels: LogLevels;
     custom_levels: Partial<LogLevels>;
     filters: Filters;
+    meta: {
+        [key: string]: any;
+    };
 }
 export declare type LogLevels = {
     [method: string]: LogLevelDefinition;

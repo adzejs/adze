@@ -1,5 +1,5 @@
-import { Label } from "./Label";
-import { LogLevelDefinition, ConsoleMethod, Defaults } from ".";
+import { Label } from './Label';
+import { LogLevelDefinition, ConsoleMethod, Defaults } from '.';
 /**
  * Fingerprint of the function that is called when you execute
  * a log method such as info().
@@ -13,7 +13,7 @@ export declare type CustomLogFunction = (levelName: string, ...args: any[]) => T
 /**
  * The keys of the default terminating log methods included with Adze.
  */
-export declare type TerminatingMethodKeys = "attention" | "error" | "warn" | "fail" | "success" | "info" | "log" | "debug" | "verbose";
+export declare type TerminatingMethodKeys = 'attention' | 'error' | 'warn' | 'fail' | 'success' | 'info' | 'log' | 'debug' | 'verbose';
 /**
  * The configuration interface for the default Adze terminating log methods.
  */
@@ -48,11 +48,12 @@ interface LogValues {
     namespaceVal?: string | string[];
     labelVal?: Label;
     timeNowVal?: string;
-    metaData: {
-        [key: string]: any;
-    };
-    modifierQueue: Function[];
-    printer(log: Log, def: LogLevelDefinition, use_emoji: boolean, args: any[]): LogRender;
+    metaData: MetaData;
+    modifierQueue: Array<() => void>;
+    printer(log: FinalLog, use_emoji: boolean): LogRender;
+}
+export interface MetaData {
+    [key: string]: any;
 }
 /**
  * All of the user accessible methods that can be chained to
@@ -81,7 +82,7 @@ interface LogMethods {
     meta<T>(key: string, val: T): Log;
     ns(ns: string): Log;
     namespace(ns: string | string[]): Log;
-    silent(): void;
+    silent(): Log;
     trace(): Log;
     time(): Log;
     timeNow(): Log;
@@ -94,7 +95,10 @@ export interface Log extends LogFlags, LogValues, LogMethods, TerminatingMethods
 }
 export interface FinalLog extends Log {
     level: number;
+    timestamp: LogTimestamp;
+    render: LogRender;
     args: any[];
+    definition: LogLevelDefinition;
 }
 /**
  * The render value for a Log.
@@ -110,4 +114,5 @@ export interface TerminatedLog {
     log: Log | FinalLog;
     render: LogRender | null;
 }
+export declare type Collection = FinalLog[];
 export {};

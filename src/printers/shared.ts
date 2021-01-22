@@ -2,6 +2,13 @@ import { FinalLog, LogRender, ConsoleMethod } from '../_contracts';
 import { env } from '../global';
 import { isString } from '../util';
 
+const error = Function.prototype.bind.call(console.error, console);
+const warn = Function.prototype.bind.call(console.warn, console);
+const info = Function.prototype.bind.call(console.info, console);
+const log = Function.prototype.bind.call(console.log, console);
+const debug = Function.prototype.bind.call(console.debug, console);
+const cnsl = { error, warn, info, log, debug };
+
 // ------- PRINT ENTRY -------- //
 
 export function print(log: FinalLog): LogRender {
@@ -17,15 +24,15 @@ export function printGroupEnd(log: FinalLog): LogRender {
 }
 
 export function printTable(log: FinalLog): LogRender {
-  return applyRender(log, 'table', log.args, false); //, log.isSilent, false);
+  return applyRender(log, 'table', log.args, false);
 }
 
 export function printDir(log: FinalLog): LogRender {
-  return applyRender(log, 'dir', log.args, false); //, log.isSilent, false);
+  return applyRender(log, 'dir', log.args, false);
 }
 
 export function printDirxml(log: FinalLog): LogRender {
-  return applyRender(log, 'dirxml', log.args, false); //, log.isSilent, false);
+  return applyRender(log, 'dirxml', log.args, false);
 }
 
 export function printTrace(log: FinalLog): LogRender {
@@ -58,7 +65,7 @@ export function applyRender(
 export function toConsole(render: LogRender, is_silent: boolean): LogRender {
   const [method, args] = render;
   if (env.ADZE_ENV !== 'dev' && !is_silent) {
-    console[method](...args);
+    cnsl[method](...args);
   }
   return render;
 }
