@@ -65,7 +65,7 @@ export function applyRender(
 export function toConsole(render: LogRender, is_silent: boolean): LogRender {
   const [method, args] = render;
   if (env.ADZE_ENV !== 'dev' && !is_silent) {
-    cnsl[method](...args);
+    console[method](...args);
   }
   return render;
 }
