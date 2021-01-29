@@ -71,6 +71,11 @@ export function adze(user_cfg: Configuration = {}): Log {
 
   return {
     cfg,
+    level: null,
+    args: null,
+    render: null,
+    timestamp: null,
+    stacktrace: null,
     traceable: false,
     dumpContext: false,
     isSilent: false,
