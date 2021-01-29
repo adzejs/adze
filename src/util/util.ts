@@ -19,6 +19,7 @@ export function initialCaps(str: string): string {
 /**
  * Applies property mutations to the provided object.
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function mutateProps<O>(obj: any, mutations: Array<[string, any]>): O {
   mutations.forEach(([prop, val]) => (obj[prop] = val));
   return obj;
@@ -165,14 +166,14 @@ export function createArrayOfNumbers(start: number, end: number): number[] {
 /**
  * Type Guard to check if the given value is a String.
  */
-export function isString(val: any): val is string {
+export function isString(val: unknown): val is string {
   return typeof val === 'string';
 }
 
 /**
  * Type Guard to check if the given value is an Array.
  */
-export function isArray(val: any): val is [] {
+export function isArray(val: unknown): val is [] {
   return Array.isArray(val);
 }
 
