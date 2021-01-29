@@ -6,14 +6,14 @@ import {
   Defaults,
   LogLevelDefinition,
   TerminatedLog,
-  LogRender,
   LogTimestamp,
 } from '../_contracts';
 import { print, toConsole } from '../printers';
 import { allowed, evalPasses } from '../conditions';
-import { mutateProps, timestamp } from '../util';
+import { mutateProps, timestamp, stacktrace } from '../util';
 import { shedExists } from '../shed';
 import { env } from '../global';
+import { cloneDeep } from 'lodash-es';
 
 /**
  * Seals the configuration of a log and returns a function that
@@ -31,7 +31,7 @@ export function seal(this: Log): () => Log {
   runModifierQueue(this.modifierQueue);
   // Clear the queue as to not repeat the actions when the subsequent logs are terminated.
   this.modifierQueue = [];
-  return () => ({ ...this });
+  return () => cloneDeep(this);
 }
 
 /**
@@ -74,7 +74,7 @@ export function seal(this: Log): () => Log {
  *
  * ```
  */
-export function thread(this: Log, key: string, value: any): void {
+export function thread(this: Log, key: string, value: unknown): void {
   // Check if the log has a label. If not, console.warn the user.
   // If the log has a label, attach the context to the label.
   runModifierQueue(this.modifierQueue);
@@ -112,7 +112,7 @@ export function clr(this: Log): void {
  * Generates a terminating log method the specified log level name.
  */
 export function logMethod(levelName: string): LogFunction {
-  return function (this: Log, ...args: any[]): TerminatedLog {
+  return function (this: Log, ...args: unknown[]): TerminatedLog {
     return executionPipeline(
       this,
       this.cfg,
@@ -130,7 +130,7 @@ export function customMethod(): CustomLogFunction {
   return function (
     this: Log,
     levelName: string,
-    ...args: any[]
+    ...args: unknown[]
   ): TerminatedLog {
     return executionPipeline(
       this,
@@ -168,7 +168,7 @@ function executionPipeline(
   log: Log,
   cfg: Defaults,
   def: LogLevelDefinition | undefined,
-  args: any[]
+  args: unknown[]
 ): TerminatedLog {
   if (def && allowed(cfg, def)) {
     // Apply modifiers in the proper order.
@@ -177,7 +177,7 @@ function executionPipeline(
     // Check the test modifiers.
     if (evalPasses(log)) {
       // Save terminator props for recall purposes
-      const final_log = finalizeLog(log, def, args, timestamp());
+      const final_log = finalizeLog(log, def, args, timestamp(), stacktrace());
 
       // If a global context exists, check if this log is allowed.
       const globally_allowed = env.$shed?.logGloballyAllowed(final_log) ?? true;
@@ -224,7 +224,6 @@ export function store(log: FinalLog): void {
 /**
  * Fires listeners for this log instance if a Shed exists.
  */
-// TODO: Determine how to handle render for recalling logs from bundles
 export function fireListeners(log: FinalLog): void {
   const shed = env.$shed;
   if (shedExists(shed)) {
@@ -239,13 +238,15 @@ export function fireListeners(log: FinalLog): void {
 function finalizeLog(
   log: Log,
   def: LogLevelDefinition,
-  args: any[],
-  timestamp: LogTimestamp
+  args: unknown[],
+  timestamp: LogTimestamp,
+  stacktrace: string | null
 ): FinalLog {
   return mutateProps<FinalLog>(log, [
     ['args', args],
     ['level', def.level],
     ['definition', def],
     ['timestamp', timestamp],
+    ['stacktrace', stacktrace],
   ]);
 }

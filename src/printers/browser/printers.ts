@@ -67,7 +67,7 @@ export function printGroupCollapsed(
 export function fLeader(
   def: LogLevelDefinition,
   use_emoji: boolean,
-  args: any[]
+  args: unknown[]
 ): string {
   return ` %c${fEmoji(def, use_emoji)} ${fName(def.levelName)}(${args.length})`;
 }

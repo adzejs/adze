@@ -43,8 +43,8 @@ export function printGroupCollapsed(
 function setupPrintGroup(
   def: LogLevelDefinition,
   use_emoji: boolean,
-  args: any[]
-): any[] {
+  args: unknown[]
+): unknown[] {
   const partial_args = [fLeader(def, use_emoji, args)];
   return typeof args[0] === 'string'
     ? [...partial_args, args[0]]
@@ -60,7 +60,7 @@ function setupPrintGroup(
 export function fLeader(
   def: LogLevelDefinition,
   use_emoji: boolean,
-  args: any[]
+  args: unknown[]
 ): string {
   const emoji = use_emoji ? fEmoji(def.emoji) : '';
   const padding = use_emoji ? 14 + emoji.length : 14;

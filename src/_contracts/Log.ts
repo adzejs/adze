@@ -5,7 +5,7 @@ import { LogLevelDefinition, ConsoleMethod, Defaults } from '.';
  * Fingerprint of the function that is called when you execute
  * a log method such as info().
  */
-export type LogFunction = (...args: any[]) => TerminatedLog;
+export type LogFunction = (...args: unknown[]) => TerminatedLog;
 
 /**
  * Fingerprint of the function that is called when you execute
@@ -13,8 +13,7 @@ export type LogFunction = (...args: any[]) => TerminatedLog;
  */
 export type CustomLogFunction = (
   levelName: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ...args: any[]
+  ...args: unknown[]
 ) => TerminatedLog;
 
 /**
@@ -61,11 +60,12 @@ interface LogFlags {
  */
 interface LogValues {
   cfg: Defaults;
-  timestamp?: LogTimestamp;
-  render?: LogRender;
-  level?: number;
+  timestamp: LogTimestamp | null;
+  stacktrace: string | null;
+  render: LogRender | null;
+  level: number | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  args?: any[];
+  args: unknown[] | null;
   namespaceVal?: string | string[];
   labelVal?: Label;
   timeNowVal?: string;
@@ -75,8 +75,7 @@ interface LogValues {
 }
 
 export interface MetaData {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 /**
@@ -87,8 +86,7 @@ interface LogMethods {
   custom: CustomLogFunction;
   seal(this: Log): () => Log;
   context<T>(): T;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  thread(key: string, value: any): void;
+  thread(key: string, value: unknown): void;
   close(): void;
   clear(): void;
   clr(): void;
@@ -128,16 +126,14 @@ export interface FinalLog extends Log {
   level: number;
   timestamp: LogTimestamp;
   render: LogRender;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  args: any[];
+  args: unknown[];
   definition: LogLevelDefinition;
 }
 
 /**
  * The render value for a Log.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Arguments = any[];
+type Arguments = unknown[];
 export type LogRender = [ConsoleMethod, Arguments];
 
 /**

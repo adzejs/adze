@@ -49,7 +49,7 @@ export function printTrace(log: FinalLog): LogRender {
 export function applyRender(
   log: FinalLog,
   method: ConsoleMethod,
-  args: any[],
+  args: unknown[],
   spread = true
 ): LogRender {
   const expanded_args = log.dumpContext ? args.concat([log.context]) : args;

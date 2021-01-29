@@ -62,7 +62,7 @@ export interface LogData {
   level: number;
   definition: LogLevelDefinition;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  args: any[];
+  args: unknown[];
   namespace: string | string[] | null;
   label: LabelData;
   timeNow: string | null;

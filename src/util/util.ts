@@ -35,6 +35,13 @@ export function timestamp(): LogTimestamp {
 }
 
 /**
+ * Generates a stacktrace and returns it.
+ */
+export function stacktrace(): string | null {
+  return Error().stack ?? null;
+}
+
+/**
  * Gets a URLSearchParams object of the current URL.
  */
 export function getSearchParams(): URLSearchParams | undefined {
