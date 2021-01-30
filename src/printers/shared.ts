@@ -1,13 +1,7 @@
 import { FinalLog, LogRender, ConsoleMethod } from '../_contracts';
-import { env } from '../global';
+import { env, isFirefox } from '../global';
 import { isString } from '../util';
-
-const error = Function.prototype.bind.call(console.error, console);
-const warn = Function.prototype.bind.call(console.warn, console);
-const info = Function.prototype.bind.call(console.info, console);
-const log = Function.prototype.bind.call(console.log, console);
-const debug = Function.prototype.bind.call(console.debug, console);
-const cnsl = { error, warn, info, log, debug };
+import { printLog } from './browser';
 
 // ------- PRINT ENTRY -------- //
 
@@ -35,8 +29,15 @@ export function printDirxml(log: FinalLog): LogRender {
   return applyRender(log, 'dirxml', log.args, false);
 }
 
-export function printTrace(log: FinalLog): LogRender {
-  return applyRender(log, 'trace', log.args);
+export function printTrace(log: FinalLog, use_emoji: boolean): LogRender {
+  // NOTE: Firefox does not support styling on console.trace()
+  if (isFirefox) {
+    return applyRender(log, 'trace', log.args);
+  }
+  // All other browsers support console styling on console.trace()
+  const render = printLog(log, use_emoji);
+  const args = render[1];
+  return applyRender(log, 'trace', args);
 }
 
 // ------ Print to the console ------- //

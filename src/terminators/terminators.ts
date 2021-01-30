@@ -176,8 +176,11 @@ function executionPipeline(
 
     // Check the test modifiers.
     if (evalPasses(log)) {
+      // Check if capturing stacktrace is enabled
+      const stktrc = cfg.capture_stacktrace ? stacktrace() : null;
+
       // Save terminator props for recall purposes
-      const final_log = finalizeLog(log, def, args, timestamp(), stacktrace());
+      const final_log = finalizeLog(log, def, args, timestamp(), stktrc);
 
       // If a global context exists, check if this log is allowed.
       const globally_allowed = env.$shed?.logGloballyAllowed(final_log) ?? true;

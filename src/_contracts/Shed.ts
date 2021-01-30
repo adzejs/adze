@@ -60,6 +60,7 @@ export interface LogData {
   cfg: Defaults;
   timestamp: LogTimestamp;
   level: number;
+  stacktrace: string | null;
   definition: LogLevelDefinition;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   args: unknown[];

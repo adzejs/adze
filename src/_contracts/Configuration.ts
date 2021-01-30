@@ -18,6 +18,7 @@ export interface Defaults {
   log_level: number;
   log_cache_size: number;
   use_emoji: boolean;
+  capture_stacktrace: boolean;
   base_style: string;
   log_levels: LogLevels;
   custom_levels: Partial<LogLevels>;
