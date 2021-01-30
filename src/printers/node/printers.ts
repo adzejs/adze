@@ -1,4 +1,4 @@
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { FinalLog, LogLevelDefinition, LogRender } from '../../_contracts';
 import { applyRender, fNamespace } from '../shared';
 import { env } from '../../global';
@@ -49,6 +49,12 @@ function setupPrintGroup(
   return typeof args[0] === 'string'
     ? [...partial_args, args[0]]
     : partial_args;
+}
+
+export function printTrace(log: FinalLog, use_emoji: boolean): LogRender {
+  const render = printLog(log, use_emoji);
+  const args = render[1];
+  return applyRender(log, 'trace', args);
 }
 
 // ------- PRINT FORMATTERS -------- //

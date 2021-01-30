@@ -11,6 +11,7 @@ export declare function printGroup(log: FinalLog, use_emoji: boolean): LogRender
  * The method for printing collapsed group logs to the node console.
  */
 export declare function printGroupCollapsed(log: FinalLog, use_emoji: boolean): LogRender;
+export declare function printTrace(log: FinalLog, use_emoji: boolean): LogRender;
 /**
  * Formats the leader of the log string. This contains the emoji if enabled,
  * the log level name, and the number of arguments being printed.

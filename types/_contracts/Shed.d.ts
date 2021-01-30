@@ -39,6 +39,7 @@ export interface LogData {
     cfg: Defaults;
     timestamp: LogTimestamp;
     level: number;
+    stacktrace: string | null;
     definition: LogLevelDefinition;
     args: unknown[];
     namespace: string | string[] | null;

@@ -1,4 +1,4 @@
-import { defaultsDeep } from 'lodash-es';
+import defaultsDeep from 'lodash/defaultsDeep';
 
 import { Log, Configuration, Defaults } from './_contracts';
 import {

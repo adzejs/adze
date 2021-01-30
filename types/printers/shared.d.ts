@@ -4,7 +4,6 @@ export declare function printGroupEnd(log: FinalLog): LogRender;
 export declare function printTable(log: FinalLog): LogRender;
 export declare function printDir(log: FinalLog): LogRender;
 export declare function printDirxml(log: FinalLog): LogRender;
-export declare function printTrace(log: FinalLog): LogRender;
 /**
  * Applies the render tuple to the log instance. If spread is indicated, the args
  * value will be an array. If spread is false, the args value will be an array with

@@ -1,6 +1,6 @@
 import { FinalLog, LogLevelDefinition, LogRender } from '../../_contracts';
 import { applyRender, fNamespace } from '../shared';
-import { env } from '../../global';
+import { env, isFirefox } from '../../global';
 import { initialCaps } from '../../util';
 
 // ------- PRINT METHODS -------- //
@@ -56,6 +56,17 @@ export function printGroupCollapsed(
       : partial_args;
 
   return applyRender(log, 'groupCollapsed', render_args);
+}
+
+export function printTrace(log: FinalLog, use_emoji: boolean): LogRender {
+  // NOTE: Firefox does not support styling on console.trace()
+  if (isFirefox) {
+    return applyRender(log, 'trace', log.args);
+  }
+  // All other browsers support console styling on console.trace()
+  const render = printLog(log, use_emoji);
+  const args = render[1];
+  return applyRender(log, 'trace', args);
 }
 
 // ------- PRINT FORMATTERS -------- //

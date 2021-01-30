@@ -13,7 +13,7 @@ import { allowed, evalPasses } from '../conditions';
 import { mutateProps, timestamp, stacktrace } from '../util';
 import { shedExists } from '../shed';
 import { env } from '../global';
-import { cloneDeep } from 'lodash-es';
+import cloneDeep from 'lodash/cloneDeep';
 
 /**
  * Seals the configuration of a log and returns a function that
