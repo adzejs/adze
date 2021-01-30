@@ -40,7 +40,7 @@ export interface LogData {
     timestamp: LogTimestamp;
     level: number;
     definition: LogLevelDefinition;
-    args: any[];
+    args: unknown[];
     namespace: string | string[] | null;
     label: LabelData;
     timeNow: string | null;

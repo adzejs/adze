@@ -15,7 +15,7 @@ export declare function printGroupCollapsed(log: FinalLog, use_emoji: boolean): 
  * Formats the leader of the log string. This contains the emoji if enabled,
  * the log level name, and the number of arguments being printed.
  */
-export declare function fLeader(def: LogLevelDefinition, use_emoji: boolean, args: any[]): string;
+export declare function fLeader(def: LogLevelDefinition, use_emoji: boolean, args: unknown[]): string;
 /**
  * Formats the meta section of the log string which includes the
  * log namespace, the label, the timestamp from the timer, the count

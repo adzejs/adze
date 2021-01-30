@@ -10,7 +10,7 @@ export declare function printTrace(log: FinalLog): LogRender;
  * value will be an array. If spread is false, the args value will be an array with
  * a nested array to prevent the spread operator from destructuring the values.
  */
-export declare function applyRender(log: FinalLog, method: ConsoleMethod, args: any[], spread?: boolean): LogRender;
+export declare function applyRender(log: FinalLog, method: ConsoleMethod, args: unknown[], spread?: boolean): LogRender;
 /**
  * Render the log. If the ADZE_ENV is set to "dev" the log will not render and
  * will be returned for unit library development purposes.

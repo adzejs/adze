@@ -4,12 +4,12 @@ import { LogLevelDefinition, ConsoleMethod, Defaults } from '.';
  * Fingerprint of the function that is called when you execute
  * a log method such as info().
  */
-export declare type LogFunction = (...args: any[]) => TerminatedLog;
+export declare type LogFunction = (...args: unknown[]) => TerminatedLog;
 /**
  * Fingerprint of the function that is called when you execute
  * a custom log method defined in the configuration.
  */
-export declare type CustomLogFunction = (levelName: string, ...args: any[]) => TerminatedLog;
+export declare type CustomLogFunction = (levelName: string, ...args: unknown[]) => TerminatedLog;
 /**
  * The keys of the default terminating log methods included with Adze.
  */
@@ -41,10 +41,11 @@ interface LogFlags {
  */
 interface LogValues {
     cfg: Defaults;
-    timestamp?: LogTimestamp;
-    render?: LogRender;
-    level?: number;
-    args?: any[];
+    timestamp: LogTimestamp | null;
+    stacktrace: string | null;
+    render: LogRender | null;
+    level: number | null;
+    args: unknown[] | null;
     namespaceVal?: string | string[];
     labelVal?: Label;
     timeNowVal?: string;
@@ -53,7 +54,7 @@ interface LogValues {
     printer(log: FinalLog, use_emoji: boolean): LogRender;
 }
 export interface MetaData {
-    [key: string]: any;
+    [key: string]: unknown;
 }
 /**
  * All of the user accessible methods that can be chained to
@@ -63,7 +64,7 @@ interface LogMethods {
     custom: CustomLogFunction;
     seal(this: Log): () => Log;
     context<T>(): T;
-    thread(key: string, value: any): void;
+    thread(key: string, value: unknown): void;
     close(): void;
     clear(): void;
     clr(): void;
@@ -97,13 +98,13 @@ export interface FinalLog extends Log {
     level: number;
     timestamp: LogTimestamp;
     render: LogRender;
-    args: any[];
+    args: unknown[];
     definition: LogLevelDefinition;
 }
 /**
  * The render value for a Log.
  */
-declare type Arguments = any[];
+declare type Arguments = unknown[];
 export declare type LogRender = [ConsoleMethod, Arguments];
 /**
  * The final value of a log after it has been terminated. This is useful for
