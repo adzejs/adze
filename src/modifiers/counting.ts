@@ -6,11 +6,11 @@ import { modifier } from './modifier';
  *
  * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/count)
  */
-export function count(this: Log): Log {
-  return modifier(this, () => {
-    if (this.labelVal) {
-      this.labelVal.count = this.labelVal.count ?? 0;
-      this.labelVal.count += 1;
+export function count(ctxt: Log): Log {
+  return modifier(ctxt, () => {
+    if (ctxt.labelVal) {
+      ctxt.labelVal.count = ctxt.labelVal.count ?? 0;
+      ctxt.labelVal.count += 1;
     }
   });
 }
@@ -20,10 +20,10 @@ export function count(this: Log): Log {
  *
  * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/countReset)
  */
-export function countReset(this: Log): Log {
-  return modifier(this, () => {
-    if (this.labelVal) {
-      this.labelVal.count = 0;
+export function countReset(ctxt: Log): Log {
+  return modifier(ctxt, () => {
+    if (ctxt.labelVal) {
+      ctxt.labelVal.count = 0;
     }
   });
 }
@@ -33,10 +33,10 @@ export function countReset(this: Log): Log {
  *
  * This is a non-standard method.
  */
-export function countClear(this: Log): Log {
-  return modifier(this, () => {
-    if (this.labelVal) {
-      this.labelVal.count = undefined;
+export function countClear(ctxt: Log): Log {
+  return modifier(ctxt, () => {
+    if (ctxt.labelVal) {
+      ctxt.labelVal.count = undefined;
     }
   });
 }

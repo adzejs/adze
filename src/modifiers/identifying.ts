@@ -40,8 +40,8 @@ export function ns(this: Log, ns: string | string[]): Log {
  *
  * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/trace)
  */
-export function trace(this: Log): Log {
-  return modifier(this, () => {
-    this.printer = printTrace();
+export function trace(ctxt: Log): Log {
+  return modifier(ctxt, () => {
+    ctxt.printer = printTrace();
   });
 }

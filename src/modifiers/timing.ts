@@ -9,10 +9,10 @@ import { modifier } from './modifier';
  *
  * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/time).
  */
-export function time(this: Log): Log {
-  return modifier(this, () => {
-    if (this.labelVal) {
-      this.labelVal.timeStart = hrtime();
+export function time(ctxt: Log): Log {
+  return modifier(ctxt, () => {
+    if (ctxt.labelVal) {
+      ctxt.labelVal.timeStart = hrtime();
     }
   });
 }
@@ -22,12 +22,12 @@ export function time(this: Log): Log {
  *
  * This is a non-standard method.
  */
-export function timeNow(this: Log): Log {
-  return modifier(this, () => {
+export function timeNow(ctxt: Log): Log {
+  return modifier(ctxt, () => {
     const time_now = formatTime(hrtime());
-    this.labelVal
-      ? (this.labelVal.timeNow = time_now)
-      : (this.timeNowVal = time_now);
+    ctxt.labelVal
+      ? (ctxt.labelVal.timeNow = time_now)
+      : (ctxt.timeNowVal = time_now);
   });
 }
 
@@ -39,10 +39,10 @@ export function timeNow(this: Log): Log {
  *
  * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/timeEnd).
  */
-export function timeEnd(this: Log): Log {
-  return modifier(this, () => {
-    if (this.labelVal) {
-      this.labelVal.timeEllapsed = formatTime(hrtime(this.labelVal.timeStart));
+export function timeEnd(ctxt: Log): Log {
+  return modifier(ctxt, () => {
+    if (ctxt.labelVal) {
+      ctxt.labelVal.timeEllapsed = formatTime(hrtime(ctxt.labelVal.timeStart));
     }
   });
 }

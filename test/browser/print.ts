@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const browserEnv = require('browser-env');
 import test from 'ava';
-import { adze, defaults } from '../src';
+import { adze, defaults } from '../../src';
 
 // Simulate the browser environment for testing
 browserEnv();
@@ -364,7 +364,7 @@ test('browser renders a custom log with emoji', (t) => {
 });
 
 // =========================
-// WITH EMOJI
+// ALTERED BASE STYLE
 // =========================
 
 test('browser renders a log with altered base style', (t) => {

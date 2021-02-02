@@ -7,9 +7,9 @@ import { modifier } from './modifier';
  *
  * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/group)
  */
-export function group(this: Log): Log {
-  return modifier(this, () => {
-    this.printer = printGroup();
+export function group(ctxt: Log): Log {
+  return modifier(ctxt, () => {
+    ctxt.printer = printGroup();
   });
 }
 
@@ -18,9 +18,9 @@ export function group(this: Log): Log {
  *
  * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupCollapsed)
  */
-export function groupCollapsed(this: Log): Log {
-  return modifier(this, () => {
-    this.printer = printGroupCollapsed();
+export function groupCollapsed(ctxt: Log): Log {
+  return modifier(ctxt, () => {
+    ctxt.printer = printGroupCollapsed();
   });
 }
 
@@ -29,8 +29,8 @@ export function groupCollapsed(this: Log): Log {
  *
  * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupEnd)
  */
-export function groupEnd(this: Log): Log {
-  return modifier(this, () => {
-    this.printer = printGroupEnd;
+export function groupEnd(ctxt: Log): Log {
+  return modifier(ctxt, () => {
+    ctxt.printer = printGroupEnd;
   });
 }

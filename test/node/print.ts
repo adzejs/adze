@@ -1,9 +1,7 @@
 import test from 'ava';
-import { adze, defaults } from '../src';
+import { adze, defaults } from '../../src';
 
-test.before((t) => {
-  global.ADZE_ENV = 'dev';
-});
+global.ADZE_ENV = 'dev';
 
 // ------- Default Node Logs -------- //
 

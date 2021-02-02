@@ -13,6 +13,7 @@ import {
 import {
   count,
   countReset,
+  countClear,
   dir,
   dirxml,
   dump,
@@ -70,6 +71,9 @@ export function adze(user_cfg: Configuration = {}): Log {
   const metaData = cfg.meta;
 
   return {
+    // ======================================
+    // Data Properties
+    // ======================================
     cfg,
     level: null,
     args: null,
@@ -83,6 +87,9 @@ export function adze(user_cfg: Configuration = {}): Log {
     printer: printLog(),
     metaData,
 
+    // ======================================
+    // Terminating Methods (return void)
+    // ======================================
     attention: logMethod('attention'),
     error: logMethod('error'),
     warn: logMethod('warn'),
@@ -93,34 +100,88 @@ export function adze(user_cfg: Configuration = {}): Log {
     debug: logMethod('debug'),
     verbose: logMethod('verbose'),
     custom: customMethod(),
-
     seal,
-    count,
-    countReset,
     thread,
-    dump,
     close,
     clear,
     clr,
-    dir,
-    dirxml,
-    table,
+
+    // ======================================
+    // Modifiers that require parameters
+    // ======================================
     assert,
     test,
-    group,
-    groupCollapsed,
-    groupEnd,
     label,
     meta,
     namespace,
     ns,
-    silent,
-    trace,
-    time,
-    timeNow,
-    timeEnd,
 
-    // A shortcut accessor for grabbing the thread context from the label object.
+    // ==========================================
+    // Modifiers that do not require parameters
+    // ==========================================
+    get dir() {
+      return dir(this);
+    },
+
+    get dirxml() {
+      return dirxml(this);
+    },
+
+    get table() {
+      return table(this);
+    },
+
+    get silent() {
+      return silent(this);
+    },
+
+    get group() {
+      return group(this);
+    },
+
+    get groupCollapsed() {
+      return groupCollapsed(this);
+    },
+
+    get groupEnd() {
+      return groupEnd(this);
+    },
+
+    get count() {
+      return count(this);
+    },
+
+    get countReset() {
+      return countReset(this);
+    },
+
+    get countClear() {
+      return countClear(this);
+    },
+
+    get dump() {
+      return dump(this);
+    },
+
+    get trace() {
+      return trace(this);
+    },
+
+    get time() {
+      return time(this);
+    },
+
+    get timeNow() {
+      return timeNow(this);
+    },
+
+    get timeEnd() {
+      return timeEnd(this);
+    },
+
+    // ======================================
+    // Shortcuts
+    // ======================================
     get context() {
       return this.labelVal?.context;
     },

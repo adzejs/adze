@@ -93,26 +93,27 @@ interface LogMethods {
   clear(): void;
   clr(): void;
   // Modifier Functions
-  count(): Log;
-  countReset(): Log;
-  dir(): Log;
-  dirxml(): Log;
-  dump(): Log;
-  table(): Log;
+  count: Log;
+  countReset: Log;
+  countClear: Log;
+  dir: Log;
+  dirxml: Log;
+  dump: Log;
+  table: Log;
   assert(assertion: boolean): Log;
   test(expression: boolean): Log;
-  group(): Log;
-  groupCollapsed(): Log;
-  groupEnd(): Log;
+  group: Log;
+  groupCollapsed: Log;
+  groupEnd: Log;
   label(name: string): Log;
   meta<T>(key: string, val: T): Log;
   ns(ns: string): Log;
   namespace(ns: string | string[]): Log;
-  silent(): Log;
-  trace(): Log;
-  time(): Log;
-  timeNow(): Log;
-  timeEnd(): Log;
+  silent: Log;
+  trace: Log;
+  time: Log;
+  timeNow: Log;
+  timeEnd: Log;
 }
 
 /**
