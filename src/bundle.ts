@@ -1,4 +1,5 @@
 import { Bundle, Bundler, BundledLog, Log } from './_contracts';
+import { cloneLog } from './util';
 
 /**
  * Bundles all logs together by wrapping all subsequent logs in a Bundle callback
@@ -16,12 +17,11 @@ import { Bundle, Bundler, BundledLog, Log } from './_contracts';
 export function bundle(log: Log): Bundler {
   const bundle_arr = [] as Bundle;
   return () => {
-    const bundled_log: BundledLog = {
-      ...log,
+    const bundled_log = cloneLog<BundledLog>(log, {
       get bundle() {
         return bundle_arr;
       },
-    };
+    });
     bundle_arr.push(bundled_log);
     return bundled_log;
   };

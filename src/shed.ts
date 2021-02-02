@@ -16,7 +16,8 @@ import {
   FilterAllowedCallback,
 } from './_contracts';
 import { defaults, shed_defaults } from './_defaults';
-import { isString, formatLevels, makeLogData } from './util';
+import { isString, formatLevels } from './util';
+import { makeLogData } from './terminators';
 import { env } from './global';
 
 /**

@@ -1,13 +1,5 @@
-import {
-  LogTimestamp,
-  Defaults,
-  LogLevels,
-  LevelFilter,
-  FinalLog,
-  LogData,
-  LabelData,
-} from '../_contracts';
-import { env, envIsWindow } from '../global';
+import { Defaults, LogLevels, LevelFilter } from '../_contracts';
+import { isString, isArray, isDefined } from './type-guards';
 
 /**
  * Capitalizes the first character of the provided string.
@@ -23,33 +15,6 @@ export function initialCaps(str: string): string {
 export function mutateProps<O>(obj: any, mutations: Array<[string, any]>): O {
   mutations.forEach(([prop, val]) => (obj[prop] = val));
   return obj;
-}
-
-/**
- * Generate a unique ID for your log.
- */
-export function timestamp(): LogTimestamp {
-  const unixMilli = Date.now();
-  const date = new Date(unixMilli);
-  const utc = date.toUTCString();
-  return { unixMilli, utc };
-}
-
-/**
- * Generates a stacktrace and returns it.
- */
-export function stacktrace(): string | null {
-  return Error().stack ?? null;
-}
-
-/**
- * Gets a URLSearchParams object of the current URL.
- */
-export function getSearchParams(): URLSearchParams | undefined {
-  const my_env = env();
-  if (envIsWindow(my_env)) {
-    return new URLSearchParams(my_env.document.location.search.substring(1));
-  }
 }
 
 /**
@@ -75,48 +40,6 @@ export function formatLevels(
     return levels;
   }
   return [] as number[];
-}
-
-/**
- * Creates a slimmed down object comprised of data from
- * the final log.
- */
-export function makeLogData(log: FinalLog): LogData {
-  const {
-    cfg,
-    level,
-    timestamp,
-    stacktrace,
-    definition,
-    args,
-    namespaceVal: namespace = null,
-    labelVal = null,
-    timeNowVal: timeNow = null,
-    metaData: meta = {},
-  } = log;
-
-  const label: LabelData = {
-    name: labelVal?.name ?? null,
-    timeNow: labelVal?.timeNow ?? null,
-    timeEllapsed: labelVal?.timeEllapsed ?? null,
-    count: labelVal?.count ?? null,
-  };
-
-  const context = labelVal?.context ?? null;
-
-  return {
-    cfg,
-    level,
-    timestamp,
-    stacktrace,
-    definition,
-    args,
-    namespace,
-    label,
-    timeNow,
-    meta,
-    context,
-  };
 }
 
 /**
@@ -164,25 +87,4 @@ export function createArrayOfNumbers(start: number, end: number): number[] {
     arr.push(i);
   }
   return arr;
-}
-
-/**
- * Type Guard to check if the given value is a String.
- */
-export function isString(val: unknown): val is string {
-  return typeof val === 'string';
-}
-
-/**
- * Type Guard to check if the given value is an Array.
- */
-export function isArray(val: unknown): val is [] {
-  return Array.isArray(val);
-}
-
-/**
- * Type Guard that validates that the given value is not undefined.
- */
-export function isDefined<T>(val: T | undefined): val is T {
-  return val !== undefined;
 }

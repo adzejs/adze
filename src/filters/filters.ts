@@ -1,4 +1,4 @@
-import { Log, LogRender, FinalLog, Bundle, Collection } from '../_contracts';
+import { Log, LogRender, FinalLog, Collection } from '../_contracts';
 import { isString } from '../util';
 
 /**
@@ -6,21 +6,15 @@ import { isString } from '../util';
  */
 export function filterNamespace(
   collection: Collection = [],
-  ns: string | string[]
+  ns: string[]
 ): Collection {
   return loopCollection(collection, (log) => {
     const log_ns = log.namespaceVal;
     if (log_ns) {
-      if (isString(log_ns)) {
-        return isString(ns) ? log_ns === ns : ns.includes(log_ns) ?? false;
-      } else {
-        // Loop over each log ns value and see if any match any ns value.
-        return log_ns
-          .map((val) => {
-            return isString(ns) ? val === ns : ns.includes(val);
-          })
-          .includes(true);
-      }
+      // Loop over each log ns value and see if any match any ns value.
+      return log_ns
+        .map((val) => (isString(ns) ? val === ns : ns.includes(val)))
+        .includes(true);
     }
     return false;
   });

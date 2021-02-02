@@ -149,10 +149,10 @@ function thread({ adze, createShed, removeShed, render }) {
   add(1, 2);
   subtract(4, 3);
 
-  adze().label('foo').dump().info('Results from our thread');
+  adze().label('foo').dump.info('Results from our thread');
   adze().label('foo').close();
   removeShed();
-  adze().label('foo').dump().info('(MDC) Context after closing the thread');
+  adze().label('foo').dump.info('(MDC) Context after closing the thread');
 }
 
 function logLevelOf2({ adze }) {
@@ -262,12 +262,12 @@ function withMultiNamespace({ adze }) {
 
 function withTime({ adze }) {
   console.log('\n----- Default Log Timing w/ No Store -----\n');
-  adze().time().log('Testing time with no store.');
-  adze().timeEnd().log('Testing time with no store.');
-  adze().timeNow().log('Testing timeNow with no store.');
-  adze({ use_emoji: true })
-    .timeNow()
-    .log("Testing timeNow with no store and emoji's enabled.");
+  adze().time.log('Testing time with no store.');
+  adze().timeEnd.log('Testing time with no store.');
+  adze().timeNow.log('Testing timeNow with no store.');
+  adze({ use_emoji: true }).timeNow.log(
+    "Testing timeNow with no store and emoji's enabled."
+  );
 }
 
 function asTable({ adze }) {
@@ -276,32 +276,33 @@ function asTable({ adze }) {
     { firstName: 'Andrew', lastName: 'Stacy' },
     { firstName: 'Jim', lastName: 'Bob' },
   ];
-  adze().table().log(tabular_data);
+  adze().table.log(tabular_data);
 }
 
 function asDir({ adze }) {
   console.log('\n----- Default Dir Log -----\n');
   const deep_obj = { a: { b: 'testing' } };
-  adze().dir().log(deep_obj);
+  const x = adze().dir.log(deep_obj);
+  console.log({ x });
 }
 
 function asDirxml({ adze }, el) {
   console.log('\n----- Default Dirxml Log -----\n');
-  adze().dirxml().log(el);
+  adze().dirxml.log(el);
 }
 
 function asGroup({ adze }) {
   console.log('\n----- Default Expanded Group Log -----\n');
-  adze().group().log('This is a group.');
+  adze().group.log('This is a group.');
   adze().log('This is a child of a group log.');
-  adze().groupEnd().log();
+  adze().groupEnd.log();
 }
 
 function asGroupCollapsed({ adze }) {
   console.log('\n----- Default Collapsed Group Log -----\n');
-  adze().groupCollapsed().log('This is a collapsed group.');
+  adze().groupCollapsed.log('This is a collapsed group.');
   adze().log('This is a child of a collapsed group.');
-  adze().groupEnd().log();
+  adze().groupEnd.log();
 }
 
 function evaluation({ adze }) {
@@ -325,5 +326,5 @@ function evaluation({ adze }) {
 
 function withTrace({ adze }) {
   console.log('\n----- Default Log w/ Trace -----\n');
-  adze().trace().log('Tracing...');
+  adze().trace.log('Tracing...');
 }

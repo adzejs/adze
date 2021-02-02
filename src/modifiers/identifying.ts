@@ -2,6 +2,7 @@ import { Log } from '../_contracts';
 import { getLabel, addLabel } from '../label';
 import { printTrace } from '../printers';
 import { prependModifier, modifier } from './modifier';
+import { isString } from '../util';
 
 /**
  * Adds a label to the log. Label's can be used for log identification
@@ -24,7 +25,7 @@ export function label(this: Log, name: string): Log {
  */
 export function namespace(this: Log, ns: string | string[]): Log {
   return modifier(this, () => {
-    this.namespaceVal = ns;
+    this.namespaceVal = isString(ns) ? [ns] : ns;
   });
 }
 
