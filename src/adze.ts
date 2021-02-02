@@ -80,7 +80,7 @@ export function adze(user_cfg: Configuration = {}): Log {
     dumpContext: false,
     isSilent: false,
     modifierQueue: [],
-    printer: printLog,
+    printer: printLog(),
     metaData,
 
     attention: logMethod('attention'),

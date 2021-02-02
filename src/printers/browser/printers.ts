@@ -1,6 +1,6 @@
 import { FinalLog, LogLevelDefinition, LogRender } from '../../_contracts';
 import { applyRender, fNamespace } from '../shared';
-import { env, isFirefox } from '../../global';
+import { env, browser } from '../../global';
 import { initialCaps } from '../../util';
 
 // ------- PRINT METHODS -------- //
@@ -60,7 +60,7 @@ export function printGroupCollapsed(
 
 export function printTrace(log: FinalLog, use_emoji: boolean): LogRender {
   // NOTE: Firefox does not support styling on console.trace()
-  if (isFirefox) {
+  if (browser().isFirefox) {
     return applyRender(log, 'trace', log.args);
   }
   // All other browsers support console styling on console.trace()
@@ -87,7 +87,7 @@ export function fLeader(
  * Adds the emoji to the log leader if enabled.
  */
 function fEmoji(def: LogLevelDefinition, use_emoji: boolean): string {
-  return env.$shed?.overrides?.use_emoji || use_emoji ? ` ${def.emoji}` : '';
+  return env().$shed?.overrides?.use_emoji || use_emoji ? ` ${def.emoji}` : '';
 }
 
 /**
@@ -119,7 +119,7 @@ function fTime(log: FinalLog, use_emoji: boolean): string {
   }`;
   return label_txt !== ''
     ? ` (${
-        env.$shed?.overrides?.use_emoji || use_emoji ? '⏱' : ''
+        env().$shed?.overrides?.use_emoji || use_emoji ? '⏱' : ''
       }${label_txt}) `
     : '';
 }

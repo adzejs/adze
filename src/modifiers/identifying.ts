@@ -42,6 +42,6 @@ export function ns(this: Log, ns: string | string[]): Log {
  */
 export function trace(this: Log): Log {
   return modifier(this, () => {
-    this.printer = printTrace;
+    this.printer = printTrace();
   });
 }

@@ -14,7 +14,7 @@
     "preserveConstEnums": true,
     "baseUrl": "."
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*.ts", "test/**/*.ts"],
   "exclude": [
     "old",
     "dist",

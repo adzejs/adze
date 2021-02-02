@@ -126,7 +126,7 @@ function fTime(log: FinalLog, use_emoji: boolean): string {
   const label_txt = `${log.timeNowVal ?? log.labelVal?.timeEllapsed ?? ''}`;
   return label_txt !== ''
     ? `(${
-        env.$shed?.overrides?.use_emoji || use_emoji ? '⏱' : ''
+        env().$shed?.overrides?.use_emoji || use_emoji ? '⏱' : ''
       }${label_txt}) `
     : '';
 }

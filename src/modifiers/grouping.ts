@@ -9,7 +9,7 @@ import { modifier } from './modifier';
  */
 export function group(this: Log): Log {
   return modifier(this, () => {
-    this.printer = printGroup;
+    this.printer = printGroup();
   });
 }
 
@@ -20,7 +20,7 @@ export function group(this: Log): Log {
  */
 export function groupCollapsed(this: Log): Log {
   return modifier(this, () => {
-    this.printer = printGroupCollapsed;
+    this.printer = printGroupCollapsed();
   });
 }
 

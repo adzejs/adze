@@ -51,7 +51,7 @@ export declare function seal(this: Log): () => Log;
  *
  * ```
  */
-export declare function thread(this: Log, key: string, value: any): void;
+export declare function thread(this: Log, key: string, value: unknown): void;
 /**
  * Closes a thread assigned to the log by clearing the context values.
  */

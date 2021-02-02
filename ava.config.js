@@ -1,21 +1,16 @@
-export default ({
-  babel: {
-    compileEnhancements: false,
-  },
-  require: [
-    "ts-node/register"
-  ],
+export default {
+  require: ['ts-node/register'],
   files: [
-    "test/**/*.ts",
-    "!test/mock/**/*.ts",
-    "!test/data/**/*.ts",
-    "!test/polyfill/**/*.ts",
+    'test/**/*.ts',
+    '!test/browser-env.d.ts',
+    '!test/mock/**/*.ts',
+    '!test/data/**/*.ts',
+    '!test/polyfill/**/*.ts',
   ],
-  ingoredByWatcher: [
-    "src/**/*.ts"
-  ],
+  // environmentVariables: {
+  //   ADZE_ENV: 'dev',
+  // },
+  ingoredByWatcher: ['src/**/*.ts'],
   verbose: true,
-  extensions: [
-    "ts"
-  ]
-});
+  extensions: ['ts'],
+};

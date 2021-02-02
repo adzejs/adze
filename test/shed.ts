@@ -1,5 +1,9 @@
 import test from 'ava';
 
-test('testing shed', (t) => {
+test.before((t) => {
+  global.ADZE_ENV = 'dev';
+});
+
+test.skip('testing shed', (t) => {
   t.pass();
 });

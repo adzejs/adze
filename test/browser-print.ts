@@ -1,7 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const browserEnv = require('browser-env');
 import test from 'ava';
 import { adze, defaults } from '../src';
-import { Defaults, LogLevelDefinition } from '../src/_contracts';
 
+browserEnv();
 global.ADZE_ENV = 'dev';
 
 // ------- Default Browser Logs -------- //

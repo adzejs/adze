@@ -29,15 +29,16 @@ export function shedExists(store: Shed | undefined): store is Shed {
  * Creates a new shed instance in your environment's global context.
  */
 export function createShed(config: ShedUserConfig): Shed {
-  env.$shed = new Shed(config);
-  return env.$shed;
+  const my_env = env();
+  my_env.$shed = new Shed(config);
+  return my_env.$shed;
 }
 
 /**
  * Removes the shed from the environment's global context.
  */
 export function removeShed(): void {
-  delete env.$shed;
+  delete env().$shed;
 }
 
 /**

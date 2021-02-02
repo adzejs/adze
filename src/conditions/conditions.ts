@@ -41,5 +41,7 @@ export function evalPasses(log: Log): boolean {
  */
 export function notTestEnv(): boolean {
   // Allow for URL Param of ADZE_ENV when in the browser.
-  return (env?.ADZE_ENV ?? getSearchParams()?.get('ADZE_ENV') ?? '') !== 'test';
+  return (
+    (env()?.ADZE_ENV ?? getSearchParams()?.get('ADZE_ENV') ?? '') !== 'test'
+  );
 }

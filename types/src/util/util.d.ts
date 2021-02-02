@@ -12,6 +12,10 @@ export declare function mutateProps<O>(obj: any, mutations: Array<[string, any]>
  */
 export declare function timestamp(): LogTimestamp;
 /**
+ * Generates a stacktrace and returns it.
+ */
+export declare function stacktrace(): string | null;
+/**
  * Gets a URLSearchParams object of the current URL.
  */
 export declare function getSearchParams(): URLSearchParams | undefined;
@@ -50,11 +54,11 @@ export declare function createArrayOfNumbers(start: number, end: number): number
 /**
  * Type Guard to check if the given value is a String.
  */
-export declare function isString(val: any): val is string;
+export declare function isString(val: unknown): val is string;
 /**
  * Type Guard to check if the given value is an Array.
  */
-export declare function isArray(val: any): val is [];
+export declare function isArray(val: unknown): val is [];
 /**
  * Type Guard that validates that the given value is not undefined.
  */

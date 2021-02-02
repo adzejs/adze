@@ -149,7 +149,7 @@ function getDefinition(
   type: 'log_levels' | 'custom_levels',
   levelName: string
 ): LogLevelDefinition | undefined {
-  const shed = env.$shed;
+  const shed = env().$shed;
   let definition = undefined;
 
   if (shedExists(shed) && shed.hasOverrides) {
@@ -183,7 +183,8 @@ function executionPipeline(
       const final_log = finalizeLog(log, def, args, timestamp(), stktrc);
 
       // If a global context exists, check if this log is allowed.
-      const globally_allowed = env.$shed?.logGloballyAllowed(final_log) ?? true;
+      const globally_allowed =
+        env().$shed?.logGloballyAllowed(final_log) ?? true;
 
       if (globally_allowed) {
         // Render the log and print to the console
@@ -218,7 +219,7 @@ function runModifierQueue(queue: Array<() => void>): void {
  * Stores this log in the Shed if the Shed exists.
  */
 export function store(log: FinalLog): void {
-  const shed = env.$shed;
+  const shed = env().$shed;
   if (shedExists(shed)) {
     shed.store(log);
   }
@@ -228,7 +229,7 @@ export function store(log: FinalLog): void {
  * Fires listeners for this log instance if a Shed exists.
  */
 export function fireListeners(log: FinalLog): void {
-  const shed = env.$shed;
+  const shed = env().$shed;
   if (shedExists(shed)) {
     shed.fireListeners(log);
   }

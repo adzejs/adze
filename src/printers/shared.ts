@@ -6,7 +6,7 @@ import { isString } from '../util';
 
 export function print(log: FinalLog): LogRender {
   const use_emoji =
-    env.$shed?.overrides?.use_emoji === true || log.cfg.use_emoji === true;
+    env().$shed?.overrides?.use_emoji === true || log.cfg.use_emoji === true;
   return log.printer(log, use_emoji);
 }
 
@@ -53,7 +53,7 @@ export function applyRender(
  */
 export function toConsole(render: LogRender, is_silent: boolean): LogRender {
   const [method, args] = render;
-  if (env.ADZE_ENV !== 'dev' && !is_silent) {
+  if (env().ADZE_ENV !== 'dev' && !is_silent) {
     console[method](...args);
   }
   return render;

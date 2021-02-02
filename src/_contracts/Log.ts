@@ -42,6 +42,8 @@ export interface LogTimestamp {
   utc: string;
 }
 
+export type PrintFunction = (log: FinalLog, use_emoji: boolean) => LogRender;
+
 /**
  * Boolean flags that represent various states of how the log
  * should be printed.
@@ -71,7 +73,7 @@ interface LogValues {
   timeNowVal?: string;
   metaData: MetaData;
   modifierQueue: Array<() => void>;
-  printer(log: FinalLog, use_emoji: boolean): LogRender;
+  printer: PrintFunction;
 }
 
 export interface MetaData {

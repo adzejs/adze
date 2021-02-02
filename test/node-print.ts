@@ -1,12 +1,13 @@
 import test from 'ava';
 import { adze, defaults } from '../src';
-import { Defaults, LogLevelDefinition } from '../src/_contracts';
 
-global.ADZE_ENV = 'dev';
+test.before((t) => {
+  global.ADZE_ENV = 'dev';
+});
 
 // ------- Default Node Logs -------- //
 
-test('node renders a default attention log', (t) => {
+test.skip('node renders a default attention log', (t) => {
   const t_log = adze().attention('testing');
   t.truthy(t_log.log);
 
@@ -24,7 +25,7 @@ test('node renders a default attention log', (t) => {
   }
 });
 
-test('node renders a default error log', (t) => {
+test.skip('node renders a default error log', (t) => {
   const t_log = adze().error('testing');
   t.truthy(t_log.log);
 
@@ -39,7 +40,7 @@ test('node renders a default error log', (t) => {
   }
 });
 
-test('node renders a default warn log', (t) => {
+test.skip('node renders a default warn log', (t) => {
   const t_log = adze().warn('testing');
   t.truthy(t_log.log);
 
@@ -54,7 +55,7 @@ test('node renders a default warn log', (t) => {
   }
 });
 
-test('node renders a default info log', (t) => {
+test.skip('node renders a default info log', (t) => {
   const t_log = adze().info('testing');
   t.truthy(t_log.log);
 
@@ -69,7 +70,7 @@ test('node renders a default info log', (t) => {
   }
 });
 
-test('node renders a default fail log', (t) => {
+test.skip('node renders a default fail log', (t) => {
   const t_log = adze().fail('testing');
   t.truthy(t_log.log);
 
@@ -84,7 +85,7 @@ test('node renders a default fail log', (t) => {
   }
 });
 
-test('node renders a default success log', (t) => {
+test.skip('node renders a default success log', (t) => {
   const t_log = adze().success('testing');
   t.truthy(t_log.log);
 
@@ -99,7 +100,7 @@ test('node renders a default success log', (t) => {
   }
 });
 
-test('node renders a default log', (t) => {
+test.skip('node renders a default log', (t) => {
   const t_log = adze().log('testing');
   t.truthy(t_log.log);
 
@@ -114,7 +115,7 @@ test('node renders a default log', (t) => {
   }
 });
 
-test('node renders a default debug log', (t) => {
+test.skip('node renders a default debug log', (t) => {
   const t_log = adze().debug('testing');
   t.truthy(t_log.log);
 
@@ -129,7 +130,7 @@ test('node renders a default debug log', (t) => {
   }
 });
 
-test('node renders a default verbose log', (t) => {
+test.skip('node renders a default verbose log', (t) => {
   const t_log = adze().verbose('testing');
   t.truthy(t_log.log);
 
