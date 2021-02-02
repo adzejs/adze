@@ -2,9 +2,7 @@ import test from 'ava';
 import { adze, defaults } from '../src';
 import { Defaults, LogLevelDefinition } from '../src/_contracts';
 
-test.before((t) => {
-  global.ADZE_ENV = 'dev';
-});
+global.ADZE_ENV = 'dev';
 
 test.skip('create a new logger with defaults', (t) => {
   const log = adze();

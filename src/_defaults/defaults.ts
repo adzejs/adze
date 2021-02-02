@@ -32,7 +32,7 @@ export const defaults: Defaults = {
       style: `padding-right: 50px; background: linear-gradient(to right, #fff, #d9dce0); color: #333435; border-color: #bfc1c5;`,
       terminal: ['bgGray', 'white'],
       method: 'log',
-      emoji: '📓',
+      emoji: '📌',
     },
     success: {
       level: 5,
