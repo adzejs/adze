@@ -66,7 +66,6 @@ interface LogValues {
   stacktrace: string | null;
   render: LogRender | null;
   level: number | null;
-  id: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   args: unknown[] | null;
   namespaceVal?: string[];

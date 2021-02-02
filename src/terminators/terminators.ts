@@ -10,10 +10,9 @@ import {
 } from '../_contracts';
 import { print, toConsole } from '../printers';
 import { allowed, evalPasses } from '../conditions';
-import { mutateProps, timestamp, stacktrace } from '../util';
+import { mutateProps, timestamp, stacktrace, cloneLog } from '../util';
 import { shedExists } from '../shed';
 import { env } from '../global';
-import cloneDeep from 'lodash/cloneDeep';
 
 /**
  * Seals the configuration of a log and returns a function that
@@ -31,7 +30,7 @@ export function seal(this: Log): () => Log {
   runModifierQueue(this.modifierQueue);
   // Clear the queue as to not repeat the actions when the subsequent logs are terminated.
   this.modifierQueue = [];
-  return () => cloneDeep(this);
+  return () => cloneLog(this);
 }
 
 /**

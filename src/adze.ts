@@ -85,7 +85,6 @@ export function adze(user_cfg: Configuration = {}): Log {
     isSilent: false,
     modifierQueue: [],
     printer: printLog(),
-    id: Math.round(Math.random() * 1000000),
     metaData,
 
     // ======================================
