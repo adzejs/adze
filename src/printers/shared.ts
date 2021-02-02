@@ -53,6 +53,7 @@ export function applyRender(
  */
 export function toConsole(render: LogRender, is_silent: boolean): LogRender {
   const [method, args] = render;
+  console.log('ADZE ENV', env().ADZE_ENV);
   if (env().ADZE_ENV !== 'dev' && !is_silent) {
     console[method](...args);
   }

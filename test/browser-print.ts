@@ -3,8 +3,10 @@ const browserEnv = require('browser-env');
 import test from 'ava';
 import { adze, defaults } from '../src';
 
+// Simulate the browser environment for testing
 browserEnv();
-global.ADZE_ENV = 'dev';
+// Our global context is the window not global
+window.ADZE_ENV = 'dev';
 
 // ------- Default Browser Logs -------- //
 

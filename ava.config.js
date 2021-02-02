@@ -7,9 +7,6 @@ export default {
     '!test/data/**/*.ts',
     '!test/polyfill/**/*.ts',
   ],
-  // environmentVariables: {
-  //   ADZE_ENV: 'dev',
-  // },
   ingoredByWatcher: ['src/**/*.ts'],
   verbose: true,
   extensions: ['ts'],
