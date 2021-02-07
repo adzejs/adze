@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const browserEnv = require('browser-env');
 import test from 'ava';
-import { adze } from '../../src';
+import { adze } from '../../../src';
 
 // Simulate the browser environment for testing
 browserEnv();
