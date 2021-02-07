@@ -1,8 +1,5 @@
-import { Log, Label, Defaults, MetaData } from '.';
-import { Configuration, LogLevelDefinition } from './Configuration';
-import { LogRender, LogTimestamp } from './Log';
-
-export type CacheLocation = 'memory' | 'localStorage';
+import { Label } from '../label';
+import { Defaults, Configuration, LogRender, LogData } from '.';
 
 export type LabelMap = Map<string, Label>;
 
@@ -15,7 +12,6 @@ export type ListenerBucket = Map<number, ListenerCallback>;
 export type ListenerCallback = (LogData: LogData, render: LogRender) => void;
 
 export interface ShedConfig {
-  cache_location: CacheLocation;
   cache_limit: number;
   global_cfg: Defaults | null;
   filters: AdzeFilters;
@@ -55,21 +51,6 @@ export type FilterAllowedCallback = (
   filter: FilterType,
   func: FilterFunction
 ) => boolean | undefined;
-
-export interface LogData {
-  cfg: Defaults;
-  timestamp: LogTimestamp;
-  level: number;
-  stacktrace: string | null;
-  definition: LogLevelDefinition;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  args: unknown[];
-  namespace: string | string[] | null;
-  label: LabelData;
-  timeNow: string | null;
-  meta: MetaData;
-  context: MetaData;
-}
 
 export interface LabelData {
   name: string | null;

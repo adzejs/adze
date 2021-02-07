@@ -1,20 +1,12 @@
-import { Defaults, LogLevels, LevelFilter } from '../_contracts';
+import { Defaults, LogLevels, LevelFilter, LogRender } from '../_contracts';
 import { isString, isArray, isDefined } from './type-guards';
+import { Env } from '../Env';
 
 /**
  * Capitalizes the first character of the provided string.
  */
 export function initialCaps(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-/**
- * Applies property mutations to the provided object.
- */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function mutateProps<O>(obj: any, mutations: Array<[string, any]>): O {
-  mutations.forEach(([prop, val]) => (obj[prop] = val));
-  return obj;
 }
 
 /**
@@ -88,3 +80,23 @@ export function createArrayOfNumbers(start: number, end: number): number[] {
   }
   return arr;
 }
+
+/**
+ * Render the log. If the ADZE_ENV is set to "dev" the log will not render and
+ * will be returned for unit library development purposes.
+ */
+export function toConsole(render: LogRender, is_silent: boolean): LogRender {
+  const [method, args] = render;
+  if (Env.global().ADZE_ENV !== 'dev' && !is_silent) {
+    console[method](...args);
+  }
+  return render;
+}
+
+/**
+ * Check if the given object has any keys set.
+ * NOTE: Currently unused.
+ */
+// export function hasKeys(obj: Record<string, unknown>): boolean {
+//   return Object.keys(obj).length > 0;
+// }

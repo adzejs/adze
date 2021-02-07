@@ -1,9 +1,8 @@
-import { Log, LogFunction } from './_contracts';
+import { Log } from './Log';
 import { adze } from './adze';
 import { bundle } from './bundle';
 import { shedExists, createShed, removeShed } from './shed';
 import { defaults } from './_defaults';
-import { fireListeners } from './terminators';
 import {
   filterLabel,
   filterLevelRange,
@@ -20,7 +19,6 @@ export {
   removeShed,
   defaults,
   Log,
-  LogFunction,
   bundle,
   filterLabel,
   filterLevelRange,
@@ -28,5 +26,4 @@ export {
   loopCollection,
   render,
   rerender,
-  fireListeners,
 };

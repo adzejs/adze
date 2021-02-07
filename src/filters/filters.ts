@@ -1,4 +1,5 @@
-import { Log, LogRender, FinalLog, Collection } from '../_contracts';
+import { LogRender, Collection, LogData } from '../_contracts';
+import { Log } from '../Log';
 import { isString } from '../util';
 
 /**
@@ -9,7 +10,7 @@ export function filterNamespace(
   ns: string[]
 ): Collection {
   return loopCollection(collection, (log) => {
-    const log_ns = log.namespaceVal;
+    const log_ns = log.namespace;
     if (log_ns) {
       // Loop over each log ns value and see if any match any ns value.
       return log_ns
@@ -27,7 +28,7 @@ export function filterLabel(
   collection: Collection = [],
   lbl: string
 ): Collection {
-  return loopCollection(collection, (log) => log.labelVal?.name === lbl);
+  return loopCollection(collection, (log) => log.label?.name === lbl);
 }
 
 /**
@@ -50,10 +51,10 @@ export function filterLevelRange(
  */
 export function loopCollection(
   collection: Collection,
-  cb: (log: Log | FinalLog) => boolean
+  cb: (log: LogData) => boolean
 ): Collection {
   return collection.reduce((acc, log) => {
-    const result = cb(log);
+    const result = cb(log.data);
     return result ? acc.concat([log]) : acc;
   }, [] as Collection);
 }
@@ -62,7 +63,7 @@ export function loopCollection(
  * If the provided log has been previously rendered, this function
  * re-renders it to the console.
  */
-export function rerender(log: FinalLog): void {
+export function rerender(log: Log): void {
   if (log.render) {
     render(log.render);
   }

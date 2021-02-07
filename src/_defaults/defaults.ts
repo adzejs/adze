@@ -1,4 +1,4 @@
-import { browser } from '../global';
+import { Env } from '../Env';
 import { Defaults } from '../_contracts';
 
 export const defaults: Defaults = {
@@ -45,7 +45,7 @@ export const defaults: Defaults = {
     fail: {
       level: 4,
       style: `padding-right: ${
-        browser().isChrome ? '42' : '44'
+        Env.isChrome() ? '42' : '44'
       }px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;`,
       terminal: ['bgRed', 'white'],
       method: 'info',
@@ -54,7 +54,7 @@ export const defaults: Defaults = {
     info: {
       level: 3,
       style: `padding-right: ${
-        browser().isSafari ? '49' : '44'
+        Env.isSafari() ? '49' : '44'
       }px; background: linear-gradient(to right, #fff, #b2d7ff); color: #465464; border-color: #96b5d7;`,
       terminal: ['bgBlue', 'white'],
       method: 'info',
@@ -63,7 +63,7 @@ export const defaults: Defaults = {
     warn: {
       level: 2,
       style: `background: linear-gradient(to right, #fff, #fff0a8); color: #715100; border-color: #e3d696; padding-right: ${
-        browser().isChrome ? '34' : '44'
+        Env.isChrome() ? '34' : '44'
       }px; `,
       terminal: ['bgYellow', 'gray'],
       method: 'warn',
@@ -72,7 +72,7 @@ export const defaults: Defaults = {
     error: {
       level: 1,
       style: `padding-right: ${
-        browser().isChrome ? '29' : '27'
+        Env.isChrome() ? '29' : '27'
       }px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;`,
       terminal: ['bgRed', 'white'],
       method: 'error',

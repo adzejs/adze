@@ -1,5 +1,5 @@
-import { Log, Defaults, LogLevelDefinition } from '../_contracts';
-import { env } from '../global';
+import { Defaults, LogLevelDefinition } from '../_contracts';
+import { Env } from '../Env';
 import { getSearchParams } from '../util';
 
 /**
@@ -17,31 +17,12 @@ export function levelActive(def: LogLevelDefinition, level: number): boolean {
 }
 
 /**
- * Check if any assertions or expressions pass for this log to terminate.
- */
-export function evalPasses(log: Log): boolean {
-  if (log.assertion !== undefined && log.expression !== undefined) {
-    console.warn(
-      'You have declared both an assertion and test on the same log. Please only declare one or nefarious results may occur.'
-    );
-    return true;
-  }
-  if (log.assertion !== undefined) {
-    return log.assertion === false;
-  }
-  if (log.expression !== undefined) {
-    return log.expression === true;
-  }
-  return true;
-}
-
-/**
  * Verify that this log is not in a test environment by checking the environment context
  * or URL params if within a browser context. Prevent termination of the log if it is 'test'.
  */
 export function notTestEnv(): boolean {
   // Allow for URL Param of ADZE_ENV when in the browser.
-  return (
-    (env()?.ADZE_ENV ?? getSearchParams()?.get('ADZE_ENV') ?? '') !== 'test'
-  );
+  const adze_env = Env.global()?.ADZE_ENV;
+  const param = getSearchParams()?.get('ADZE_ENV');
+  return (adze_env ?? param ?? '') !== 'test';
 }

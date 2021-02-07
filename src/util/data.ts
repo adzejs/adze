@@ -1,5 +1,5 @@
 import { LogTimestamp } from '../_contracts';
-import { env, envIsWindow } from '../global';
+import { Env } from '../Env';
 
 /**
  * Generate a unique ID for your log.
@@ -22,8 +22,9 @@ export function stacktrace(): string | null {
  * Gets a URLSearchParams object of the current URL.
  */
 export function getSearchParams(): URLSearchParams | undefined {
-  const my_env = env();
-  if (envIsWindow(my_env)) {
-    return new URLSearchParams(my_env.document.location.search.substring(1));
+  const env = new Env();
+  const ctxt = env.global;
+  if (Env.envIsWindow(ctxt)) {
+    return new URLSearchParams(ctxt.document.location.search.substring(1));
   }
 }
