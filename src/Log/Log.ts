@@ -353,6 +353,7 @@ export class Log {
    * Closes a thread assigned to the log by clearing the context values.
    */
   public close(): void {
+    this.runModifierQueue();
     if (this._labelVal) {
       this._labelVal.clearContext();
     }
