@@ -853,7 +853,7 @@ export class Log {
     this.timestamp = data.timestamp ? { ...data.timestamp } : null;
     this.stacktrace = data.stacktrace;
     this._namespaceVal = data.namespace ? [...data.namespace] : null;
-    this._labelVal = getLabel(data.label.name ?? '') ?? null;
+    this._labelVal = this.resolveLabel(data);
     this.dumpContext = data.dumpContext;
     this.isSilent = data.isSilent;
     this.timeNowVal = data.timeNow;
@@ -862,6 +862,31 @@ export class Log {
     return this;
   }
 
+  /**
+   * Returns the label from the store if it exists by the given name.
+   * If it's not in the store, generate a new log with the provided data
+   * properties. If the label name is null in the data, return null.
+   */
+  private resolveLabel(data: LogData | FinalLogData): Label | null {
+    if (data.label.name) {
+      const stored_label = getLabel(data.label.name) ?? null;
+      if (stored_label) {
+        return stored_label;
+      }
+      return new Label(
+        data.label.name,
+        data.context,
+        data.label.count,
+        data.label.timeNow,
+        data.label.timeEllapsed
+      );
+    }
+    return null;
+  }
+
+  // ============================
+  //   Private Utility Methods
+  // ============================
   private isFinalLogData(
     values: LogData | FinalLogData
   ): values is FinalLogData {

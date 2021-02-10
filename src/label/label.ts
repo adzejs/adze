@@ -17,12 +17,12 @@ export class Label {
    * A counter for the number of times a log
    * with this label has been terminated.
    */
-  private _count: number | null = null;
+  private _count: number | null;
 
   /**
    * Time ellapsed since execution.
    */
-  private _timeNow: string | null = null;
+  private _timeNow: string | null;
 
   /**
    * Beginning of a timer for this label.
@@ -33,10 +33,20 @@ export class Label {
    * Amount of time ellapsed between the calls of startTime()
    * and endTime() for this label.
    */
-  private _timeEllapsed: string | null = null;
+  private _timeEllapsed: string | null;
 
-  constructor(name: string) {
+  constructor(
+    name: string,
+    context: MetaData = {},
+    count: number | null = null,
+    timeNow: string | null = null,
+    timeEllapsed: string | null = null
+  ) {
     this.name = name;
+    this._context = context;
+    this._count = count;
+    this._timeNow = timeNow;
+    this._timeEllapsed = timeEllapsed;
   }
 
   public get count(): number | null {
