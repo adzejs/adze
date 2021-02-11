@@ -1,12 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const browserEnv = require('browser-env');
 import test from 'ava';
 import { adze, createShed, removeShed } from '../src';
-
-// Simulate the browser environment for testing
-browserEnv();
-// Our global context is the window not global
-window.ADZE_ENV = 'dev';
 
 test.beforeEach((t) => {
   createShed();

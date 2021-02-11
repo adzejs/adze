@@ -34,19 +34,19 @@ export class Printer {
   // ------- PRINT METHODS -------- //
 
   public printLog(): LogRender | undefined {
-    return this.printer.printLog();
+    return this.attachContext(this.printer.printLog());
   }
 
   public printGroup(): LogRender | undefined {
-    return this.printer.printGroup();
+    return this.attachContext(this.printer.printGroup());
   }
 
   public printGroupCollapsed(): LogRender | undefined {
-    return this.printer.printGroupCollapsed();
+    return this.attachContext(this.printer.printGroupCollapsed());
   }
 
   public printTrace(): LogRender | undefined {
-    return this.printer.printTrace();
+    return this.attachContext(this.printer.printTrace());
   }
 
   public printGroupEnd(): LogRender {
@@ -65,7 +65,9 @@ export class Printer {
     return this.finalizeRender(['dirxml', this.args], false);
   }
 
-  // ------ Print to the console ------- //
+  // =======================
+  //  Private Methods
+  // =======================
 
   /**
    * Applies the render tuple to the log instance. If spread is indicated, the args
@@ -78,5 +80,12 @@ export class Printer {
       : args;
     const spread_args = spread ? expanded_args : [expanded_args];
     return [method, spread_args];
+  }
+
+  private attachContext(render: LogRender | undefined): LogRender | undefined {
+    if (render && this.data.dumpContext) {
+      return [render[0], [...render[1], this.data.context]];
+    }
+    return render;
   }
 }
