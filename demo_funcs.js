@@ -282,8 +282,7 @@ function asTable({ adze }) {
 function asDir({ adze }) {
   console.log('\n----- Default Dir Log -----\n');
   const deep_obj = { a: { b: 'testing' } };
-  const x = adze().dir.log(deep_obj);
-  console.log({ x });
+  adze().dir.log(deep_obj);
 }
 
 function asDirxml({ adze }, el) {

@@ -83,11 +83,11 @@ export function createArrayOfNumbers(start: number, end: number): number[] {
 
 /**
  * Render the log. If the ADZE_ENV is set to "dev" the log will not render and
- * will be returned for unit library development purposes.
+ * will be returned for unit testing purposes.
  */
 export function toConsole(render: LogRender, is_silent: boolean): LogRender {
-  const [method, args] = render;
   if (Env.global().ADZE_ENV !== 'dev' && !is_silent) {
+    const [method, args] = render;
     console[method](...args);
   }
   return render;

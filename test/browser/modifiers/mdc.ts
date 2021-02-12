@@ -27,7 +27,6 @@ test('Dumps the MDC context', (t) => {
   if (render) {
     const [method, args] = render;
     t.is(method, 'log');
-    console.log('ARGS', args);
     t.deepEqual(args[args.length - 1], {
       key1: 'value1',
       key2: 'value2',

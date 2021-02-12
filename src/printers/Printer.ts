@@ -49,20 +49,20 @@ export class Printer {
     return this.attachContext(this.printer.printTrace());
   }
 
-  public printGroupEnd(): LogRender {
-    return this.finalizeRender(['groupEnd', []]);
+  public printGroupEnd(): LogRender | undefined {
+    return this.attachContext(['groupEnd', []]);
   }
 
-  public printTable(): LogRender {
-    return this.finalizeRender(['table', this.args], false);
+  public printTable(): LogRender | undefined {
+    return this.attachContext(['table', this.args]);
   }
 
-  public printDir(): LogRender {
-    return this.finalizeRender(['dir', this.args], false);
+  public printDir(): LogRender | undefined {
+    return this.attachContext(['dir', this.args]);
   }
 
-  public printDirxml(): LogRender {
-    return this.finalizeRender(['dirxml', this.args], false);
+  public printDirxml(): LogRender | undefined {
+    return this.attachContext(['dirxml', this.args]);
   }
 
   // =======================
@@ -70,18 +70,9 @@ export class Printer {
   // =======================
 
   /**
-   * Applies the render tuple to the log instance. If spread is indicated, the args
-   * value will be an array. If spread is false, the args value will be an array with
-   * a nested array to prevent the spread operator from destructuring the values.
+   * Attaches context values to the arguments of the log render if the
+   * dump modifier was used.
    */
-  private finalizeRender([method, args]: LogRender, spread = true): LogRender {
-    const expanded_args = this.data.dumpContext
-      ? args.concat([this.data.context])
-      : args;
-    const spread_args = spread ? expanded_args : [expanded_args];
-    return [method, spread_args];
-  }
-
   private attachContext(render: LogRender | undefined): LogRender | undefined {
     if (render && this.data.dumpContext) {
       return [render[0], [...render[1], this.data.context]];

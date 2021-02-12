@@ -9,5 +9,6 @@ export default {
   ],
   ingoredByWatcher: ['src/**/*.ts'],
   verbose: true,
+  timeout: '20s',
   extensions: ['ts'],
 };

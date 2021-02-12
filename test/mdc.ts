@@ -1,6 +1,8 @@
 import test from 'ava';
 import { adze, createShed, removeShed } from '../src';
 
+global.ADZE_ENV = 'dev';
+
 test.beforeEach((t) => {
   createShed();
 });

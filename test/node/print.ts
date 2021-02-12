@@ -134,7 +134,6 @@ test.skip('node renders a default verbose log', (t) => {
 
   if (t_log.render) {
     const [method, args] = t_log.render;
-    console.log('ARGS', args);
     t.is(method, 'debug');
     t.is(args[0], ' Verbose(1)    ');
     t.is(args[1], defaults.base_style + defaults.log_levels.verbose.style);
