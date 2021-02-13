@@ -9,7 +9,10 @@ export type ListenerBuckets = Map<number, ListenerBucket>;
 
 export type ListenerBucket = Map<number, ListenerCallback>;
 
-export type ListenerCallback = (LogData: LogData, render: LogRender) => void;
+export type ListenerCallback = (
+  LogData: LogData,
+  render: LogRender | null
+) => void;
 
 export interface ShedConfig {
   cache_limit: number;

@@ -45,7 +45,7 @@ export const defaults: Defaults = {
     fail: {
       level: 4,
       style: `padding-right: ${
-        Env.isChrome() ? '42' : '44'
+        Env.isChrome() ? '43' : '44'
       }px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;`,
       terminal: ['bgRed', 'white'],
       method: 'info',

@@ -33,36 +33,44 @@ export class Printer {
 
   // ------- PRINT METHODS -------- //
 
-  public printLog(): LogRender | undefined {
-    return this.attachContext(this.printer.printLog());
+  public printLog(): LogRender | null {
+    return this.checkSilent(
+      this.attachContext(this.printer.printLog() ?? null)
+    );
   }
 
-  public printGroup(): LogRender | undefined {
-    return this.attachContext(this.printer.printGroup());
+  public printGroup(): LogRender | null {
+    return this.checkSilent(
+      this.attachContext(this.printer.printGroup() ?? null)
+    );
   }
 
-  public printGroupCollapsed(): LogRender | undefined {
-    return this.attachContext(this.printer.printGroupCollapsed());
+  public printGroupCollapsed(): LogRender | null {
+    return this.checkSilent(
+      this.attachContext(this.printer.printGroupCollapsed() ?? null)
+    );
   }
 
-  public printTrace(): LogRender | undefined {
-    return this.attachContext(this.printer.printTrace());
+  public printTrace(): LogRender | null {
+    return this.checkSilent(
+      this.attachContext(this.printer.printTrace() ?? null)
+    );
   }
 
-  public printGroupEnd(): LogRender | undefined {
-    return this.attachContext(['groupEnd', []]);
+  public printGroupEnd(): LogRender | null {
+    return this.checkSilent(this.attachContext(['groupEnd', []]));
   }
 
-  public printTable(): LogRender | undefined {
-    return this.attachContext(['table', this.args]);
+  public printTable(): LogRender | null {
+    return this.checkSilent(this.attachContext(['table', this.args]));
   }
 
-  public printDir(): LogRender | undefined {
-    return this.attachContext(['dir', this.args]);
+  public printDir(): LogRender | null {
+    return this.checkSilent(this.attachContext(['dir', this.args]));
   }
 
-  public printDirxml(): LogRender | undefined {
-    return this.attachContext(['dirxml', this.args]);
+  public printDirxml(): LogRender | null {
+    return this.checkSilent(this.attachContext(['dirxml', this.args]));
   }
 
   // =======================
@@ -73,9 +81,19 @@ export class Printer {
    * Attaches context values to the arguments of the log render if the
    * dump modifier was used.
    */
-  private attachContext(render: LogRender | undefined): LogRender | undefined {
+  private attachContext(render: LogRender | null): LogRender | null {
     if (render && this.data.dumpContext) {
       return [render[0], [...render[1], this.data.context]];
+    }
+    return render;
+  }
+
+  /**
+   * If the log data is flagged as silent, return null instead of the log render.
+   */
+  private checkSilent(render: LogRender | null): LogRender | null {
+    if (this.data.isSilent) {
+      return null;
     }
     return render;
   }

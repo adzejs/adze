@@ -746,17 +746,15 @@ export class Log {
             // Render the log and print to the console
             const render = new Printer(log_data)[this.printer]();
 
-            if (render) {
-              // Write the LogRender to the console.
-              toConsole(render, this.isSilent);
+            // Write the LogRender to the console.
+            toConsole(render);
 
-              // Fire log events
-              this.store();
-              this.fireListeners(log_data, render);
+            // Fire log events
+            this.store();
+            this.fireListeners(log_data, render);
 
-              // Return the terminated log object for testing purposes
-              return { log: this, render };
-            }
+            // Return the terminated log object for testing purposes
+            return { log: this, render };
           }
         }
       }
@@ -802,7 +800,7 @@ export class Log {
   /**
    * Fires listeners for this log instance if a Shed exists.
    */
-  private fireListeners(data: FinalLogData, render: LogRender): void {
+  private fireListeners(data: FinalLogData, render: LogRender | null): void {
     const shed = this.env.global.$shed;
     if (shedExists(shed)) {
       shed.fireListeners(data, render);

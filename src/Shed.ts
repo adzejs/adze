@@ -252,7 +252,7 @@ export class Shed {
    * Fire any log listeners for the provided log. Passes the log render
    * and a slimmed down log data object.
    */
-  public fireListeners(log: FinalLogData, render: LogRender): void {
+  public fireListeners(log: FinalLogData, render: LogRender | null): void {
     this.listeners.get(log.level)?.forEach((listener) => {
       listener(log, render);
     });
