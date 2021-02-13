@@ -12,7 +12,7 @@ export class BrowserPrinter extends SharedPrinter {
   /**
    * The primary method for printing logs to the browser console.
    */
-  public printLog(): LogRender | undefined {
+  public printLog(): LogRender {
     const method = this.data.definition.method;
     const leader = this.fLeader();
     const style = this.data.cfg.base_style + this.data.definition.style;
@@ -29,7 +29,7 @@ export class BrowserPrinter extends SharedPrinter {
   /**
    * The method for printing group logs to the browser console.
    */
-  public printGroup(): LogRender | undefined {
+  public printGroup(): LogRender {
     const partial_args = [
       this.fLeader(),
       this.data.cfg.base_style + this.data.definition.style,
@@ -45,7 +45,7 @@ export class BrowserPrinter extends SharedPrinter {
   /**
    * The method for printing collapsed group logs to the browser console.
    */
-  public printGroupCollapsed(): LogRender | undefined {
+  public printGroupCollapsed(): LogRender {
     const partial_args = [
       this.fLeader(),
       this.data.cfg.base_style + this.data.definition.style,
@@ -58,7 +58,7 @@ export class BrowserPrinter extends SharedPrinter {
     return ['groupCollapsed', render_args];
   }
 
-  public printTrace(): LogRender | undefined {
+  public printTrace(): LogRender {
     // NOTE: Firefox does not support styling on console.trace()
     if (this.env.isFirefox) {
       return ['trace', this.data.args];

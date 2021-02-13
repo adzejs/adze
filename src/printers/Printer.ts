@@ -34,27 +34,21 @@ export class Printer {
   // ------- PRINT METHODS -------- //
 
   public printLog(): LogRender | null {
-    return this.checkSilent(
-      this.attachContext(this.printer.printLog() ?? null)
-    );
+    return this.checkSilent(this.attachContext(this.printer.printLog()));
   }
 
   public printGroup(): LogRender | null {
-    return this.checkSilent(
-      this.attachContext(this.printer.printGroup() ?? null)
-    );
+    return this.checkSilent(this.attachContext(this.printer.printGroup()));
   }
 
   public printGroupCollapsed(): LogRender | null {
     return this.checkSilent(
-      this.attachContext(this.printer.printGroupCollapsed() ?? null)
+      this.attachContext(this.printer.printGroupCollapsed())
     );
   }
 
   public printTrace(): LogRender | null {
-    return this.checkSilent(
-      this.attachContext(this.printer.printTrace() ?? null)
-    );
+    return this.checkSilent(this.attachContext(this.printer.printTrace()));
   }
 
   public printGroupEnd(): LogRender | null {

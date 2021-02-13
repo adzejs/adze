@@ -13,7 +13,7 @@ export class NodePrinter extends SharedPrinter {
   /**
    * The primary method for printing logs to the node console.
    */
-  public printLog(): LogRender | undefined {
+  public printLog(): LogRender {
     const method = this.data.definition.method;
     const leader = this.fLeader();
     const style = this.data.definition.terminal;
@@ -30,7 +30,7 @@ export class NodePrinter extends SharedPrinter {
   /**
    * The method for printing group logs to the node console.
    */
-  public printGroup(): LogRender | undefined {
+  public printGroup(): LogRender {
     const render_args = this.setupPrintGroup();
     return ['group', render_args];
   }
@@ -38,12 +38,12 @@ export class NodePrinter extends SharedPrinter {
   /**
    * The method for printing collapsed group logs to the node console.
    */
-  public printGroupCollapsed(): LogRender | undefined {
+  public printGroupCollapsed(): LogRender {
     const render_args = this.setupPrintGroup();
     return ['groupCollapsed', render_args];
   }
 
-  public printTrace(): LogRender | undefined {
+  public printTrace(): LogRender {
     const render = this.printLog();
     const args = render?.[1] ?? [];
     return ['trace', args];
