@@ -10,7 +10,7 @@ export class BrowserPrinter extends SharedPrinter {
   // ------- PRINT METHODS -------- //
 
   /**
-   * The primary method for printing logs to the browser console.
+   * The primary method for rendering logs.
    */
   public printLog(): LogRender {
     const method = this.data.definition.method;
@@ -27,7 +27,7 @@ export class BrowserPrinter extends SharedPrinter {
   }
 
   /**
-   * The method for printing group logs to the browser console.
+   * The method for rendering group logs.
    */
   public printGroup(): LogRender {
     const partial_args = [
@@ -43,7 +43,7 @@ export class BrowserPrinter extends SharedPrinter {
   }
 
   /**
-   * The method for printing collapsed group logs to the browser console.
+   * The method for rendering collapsed group logs.
    */
   public printGroupCollapsed(): LogRender {
     const partial_args = [
@@ -58,6 +58,9 @@ export class BrowserPrinter extends SharedPrinter {
     return ['groupCollapsed', render_args];
   }
 
+  /**
+   * Renders the stacktrace.
+   */
   public printTrace(): LogRender {
     // NOTE: Firefox does not support styling on console.trace()
     if (this.env.isFirefox) {
@@ -103,7 +106,7 @@ export class BrowserPrinter extends SharedPrinter {
    * these modifiers were applied to this log.
    */
   public fMeta(): string {
-    return `${this.fNamespace()}${this.fLabel()}${this.fTime()}${this.fCount()}${this.fTest()}`;
+    return `${this.fNamespace()}${this.fLabel()}${this.fTime()}${this.fCount()}${this.fAssert()}${this.fTest()}`;
   }
 
   /**
@@ -140,12 +143,22 @@ export class BrowserPrinter extends SharedPrinter {
   }
 
   /**
-   * Formats the assertion or test on the log string based on
-   * any testing modifiers applied to this log.
+   * Adds indicator text to the log render when
+   * the assertion fails.
    */
-  public fTest(): string {
+  public fAssert(): string {
     return this.data.assertion === false
       ? `${this.use_emoji ? '❌ ' : ''}Assertion failed:`
+      : '';
+  }
+
+  /**
+   * Adds indicator text to the log render when
+   * the test expression passes.
+   */
+  public fTest(): string {
+    return this.data.expression === true
+      ? `${this.use_emoji ? '✅ ' : ''}Expression Passed:`
       : '';
   }
 }

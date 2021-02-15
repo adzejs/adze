@@ -108,7 +108,7 @@ export class NodePrinter extends SharedPrinter {
    * these modifiers were applied to this log.
    */
   private fMeta(): string {
-    return `${this.fNamespace()}${this.fLabel()}${this.fTime()}${this.fCount()}${this.fTest()}`;
+    return `${this.fNamespace()}${this.fLabel()}${this.fTime()}${this.fCount()}${this.fAssert()}${this.fTest()}`;
   }
 
   /**
@@ -145,12 +145,22 @@ export class NodePrinter extends SharedPrinter {
   }
 
   /**
-   * Formats the assertion or test on the log string based on
-   * any testing modifiers applied to this log.
+   * Adds indicator text to the log render when
+   * the assertion fails.
    */
-  private fTest(): string {
+  private fAssert(): string {
     return this.data.assertion === false
       ? `${this.use_emoji ? '❌ ' : ''}Assertion failed:`
+      : '';
+  }
+
+  /**
+   * Adds indicator text to the log render when
+   * the test expression passes.
+   */
+  public fTest(): string {
+    return this.data.expression === true
+      ? `${this.use_emoji ? '✅ ' : ''}Expression Passed:`
       : '';
   }
 }

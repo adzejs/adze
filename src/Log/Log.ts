@@ -829,6 +829,8 @@ export class Log {
         timeEllapsed: this._labelVal?.timeEllapsed ?? null,
         count: this._labelVal?.count ?? null,
       },
+      assertion: this.assertion,
+      expression: this.expression,
       dumpContext: this.dumpContext,
       isSilent: this.isSilent,
       timeNow: this.timeNowVal,
@@ -853,6 +855,8 @@ export class Log {
     this.stacktrace = data.stacktrace;
     this._namespaceVal = data.namespace ? [...data.namespace] : null;
     this._labelVal = this.resolveLabel(data);
+    this.assertion = data.assertion;
+    this.expression = data.expression;
     this.dumpContext = data.dumpContext;
     this.isSilent = data.isSilent;
     this.timeNowVal = data.timeNow;
