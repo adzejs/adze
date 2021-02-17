@@ -638,10 +638,6 @@ export class Log {
     return this._labelVal?.getContext() ?? {};
   }
 
-  // public get bundle(): Bundle {
-  //   return;
-  // }
-
   // ==============================
   //   Private Methods
   // ==============================
