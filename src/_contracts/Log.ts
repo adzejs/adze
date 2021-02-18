@@ -104,7 +104,7 @@ export interface FinalLogData extends LogData {
  * gleaning the final render information and getting the Log instance for
  * unit testing purposes.
  */
-export interface TerminatedLog {
-  log: Log;
+export interface TerminatedLog<I extends Log> {
+  log: I;
   render: LogRender | null;
 }

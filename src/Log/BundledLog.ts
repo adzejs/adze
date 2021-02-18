@@ -1,8 +1,15 @@
 import { Env } from 'src/Env';
 import { Printer } from '../printers';
-import { Bundle, Configuration } from 'src/_contracts';
+import { Bundle, Configuration, TerminatedLog } from 'src/_contracts';
 import { Log } from './Log';
 
+// interface TerminatedBundledLog extends TerminatedLog<BundledLog> {
+//   log: BundledLog;
+// }
+
+// interface BundledLogTerminators {
+//   log: (...args: unknown[]) => TerminatedBundledLog;
+// }
 export class BundledLog extends Log {
   private _bundle: Bundle;
 

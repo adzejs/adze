@@ -162,7 +162,7 @@ export class Log {
    * You should use this sparingly since it's level is lower
    * than error.
    */
-  public attention(...args: unknown[]): TerminatedLog {
+  public attention(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('attention', args);
   }
 
@@ -174,7 +174,7 @@ export class Log {
    * Use this for logging fatal errors or errors that
    * impact functionality of your application.
    */
-  public error(...args: unknown[]): TerminatedLog {
+  public error(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('error', args);
   }
 
@@ -187,7 +187,7 @@ export class Log {
    * app performance in a less impactful way than
    * an error.
    */
-  public warn(...args: unknown[]): TerminatedLog {
+  public warn(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('warn', args);
   }
 
@@ -200,7 +200,7 @@ export class Log {
    * application. This level does not indicate any
    * problems.
    */
-  public info(...args: unknown[]): TerminatedLog {
+  public info(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('info', args);
   }
 
@@ -212,7 +212,7 @@ export class Log {
    * Use this for logging network communication errors
    * that do not break your application.
    */
-  public fail(...args: unknown[]): TerminatedLog {
+  public fail(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('fail', args);
   }
 
@@ -223,7 +223,7 @@ export class Log {
    *
    * Use this for logging successful network communication.
    */
-  public success(...args: unknown[]): TerminatedLog {
+  public success(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('success', args);
   }
 
@@ -235,7 +235,7 @@ export class Log {
    * Use this for general logging that doesn't apply
    * to any of the lower levels.
    */
-  public log(...args: unknown[]): TerminatedLog {
+  public log(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('log', args);
   }
 
@@ -249,7 +249,7 @@ export class Log {
    * with your application. This is typically hidden by
    * default.
    */
-  public debug(...args: unknown[]): TerminatedLog {
+  public debug(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('debug', args);
   }
 
@@ -263,7 +263,7 @@ export class Log {
    * logging are granular enough that they are no longer
    * easily human readable.
    */
-  public verbose(...args: unknown[]): TerminatedLog {
+  public verbose(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('verbose', args);
   }
 
@@ -273,7 +273,7 @@ export class Log {
    * Custom log levels are defined within the Adze configuration object
    * under the `custom_levels` property.
    */
-  public custom(level_name: string, ...args: unknown[]): TerminatedLog {
+  public custom(level_name: string, ...args: unknown[]): TerminatedLog<this> {
     return this.customMethod(level_name, args);
   }
 
@@ -288,7 +288,7 @@ export class Log {
    * sealed().log('Another log.'); // -> prints "#sealed [sealed-label] Another log."
    * ```
    */
-  public seal(): () => Log {
+  public seal(): () => ThisType<this> {
     // Run the modifier queue to apply their results
     this.runModifierQueue();
     // Clear the queue as to not repeat the actions when the subsequent logs are terminated.
