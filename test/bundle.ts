@@ -17,6 +17,5 @@ test('bundles logs', (t) => {
     t.fail();
   }
 
-  t.is(log.bundle, 
-
+  t.pass();
 });

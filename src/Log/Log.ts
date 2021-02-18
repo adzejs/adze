@@ -288,14 +288,14 @@ export class Log {
    * sealed().log('Another log.'); // -> prints "#sealed [sealed-label] Another log."
    * ```
    */
-  public seal(): () => ThisType<this> {
+  public seal<I extends this>(): () => I {
     // Run the modifier queue to apply their results
     this.runModifierQueue();
     // Clear the queue as to not repeat the actions when the subsequent logs are terminated.
     this.modifierQueue = [];
     // Create a new Adze log and hydrate it with the data from this instance.
     // This effectively clones the Adze log.
-    return () => new Log(this.Printer, this.env).hydrate(this.data);
+    return () => new Log(this.Printer, this.env).hydrate(this.data) as I;
   }
 
   /**
@@ -673,7 +673,7 @@ export class Log {
   /**
    * Generates a terminating log method the specified log level name.
    */
-  private logMethod(levelName: string, args: unknown[]): TerminatedLog {
+  private logMethod(levelName: string, args: unknown[]): TerminatedLog<this> {
     return this.executionPipeline(
       this.getDefinition('log_levels', levelName),
       args
@@ -684,9 +684,9 @@ export class Log {
    * Generates a terminating log method that enables the user to specify a custom
    * log level by key as the format for the log.
    */
-  private customMethod(levelName: string, args: unknown[]): TerminatedLog {
+  private customMethod(lvlName: string, args: unknown[]): TerminatedLog<this> {
     return this.executionPipeline(
-      this.getDefinition('custom_levels', levelName),
+      this.getDefinition('custom_levels', lvlName),
       args
     );
   }
@@ -716,7 +716,7 @@ export class Log {
   private executionPipeline(
     def: LogLevelDefinition | undefined,
     args: unknown[]
-  ): TerminatedLog {
+  ): TerminatedLog<this> {
     if (def && allowed(this.cfg, def)) {
       // Apply modifiers in the proper order.
       this.runModifierQueue();
