@@ -25,17 +25,17 @@ export class Log {
   /**
    * The Printer class constructor.
    */
-  private Printer: typeof Printer;
+  protected Printer: typeof Printer;
 
   /**
    * Instance of the Env class.
    */
-  private env: Env = new Env();
+  protected env: Env = new Env();
 
   /**
    * The Adze log configuration merged with defaults.
    */
-  private cfg: Defaults;
+  protected cfg: Defaults;
 
   /**
    * The level of this log instance.
@@ -288,14 +288,20 @@ export class Log {
    * sealed().log('Another log.'); // -> prints "#sealed [sealed-label] Another log."
    * ```
    */
-  public seal<I extends this>(): () => I {
+  public seal(): () => Log {
+    return this.doSeal<Log>(() =>
+      new Log(this.Printer, this.env).hydrate(this.data)
+    );
+  }
+
+  protected doSeal<T extends Log>(cb: () => T): () => T {
     // Run the modifier queue to apply their results
     this.runModifierQueue();
     // Clear the queue as to not repeat the actions when the subsequent logs are terminated.
     this.modifierQueue = [];
     // Create a new Adze log and hydrate it with the data from this instance.
     // This effectively clones the Adze log.
-    return () => new Log(this.Printer, this.env).hydrate(this.data) as I;
+    return () => cb();
   }
 
   /**

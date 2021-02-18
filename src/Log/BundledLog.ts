@@ -1,15 +1,8 @@
 import { Env } from 'src/Env';
 import { Printer } from '../printers';
-import { Bundle, Configuration, TerminatedLog } from 'src/_contracts';
+import { Bundle, Configuration } from 'src/_contracts';
 import { Log } from './Log';
 
-// interface TerminatedBundledLog extends TerminatedLog<BundledLog> {
-//   log: BundledLog;
-// }
-
-// interface BundledLogTerminators {
-//   log: (...args: unknown[]) => TerminatedBundledLog;
-// }
 export class BundledLog extends Log {
   private _bundle: Bundle;
 
@@ -25,5 +18,11 @@ export class BundledLog extends Log {
 
   public get bundle(): Bundle {
     return this._bundle;
+  }
+
+  public seal(): () => BundledLog {
+    return this.doSeal<BundledLog>(() =>
+      new BundledLog(this.Printer, this.env, this._bundle).hydrate(this.data)
+    );
   }
 }
