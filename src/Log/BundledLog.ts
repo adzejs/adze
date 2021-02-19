@@ -1,9 +1,9 @@
 import { Env } from 'src/Env';
 import { Printer } from '../printers';
 import { Bundle, Configuration } from 'src/_contracts';
-import { Log } from './Log';
+import { BaseLog } from './BaseLog';
 
-export class BundledLog extends Log {
+export class BundledLog extends BaseLog {
   private _bundle: Bundle;
 
   constructor(
@@ -18,11 +18,5 @@ export class BundledLog extends Log {
 
   public get bundle(): Bundle {
     return this._bundle;
-  }
-
-  public seal(): () => BundledLog {
-    return this.doSeal<BundledLog>(() =>
-      new BundledLog(this.Printer, this.env, this._bundle).hydrate(this.data)
-    );
   }
 }

@@ -15,7 +15,7 @@ import {
   FinalLogData,
   LogRender,
 } from './_contracts';
-import { Log } from './Log';
+import { BaseLog } from './Log/BaseLog';
 import { Label } from './label';
 import { defaults, shed_defaults } from './_defaults';
 import { isString, formatLevels } from './util';
@@ -128,7 +128,7 @@ export class Shed {
   /**
    * Store a log in the shed for later recall.
    */
-  public store(log: Log): void {
+  public store(log: BaseLog): void {
     if (this.cache.length < this.cfg.cache_limit) {
       this.cache = this.cache.concat([log]);
     }

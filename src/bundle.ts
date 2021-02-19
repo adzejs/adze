@@ -10,15 +10,18 @@ import { Log, BundledLog } from './Log';
  *
  * **Example:**
  * ```javascript
+ * import { adze, bundle, filterAll } from 'adze';
+ *
  * const bundled = bundle(adze());
  * bundled.log("This is a log.");
- * bundled.log("This is another log.");
- * bundle.all(); // -> reprints all "bundled" logs.
+ * const { log } = bundled.log("This is another log.");
+ * filterAll(log.bundle); // -> reprints all "bundled" logs.
  * ```
  */
-export function bundle(log: Log): Bundler {
+export function bundle(_log: Log | (() => Log)): Bundler {
   const bundle_arr = [] as Bundle;
   return () => {
+    const log = typeof _log === 'function' ? _log() : _log;
     const bundled_log = new BundledLog(Printer, new Env(), bundle_arr).hydrate(
       log.data
     );

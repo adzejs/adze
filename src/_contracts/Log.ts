@@ -1,4 +1,4 @@
-import { Log } from '../Log';
+import { BaseLog, Log, BundledLog } from '../Log';
 import { LogLevelDefinition, ConsoleMethod, Defaults, LabelData } from '.';
 
 /**
@@ -23,13 +23,6 @@ export interface LogTimestamp {
   unixMilli: number;
   utc: string;
 }
-/**
- * A queue of modifier methods that apply various property
- * transforms on the Log instance. They are queued up so that
- * ordering can be established internally to make the end user
- * API easier to use.
- */
-export type ModifierQueue = Array<() => void>;
 
 type PrintMethodNames =
   | 'Dir'
@@ -63,7 +56,7 @@ export type LogRender = [ConsoleMethod, Arguments];
 /**
  * Type alias for an array of Log instances.
  */
-export type Collection = Log[];
+export type Collection = BaseLog[];
 
 /**
  * Log data object generated from a Log instance. This is
@@ -85,6 +78,7 @@ export interface LogData {
   assertion?: boolean;
   expression?: boolean;
   isSilent: boolean;
+  modifierQueue: Array<(ctxt: BaseLog) => void>;
 }
 
 /**
@@ -104,7 +98,7 @@ export interface FinalLogData extends LogData {
  * gleaning the final render information and getting the Log instance for
  * unit testing purposes.
  */
-export interface TerminatedLog<I extends Log> {
+export interface TerminatedLog<I extends BaseLog> {
   log: I;
   render: LogRender | null;
 }

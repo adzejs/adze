@@ -1,5 +1,5 @@
 import test from 'ava';
-import { adze, bundle } from '../src';
+import { adze, bundle, createShed, removeShed } from '../src';
 
 global.ADZE_ENV = 'dev';
 
@@ -11,11 +11,36 @@ test('bundles logs', (t) => {
     .ns(['foo', 'SPACE'])
     .info('Multiple namespaces.');
 
-  const sealed = bundled().count.seal();
-
   if (render === null || render2 === null) {
     t.fail();
   }
 
-  t.pass();
+  t.deepEqual(log.bundle[0].data.namespace, ['SPACE']);
+  t.deepEqual(log.bundle[1].data.namespace, ['foo', 'SPACE']);
+
+  t.deepEqual(log2.bundle[0].data.namespace, ['SPACE']);
+  t.deepEqual(log2.bundle[1].data.namespace, ['foo', 'SPACE']);
+});
+
+test('can bundle sealed log instance', (t) => {
+  createShed();
+  const bundled = bundle(
+    adze({ use_emoji: true }).count.label('SEALED').seal()
+  );
+
+  const { log } = bundled().ns('SPACE').error('This is an error!');
+  const { log: log2 } = bundled()
+    .ns(['foo', 'SPACE'])
+    .info('Multiple namespaces.');
+
+  t.is(log.bundle[0].data.label.name, 'SEALED');
+  t.is(log.bundle[0].data.label.count, 2);
+  t.is(log.bundle[1].data.label.name, 'SEALED');
+  t.is(log.bundle[1].data.label.count, 2);
+
+  t.is(log2.bundle[0].data.label.name, 'SEALED');
+  t.is(log2.bundle[0].data.label.count, 2);
+  t.is(log2.bundle[1].data.label.name, 'SEALED');
+  t.is(log2.bundle[1].data.label.count, 2);
+  removeShed();
 });

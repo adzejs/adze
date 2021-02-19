@@ -1,12 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const browserEnv = require('browser-env');
 import test from 'ava';
 import { adze, createShed, removeShed } from '../src';
 
-// Simulate the browser environment for testing
-browserEnv();
 // Our global context is the window not global
-window.ADZE_ENV = 'dev';
+global.ADZE_ENV = 'dev';
 
 test('sealing a log preserves configuration but creates new log instances', (t) => {
   const sealed = adze().label('test').ns(['test1', 'test2']).seal();
@@ -42,20 +38,30 @@ test('sealing a log preserves configuration but creates new log instances', (t) 
 
 test('sealed log gets label instance from store', (t) => {
   createShed();
-  adze().label('test').count.log('Counting.');
   const sealed = adze().label('test').count.seal();
-  const { log, render } = sealed().info('Sealed log.');
+  const { log, render } = sealed().log('Counting.');
+  const { log: log2, render: render2 } = sealed().info('Sealed log.');
 
-  if (render) {
+  if (render && render2) {
     const data = log.data;
-    const [method1, args1] = render;
+    const data2 = log2.data;
+    const [method, args] = render;
+    const [method2, args2] = render2;
 
     // Check Log #1
     t.is(data.label.name, 'test');
     t.is(data.label.count, 2);
-    t.is(method1, 'info');
-    t.is(args1[2], '[test] (Count: 2)');
-    t.is(args1[3], 'Sealed log.');
+    t.is(method, 'log');
+    t.is(args[2], '[test] (Count: 1)');
+    t.is(args[3], 'Counting.');
+
+    // Check Log #2
+    t.is(data2.label.name, 'test');
+    t.is(data2.label.count, 2);
+    t.is(method2, 'info');
+    t.is(args2[2], '[test] (Count: 2)');
+    t.is(args2[3], 'Sealed log.');
+
     removeShed();
   } else {
     removeShed();
