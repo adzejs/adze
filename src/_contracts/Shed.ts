@@ -38,8 +38,8 @@ export interface GlobalFilterOptions<T> {
 
 export interface ShedUserConfig
   extends Partial<Omit<ShedConfig, 'filters' | 'global_cfg'>> {
-  filters: UserAdzeFilters;
-  global_cfg: Configuration | null;
+  filters?: UserAdzeFilters;
+  global_cfg?: Configuration | null;
 }
 
 export type GlobalFilter = 'label' | 'namespace' | 'level';

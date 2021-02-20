@@ -84,13 +84,7 @@ export class Shed {
 
   constructor(env: Env, config?: ShedUserConfig) {
     this.env = env;
-    const global_cfg = config?.global_cfg
-      ? (defaultsDeep(config.global_cfg, defaults) as Defaults)
-      : null;
-    const cfg_global_defaults = { ...config, global_cfg };
-    const cfg_defaults = defaultsDeep(cfg_global_defaults, shed_defaults);
-    const cfg_global_parsed = this.parseFilterLevels(cfg_defaults);
-    this.cfg = cfg_global_parsed;
+    this.cfg = this.formatConfig(config);
   }
 
   /**
@@ -183,9 +177,17 @@ export class Shed {
   /**
    * Sets the current value of the global Adze configuration overrides.
    */
-  public set config(cfg: Defaults | null) {
-    const defaulted = cfg ? defaultsDeep(cfg, defaults) : cfg;
-    this.cfg.global_cfg = defaulted;
+  public set config(cfg: ShedUserConfig | undefined) {
+    this.cfg = this.formatConfig(cfg);
+  }
+
+  private formatConfig(cfg: ShedUserConfig | undefined): ShedConfig {
+    const global_cfg = cfg?.global_cfg
+      ? (defaultsDeep(cfg.global_cfg, defaults) as Defaults)
+      : null;
+    const cfg_global_defaults = { ...cfg, global_cfg };
+    const cfg_defaults = defaultsDeep(cfg_global_defaults, shed_defaults);
+    return this.parseFilterLevels(cfg_defaults);
   }
 
   /**
