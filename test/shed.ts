@@ -14,6 +14,10 @@ global.ADZE_ENV = 'dev';
 // Setup our test hook context
 const test = anyTest as TestInterface<{ shed: Shed }>;
 
+test.afterEach((t) => {
+  removeShed();
+});
+
 test('createShed adds a shed instance to the global context', (t) => {
   createShed();
   t.truthy(global.$shed);
@@ -200,6 +204,22 @@ test('fires the log listeners', (t) => {
   }
 });
 
-test.todo(
-  'logGloballyAllowed correctly indicates that a log is allowed to render'
-);
+test('logGloballyAllowed correctly indicates that a log is allowed to render', (t) => {
+  const shed = createShed({
+    filters: {
+      hideAll: true,
+    },
+  });
+  const { log } = adze().log('This is a test.');
+  const data = log.data;
+
+  if (isFinalLogData(data)) {
+    if (shed.logGloballyAllowed(data)) {
+      t.fail();
+    } else {
+      t.pass();
+    }
+  } else {
+    t.fail();
+  }
+});
