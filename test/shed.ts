@@ -223,3 +223,9 @@ test('logGloballyAllowed correctly indicates that a log is allowed to render', (
     t.fail();
   }
 });
+
+test.todo('configured cache limit works properly');
+
+test.todo('hideAll global log filter prevents all logs rendering');
+
+// More filter tests
