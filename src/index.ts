@@ -11,6 +11,7 @@ import {
   render,
   rerender,
 } from './filters';
+export { isFinalLogData } from './util';
 
 export {
   adze,

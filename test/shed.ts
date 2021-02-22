@@ -1,7 +1,13 @@
 import anyTest, { TestInterface } from 'ava';
-import { create } from 'lodash';
 import { Shed } from 'src/shed';
-import { createShed, adze, removeShed, shedExists } from '../src';
+import {
+  createShed,
+  adze,
+  removeShed,
+  shedExists,
+  isFinalLogData,
+} from '../src';
+import { Label } from '../src/label';
 
 global.ADZE_ENV = 'dev';
 
@@ -66,23 +72,133 @@ test('store accepts global config overrides with setter', (t) => {
   t.is(shed.cacheLimit, 50);
 });
 
-test.todo('store returns global config overrides from getter');
+test('store returns global config overrides from getter', (t) => {
+  const shed = createShed({
+    global_cfg: {
+      log_levels: {
+        log: {
+          level: 100,
+        },
+      },
+    },
+  });
+  const cfg = shed.overrides;
+  t.is(cfg?.log_levels.log.level, 100);
+});
 
-test.todo(
-  'store hasOverrides correctly indicates that global config override has been set'
-);
+test('store hasOverrides correctly indicates that global config override has been set', (t) => {
+  const shed = createShed({
+    global_cfg: {
+      log_levels: {
+        log: {
+          level: 100,
+        },
+      },
+    },
+  });
+  t.truthy(shed.hasOverrides);
+});
 
-test.todo('stores a label instance');
+test('stores and returns a label instance', (t) => {
+  const shed = createShed();
+  shed.addLabel(new Label('test'));
+  const label = shed.getLabel('test');
 
-test.todo('returns a label from the cache');
+  t.is(label?.name, 'test');
+});
 
-test.todo('hasLabel indicates existence of label in the cache');
+test('hasLabel indicates existence of label in the cache', (t) => {
+  const shed = createShed();
+  shed.addLabel(new Label('test'));
 
-test.todo('adds a log listener');
+  t.truthy(shed.hasLabel('test'));
+});
 
-test.todo('removes a log listener');
+test('adds a log listener targeting specific log levels', (t) => {
+  t.plan(2);
+  const shed = createShed();
+  shed.addListener([1, 6], (data) => {
+    if (data.level) {
+      t.truthy([1, 6].includes(data.level));
+    } else {
+      t.fail();
+    }
+  });
 
-test.todo('fires the log listeners');
+  adze().error('This is an error.');
+  adze().log('This is a log.');
+  adze().verbose('This is a verbose.');
+});
+
+test('adds a log listener targeting all log levels', (t) => {
+  t.plan(3);
+  const shed = createShed();
+  shed.addListener('*', (data) => {
+    if (data.level) {
+      t.truthy([1, 6, 8].includes(data.level));
+    } else {
+      t.fail();
+    }
+  });
+
+  adze().error('This is an error.');
+  adze().log('This is a log.');
+  adze().verbose('This is a verbose.');
+});
+
+test('adds a log listener targeting a range of log levels', (t) => {
+  t.plan(2);
+  const shed = createShed();
+  shed.addListener('1-6', (data) => {
+    if (data.level) {
+      t.truthy([1, 6].includes(data.level));
+    } else {
+      t.fail();
+    }
+  });
+
+  adze().error('This is an error.');
+  adze().log('This is a log.');
+  adze().verbose('This is a verbose.');
+});
+
+test('removes a log listener', (t) => {
+  t.plan(3);
+  const shed = createShed();
+  const location = shed.addListener('1-3', (data) => {
+    if (data.level) {
+      t.truthy([1, 2, 3].includes(data.level));
+    } else {
+      t.fail();
+    }
+  });
+
+  adze().error('This is an error.');
+  adze().warn('This is a log.');
+  adze().info('This is a verbose.');
+
+  shed.removeListener(location);
+
+  adze().error('This is an error.');
+  adze().warn('This is a log.');
+  adze().info('This is a verbose.');
+});
+
+test('fires the log listeners', (t) => {
+  const { log, render } = adze().info('A basic log.');
+
+  const shed = createShed();
+  shed.addListener([3], () => {
+    t.pass();
+  });
+
+  const data = log.data;
+  if (isFinalLogData(data)) {
+    shed.fireListeners(data, render);
+  } else {
+    t.fail();
+  }
+});
 
 test.todo(
   'logGloballyAllowed correctly indicates that a log is allowed to render'

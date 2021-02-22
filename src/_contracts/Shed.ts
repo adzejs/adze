@@ -1,5 +1,6 @@
 import { Label } from '../label';
 import { Defaults, Configuration, LogRender, LogData } from '.';
+import { FinalLogData } from './Log';
 
 export type LabelMap = Map<string, Label>;
 
@@ -10,7 +11,7 @@ export type ListenerBuckets = Map<number, ListenerBucket>;
 export type ListenerBucket = Map<number, ListenerCallback>;
 
 export type ListenerCallback = (
-  LogData: LogData,
+  LogData: LogData | FinalLogData,
   render: LogRender | null
 ) => void;
 

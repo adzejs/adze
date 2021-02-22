@@ -12,7 +12,13 @@ import {
   FinalLogData,
   TerminatedLog,
 } from '../_contracts';
-import { isString, stacktrace, timestamp, toConsole } from '../util';
+import {
+  isString,
+  stacktrace,
+  timestamp,
+  toConsole,
+  isFinalLogData,
+} from '../util';
 import { Label, addLabel, getLabel } from '../label';
 import { defaults } from '../_defaults';
 import { Env } from '../Env';
@@ -715,7 +721,7 @@ export class BaseLog {
         // Set this log data to a variable for type checking
         const log_data = this.data;
 
-        if (this.isFinalLogData(log_data)) {
+        if (isFinalLogData(log_data)) {
           // If a global context exists, check if this log is allowed.
           const globally_allowed =
             this.env.global.$shed?.logGloballyAllowed(log_data) ?? true;
@@ -816,9 +822,6 @@ export class BaseLog {
       context: { ...this.context },
       modifierQueue: [...this.modifierQueue],
     };
-    if (this.isFinalLogData(values)) {
-      return values as FinalLogData;
-    }
     return values;
   }
 
@@ -865,19 +868,5 @@ export class BaseLog {
       );
     }
     return null;
-  }
-
-  // ============================
-  //   Private Utility Methods
-  // ============================
-  private isFinalLogData(
-    values: LogData | FinalLogData
-  ): values is FinalLogData {
-    return (
-      values.level !== null &&
-      values.definition !== null &&
-      values.args !== null &&
-      values.timestamp !== null
-    );
   }
 }
