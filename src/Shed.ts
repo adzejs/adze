@@ -305,17 +305,21 @@ export class Shed {
    */
   private namespaceAllowed(log: FinalLogData): boolean {
     return this.filterAllowed('namespace', (filter, func) => {
-      const source = this.cfg.filters?.namespace?.[filter] ?? ([] as string[]);
-      const target = log.namespace;
-      if (target) {
-        if (isString(target)) {
-          return this[func]<string>(source, target);
-        } else {
-          // Namespace log value is an array. Check each namespace value.
-          return target
-            .map((val) => this[func]<string>(source, val))
-            .includes(true);
+      const filter_ns =
+        this.cfg.filters?.namespace?.[filter] ?? ([] as string[]);
+
+      const log_ns = log.namespace;
+
+      if (log_ns) {
+        // Namespace log value is an array. Check each namespace value.
+        const arr = log_ns.map((val) => this[func]<string>(filter_ns, val));
+
+        // If filter is include, namspace is allowed if at least one passes
+        if (func === 'isIncluded') {
+          return arr.includes(true);
         }
+        // If filter is exclude, namspace is allowed if all pass
+        return !arr.includes(false);
       }
     });
   }

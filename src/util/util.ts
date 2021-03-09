@@ -81,6 +81,10 @@ export function createArrayOfNumbers(start: number, end: number): number[] {
   return arr;
 }
 
+// TODO: Updated toConsole to utilize chalk styles if the render contains them.
+// OR, apply chalk styles at Print time and put the rendered string with chalk
+// styles applied in the log render.
+
 /**
  * Render the log. If the ADZE_ENV is set to "dev" the log will not render and
  * will be returned for unit testing purposes.
