@@ -1,35 +1,14 @@
-import { LogTimestamp, Defaults, LogLevels, LevelFilter, FinalLog, LogData } from '../_contracts';
+import { Defaults, LogLevels, LevelFilter, LogRender, ChalkStyle } from '../_contracts';
 /**
  * Capitalizes the first character of the provided string.
  */
 export declare function initialCaps(str: string): string;
-/**
- * Applies property mutations to the provided object.
- */
-export declare function mutateProps<O>(obj: any, mutations: Array<[string, any]>): O;
-/**
- * Generate a unique ID for your log.
- */
-export declare function timestamp(): LogTimestamp;
-/**
- * Generates a stacktrace and returns it.
- */
-export declare function stacktrace(): string | null;
-/**
- * Gets a URLSearchParams object of the current URL.
- */
-export declare function getSearchParams(): URLSearchParams | undefined;
 /**
  * Converts a level value of '*' to an array of numbers up to the highest
  * value defined by the user configuration. If levels is already a number array
  * it is returned unchanged.
  */
 export declare function formatLevels(cfg: Defaults | null, levels: LevelFilter): number[];
-/**
- * Creates a slimmed down object comprised of data from
- * the final log.
- */
-export declare function makeLogData(log: FinalLog): LogData;
 /**
  * Type Guard that validates that a given string represents a
  * range of numbers.
@@ -52,14 +31,11 @@ export declare function levelsFromConfig(lvls: LogLevels | Partial<LogLevels>): 
  */
 export declare function createArrayOfNumbers(start: number, end: number): number[];
 /**
- * Type Guard to check if the given value is a String.
+ * Render the log. If the ADZE_ENV is set to "dev" the log will not render and
+ * will be returned for unit testing purposes.
  */
-export declare function isString(val: unknown): val is string;
+export declare function toConsole(render: LogRender | null): void;
 /**
- * Type Guard to check if the given value is an Array.
+ * Applies array of chalk styles to the provided string.
  */
-export declare function isArray(val: unknown): val is [];
-/**
- * Type Guard that validates that the given value is not undefined.
- */
-export declare function isDefined<T>(val: T | undefined): val is T;
+export declare function applyChalkStyles(str: string, styles: ChalkStyle[]): string;

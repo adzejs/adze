@@ -1,4 +1,4 @@
-import { RecursivePartial, ChalkStyles } from '.';
+import { RecursivePartial, ChalkStyle } from '.';
 export declare type ConsoleMethod = 'error' | 'warn' | 'info' | 'log' | 'debug' | 'trace' | 'group' | 'groupCollapsed' | 'groupEnd' | 'table' | 'dir' | 'dirxml';
 export interface Defaults {
     log_level: number;
@@ -21,7 +21,7 @@ export interface LogLevelDefinition {
     levelName?: string;
     method: ConsoleMethod;
     style: string;
-    terminal: ChalkStyles[];
+    terminal: ChalkStyle[];
     emoji: string;
 }
 export interface Filters {

@@ -1,15 +1,18 @@
-import { Bundler, Log } from './_contracts';
+import { Bundler } from './_contracts';
+import { Log } from './Log';
 /**
- * Bundles all logs together by wrapping all subsequent logs in a Bundle callback
+ * Bundles logs together by wrapping all subsequent logs in a Bundle callback
  * that curries them into an array. This bundle array can be used to recall and
- * filter logs.
+ * filter logs without the need for a global `Shed`.
  *
  * **Example:**
  * ```javascript
+ * import { adze, bundle, filterAll } from 'adze';
+ *
  * const bundled = bundle(adze());
  * bundled.log("This is a log.");
- * bundled.log("This is another log.");
- * bundle.all(); // -> reprints all "bundled" logs.
+ * const { log } = bundled.log("This is another log.");
+ * filterAll(log.bundle); // -> reprints all "bundled" logs.
  * ```
  */
-export declare function bundle(log: Log): Bundler;
+export declare function bundle(_log: Log | (() => Log)): Bundler;

@@ -1,4 +1,7 @@
-import { Defaults, Label, ShedUserConfig, FinalLog, Collection, LevelFilter, ListenerLocations, ListenerCallback } from './_contracts';
+import { Defaults, ShedUserConfig, Collection, LevelFilter, ListenerLocations, ListenerCallback, FinalLogData, LogRender } from './_contracts';
+import { BaseLog } from './Log/BaseLog';
+import { Label } from './label';
+import { Env } from './Env';
 /**
  * A typeguard that indicates that a global shed store exists.
  */
@@ -6,7 +9,7 @@ export declare function shedExists(store: Shed | undefined): store is Shed;
 /**
  * Creates a new shed instance in your environment's global context.
  */
-export declare function createShed(config: ShedUserConfig): Shed;
+export declare function createShed(config?: ShedUserConfig): Shed;
 /**
  * Removes the shed from the environment's global context.
  */
@@ -15,6 +18,10 @@ export declare function removeShed(): void;
  * A global store for caching, listening, and recalling Adze logs.
  */
 export declare class Shed {
+    /**
+     * Instance of the Env class.
+     */
+    private env;
     /**
      * The configuration for Shed. Shed is constructed with a set of
      * defaults that can overriden by the configuration supplied by the user.
@@ -40,7 +47,7 @@ export declare class Shed {
      * are printed.
      */
     private listeners;
-    constructor(config: ShedUserConfig);
+    constructor(env: Env, config?: ShedUserConfig);
     /**
      * Parses the level filter on the configuration and reassigns it.
      * This is for increased performance so this calculation isn't done each
@@ -53,7 +60,7 @@ export declare class Shed {
     /**
      * Store a log in the shed for later recall.
      */
-    store(log: FinalLog): void;
+    store(log: BaseLog): void;
     /**
      * Sets the limit for the maximum number of logs that Shed will cache.
      */
@@ -82,7 +89,8 @@ export declare class Shed {
     /**
      * Sets the current value of the global Adze configuration overrides.
      */
-    set config(cfg: Defaults | null);
+    set config(cfg: ShedUserConfig | undefined);
+    private formatConfig;
     /**
      * Get a label from the Shed by name.
      */
@@ -110,7 +118,7 @@ export declare class Shed {
      * Fire any log listeners for the provided log. Passes the log render
      * and a slimmed down log data object.
      */
-    fireListeners(log: FinalLog): void;
+    fireListeners(log: FinalLogData, render: LogRender | null): void;
     /*************************************\
      * GLOBAL FILTER METHODS
     \*************************************/
@@ -118,7 +126,7 @@ export declare class Shed {
      * Returns a boolean indicating if this log instance should be
      * allowed to print.
      */
-    logGloballyAllowed(log: FinalLog): boolean;
+    logGloballyAllowed(log: FinalLogData): boolean;
     /**
      * Validate that the current level set on the log is allowed based on
      * the global filter rules.

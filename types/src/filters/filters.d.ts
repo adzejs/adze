@@ -1,8 +1,9 @@
-import { Log, LogRender, FinalLog, Collection } from '../_contracts';
+import { LogRender, Collection, LogData } from '../_contracts';
+import { Log } from '../Log';
 /**
  * Filter a collection of logs by the namespace.
  */
-export declare function filterNamespace(collection: Collection | undefined, ns: string | string[]): Collection;
+export declare function filterNamespace(collection: Collection | undefined, ns: string[]): Collection;
 /**
  * Filter and render the bundle of logs by the label.
  */
@@ -12,15 +13,17 @@ export declare function filterLabel(collection: Collection | undefined, lbl: str
  */
 export declare function filterLevelRange(collection: Collection | undefined, low: number, high: number): Collection;
 /**
- * Loops over a bundle of logs and executes the callback for each log that
- * has a render value.
+ * Executes a callback on each value of a collection. The callback receives a
+ * log data object for each log in the collection. If a truthy value is returned the
+ * current log of the iteration will be added into a new collection. If a falsy value is
+ * returned it will be omitted.
  */
-export declare function loopCollection(collection: Collection, cb: (log: Log | FinalLog) => boolean): Collection;
+export declare function filterCollection(collection: Collection, cb: (log: LogData) => boolean): Collection;
 /**
  * If the provided log has been previously rendered, this function
  * re-renders it to the console.
  */
-export declare function rerender(log: FinalLog): void;
+export declare function rerender(log: Log): void;
 /**
  * Render a log to the console based on a render object.
  */

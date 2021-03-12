@@ -1,10 +1,4 @@
-import { Log } from '.';
-/**
- * An extension of a Log that adds a getter for the log bundle.
- */
-export interface BundledLog extends Log {
-    readonly bundle: Bundle;
-}
+import { BundledLog } from '../Log';
 /**
  * Generates a new bundled log.
  */
