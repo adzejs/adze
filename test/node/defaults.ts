@@ -1,5 +1,5 @@
 import test from 'ava';
-import { adze, defaults } from '../../src';
+import { adze } from '../../src';
 
 global.ADZE_ENV = 'dev';
 

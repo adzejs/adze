@@ -147,30 +147,3 @@ test('browser renders a default verbose log', (t) => {
     t.fail();
   }
 });
-
-test('browser renders a custom log', (t) => {
-  const style =
-    'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
-  const { log, render } = adze({
-    custom_levels: {
-      custom: {
-        level: 1,
-        emoji: '🤪',
-        method: 'log',
-        terminal: ['bgCyanBright', 'cyan'],
-        style,
-      },
-    },
-  }).custom('custom', 'This is a custom log.');
-  t.truthy(log);
-
-  if (render) {
-    const [method, args] = render;
-    t.is(method, 'log');
-    t.is(args[0], ' %c Custom(1)');
-    t.is(args[1], defaults.base_style + style);
-    t.is(args[2], 'This is a custom log.');
-  } else {
-    t.fail();
-  }
-});

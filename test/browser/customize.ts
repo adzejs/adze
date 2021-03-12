@@ -62,3 +62,26 @@ test('browser renders a custom log with emoji', (t) => {
     t.fail();
   }
 });
+
+// =========================
+// ALTERED BASE STYLE
+// =========================
+
+test('browser renders a log with altered base style', (t) => {
+  const base_style =
+    'font-size: 12px; font-weight: normal; border-radius: 0 5px 5px 0; border-width: 2px; border-style: dashed;';
+  const t_log = adze({
+    base_style,
+  }).log('testing');
+  t.truthy(t_log.log);
+
+  if (t_log.render) {
+    const [method, args] = t_log.render;
+    t.is(method, 'log');
+    t.is(args[0], ' %c Log(1)');
+    t.is(args[1], base_style + defaults.log_levels.log.style);
+    t.is(args[2], 'testing');
+  } else {
+    t.fail();
+  }
+});
