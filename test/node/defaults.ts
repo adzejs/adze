@@ -5,7 +5,7 @@ global.ADZE_ENV = 'dev';
 
 // ------- Default Node Logs -------- //
 
-test('Node renders a default attention log', (t) => {
+test('node renders a default attention log', (t) => {
   const t_log = adze().attention('testing');
   t.truthy(t_log.log);
 
@@ -19,7 +19,7 @@ test('Node renders a default attention log', (t) => {
   }
 });
 
-test('Node renders a default error log', (t) => {
+test('node renders a default error log', (t) => {
   const t_log = adze().error('testing');
   t.truthy(t_log.log);
 
@@ -33,7 +33,7 @@ test('Node renders a default error log', (t) => {
   }
 });
 
-test('Node renders a default warn log', (t) => {
+test('node renders a default warn log', (t) => {
   const t_log = adze().warn('testing');
   t.truthy(t_log.log);
 
@@ -47,7 +47,7 @@ test('Node renders a default warn log', (t) => {
   }
 });
 
-test('Node renders a default info log', (t) => {
+test('node renders a default info log', (t) => {
   const t_log = adze().info('testing');
   t.truthy(t_log.log);
 
@@ -61,7 +61,7 @@ test('Node renders a default info log', (t) => {
   }
 });
 
-test('Node renders a default fail log', (t) => {
+test('node renders a default fail log', (t) => {
   const t_log = adze().fail('testing');
   t.truthy(t_log.log);
 
@@ -75,7 +75,7 @@ test('Node renders a default fail log', (t) => {
   }
 });
 
-test('Node renders a default success log', (t) => {
+test('node renders a default success log', (t) => {
   const t_log = adze().success('testing');
   t.truthy(t_log.log);
 
@@ -89,7 +89,7 @@ test('Node renders a default success log', (t) => {
   }
 });
 
-test('Node renders a default log', (t) => {
+test('node renders a default log', (t) => {
   const t_log = adze().log('testing');
   t.truthy(t_log.log);
 
@@ -103,7 +103,7 @@ test('Node renders a default log', (t) => {
   }
 });
 
-test('Node renders a default debug log', (t) => {
+test('node renders a default debug log', (t) => {
   const t_log = adze().debug('testing');
   t.truthy(t_log.log);
 
@@ -117,7 +117,7 @@ test('Node renders a default debug log', (t) => {
   }
 });
 
-test('Node renders a default verbose log', (t) => {
+test('node renders a default verbose log', (t) => {
   const t_log = adze().verbose('testing');
   t.truthy(t_log.log);
 
@@ -131,7 +131,7 @@ test('Node renders a default verbose log', (t) => {
   }
 });
 
-test('Node renders a custom log', (t) => {
+test('node renders a custom log', (t) => {
   const style =
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
   const { log, render } = adze({

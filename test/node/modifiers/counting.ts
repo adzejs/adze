@@ -1,12 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const browserEnv = require('browser-env');
 import test from 'ava';
 import { adze, createShed, removeShed } from '../../../src';
 
-// Simulate the browser environment for testing
-browserEnv();
-// Our global context is the window not global
-window.ADZE_ENV = 'dev';
+global.ADZE_ENV = 'dev';
 
 test.beforeEach((t) => {
   createShed();
@@ -25,8 +20,8 @@ test('counts 10 logs', (t) => {
     const { render } = terminated;
     if (render) {
       const [_, args] = render;
-      if (typeof args[2] === 'string') {
-        t.is(args[2], '[test] (Count: 10)');
+      if (typeof args[1] === 'string') {
+        t.is(args[1], '[test] (Count: 10)');
       }
     } else {
       t.fail();
@@ -45,8 +40,8 @@ test('counts 10 logs then resets to 0', (t) => {
     const { render } = terminated;
     if (render) {
       const [_, args] = render;
-      if (typeof args[2] === 'string') {
-        t.is(args[2], '[test] (Count: 0)');
+      if (typeof args[1] === 'string') {
+        t.is(args[1], '[test] (Count: 0)');
       }
     } else {
       t.fail();
@@ -71,8 +66,8 @@ test('counts 10 logs then resets to 0 and counts 5 logs', (t) => {
     const { render } = terminated;
     if (render) {
       const [_, args] = render;
-      if (typeof args[2] === 'string') {
-        t.is(args[2], '[test] (Count: 5)');
+      if (typeof args[1] === 'string') {
+        t.is(args[1], '[test] (Count: 5)');
       }
     } else {
       t.fail();
@@ -93,8 +88,8 @@ test('counts 10 logs then clears the log count for the "test" label', (t) => {
       const [_, args] = render;
 
       // Validate the output string
-      if (typeof args[2] === 'string') {
-        t.is(args[2], '[test] ');
+      if (typeof args[1] === 'string') {
+        t.is(args[1], '[test] ');
       }
 
       t.is(log.data.label.count, null);

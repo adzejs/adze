@@ -7,7 +7,7 @@ global.ADZE_ENV = 'dev';
 // WITH EMOJI
 // =========================
 
-test('Node renders a default attention log with emoji', (t) => {
+test('node renders a default attention log with emoji', (t) => {
   const t_log = adze({ use_emoji: true }).attention('testing');
   t.truthy(t_log.log);
 
@@ -21,7 +21,7 @@ test('Node renders a default attention log with emoji', (t) => {
   }
 });
 
-test('Node renders a default error log with emoji', (t) => {
+test('node renders a default error log with emoji', (t) => {
   const t_log = adze({ use_emoji: true }).error('testing');
   t.truthy(t_log.log);
 
@@ -35,7 +35,7 @@ test('Node renders a default error log with emoji', (t) => {
   }
 });
 
-test('Node renders a default warn log with emoji', (t) => {
+test('node renders a default warn log with emoji', (t) => {
   const t_log = adze({ use_emoji: true }).warn('testing');
   t.truthy(t_log.log);
 
@@ -49,7 +49,7 @@ test('Node renders a default warn log with emoji', (t) => {
   }
 });
 
-test('Node renders a default info log with emoji', (t) => {
+test('node renders a default info log with emoji', (t) => {
   const t_log = adze({ use_emoji: true }).info('testing');
   t.truthy(t_log.log);
 
@@ -63,7 +63,7 @@ test('Node renders a default info log with emoji', (t) => {
   }
 });
 
-test('Node renders a default fail log with emoji', (t) => {
+test('node renders a default fail log with emoji', (t) => {
   const t_log = adze({ use_emoji: true }).fail('testing');
   t.truthy(t_log.log);
 
@@ -77,7 +77,7 @@ test('Node renders a default fail log with emoji', (t) => {
   }
 });
 
-test('Node renders a default success log with emoji', (t) => {
+test('node renders a default success log with emoji', (t) => {
   const t_log = adze({ use_emoji: true }).success('testing');
   t.truthy(t_log.log);
 
@@ -91,7 +91,7 @@ test('Node renders a default success log with emoji', (t) => {
   }
 });
 
-test('Node renders a default log with emoji', (t) => {
+test('node renders a default log with emoji', (t) => {
   const t_log = adze({ use_emoji: true }).log('testing');
   t.truthy(t_log.log);
 
@@ -105,7 +105,7 @@ test('Node renders a default log with emoji', (t) => {
   }
 });
 
-test('Node renders a default debug log with emoji', (t) => {
+test('node renders a default debug log with emoji', (t) => {
   const t_log = adze({ use_emoji: true }).debug('testing');
   t.truthy(t_log.log);
 
@@ -119,7 +119,7 @@ test('Node renders a default debug log with emoji', (t) => {
   }
 });
 
-test('Node renders a default verbose log with emoji', (t) => {
+test('node renders a default verbose log with emoji', (t) => {
   const t_log = adze({ use_emoji: true }).verbose('testing');
   t.truthy(t_log.log);
 

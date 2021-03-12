@@ -1,14 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const browserEnv = require('browser-env');
 import test from 'ava';
-import { adze, defaults } from '../../src';
+import { adze } from '../../src';
 
-// Simulate the browser environment for testing
-browserEnv();
-// Our global context is the window not global
-window.ADZE_ENV = 'dev';
+global.ADZE_ENV = 'dev';
 
-test('browser renders a custom log', (t) => {
+test('node renders a custom log', (t) => {
   const style =
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
   const { log, render } = adze({
@@ -27,15 +22,14 @@ test('browser renders a custom log', (t) => {
   if (render) {
     const [method, args] = render;
     t.is(method, 'log');
-    t.is(args[0], ' %c Custom(1)');
-    t.is(args[1], defaults.base_style + style);
-    t.is(args[2], 'This is a custom log.');
+    t.is(args[0], ' Custom(1)     ');
+    t.is(args[1], 'This is a custom log.');
   } else {
     t.fail();
   }
 });
 
-test('browser renders a custom log with emoji', (t) => {
+test('node renders a custom log with emoji', (t) => {
   const style =
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
   const { log, render } = adze({
@@ -55,9 +49,8 @@ test('browser renders a custom log with emoji', (t) => {
   if (render) {
     const [method, args] = render;
     t.is(method, 'log');
-    t.is(args[0], ' %c 🤪 Custom(1)');
-    t.is(args[1], defaults.base_style + style);
-    t.is(args[2], 'This is a custom log.');
+    t.is(args[0], ' 🤪 Custom(1)     ');
+    t.is(args[1], 'This is a custom log.');
   } else {
     t.fail();
   }

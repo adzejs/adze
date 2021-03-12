@@ -129,7 +129,7 @@ export class NodePrinter extends SharedPrinter {
    */
   private fCount(): string {
     const count = this.data.label.count;
-    return count ? `(Count: ${count})` : '';
+    return count !== null ? `(Count: ${count})` : '';
   }
 
   /**
