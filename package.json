@@ -24,7 +24,7 @@
     "log",
     "logging"
   ],
-  "types": "types/index.d.ts",
+  "types": "types/src/index.d.ts",
   "author": "Andrew Stacy",
   "license": "Apache-2.0",
   "devDependencies": {
