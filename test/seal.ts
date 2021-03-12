@@ -21,16 +21,16 @@ test('sealing a log preserves configuration but creates new log instances', (t) 
     t.is(data1.namespace?.[0], 'test1');
     t.is(data1.namespace?.[1], 'test2');
     t.is(method1, 'log');
-    t.is(args1[2], '#test1 #test2 [test] ');
-    t.is(args1[3], 'Log #1');
+    t.is(args1[1], '#test1 #test2 [test] ');
+    t.is(args1[2], 'Log #1');
 
     // Check Log #1
     t.is(data2.label.name, 'test');
     t.is(data2.namespace?.[0], 'test1');
     t.is(data2.namespace?.[1], 'test2');
     t.is(method2, 'info');
-    t.is(args1[2], '#test1 #test2 [test] ');
-    t.is(args2[3], 'Log #2');
+    t.is(args2[1], '#test1 #test2 [test] ');
+    t.is(args2[2], 'Log #2');
   } else {
     t.fail();
   }
@@ -52,15 +52,15 @@ test('sealed log gets label instance from store', (t) => {
     t.is(data.label.name, 'test');
     t.is(data.label.count, 2);
     t.is(method, 'log');
-    t.is(args[2], '[test] (Count: 1)');
-    t.is(args[3], 'Counting.');
+    t.is(args[1], '[test] (Count: 1)');
+    t.is(args[2], 'Counting.');
 
     // Check Log #2
     t.is(data2.label.name, 'test');
     t.is(data2.label.count, 2);
     t.is(method2, 'info');
-    t.is(args2[2], '[test] (Count: 2)');
-    t.is(args2[3], 'Sealed log.');
+    t.is(args2[1], '[test] (Count: 2)');
+    t.is(args2[2], 'Sealed log.');
 
     removeShed();
   } else {
