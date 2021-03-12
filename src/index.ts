@@ -1,4 +1,3 @@
-import { Log } from './Log';
 import { adze } from './adze';
 import { bundle } from './bundle';
 import { shedExists, createShed, removeShed } from './shed';
@@ -7,24 +6,25 @@ import {
   filterLabel,
   filterLevelRange,
   filterNamespace,
-  loopCollection,
+  filterCollection,
   render,
   rerender,
 } from './filters';
-export { isFinalLogData } from './util';
+import { isFinalLogData } from './util';
 
+export * from './_contracts';
 export {
   adze,
   shedExists,
   createShed,
   removeShed,
   defaults,
-  Log,
   bundle,
   filterLabel,
   filterLevelRange,
   filterNamespace,
-  loopCollection,
+  filterCollection,
+  isFinalLogData,
   render,
   rerender,
 };

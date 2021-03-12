@@ -9,7 +9,7 @@ export function filterNamespace(
   collection: Collection = [],
   ns: string[]
 ): Collection {
-  return loopCollection(collection, (log) => {
+  return filterCollection(collection, (log) => {
     const log_ns = log.namespace;
     if (log_ns) {
       // Loop over each log ns value and see if any match any ns value.
@@ -28,7 +28,7 @@ export function filterLabel(
   collection: Collection = [],
   lbl: string
 ): Collection {
-  return loopCollection(collection, (log) => log.label?.name === lbl);
+  return filterCollection(collection, (log) => log.label?.name === lbl);
 }
 
 /**
@@ -39,17 +39,19 @@ export function filterLevelRange(
   low: number,
   high: number
 ): Collection {
-  return loopCollection(collection, (log) => {
+  return filterCollection(collection, (log) => {
     const level = log.level ?? Infinity;
     return level >= low && level <= high;
   });
 }
 
 /**
- * Loops over a bundle of logs and executes the callback for each log that
- * has a render value.
+ * Executes a callback on each value of a collection. The callback receives a
+ * log data object for each log in the collection. If a truthy value is returned the
+ * current log of the iteration will be added into a new collection. If a falsy value is
+ * returned it will be omitted.
  */
-export function loopCollection(
+export function filterCollection(
   collection: Collection,
   cb: (log: LogData) => boolean
 ): Collection {

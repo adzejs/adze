@@ -4,9 +4,9 @@ import { Env } from './Env';
 import { Log, BundledLog } from './Log';
 
 /**
- * Bundles all logs together by wrapping all subsequent logs in a Bundle callback
+ * Bundles logs together by wrapping all subsequent logs in a Bundle callback
  * that curries them into an array. This bundle array can be used to recall and
- * filter logs.
+ * filter logs without the need for a global `Shed`.
  *
  * **Example:**
  * ```javascript
