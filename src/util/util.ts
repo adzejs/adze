@@ -1,4 +1,11 @@
-import { Defaults, LogLevels, LevelFilter, LogRender } from '../_contracts';
+import chalk from 'chalk';
+import {
+  Defaults,
+  LogLevels,
+  LevelFilter,
+  LogRender,
+  ChalkStyle,
+} from '../_contracts';
 import { isString, isArray, isDefined } from './type-guards';
 import { Env } from '../Env';
 
@@ -81,10 +88,6 @@ export function createArrayOfNumbers(start: number, end: number): number[] {
   return arr;
 }
 
-// TODO: Updated toConsole to utilize chalk styles if the render contains them.
-// OR, apply chalk styles at Print time and put the rendered string with chalk
-// styles applied in the log render.
-
 /**
  * Render the log. If the ADZE_ENV is set to "dev" the log will not render and
  * will be returned for unit testing purposes.
@@ -97,9 +100,10 @@ export function toConsole(render: LogRender | null): void {
 }
 
 /**
- * Check if the given object has any keys set.
- * NOTE: Currently unused.
+ * Applies array of chalk styles to the provided string.
  */
-// export function hasKeys(obj: Record<string, unknown>): boolean {
-//   return Object.keys(obj).length > 0;
-// }
+export function applyChalkStyles(str: string, styles: ChalkStyle[]): string {
+  return styles.reduce((acc, style) => {
+    return chalk[style](acc);
+  }, str);
+}

@@ -1,59 +1,57 @@
-type ChalkColors =
-  | 'black'
-  | 'red'
-  | 'green'
-  | 'yellow'
-  | 'blue'
-  | 'magenta'
-  | 'cyan'
-  | 'white'
-  | 'gray'
-  | 'grey';
-type ChalkColorsBright =
-  | 'blackBright'
-  | 'redBright'
-  | 'greenBright'
-  | 'yellowBright'
-  | 'blueBright'
-  | 'magentaBright'
-  | 'cyanBright'
-  | 'whiteBright';
+const styles_raw = [
+  'black',
+  'red',
+  'green',
+  'yellow',
+  'blue',
+  'magenta',
+  'cyan',
+  'white',
+  'gray',
+  'grey',
+  'blackBright',
+  'redBright',
+  'greenBright',
+  'yellowBright',
+  'blueBright',
+  'magentaBright',
+  'cyanBright',
+  'whiteBright',
+  'bgBlack',
+  'bgRed',
+  'bgGreen',
+  'bgYellow',
+  'bgBlue',
+  'bgMagenta',
+  'bgCyan',
+  'bgWhite',
+  'bgGray',
+  'bgGrey',
+  'bgBlackBright',
+  'bgRedBright',
+  'bgGreenBright',
+  'bgYellowBright',
+  'bgBlueBright',
+  'bgMagentaBright',
+  'bgCyanBright',
+  'bgWhiteBright',
+  'reset',
+  'bold',
+  'dim',
+  'italic',
+  'underline',
+  'inverse',
+  'hidden',
+  'strikethrough',
+  'visible',
+] as const;
 
-type ChalkBgColors =
-  | 'bgBlack'
-  | 'bgRed'
-  | 'bgGreen'
-  | 'bgYellow'
-  | 'bgBlue'
-  | 'bgMagenta'
-  | 'bgCyan'
-  | 'bgWhite'
-  | 'bgGray'
-  | 'bgGrey';
-type ChalkBgColorsBright =
-  | 'bgBlackBright'
-  | 'bgRedBright'
-  | 'bgGreenBright'
-  | 'bgYellowBright'
-  | 'bgBlueBright'
-  | 'bgMagentaBright'
-  | 'bgCyanBright'
-  | 'bgWhiteBright';
+/**
+ * String union representing all possible Chalk styles.
+ */
+export type ChalkStyle = typeof styles_raw[number];
 
-type ChalkModifiers =
-  | 'reset'
-  | 'bold'
-  | 'dim'
-  | 'italic'
-  | 'underline'
-  | 'inverse'
-  | 'hidden'
-  | 'strikethrough'
-  | 'visible';
-
-export type ChalkStyles =
-  | ChalkColors
-  | ChalkColorsBright
-  | ChalkBgColors
-  | ChalkBgColorsBright
-  | ChalkModifiers;
+/**
+ * Immutable array of all possible chalk styles.
+ */
+export const chalk_styles = Object.freeze(styles_raw);

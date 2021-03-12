@@ -1,4 +1,4 @@
-import { LogData, FinalLogData } from '../_contracts';
+import { LogData, FinalLogData, ChalkStyle, chalk_styles } from '../_contracts';
 
 /**
  * Type Guard to check if the given value is a String.
@@ -33,4 +33,18 @@ export function isFinalLogData(
     data.args !== null &&
     data.timestamp !== null
   );
+}
+
+/**
+ * Type guard that indicates the provided value is a Chalk style.
+ */
+export function isChalkStyle(val: unknown): val is ChalkStyle {
+  return isString(val) && chalk_styles.includes(val as ChalkStyle);
+}
+
+/**
+ * Type guard that indicates the provided value is an array of chalk styles.
+ */
+export function isChalkStyles(val: unknown): val is ChalkStyle[] {
+  return isArray(val) && val.filter(isChalkStyle).length === 0;
 }

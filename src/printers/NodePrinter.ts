@@ -1,7 +1,6 @@
-import chalk from 'chalk';
 import { SharedPrinter } from './SharedPrinter';
 import { LogRender, FinalLogData } from '../_contracts';
-import { initialCaps } from '../util';
+import { applyChalkStyles, initialCaps } from '../util';
 
 export class NodePrinter extends SharedPrinter {
   constructor(data: FinalLogData) {
@@ -16,13 +15,12 @@ export class NodePrinter extends SharedPrinter {
   public printLog(): LogRender {
     const method = this.data.definition.method;
     const leader = this.fLeader();
-    const style = this.data.definition.terminal;
     const meta = this.fMeta();
 
     const render_args =
       meta === ''
         ? [leader, ...this.data.args]
-        : [leader, style, meta, ...this.data.args];
+        : [leader, meta, ...this.data.args];
 
     return [method, render_args];
   }
@@ -70,9 +68,7 @@ export class NodePrinter extends SharedPrinter {
       padding
     );
 
-    return this.data.definition?.terminal.reduce((acc, style) => {
-      return chalk[style](acc);
-    }, padded_leader);
+    return applyChalkStyles(padded_leader, this.data.definition.terminal);
   }
 
   /**
@@ -91,14 +87,14 @@ export class NodePrinter extends SharedPrinter {
    * Adds the emoji to the log leader if enabled.
    */
   private fEmoji(): string {
-    return ` ${this.data.definition?.emoji ?? ''}`;
+    return ` ${this.data.definition.emoji ?? ''}`;
   }
 
   /**
    * Adds the log level name to the leader in initial caps.
    */
   private fName(): string {
-    return initialCaps(this.data.definition?.levelName ?? '');
+    return initialCaps(this.data.definition.levelName ?? '');
   }
 
   /**
