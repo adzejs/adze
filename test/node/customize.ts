@@ -3,7 +3,7 @@ import { adze } from '../../src';
 
 global.ADZE_ENV = 'dev';
 
-test('node renders a custom log', (t) => {
+test('renders a custom log', (t) => {
   const style =
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
   const { log, render } = adze({
@@ -29,7 +29,7 @@ test('node renders a custom log', (t) => {
   }
 });
 
-test('node renders a custom log with emoji', (t) => {
+test('renders a custom log with emoji', (t) => {
   const style =
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
   const { log, render } = adze({

@@ -12,7 +12,7 @@ window.ADZE_ENV = 'dev';
 // WITH EMOJI
 // =========================
 
-test('browser renders a attention log with emoji', (t) => {
+test('renders a attention log with emoji', (t) => {
   const t_log = adze({
     use_emoji: true,
   }).attention('testing');
@@ -32,7 +32,7 @@ test('browser renders a attention log with emoji', (t) => {
   }
 });
 
-test('browser renders a error log with emoji', (t) => {
+test('renders a error log with emoji', (t) => {
   const t_log = adze({
     use_emoji: true,
   }).error('testing');
@@ -49,7 +49,7 @@ test('browser renders a error log with emoji', (t) => {
   }
 });
 
-test('browser renders a warn log with emoji', (t) => {
+test('renders a warn log with emoji', (t) => {
   const t_log = adze({
     use_emoji: true,
   }).warn('testing');
@@ -66,7 +66,7 @@ test('browser renders a warn log with emoji', (t) => {
   }
 });
 
-test('browser renders a info log with emoji', (t) => {
+test('renders a info log with emoji', (t) => {
   const t_log = adze({
     use_emoji: true,
   }).info('testing');
@@ -83,7 +83,7 @@ test('browser renders a info log with emoji', (t) => {
   }
 });
 
-test('browser renders a fail log with emoji', (t) => {
+test('renders a fail log with emoji', (t) => {
   const t_log = adze({
     use_emoji: true,
   }).fail('testing');
@@ -100,7 +100,7 @@ test('browser renders a fail log with emoji', (t) => {
   }
 });
 
-test('browser renders a success log with emoji', (t) => {
+test('renders a success log with emoji', (t) => {
   const t_log = adze({
     use_emoji: true,
   }).success('testing');
@@ -117,7 +117,7 @@ test('browser renders a success log with emoji', (t) => {
   }
 });
 
-test('browser renders a log with emoji', (t) => {
+test('renders a log with emoji', (t) => {
   const t_log = adze({
     use_emoji: true,
   }).log('testing');
@@ -134,7 +134,7 @@ test('browser renders a log with emoji', (t) => {
   }
 });
 
-test('browser renders a debug log with emoji', (t) => {
+test('renders a debug log with emoji', (t) => {
   const t_log = adze({
     use_emoji: true,
   }).debug('testing');
@@ -151,7 +151,7 @@ test('browser renders a debug log with emoji', (t) => {
   }
 });
 
-test('browser renders a verbose log with emoji', (t) => {
+test('renders a verbose log with emoji', (t) => {
   const t_log = adze({
     use_emoji: true,
   }).verbose('testing');
@@ -168,7 +168,7 @@ test('browser renders a verbose log with emoji', (t) => {
   }
 });
 
-test('browser renders a custom log with emoji', (t) => {
+test('renders a custom log with emoji', (t) => {
   const style =
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
   const { log, render } = adze({

@@ -10,7 +10,7 @@ window.ADZE_ENV = 'dev';
 
 // ------- Default Browser Logs -------- //
 
-test('browser renders a default attention log', (t) => {
+test('renders a default attention log', (t) => {
   const t_log = adze().attention('testing');
   t.truthy(t_log.log);
 
@@ -28,7 +28,7 @@ test('browser renders a default attention log', (t) => {
   }
 });
 
-test('browser renders a default error log', (t) => {
+test('renders a default error log', (t) => {
   const t_log = adze().error('testing');
   t.truthy(t_log.log);
 
@@ -43,7 +43,7 @@ test('browser renders a default error log', (t) => {
   }
 });
 
-test('browser renders a default warn log', (t) => {
+test('renders a default warn log', (t) => {
   const t_log = adze().warn('testing');
   t.truthy(t_log.log);
 
@@ -58,7 +58,7 @@ test('browser renders a default warn log', (t) => {
   }
 });
 
-test('browser renders a default info log', (t) => {
+test('renders a default info log', (t) => {
   const t_log = adze().info('testing');
   t.truthy(t_log.log);
 
@@ -73,7 +73,7 @@ test('browser renders a default info log', (t) => {
   }
 });
 
-test('browser renders a default fail log', (t) => {
+test('renders a default fail log', (t) => {
   const t_log = adze().fail('testing');
   t.truthy(t_log.log);
 
@@ -88,7 +88,7 @@ test('browser renders a default fail log', (t) => {
   }
 });
 
-test('browser renders a default success log', (t) => {
+test('renders a default success log', (t) => {
   const t_log = adze().success('testing');
   t.truthy(t_log.log);
 
@@ -103,7 +103,7 @@ test('browser renders a default success log', (t) => {
   }
 });
 
-test('browser renders a default log', (t) => {
+test('renders a default log', (t) => {
   const t_log = adze().log('testing');
   t.truthy(t_log.log);
 
@@ -118,7 +118,7 @@ test('browser renders a default log', (t) => {
   }
 });
 
-test('browser renders a default debug log', (t) => {
+test('renders a default debug log', (t) => {
   const t_log = adze().debug('testing');
   t.truthy(t_log.log);
 
@@ -133,7 +133,7 @@ test('browser renders a default debug log', (t) => {
   }
 });
 
-test('browser renders a default verbose log', (t) => {
+test('renders a default verbose log', (t) => {
   const t_log = adze().verbose('testing');
   t.truthy(t_log.log);
 

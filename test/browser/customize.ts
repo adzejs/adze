@@ -8,7 +8,7 @@ browserEnv();
 // Our global context is the window not global
 window.ADZE_ENV = 'dev';
 
-test('browser renders a custom log', (t) => {
+test('renders a custom log', (t) => {
   const style =
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
   const { log, render } = adze({
@@ -35,7 +35,7 @@ test('browser renders a custom log', (t) => {
   }
 });
 
-test('browser renders a custom log with emoji', (t) => {
+test('renders a custom log with emoji', (t) => {
   const style =
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
   const { log, render } = adze({
@@ -67,7 +67,7 @@ test('browser renders a custom log with emoji', (t) => {
 // ALTERED BASE STYLE
 // =========================
 
-test('browser renders a log with altered base style', (t) => {
+test('renders a log with altered base style', (t) => {
   const base_style =
     'font-size: 12px; font-weight: normal; border-radius: 0 5px 5px 0; border-width: 2px; border-style: dashed;';
   const t_log = adze({
