@@ -1,12 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const browserEnv = require('browser-env');
 import test from 'ava';
 import { adze, createShed, removeShed } from '../../../src';
 
-// Simulate the browser environment for testing
-browserEnv();
-// Our global context is the window not global
-window.ADZE_ENV = 'dev';
+global.ADZE_ENV = 'dev';
 
 test.beforeEach((t) => {
   createShed();
@@ -21,8 +16,8 @@ test('timer starts and ends and prints correctly', (t) => {
   const { render } = adze().label('test').timeEnd.log('Stopping the timer.');
   if (render) {
     const [_, args] = render;
-    if (typeof args[2] === 'string') {
-      t.regex(args[2], /\[test\]\s\s\(\d+s\s\d+\.\d+ms\)/g);
+    if (typeof args[1] === 'string') {
+      t.regex(args[1], /\[test\]\s\(\d+s\s\d+\.\d+ms\)\s/g);
     }
   } else {
     t.fail();
@@ -35,8 +30,8 @@ test('timer starts and ends and prints correctly with emoji', (t) => {
   const { render } = log().label('test').timeEnd.log('Stopping the timer.');
   if (render) {
     const [_, args] = render;
-    if (typeof args[2] === 'string') {
-      t.regex(args[2], /\[test\]\s\s\(⏱\d+s\s\d+\.\d+ms\)/g);
+    if (typeof args[1] === 'string') {
+      t.regex(args[1], /\[test\]\s\(⏱\d+s\s\d+\.\d+ms\)\s/g);
     }
   } else {
     t.fail();
