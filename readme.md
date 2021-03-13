@@ -11,6 +11,7 @@ As you may already be aware there are a number of other good JS libraries out th
 Here is a list of the features that Adze provides:
 
 - First-class TypeScript support.
+- Runs in both the browser and node with no special configuration.
 - A fluent, chainable API for creating logs.
 - Attractive out-of-the-box log styling (EMOJI'S INCLUDED)
 - Full control over all aspects of your log configurations.
