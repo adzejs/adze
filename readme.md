@@ -2,7 +2,7 @@
 
 > Adze - [a cutting tool that ... is used chiefly for shaping wood](https://www.merriam-webster.com/dictionary/adze).
 
-[![Build Status](https://travis-ci.com/AJStacy/Adze.svg?branch=master)](https://travis-ci.com/AJStacy/Adze)![npm](https://img.shields.io/npm/v/adze)![node-lts](https://img.shields.io/node/v-lts/adze)
+[![Build Status](https://travis-ci.com/AJStacy/Adze.svg?branch=master)](https://travis-ci.com/AJStacy/Adze) ![npm](https://img.shields.io/npm/v/adze) ![node-lts](https://img.shields.io/node/v-lts/adze)
 
 Adze was chosen as a name for this library to maintain solidarity with the logging puns and to emphasize that this library is a tool for shaping the logs of your application.
 
