@@ -17,7 +17,6 @@ test('log saves meta data correctly', (t) => {
     .log('Added meta twice.');
 
   t.truthy(render);
-  const x = log.data.meta.test;
   t.deepEqual(log.data.meta, {
     test: {
       a: 12,

@@ -14,7 +14,7 @@ global.ADZE_ENV = 'dev';
 // Setup our test hook context
 const test = anyTest as TestInterface<{ shed: Shed }>;
 
-test.afterEach((t) => {
+test.afterEach(() => {
   removeShed();
 });
 

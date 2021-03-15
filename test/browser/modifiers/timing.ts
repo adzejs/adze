@@ -8,11 +8,11 @@ browserEnv();
 // Our global context is the window not global
 window.ADZE_ENV = 'dev';
 
-test.beforeEach((t) => {
+test.beforeEach(() => {
   createShed();
 });
 
-test.afterEach((t) => {
+test.afterEach(() => {
   removeShed();
 });
 

@@ -18,7 +18,7 @@ import {
 import { BaseLog } from './log/BaseLog';
 import { Label } from './label';
 import { defaults, shed_defaults } from './_defaults';
-import { isString, formatLevels } from './util';
+import { formatLevels } from './util';
 import { Env } from './Env';
 
 /**

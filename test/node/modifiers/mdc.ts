@@ -3,11 +3,11 @@ import { adze, createShed, removeShed } from '../../../src';
 
 global.ADZE_ENV = 'dev';
 
-test.beforeEach((t) => {
+test.beforeEach(() => {
   createShed();
 });
 
-test.afterEach((t) => {
+test.afterEach(() => {
   removeShed();
 });
 
