@@ -1,4 +1,4 @@
-import { BundledLog } from '../Log';
+import { BundledLog } from '../log';
 
 /**
  * Generates a new bundled log.

@@ -24,7 +24,7 @@ import { defaults } from '../_defaults';
 import { Env } from '../Env';
 import { Printer } from '../printers';
 import { allowed } from '../conditions';
-import { shedExists } from '../shed';
+import { shedExists } from '../Shed';
 
 export class BaseLog {
   /**

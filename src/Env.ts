@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { Shed } from './shed';
+import { Shed } from './Shed';
 
 declare global {
   interface Window {

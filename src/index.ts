@@ -1,6 +1,6 @@
 import { adze } from './adze';
 import { bundle } from './bundle';
-import { shedExists, createShed, removeShed } from './shed';
+import { shedExists, createShed, removeShed } from './Shed';
 import { defaults } from './_defaults';
 import {
   filterLabel,

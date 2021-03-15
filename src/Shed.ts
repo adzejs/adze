@@ -15,7 +15,7 @@ import {
   FinalLogData,
   LogRender,
 } from './_contracts';
-import { BaseLog } from './Log/BaseLog';
+import { BaseLog } from './log/BaseLog';
 import { Label } from './label';
 import { defaults, shed_defaults } from './_defaults';
 import { isString, formatLevels } from './util';

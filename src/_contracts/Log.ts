@@ -1,4 +1,4 @@
-import { BaseLog } from '../Log';
+import { BaseLog } from '../log';
 import { LogLevelDefinition, ConsoleMethod, Defaults, LabelData } from '.';
 
 /**

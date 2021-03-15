@@ -1,5 +1,5 @@
 import { Configuration } from './_contracts';
-import { Log } from './Log';
+import { Log } from './log';
 import { Printer } from './printers';
 import { Env } from './Env';
 

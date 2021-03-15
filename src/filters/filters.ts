@@ -1,5 +1,5 @@
 import { LogRender, Collection, LogData } from '../_contracts';
-import { Log } from '../Log';
+import { Log } from '../log';
 import { isString } from '../util';
 
 /**
