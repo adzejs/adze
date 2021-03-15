@@ -1,1 +1,25 @@
 language: nodejs
+cache: yarn
+install:
+  - yarn install
+jobs:
+  include:
+    - stage: lint, test and build
+      script:
+        - yarn lint
+        - yarn test
+        - yarn build
+    - stage: release
+      script: yarn build:production
+      deploy:
+        provider: npm
+        email: $NPM_EMAIL
+        api_key: $NPM_TOKEN
+        on:
+          tags: true
+          repo: AJStacy/Adze
+        skip_cleanup: 'true'
+branches:
+  only:
+    - master
+    - /^v[0-9]+.*$/ #This validates that the tag formatting is correct
