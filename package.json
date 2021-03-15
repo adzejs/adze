@@ -4,6 +4,9 @@
   "description": "Better JavaScript console logging.",
   "main": "dist/adze.js",
   "sideEffects": false,
+  "engines": {
+    "node": ">=10"
+  },
   "scripts": {
     "test": "ava",
     "demo:browser": "http-server -o -p 8082",
