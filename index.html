@@ -1,45 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Adze - JavaScript Logging Library</title>
-  <link rel="icon" type="image/png" href="img/favicon.png">
+  <head>
+    <meta charset="utf-8" />
+    <title>Adze - JavaScript Logging Library</title>
+    <link rel="icon" type="image/png" href="img/favicon.png" />
 
-  <script src="dist/adze.js"></script>
-  <style>
-    html, body {
-      font-size: 62.5%;
-      background-color: #fff;
-      font-family: arial;
-    }
-    .main {
-      text-align: center;
-    }
-    .main img {
-      width: 50%;
-      height: 50%;
-    }
-    h1, h2 { text-align: center; }
-    h1 { font-size: 4rem; }
-    h2 { font-size: 2.8rem; }
-    p, pre {
-      padding: 5rem;
-      font-size: 1.8rem;
-    }
-  </style>
-</head>
+    <script src="dist/adze.js"></script>
+    <style>
+      html,
+      body {
+        font-size: 62.5%;
+        background-color: #fff;
+        font-family: arial;
+      }
+      .main {
+        text-align: center;
+      }
+      .main img {
+        width: 50%;
+        height: 50%;
+      }
+      h1,
+      h2 {
+        text-align: center;
+      }
+      h1 {
+        font-size: 4rem;
+      }
+      h2 {
+        font-size: 2.8rem;
+      }
+      p,
+      pre {
+        padding: 5rem;
+        font-size: 1.8rem;
+      }
+    </style>
+  </head>
 
-<body>
-  <div class="main">
-    <img src="img/logo.svg">
-    <h2>Open up the console to see the tests.</h2>
-  </div>
+  <body>
+    <div class="main">
+      <img src="docs/assets/logo.svg" />
+      <h2>Open up the console to see the tests.</h2>
+    </div>
 
-  <script type="module">
-    import runDemo from './demo_funcs.js';
+    <script type="module">
+      import runDemo from './demo_funcs.js';
 
-    runDemo(AdzeLib, document.querySelector('.main'));
-  </script>
-  
-</body>
+      runDemo(AdzeLib, document.querySelector('.main'));
+    </script>
+  </body>
 </html>

@@ -1,5 +1,6 @@
 // Run our demo modules
 export default function runDemo(lib, el) {
+  screenshotDemo(lib);
   defaultLevels(lib);
   defaultLevelsWithEmoji(lib);
   defaultLevelsWithGlobalOverride(lib);
@@ -20,6 +21,42 @@ export default function runDemo(lib, el) {
   asGroupCollapsed(lib);
   evaluation(lib);
   withTrace(lib);
+}
+
+function screenshotDemo({ adze }) {
+  const log = adze();
+  log.attention('Example attention log');
+  log.error('Example error log');
+  log.warn('Example warning log');
+  log.info('Example info log');
+  log.fail('Example fail log');
+  log.success('Example success log');
+  log.log('Example log');
+  log.debug('Example debug log');
+  log.verbose('Example verbose log');
+  const log2 = adze({ use_emoji: true });
+  log2.attention('Example attention log');
+  log2.error('Example error log');
+  log2.warn('Example warning log');
+  log2.info('Example info log');
+  log2.fail('Example fail log');
+  log2.success('Example success log');
+  log2.log('Example log');
+  log2.debug('Example debug log');
+  log2.verbose('Example verbose log');
+  adze({
+    use_emoji: true,
+    custom_levels: {
+      customError: {
+        level: 1,
+        method: 'error',
+        style:
+          'font-size: 10px; font-weight: bold; border-radius: 0 10px 10px 0; border-width: 1px; border-style: solid; padding-right: 10px; background: linear-gradient(to right, #ffcafc, #ff02f2); color: #fff; border-color: #e3bbbb;',
+        terminal: ['bgRed', 'white'],
+        emoji: '😭',
+      },
+    },
+  }).custom('customError', 'This is a custom error log');
 }
 
 function defaultLevels({ adze }) {

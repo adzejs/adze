@@ -1,4 +1,4 @@
-![Adze Logo](img/logo_small.png)
+![Adze Logo](docs/assets/logo_small.png)
 
 > Adze - [a cutting tool that ... is used chiefly for shaping wood](https://www.merriam-webster.com/dictionary/adze).
 

@@ -114,7 +114,7 @@ export class BrowserPrinter extends SharedPrinter {
    * that have been applied to this log.
    */
   public fTime(): string {
-    const timeNow = this.data.label?.timeNow;
+    const timeNow = this.data.label?.timeNow ?? this.data.timeNow;
     const timeEllapsed = this.data.label?.timeEllapsed;
     const label_txt = `${timeNow ?? timeEllapsed ?? ''}`;
 
