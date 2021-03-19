@@ -36,6 +36,7 @@ module.exports = {
     docsDir: '',
     editLinkText: '',
     lastUpdated: false,
+    sidebarDepth: 2,
     nav: [
       {
         text: 'Guide',
@@ -51,7 +52,7 @@ module.exports = {
         {
           title: 'Guide',
           collapsable: false,
-          children: ['', 'installation', 'concepts'],
+          children: ['', 'installation', 'concepts', 'shed', 'using-adze'],
         },
       ],
     },

@@ -729,6 +729,7 @@ export class BaseLog {
           if (globally_allowed) {
             // Render the log and print to the console
             const render = new Printer(log_data)[this.printer]();
+            this._render = render;
 
             // Write the LogRender to the console.
             toConsole(render);

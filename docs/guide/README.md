@@ -1,6 +1,10 @@
-# Introduction
+# Guide
 
 ## Why is this named Adze?
+
+![A drawing of a man using an adze to shape a log](../assets/adze.png)
+
+_Photo from [Wikipedia](https://en.wikipedia.org/wiki/Adze)_
 
 > Adze - [a cutting tool that ... is used chiefly for shaping wood](https://www.merriam-webster.com/dictionary/adze).
 
