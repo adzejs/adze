@@ -1,10 +1,10 @@
-# Terminators
+# Default Terminators
 
 After you generated an Adze log instance from a [factory function](factories.md) and have applied the desired [modifiers](modifiers.md) you must terminate the method chain. The methods used to terminate the chain are called **terminators**.
 
 When a log has been terminated it will generate a log render, check if it is allowed to print the log render, cache the log instance if a [Shed](/shed) exists, and then return a data object representing the log properties and the log render to any registered log listeners. After all of that it will return a [terminated log object](/guide/concepts.html#terminated-log-object).
 
-Adze comes with 8 default log level terminators:
+Adze comes with 8 default log level terminators, all of which can be [configured](configuration):
 
 | Level | Name                    | Standard Method Used |
 | ----- | ----------------------- | -------------------- |
@@ -304,4 +304,4 @@ adze({ use_emoji: true }).verbose('Logging some extreme detail.');
 
 ### Output
 
-![debug example output](../assets/examples/debug-example.png)
+![verbose example output](../assets/examples/verbose-example.png)
