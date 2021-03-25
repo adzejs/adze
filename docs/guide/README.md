@@ -1,4 +1,4 @@
-# Guide
+# Introduction
 
 ## Why is this named Adze?
 
@@ -21,10 +21,11 @@ Here is a list of the features that Adze provides:
 - A fluent, chainable API for creating logs
 - Log Listeners that empower you to do with your logs as you wish
 - Annotate your logs with namespaces, labels, and other meta data
-- Attractive styling (EMOJI'S INCLUDED)
+- Attractive styling (EMOJI'S INCLUDED and consistent across major browsers)
 - Everything is configurable
 - Create custom log levels
 - A global log store for recalling logs and overriding configuration
+- and much more...
 
 Beyond the new features that Adze provides you, it also wraps the entire console web standard.
 Read more about the standard here: [MDN Console Docs](https://developer.mozilla.org/en-US/docs/Web/API/console)
@@ -45,4 +46,4 @@ adze({ use_emoji: true }).ns('tix-456').log('Example log');
 
 The output of this would look like the following:
 
-![Preview of Adze logs](../assets/api_example_output.png)
+![Preview of Adze logs](../assets/examples/api_example_output.png)

@@ -144,12 +144,25 @@ export class BaseLog {
     this.cfg = defaultsDeep(user_cfg, defaults) as Defaults;
   }
 
+  /**
+   * Getter for retrieving the level from the instance.
+   */
   public get level(): number | null {
     return this._level;
   }
 
+  /**
+   * Getter for retrieving the log render from the instance.
+   */
   public get render(): LogRender | null {
     return this._render;
+  }
+
+  /**
+   * Getter shortcut for retrieving MDC context from the log instance.
+   */
+  public get context(): MetaData {
+    return this._labelVal?.getContext() ?? {};
   }
 
   // ======================================
@@ -318,7 +331,7 @@ export class BaseLog {
    * add(1, 2);
    * subtract(4, 3);
    *
-   * adze().label('foo').dump().info('Results from our thread');
+   * adze().label('foo').dump.info('Results from our thread');
    * // Info => Results from our thread, { a: 1, b: 2, answer: 3 }, { x: 4, y: 3, answer: 1 }
    *
    * ```
@@ -412,8 +425,8 @@ export class BaseLog {
   }
 
   /**
-   * Assign meta data to this log instance that is retrievable
-   * in a log listener.
+   * Assign meta data to this log instance that is meant to be
+   * retrievable in a log listener or from a `log.data()` dump.
    */
   public meta<T>(key: string, val: T): this {
     return this.modifier((ctxt) => {
@@ -616,13 +629,6 @@ export class BaseLog {
     timeLog() is a useless method within the Adze API. The same effect can be 
     accomplished by created a new log with the same label.
   */
-
-  /**
-   * Getter shortcut for retrieving MDC context from the log instance.
-   */
-  public get context(): MetaData {
-    return this._labelVal?.getContext() ?? {};
-  }
 
   // ==============================
   //   Private Methods
