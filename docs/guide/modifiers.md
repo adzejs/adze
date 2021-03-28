@@ -45,6 +45,8 @@ adze({ use_emoji: true })
 
 ![assert modifier example output](../assets/examples/assert-example.png)
 
+![assert modifier example terminal output](../assets/examples/assert-terminal-example.png)
+
 ## count
 
 The count modifier tells the log to increment a counter associated to the log's [label](#label).
@@ -75,6 +77,8 @@ for (let i = 0; i < 5; i += 1) {
 ### Output
 
 ![Count modifier output](../assets/examples/count-example.png)
+
+![Count modifier terminal output](../assets/examples/count-terminal-example.png)
 
 ## countClear
 
@@ -154,9 +158,13 @@ for (let i = 0; i < 4; i += 1) {
 
 ![count reset modifier example output](../assets/examples/countReset-example.png)
 
+![count reset modifier example terminal output](../assets/examples/countReset-terminal-example.png)
+
 ## dir
 
 The dir modifier transforms the output of the log by directing it to use the `console.dir()` method for printing purposes only.
+
+_NOTE:_ Logs that use `dir` as a modifier should only be given a single argument which is usually an object. If multiple arguments are given, behavior may differ between browser and node environments. Refer to the MDN docs for more details.
 
 **MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/dir](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
 
@@ -173,16 +181,20 @@ class BaseLog {
 ```javascript
 import { adze } from 'adze';
 
-adze().dir.log('Print as a dir().', { foo: 'bar' });
+adze().dir.log({ foo: 'bar' });
 ```
 
 ### Output
 
 ![dir modifier output](../assets/examples/dir-example.png)
 
+![dir modifier terminal output](../assets/examples/dir-terminal-example.png)
+
 ## dirxml
 
 The dirxml modifier transforms the output of the log by directing it to use the `console.dirxml()` method for printing purposes only. This is mainly useful for logging out DOM elements.
+
+_NOTE:_ Logs that use `dirxml` as a modifier should only be given a single argument which is usually a DOM Element or other XML object. If multiple arguments are given, behavior may differ between browser and node environments. Refer to the MDN docs for more details.
 
 **MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml](https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml)
 
@@ -201,17 +213,20 @@ import { adze } from 'adze';
 
 // create a new div element
 const newDiv = document.createElement('div');
+newDiv.setAttribute('id', 'test');
 // and give it some content
 const newContent = document.createTextNode('Hi there and greetings!');
 // add the text node to the newly created div
 newDiv.appendChild(newContent);
 
-adze().dirxml.log('Print as a dirxml().', newDiv);
+adze().dirxml.log(newDiv);
 ```
 
 ### Output
 
-![dir modifier output](../assets/examples/dirxml-example.png)
+![dirxml modifier output](../assets/examples/dirxml-example.png)
+
+![dirxml modifier terminal output](../assets/examples/dirxml-terminal-example.png)
 
 ## dump
 
@@ -267,6 +282,8 @@ adze().label('foo').dump.info('Results from our thread');
 
 ![dump modifier example output](../assets/examples/dump-example.png)
 
+![dump modifier terminal example output](../assets/examples/dump-terminal-example.png)
+
 ## group
 
 The group modifier starts an uncollapsed group of logs. This means that all subsequent logs will be nested beneath this log until a [groupEnd](#groupEnd) log occurs.
@@ -300,9 +317,13 @@ adze().groupEnd.info();
 
 ![group modifier example output](../assets/examples/group-example.png)
 
+![group modifier terminal example output](../assets/examples/group-terminal-example.png)
+
 ## groupCollapsed
 
 The groupCollapsed modifier starts an collapsed group of logs. This means that all subsequent logs will be nested beneath this log until a [groupEnd](#groupEnd) log occurs.
+
+_Note:_ This will not be collapsed in a terminal environment since there is no way to uncollapse it.
 
 **MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/groupCollapsed](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupCollapsed)
 
@@ -332,6 +353,8 @@ adze().groupEnd.info();
 ### Output
 
 ![groupCollapsed modifier example output](../assets/examples/groupCollapsed-example.png)
+
+![groupCollapsed modifier terminal example output](../assets/examples/groupCollapsed-terminal-example.png)
 
 ## groupEnd
 
@@ -367,6 +390,8 @@ adze().info('Some other information...');
 ### Output
 
 ![groupEnd modifier example output](../assets/examples/groupEnd-example.png)
+
+![groupEnd modifier terminal example output](../assets/examples/groupEnd-terminal-example.png)
 
 ## label
 
@@ -407,6 +432,8 @@ adze().label('foo').count.log('Foo');
 
 ![label modifier example output](../assets/examples/label-example.png)
 
+![label modifier terminal example output](../assets/examples/label-terminal-example.png)
+
 ## meta
 
 The meta modifier allows you to attach meta data to your log instance. You can then retrieve it at a later time from within a log listener or by calling the `data()` method on a log instance.
@@ -444,6 +471,8 @@ adze().meta('message', info).log('This log contains an important message.');
 
 ![meta modifier output with listener output](../assets/examples/meta-example.png)
 
+![meta modifier terminal output with listener output](../assets/examples/meta-terminal-example.png)
+
 ## namespace / ns
 
 This modifier adds one or more namespaces to a log. These are mainly used as human
@@ -476,6 +505,8 @@ adze().ns('tix-456').log('More info');
 
 ![namespace modifier example output](../assets/examples/namespace-example.png)
 
+![namespace modifier terminal example output](../assets/examples/namespace-terminal-example.png)
+
 ## silent
 
 The silent modifier allows a log to be terminated and cached but prevents it from printing to the console. This can be useful for providing a log to a log listener that you do not want to have printed.
@@ -503,6 +534,8 @@ adze().log('I guess nobody is home :(');
 ### Output
 
 ![example of silent log output](../assets/examples/silent-example.png)
+
+![example of silent log terminal output](../assets/examples/silent-terminal-example.png)
 
 ## table
 
@@ -534,6 +567,8 @@ adze().table.log(tabular_data);
 ### Output
 
 ![table modifier output](../assets/examples/table-example.png)
+
+![table modifier terminal output](../assets/examples/table-terminal-example.png)
 
 ## test
 
@@ -577,6 +612,8 @@ adze({ use_emoji: true })
 
 ![test modifier example output](../assets/examples/test-example.png)
 
+![test modifier terminal example output](../assets/examples/test-terminal-example.png)
+
 ## time
 
 This modifier starts a timer associated to the log's [label](#label). This is useful for taking performance measurements. A log with a time modifier must be followed by a log with a [timeEnd](#timeend) modifier in order to get the final measurement.
@@ -617,6 +654,8 @@ adze({ use_emoji: true }).label('loop').timeEnd.log('Performance of our loop.');
 ### Output
 
 ![time modifier example output](../assets/examples/time-example.png)
+
+![time modifier terminal example output](../assets/examples/time-terminal-example.png)
 
 ## timeEnd
 
@@ -659,6 +698,8 @@ adze({ use_emoji: true }).label('loop').timeEnd.log('Performance of our loop.');
 
 ![time end modifier example output](../assets/examples/time-example.png)
 
+![time end modifier example output](../assets/examples/time-terminal-example.png)
+
 ## timeNow
 
 This modifier logs the time ellapsed since the page has loaded. This is useful for measuring page load performance rather than performance of a particular piece of code. This modifier is **not** dependent upon a [label](#label) or [Shed](./shed.md).
@@ -697,6 +738,8 @@ adze({ use_emoji: true }).timeNow.log(
 
 ![time now modifier example output](../assets/examples/timeNow-example.png)
 
+![time now modifier terminal example output](../assets/examples/timeNow-terminal-example.png)
+
 ## trace
 
 This modifier instructs the log to print a stacktrace using the standard `console.trace()` method.
@@ -724,3 +767,5 @@ adze().trace.log('Trying to find an issue...');
 ### Output
 
 ![trace modifier example output](../assets/examples/trace-example.png)
+
+![trace modifier example terminal output](../assets/examples/trace-terminal-example.png)

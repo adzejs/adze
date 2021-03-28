@@ -1,26 +1,31 @@
 // Run our demo modules
 export default function runDemo(lib, el) {
-  screenshotDemo(lib);
-  defaultLevels(lib);
-  defaultLevelsWithEmoji(lib);
-  defaultLevelsWithGlobalOverride(lib);
-  customLevels(lib);
-  customLevelsWithEmoji(lib);
-  thread(lib);
-  logLevelOf2(lib);
-  bundleLogs(lib);
-  sealLogModifiers(lib);
-  withLabel(lib);
-  withNamespace(lib);
-  withMultiNamespace(lib);
-  withTime(lib);
-  asTable(lib);
-  asDir(lib);
-  asDirxml(lib, el);
-  asGroup(lib);
-  asGroupCollapsed(lib);
-  evaluation(lib);
-  withTrace(lib);
+  screenshots(lib, el);
+  // screenshotDemo(lib);
+  // defaultLevels(lib);
+  // defaultLevelsWithEmoji(lib);
+  // defaultLevelsWithGlobalOverride(lib);
+  // customLevels(lib);
+  // customLevelsWithEmoji(lib);
+  // thread(lib);
+  // logLevelOf2(lib);
+  // bundleLogs(lib);
+  // sealLogModifiers(lib);
+  // withLabel(lib);
+  // withNamespace(lib);
+  // withMultiNamespace(lib);
+  // withTime(lib);
+  // asTable(lib);
+  // asDir(lib);
+  // asDirxml(lib, el);
+  // asGroup(lib);
+  // asGroupCollapsed(lib);
+  // evaluation(lib);
+  // withTrace(lib);
+}
+
+function screenshots({ adze, createShed }, el) {
+  adze().trace.log('Trying to find an issue...');
 }
 
 function screenshotDemo({ adze }) {

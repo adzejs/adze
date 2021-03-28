@@ -34,6 +34,8 @@ Read more about the standard here: [MDN Console Docs](https://developer.mozilla.
 
 ![Preview of Adze logs](../assets/demo.png)
 
+> This preview was generated from the same code executed in both the browser (left) and the node (right) environments.
+
 ## What does the API look like?
 
 As stated above, Adze offers an easy to use, chainable API. To create a log you simply chain together an Adze log instance with a series of modifiers and then end with a terminator. Here's an example of creating a log with emoji's and a namespace:
