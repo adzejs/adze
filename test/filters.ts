@@ -42,7 +42,7 @@ test('filters a log collection by label', (t) => {
   t.is(filtered.length, 1);
 });
 
-test('filters a log collection by range of levels', (t) => {
+test('filters a log collection by levels', (t) => {
   const bundled = bundle(adze({ use_emoji: true }));
 
   bundled().ns('SPACE').error('This is an error!');
