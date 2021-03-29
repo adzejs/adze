@@ -1,5 +1,5 @@
 import { Bundler } from './_contracts';
-import { Log } from './Log';
+import { Log } from './log';
 /**
  * Bundles logs together by wrapping all subsequent logs in a Bundle callback
  * that curries them into an array. This bundle array can be used to recall and

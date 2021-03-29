@@ -1,9 +1,9 @@
-import { BaseLog } from '../Log';
+import { BaseLog } from '../log';
 import { LogLevelDefinition, ConsoleMethod, Defaults, LabelData } from '.';
 /**
  * The keys of the default terminating log methods included with Adze.
  */
-export declare type TerminatingMethodKeys = 'attention' | 'error' | 'warn' | 'fail' | 'success' | 'info' | 'log' | 'debug' | 'verbose';
+export declare type TerminatingMethodKeys = 'alert' | 'error' | 'warn' | 'fail' | 'success' | 'info' | 'log' | 'debug' | 'verbose';
 /**
  * To keep the size of this library down we are providing
  * the user with standard browser timestamp values.

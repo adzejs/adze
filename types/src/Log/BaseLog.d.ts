@@ -91,20 +91,30 @@ export declare class BaseLog {
      */
     private dumpContext;
     constructor(printer: typeof Printer, env: Env, user_cfg?: Configuration);
+    /**
+     * Getter for retrieving the level from the instance.
+     */
     get level(): number | null;
+    /**
+     * Getter for retrieving the log render from the instance.
+     */
     get render(): LogRender | null;
     /**
-     * Terminates the log at the *attention* level.
+     * Getter shortcut for retrieving MDC context from the log instance.
+     */
+    get context(): MetaData;
+    /**
+     * Terminates the log at the *alert* level.
      *
      * **Default Level = 0**
      *
-     * This level is useful for calling attention to
+     * This level is useful for calling alert to
      * important information and lives at the lowest level.
      *
      * You should use this sparingly since it's level is lower
      * than error.
      */
-    attention(...args: unknown[]): TerminatedLog<this>;
+    alert(...args: unknown[]): TerminatedLog<this>;
     /**
      * Terminates the log at the *error* level.
      *
@@ -224,7 +234,7 @@ export declare class BaseLog {
      * add(1, 2);
      * subtract(4, 3);
      *
-     * adze().label('foo').dump().info('Results from our thread');
+     * adze().label('foo').dump.info('Results from our thread');
      * // Info => Results from our thread, { a: 1, b: 2, answer: 3 }, { x: 4, y: 3, answer: 1 }
      *
      * ```
@@ -266,8 +276,8 @@ export declare class BaseLog {
      */
     get dump(): this;
     /**
-     * Assign meta data to this log instance that is retrievable
-     * in a log listener.
+     * Assign meta data to this log instance that is meant to be
+     * retrievable in a log listener or from a `log.data()` dump.
      */
     meta<T>(key: string, val: T): this;
     /**
@@ -372,10 +382,6 @@ export declare class BaseLog {
      * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/timeEnd).
      */
     get timeEnd(): this;
-    /**
-     * Getter shortcut for retrieving MDC context from the log instance.
-     */
-    get context(): MetaData;
     /**
      * Queues a modifier method for execution when the log is terminated.
      */

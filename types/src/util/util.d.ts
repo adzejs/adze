@@ -8,7 +8,7 @@ export declare function initialCaps(str: string): string;
  * value defined by the user configuration. If levels is already a number array
  * it is returned unchanged.
  */
-export declare function formatLevels(cfg: Defaults | null, levels: LevelFilter): number[];
+export declare function formatLevels(levels: LevelFilter, cfg?: Defaults | null): number[];
 /**
  * Type Guard that validates that a given string represents a
  * range of numbers.

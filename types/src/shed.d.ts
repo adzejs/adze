@@ -1,5 +1,5 @@
 import { Defaults, ShedUserConfig, Collection, LevelFilter, ListenerLocations, ListenerCallback, FinalLogData, LogRender } from './_contracts';
-import { BaseLog } from './Log/BaseLog';
+import { BaseLog } from './log/BaseLog';
 import { Label } from './label';
 import { Env } from './Env';
 /**

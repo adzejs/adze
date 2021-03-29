@@ -1,17 +1,17 @@
-import { LogRender, Collection, LogData } from '../_contracts';
-import { Log } from '../Log';
+import { LogRender, Collection, LogData, LevelFilter } from '../_contracts';
+import { Log } from '../log';
 /**
  * Filter a collection of logs by the namespace.
  */
 export declare function filterNamespace(collection: Collection | undefined, ns: string[]): Collection;
 /**
- * Filter and render the bundle of logs by the label.
+ * Filter and render the collection of logs by the label.
  */
 export declare function filterLabel(collection: Collection | undefined, lbl: string): Collection;
 /**
- * Filter the bundle of logs by their log level.
+ * Filter the collection of logs by their log level.
  */
-export declare function filterLevelRange(collection: Collection | undefined, low: number, high: number): Collection;
+export declare function filterLevels(collection: Collection | undefined, levels: LevelFilter): Collection;
 /**
  * Executes a callback on each value of a collection. The callback receives a
  * log data object for each log in the collection. If a truthy value is returned the
