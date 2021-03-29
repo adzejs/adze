@@ -22,8 +22,8 @@ export function initialCaps(str: string): string {
  * it is returned unchanged.
  */
 export function formatLevels(
-  cfg: Defaults | null,
-  levels: LevelFilter
+  levels: LevelFilter,
+  cfg: Defaults | null = null
 ): number[] {
   if (isString(levels)) {
     if (levels === '*') {

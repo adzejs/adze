@@ -24,10 +24,20 @@ export default function runDemo(lib, el) {
   // withTrace(lib);
 }
 
-function screenshots({ adze, createShed }, el) {
-  adze().alert('Something went horribly wrong!');
-  // With emoji's enabled
-  adze({ use_emoji: true }).alert('Something went horribly wrong!');
+function screenshots({ adze, bundle, filterLabel, rerender }, el) {
+  // Let's create a bundle so we can collect our logs
+  const bundled = bundle(adze({ use_emoji: true }));
+
+  bundled().label('foo').error('This is an error!');
+  bundled().label('bar').info('This is some info.');
+  bundled().label('baz').success('Successfully did something!');
+  const { log } = bundled().label('baz').log('Logging something.');
+
+  // Let's get our collection from the bundle
+  const collection = log.bundle;
+
+  // Let's filter the collection and then re-render it.
+  filterLabel(collection, 'bar').forEach(rerender);
 }
 
 function screenshotDemo({ adze }) {
@@ -247,7 +257,7 @@ function bundleLogs({
   rerender,
   filterNamespace,
   filterLabel,
-  filterLevelRange,
+  filterLevels,
 }) {
   console.log('\n----- Bundle Logs & Recall All -----\n');
   const log = bundle(adze({ use_emoji: true }));
@@ -275,7 +285,7 @@ function bundleLogs({
   divider.info(
     '---- Next is a recall of all logs with a level in the range of 4 to 8 ----'
   );
-  filterLevelRange(log().bundle, 4, 8).forEach(rerender);
+  filterLevels(log().bundle, 4, 8).forEach(rerender);
 }
 
 function sealLogModifiers({ adze }) {

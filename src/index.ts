@@ -4,7 +4,7 @@ import { shedExists, createShed, removeShed } from './Shed';
 import { defaults } from './_defaults';
 import {
   filterLabel,
-  filterLevelRange,
+  filterLevels,
   filterNamespace,
   filterCollection,
   render,
@@ -21,7 +21,7 @@ export {
   defaults,
   bundle,
   filterLabel,
-  filterLevelRange,
+  filterLevels,
   filterNamespace,
   filterCollection,
   isFinalLogData,

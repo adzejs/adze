@@ -61,6 +61,8 @@ module.exports = {
             'modifiers',
             'default-terminators',
             'other-terminators',
+            'filtering-and-utility-functions',
+            'advanced',
           ],
         },
       ],

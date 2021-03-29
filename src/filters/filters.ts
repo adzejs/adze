@@ -1,6 +1,6 @@
-import { LogRender, Collection, LogData } from '../_contracts';
+import { LogRender, Collection, LogData, LevelFilter } from '../_contracts';
 import { Log } from '../log';
-import { isString } from '../util';
+import { formatLevels, isString } from '../util';
 
 /**
  * Filter a collection of logs by the namespace.
@@ -22,7 +22,7 @@ export function filterNamespace(
 }
 
 /**
- * Filter and render the bundle of logs by the label.
+ * Filter and render the collection of logs by the label.
  */
 export function filterLabel(
   collection: Collection = [],
@@ -32,16 +32,15 @@ export function filterLabel(
 }
 
 /**
- * Filter the bundle of logs by their log level.
+ * Filter the collection of logs by their log level.
  */
-export function filterLevelRange(
+export function filterLevels(
   collection: Collection = [],
-  low: number,
-  high: number
+  levels: LevelFilter
 ): Collection {
   return filterCollection(collection, (log) => {
-    const level = log.level ?? Infinity;
-    return level >= low && level <= high;
+    // Calculating the formatted levels for each log because they could have different config
+    return formatLevels(levels, log.cfg).includes(log.level ?? Infinity);
   });
 }
 

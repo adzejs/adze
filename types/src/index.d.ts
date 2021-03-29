@@ -2,7 +2,28 @@ import { adze } from './adze';
 import { bundle } from './bundle';
 import { shedExists, createShed, removeShed } from './shed';
 import { defaults } from './_defaults';
-import { filterLabel, filterLevelRange, filterNamespace, filterCollection, render, rerender } from './filters';
+import {
+  filterLabel,
+  filterLevels,
+  filterNamespace,
+  filterCollection,
+  render,
+  rerender,
+} from './filters';
 import { isFinalLogData } from './util';
 export * from './_contracts';
-export { adze, shedExists, createShed, removeShed, defaults, bundle, filterLabel, filterLevelRange, filterNamespace, filterCollection, isFinalLogData, render, rerender, };
+export {
+  adze,
+  shedExists,
+  createShed,
+  removeShed,
+  defaults,
+  bundle,
+  filterLabel,
+  filterLevels,
+  filterNamespace,
+  filterCollection,
+  isFinalLogData,
+  render,
+  rerender,
+};

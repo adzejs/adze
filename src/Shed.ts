@@ -99,8 +99,8 @@ export class Shed {
       new_cfg.filters.level?.include
     ) {
       new_cfg.filters.level.include = formatLevels(
-        new_cfg.global_cfg,
-        new_cfg.filters.level.include
+        new_cfg.filters.level.include,
+        new_cfg.global_cfg
       );
     }
     if (
@@ -108,8 +108,8 @@ export class Shed {
       new_cfg.filters.level?.exclude
     ) {
       new_cfg.filters.level.exclude = formatLevels(
-        new_cfg.global_cfg,
-        new_cfg.filters.level.exclude
+        new_cfg.filters.level.exclude,
+        new_cfg.global_cfg
       );
     }
     return new_cfg;
@@ -147,7 +147,7 @@ export class Shed {
    * This is useful for recalling logs and applying filters.
    */
   public getCollection(levels: LevelFilter): Collection {
-    const lvls = formatLevels(this.cfg.global_cfg, levels);
+    const lvls = formatLevels(levels, this.cfg.global_cfg);
     return this.cache.reduce((acc, log) => {
       return acc.concat(lvls.includes(log.level ?? Infinity) ? [log] : []);
     }, [] as Collection);
@@ -224,7 +224,7 @@ export class Shed {
     levels: LevelFilter,
     cb: ListenerCallback
   ): ListenerLocations {
-    const lvls = formatLevels(this.cfg.global_cfg, levels);
+    const lvls = formatLevels(levels, this.cfg.global_cfg);
     return lvls.map((lvl: number) => {
       // Get the map for the listeners of the given log level.
       const level_map = this.listenerBucket(lvl);
