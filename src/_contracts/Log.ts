@@ -5,7 +5,7 @@ import { LogLevelDefinition, ConsoleMethod, Defaults, LabelData } from '.';
  * The keys of the default terminating log methods included with Adze.
  */
 export type TerminatingMethodKeys =
-  | 'attention'
+  | 'alert'
   | 'error'
   | 'warn'
   | 'fail'

@@ -242,7 +242,7 @@ test('hideAll global log filter prevents all logs rendering', (t) => {
     },
   });
 
-  const { render: a_render } = adze().attention('This is an attention!');
+  const { render: a_render } = adze().alert('This is an alert!');
   const { render: e_render } = adze().error('This is an error!');
   const { render: w_render } = adze().warn('This is a warn!');
   const { render: i_render } = adze().info('This is an info!');
@@ -272,7 +272,7 @@ test('global filter excludes logs based on label', (t) => {
     },
   });
 
-  const { render: a_render } = adze().attention('This is an attention!');
+  const { render: a_render } = adze().alert('This is an alert!');
   const { render: e_render } = adze().label('test').error('This is an error!');
   const { render: w_render } = adze().warn('This is a warn!');
   const { render: i_render } = adze().label('test').info('This is an info!');
@@ -302,7 +302,7 @@ test('global filter includes logs based on label', (t) => {
     },
   });
 
-  const { render: a_render } = adze().attention('This is an attention!');
+  const { render: a_render } = adze().alert('This is an alert!');
   const { render: e_render } = adze().label('test').error('This is an error!');
   const { render: w_render } = adze().warn('This is a warn!');
   const { render: i_render } = adze().label('test').info('This is an info!');
@@ -332,7 +332,7 @@ test('global filter excludes logs based on namespace', (t) => {
     },
   });
 
-  const { render: a_render } = adze().attention('This is an attention!');
+  const { render: a_render } = adze().alert('This is an alert!');
   const { render: e_render } = adze().ns('testWOW').error('This is an error!');
   const { render: w_render } = adze().warn('This is a warn!');
   const { render: i_render } = adze().ns('testWOW').info('This is an info!');
@@ -364,7 +364,7 @@ test('global filter includes logs based on namespace', (t) => {
     },
   });
 
-  const { render: a_render } = adze().attention('This is an attention!');
+  const { render: a_render } = adze().alert('This is an alert!');
   const { render: e_render } = adze().ns('test').error('This is an error!');
   const { render: w_render } = adze().warn('This is a warn!');
   const { render: i_render } = adze().ns('test').info('This is an info!');

@@ -12,20 +12,17 @@ window.ADZE_ENV = 'dev';
 // WITH EMOJI
 // =========================
 
-test('renders a attention log with emoji', (t) => {
+test('renders a alert log with emoji', (t) => {
   const t_log = adze({
     use_emoji: true,
-  }).attention('testing');
+  }).alert('testing');
   t.truthy(t_log.log);
 
   if (t_log.render) {
     const [method, args] = t_log.render;
-    t.is(method, 'info');
-    t.is(args[0], ' %c 🌈 Attention(1)');
-    t.is(
-      args[1],
-      'font-size: 10px; font-weight: bold; border-radius: 0 10px 10px 0; border-width: 1px; border-style: solid;padding-right: 15px; background: linear-gradient(to right, #fff, #e2baff); color: #483c51; border-color: #c19fd9;'
-    );
+    t.is(method, 'error');
+    t.is(args[0], ' %c 🚨 Alert(1)');
+    t.is(args[1], `${defaults.base_style}${defaults.log_levels.alert.style}`);
     t.is(args[2], 'testing');
   } else {
     t.fail();
@@ -42,7 +39,7 @@ test('renders a error log with emoji', (t) => {
     const [method, args] = t_log.render;
     t.is(method, 'error');
     t.is(args[0], ' %c 🔥 Error(1)');
-    t.is(args[1], defaults.base_style + defaults.log_levels.error.style);
+    t.is(args[1], `${defaults.base_style}${defaults.log_levels.error.style}`);
     t.is(args[2], 'testing');
   } else {
     t.fail();
@@ -59,7 +56,7 @@ test('renders a warn log with emoji', (t) => {
     const [method, args] = t_log.render;
     t.is(method, 'warn');
     t.is(args[0], ' %c 🔔 Warn(1)');
-    t.is(args[1], defaults.base_style + defaults.log_levels.warn.style);
+    t.is(args[1], `${defaults.base_style}${defaults.log_levels.warn.style}`);
     t.is(args[2], 'testing');
   } else {
     t.fail();
@@ -76,7 +73,7 @@ test('renders a info log with emoji', (t) => {
     const [method, args] = t_log.render;
     t.is(method, 'info');
     t.is(args[0], ' %c 📬 Info(1)');
-    t.is(args[1], defaults.base_style + defaults.log_levels.info.style);
+    t.is(args[1], `${defaults.base_style}${defaults.log_levels.info.style}`);
     t.is(args[2], 'testing');
   } else {
     t.fail();
@@ -93,7 +90,7 @@ test('renders a fail log with emoji', (t) => {
     const [method, args] = t_log.render;
     t.is(method, 'info');
     t.is(args[0], ' %c ❌ Fail(1)');
-    t.is(args[1], defaults.base_style + defaults.log_levels.fail.style);
+    t.is(args[1], `${defaults.base_style}${defaults.log_levels.fail.style}`);
     t.is(args[2], 'testing');
   } else {
     t.fail();
@@ -110,7 +107,7 @@ test('renders a success log with emoji', (t) => {
     const [method, args] = t_log.render;
     t.is(method, 'info');
     t.is(args[0], ' %c 🎉 Success(1)');
-    t.is(args[1], defaults.base_style + defaults.log_levels.success.style);
+    t.is(args[1], `${defaults.base_style}${defaults.log_levels.success.style}`);
     t.is(args[2], 'testing');
   } else {
     t.fail();
@@ -127,7 +124,7 @@ test('renders a log with emoji', (t) => {
     const [method, args] = t_log.render;
     t.is(method, 'log');
     t.is(args[0], ' %c 📌 Log(1)');
-    t.is(args[1], defaults.base_style + defaults.log_levels.log.style);
+    t.is(args[1], `${defaults.base_style}${defaults.log_levels.log.style}`);
     t.is(args[2], 'testing');
   } else {
     t.fail();
@@ -144,7 +141,7 @@ test('renders a debug log with emoji', (t) => {
     const [method, args] = t_log.render;
     t.is(method, 'debug');
     t.is(args[0], ' %c 🐞 Debug(1)');
-    t.is(args[1], defaults.base_style + defaults.log_levels.debug.style);
+    t.is(args[1], `${defaults.base_style}${defaults.log_levels.debug.style}`);
     t.is(args[2], 'testing');
   } else {
     t.fail();
@@ -161,7 +158,7 @@ test('renders a verbose log with emoji', (t) => {
     const [method, args] = t_log.render;
     t.is(method, 'debug');
     t.is(args[0], ' %c 💤 Verbose(1)');
-    t.is(args[1], defaults.base_style + defaults.log_levels.verbose.style);
+    t.is(args[1], `${defaults.base_style}${defaults.log_levels.verbose.style}`);
     t.is(args[2], 'testing');
   } else {
     t.fail();
@@ -189,7 +186,7 @@ test('renders a custom log with emoji', (t) => {
     const [method, args] = render;
     t.is(method, 'log');
     t.is(args[0], ' %c 🤪 Custom(1)');
-    t.is(args[1], defaults.base_style + style);
+    t.is(args[1], `${defaults.base_style}${style}`);
     t.is(args[2], 'This is a custom log.');
   } else {
     t.fail();

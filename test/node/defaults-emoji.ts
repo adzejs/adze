@@ -7,14 +7,14 @@ global.ADZE_ENV = 'dev';
 // WITH EMOJI
 // =========================
 
-test('renders a default attention log with emoji', (t) => {
-  const t_log = adze({ use_emoji: true }).attention('testing');
+test('renders a default alert log with emoji', (t) => {
+  const t_log = adze({ use_emoji: true }).alert('testing');
   t.truthy(t_log.log);
 
   if (t_log.render) {
     const [method, args] = t_log.render;
-    t.is(method, 'info');
-    t.is(args[0], ' 🌈 Attention(1)  ');
+    t.is(method, 'error');
+    t.is(args[0], ' 🚨 Alert(1)      ');
     t.is(args[1], 'testing');
   } else {
     t.fail();

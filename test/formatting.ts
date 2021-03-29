@@ -45,7 +45,7 @@ test('table log terminates properly.', (t) => {
 });
 
 test('silent modifier prevents log rendering', (t) => {
-  const { render } = adze().silent.attention('This log should not render.');
+  const { render } = adze().silent.alert('This log should not render.');
   if (render) {
     t.fail();
   } else {

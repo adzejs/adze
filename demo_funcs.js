@@ -25,12 +25,14 @@ export default function runDemo(lib, el) {
 }
 
 function screenshots({ adze, createShed }, el) {
-  adze().trace.log('Trying to find an issue...');
+  adze().alert('Something went horribly wrong!');
+  // With emoji's enabled
+  adze({ use_emoji: true }).alert('Something went horribly wrong!');
 }
 
 function screenshotDemo({ adze }) {
   const log = adze();
-  log.attention('Example attention log');
+  log.alert('Example alert log');
   log.error('Example error log');
   log.warn('Example warning log');
   log.info('Example info log');
@@ -40,7 +42,7 @@ function screenshotDemo({ adze }) {
   log.debug('Example debug log');
   log.verbose('Example verbose log');
   const log2 = adze({ use_emoji: true });
-  log2.attention('Example attention log');
+  log2.alert('Example alert log');
   log2.error('Example error log');
   log2.warn('Example warning log');
   log2.info('Example info log');
@@ -66,7 +68,7 @@ function screenshotDemo({ adze }) {
 
 function defaultLevels({ adze }) {
   console.log('\n----- Default Levels -----\n');
-  adze().attention('This is an attention!');
+  adze().alert('This is an alert!');
   adze().error('This is an error!');
   adze().warn('This is a warn!');
   adze().info('This is an info!');
@@ -80,7 +82,7 @@ function defaultLevels({ adze }) {
 function defaultLevelsWithEmoji({ adze }) {
   console.log('\n----- Default Levels w/ Emoji -----\n');
   const log = adze({ use_emoji: true });
-  log.attention('This is an attention!');
+  log.alert('This is an alert!');
   log.error('This is an error!');
   log.warn('This is a warn!');
   log.info('This is an info!');
@@ -222,7 +224,7 @@ function logLevelOf2({ adze }) {
     },
   });
 
-  log.attention('This attention log should render. (level = 0)');
+  log.alert('This alert log should render. (level = 0)');
   log.error('This error log should render. (level = 1)');
   log.warn('This warning log should render. (level = 2)');
   log.info('This info log should be hidden.');

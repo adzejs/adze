@@ -5,14 +5,14 @@ global.ADZE_ENV = 'dev';
 
 // ------- Default Node Logs -------- //
 
-test('renders a default attention log', (t) => {
-  const t_log = adze().attention('testing');
+test('renders a default alert log', (t) => {
+  const t_log = adze().alert('testing');
   t.truthy(t_log.log);
 
   if (t_log.render) {
     const [method, args] = t_log.render;
-    t.is(method, 'info');
-    t.is(args[0], ' Attention(1)  ');
+    t.is(method, 'error');
+    t.is(args[0], ' Alert(1)      ');
     t.is(args[1], 'testing');
   } else {
     t.fail();

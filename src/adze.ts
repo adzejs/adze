@@ -22,7 +22,7 @@ import { Env } from './Env';
  *
  * **--- Default levels ---**
  *
- * + (0) attention
+ * + (0) alert
  * + (1) error
  * + (2) warn
  * + (3) info

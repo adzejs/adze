@@ -170,18 +170,18 @@ export class BaseLog {
   // ======================================
 
   /**
-   * Terminates the log at the *attention* level.
+   * Terminates the log at the *alert* level.
    *
    * **Default Level = 0**
    *
-   * This level is useful for calling attention to
+   * This level is useful for calling alert to
    * important information and lives at the lowest level.
    *
    * You should use this sparingly since it's level is lower
    * than error.
    */
-  public attention(...args: unknown[]): TerminatedLog<this> {
-    return this.logMethod('attention', args);
+  public alert(...args: unknown[]): TerminatedLog<this> {
+    return this.logMethod('alert', args);
   }
 
   /**

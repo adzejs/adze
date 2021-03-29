@@ -6,25 +6,25 @@ When a log has been terminated it will generate a log render, check if it is all
 
 Adze comes with 8 default log level terminators, all of which can be [configured](configuration):
 
-| Level | Name                    | Standard Method Used |
-| ----- | ----------------------- | -------------------- |
-| 0     | [attention](#attention) | info                 |
-| 1     | [error](#error)         | error                |
-| 2     | [warn](#warn)           | warn                 |
-| 3     | [info](#info)           | info                 |
-| 4     | [fail](#fail)           | info                 |
-| 5     | [success](#success)     | info                 |
-| 6     | [log](#log)             | log                  |
-| 7     | [debug](#debug)         | debug                |
-| 8     | [verbose](#verbose)     | debug                |
+| Level | Name                | Standard Method Used |
+| ----- | ------------------- | -------------------- |
+| 0     | [alert](#alert)     | error                |
+| 1     | [error](#error)     | error                |
+| 2     | [warn](#warn)       | warn                 |
+| 3     | [info](#info)       | info                 |
+| 4     | [fail](#fail)       | info                 |
+| 5     | [success](#success) | info                 |
+| 6     | [log](#log)         | log                  |
+| 7     | [debug](#debug)     | debug                |
+| 8     | [verbose](#verbose) | debug                |
 
-## attention
+## alert
 
-This level is useful for calling attention to important information and lives at the lowest level. You should use this sparingly since it's level is lower than error.
+This level should only be used for logs that require immediate attention. This should be used sparingly and only for the most critical of errors.
 
 **Default log level** = 0
 
-**Standard Log Method:** info
+**Standard Log Method:** error
 
 _This is not a standard API._
 
@@ -32,7 +32,7 @@ _This is not a standard API._
 
 ```typescript
 class BaseLog {
-  public attention(...args: unknown[]): TerminatedLog<this>;
+  public error(...args: unknown[]): TerminatedLog<this>;
 }
 ```
 
@@ -41,16 +41,16 @@ class BaseLog {
 ```javascript
 import { adze } from 'adze';
 
-adze().attention('Hello World!');
+adze().alert('Something went horribly wrong!');
 // With emoji's enabled
-adze({ use_emoji: true }).attention('Hello World!');
+adze({ use_emoji: true }).alert('Something went horribly wrong!');
 ```
 
 ### Output
 
-![attention example output](../assets/examples/attention-example.png)
+![alert example output](../assets/examples/alert-example.png)
 
-![attention terminal example output](../assets/examples/attention-terminal-example.png)
+![alert terminal example output](../assets/examples/alert-terminal-example.png)
 
 ## error
 
