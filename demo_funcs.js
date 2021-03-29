@@ -24,20 +24,16 @@ export default function runDemo(lib, el) {
   // withTrace(lib);
 }
 
-function screenshots({ adze, bundle, filterLabel, rerender }, el) {
-  // Let's create a bundle so we can collect our logs
-  const bundled = bundle(adze({ use_emoji: true }));
+function screenshots({ adze }, el) {
+  // Let's generate a log and get its render
+  const { render } = adze().info('This is an info log');
 
-  bundled().label('foo').error('This is an error!');
-  bundled().label('bar').info('This is some info.');
-  bundled().label('baz').success('Successfully did something!');
-  const { log } = bundled().label('baz').log('Logging something.');
+  // Then we will destructure the log to get the method and arguments
+  const [method, args] = render;
 
-  // Let's get our collection from the bundle
-  const collection = log.bundle;
-
-  // Let's filter the collection and then re-render it.
-  filterLabel(collection, 'bar').forEach(rerender);
+  /* And now we can re-render the log by calling the
+   console method and spreading the args */
+  console[method](...args);
 }
 
 function screenshotDemo({ adze }) {

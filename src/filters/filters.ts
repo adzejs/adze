@@ -71,7 +71,7 @@ export function rerender(log: Log): void {
 }
 
 /**
- * Render a log to the console based on a render object.
+ * Render a log to the console based on a log render object.
  */
 export function render([method, args]: LogRender): void {
   console[method](...args);
