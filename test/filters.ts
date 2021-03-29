@@ -4,7 +4,7 @@ import {
   bundle,
   filterNamespace,
   filterLabel,
-  filterLevels,
+  filterLevel,
   filterCollection,
 } from '../src';
 
@@ -53,7 +53,7 @@ test('filters a log collection by range of levels', (t) => {
   const collection = log.bundle;
   t.is(collection.length, 4);
 
-  const filtered = filterLevels(collection, '3-5');
+  const filtered = filterLevel(collection, '3-5');
 
   t.is(filtered.length, 2);
 });

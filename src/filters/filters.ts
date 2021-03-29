@@ -34,7 +34,7 @@ export function filterLabel(
 /**
  * Filter the collection of logs by their log level.
  */
-export function filterLevels(
+export function filterLevel(
   collection: Collection = [],
   levels: LevelFilter
 ): Collection {

@@ -257,7 +257,7 @@ function bundleLogs({
   rerender,
   filterNamespace,
   filterLabel,
-  filterLevels,
+  filterLevel,
 }) {
   console.log('\n----- Bundle Logs & Recall All -----\n');
   const log = bundle(adze({ use_emoji: true }));
@@ -285,7 +285,7 @@ function bundleLogs({
   divider.info(
     '---- Next is a recall of all logs with a level in the range of 4 to 8 ----'
   );
-  filterLevels(log().bundle, 4, 8).forEach(rerender);
+  filterLevel(log().bundle, 4, 8).forEach(rerender);
 }
 
 function sealLogModifiers({ adze }) {

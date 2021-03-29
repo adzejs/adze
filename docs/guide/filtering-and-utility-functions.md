@@ -78,34 +78,34 @@ In these example's of the output we can see our initial four logs and then the l
 
 ![filter label example terminal output](../assets/examples/filterLabel-terminal-example.png)
 
-## filterLevels
+## filterLevel
 
-Filters a [collection](advanced.md#collections) of logs by the given range of log levels.
+Filters a [collection](advanced.md#collections) of logs by the given [level filter](#addmelater).
 
 ### Interface
 
 ```typescript
-function filterLabel(collection: Collection = [], label: string): Collection;
+function filterLevel(coll: Collection = [], lvls: LevelFilter): Collection;
 ```
 
 ### Example
 
 ```javascript
-import { adze, bundle, filterLabel, rerender } from 'adze';
+import { adze, bundle, filterLabels, rerender } from 'adze';
 
 // Let's create a bundle so we can collect our logs
 const bundled = bundle(adze({ use_emoji: true }));
 
-bundled().label('foo').error('This is an error!');
-bundled().label('bar').info('This is some info.');
-bundled().label('baz').success('Successfully did something!');
-const { log } = bundled().label('baz').log('Logging something.');
+bundled().error('This is an error!');
+bundled().info('This is some info.');
+bundled().success('Successfully did something!');
+const { log } = bundled().log('Logging something.');
 
 // Let's get our collection from the bundle
 const collection = log.bundle;
 
 // Let's filter the collection and then re-render it.
-filterLabel(collection, 'bar').forEach(rerender);
+filterLevel(collection, 'bar').forEach(rerender);
 ```
 
 ### Output
