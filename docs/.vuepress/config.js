@@ -19,6 +19,15 @@ module.exports = {
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     [
+      'link',
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '64x64',
+        href: '/favicon.png',
+      },
+    ],
+    [
       'meta',
       { name: 'apple-mobile-web-app-status-bar-style', content: 'black' },
     ],
@@ -64,7 +73,7 @@ module.exports = {
             'getters-and-setters',
             'data',
             'shed-concepts',
-            'using-listeners',
+            'using-shed',
           ],
         },
       ],

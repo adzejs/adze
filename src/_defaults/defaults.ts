@@ -3,7 +3,6 @@ import { Defaults } from '../_contracts';
 
 export const defaults: Defaults = {
   log_level: 8,
-  log_cache_size: 300,
   use_emoji: false,
   capture_stacktrace: false,
   base_style:
@@ -32,7 +31,7 @@ export const defaults: Defaults = {
       level: 2,
       style: `background: linear-gradient(to right, #fff, #fff0a8); color: #715100; border-color: #e3d696; padding-right: ${
         Env.isChrome() ? '34' : '44'
-      }px; `,
+      }px;`,
       terminal: ['bgYellow', 'gray'],
       method: 'warn',
       emoji: '🔔',

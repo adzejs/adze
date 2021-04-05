@@ -22,13 +22,13 @@ import { formatLevels } from './util';
 import { Env } from './Env';
 
 /**
- * A typeguard that indicates that a global shed store exists.
+ * A typeguard that indicates that a global Shed store exists.
  */
 export function shedExists(store: Shed | undefined): store is Shed {
   return store !== undefined;
 }
 /**
- * Creates a new shed instance in your environment's global context.
+ * Creates a new Shed instance in your environment's global context.
  */
 export function createShed(config?: ShedUserConfig): Shed {
   const env = new Env();
@@ -37,7 +37,7 @@ export function createShed(config?: ShedUserConfig): Shed {
 }
 
 /**
- * Removes the shed from the environment's global context.
+ * Removes the Shed from the environment's global context.
  */
 export function removeShed(): void {
   delete Env.global().$shed;
@@ -64,7 +64,7 @@ export class Shed {
    *
    * Do not access this value directly. Use the `cache()` setter and getter.
    */
-  private cache: Collection = [];
+  private _cache: Collection = [];
 
   /**
    * Cache of label instances. Useful for globally linking labelled logs.
@@ -120,11 +120,11 @@ export class Shed {
   \*************************************/
 
   /**
-   * Store a log in the shed for later recall.
+   * Store a log in the Shed.
    */
   public store(log: BaseLog): void {
-    if (this.cache.length < this.cfg.cache_limit) {
-      this.cache = this.cache.concat([log]);
+    if (this.cacheSize < this.cfg.cache_limit) {
+      this._cache = this._cache.concat([log]);
     }
   }
 
@@ -143,18 +143,25 @@ export class Shed {
   }
 
   /**
+   * Returns the current number of logs cached in the Shed.
+   */
+  public get cacheSize(): number {
+    return this._cache.length;
+  }
+
+  /**
    * Returns all of the cached logs of the provided levels as a bundle.
    * This is useful for recalling logs and applying filters.
    */
   public getCollection(levels: LevelFilter): Collection {
     const lvls = formatLevels(levels, this.cfg.global_cfg);
-    return this.cache.reduce((acc, log) => {
+    return this._cache.reduce((acc, log) => {
       return acc.concat(lvls.includes(log.level ?? Infinity) ? [log] : []);
     }, [] as Collection);
   }
 
   /**
-   * Indicates whether this shed instance has global Adze config overrides set.
+   * Indicates whether this Shed instance has global Adze config overrides set.
    */
   public get hasOverrides(): boolean {
     return this.cfg.global_cfg !== null;
@@ -175,12 +182,17 @@ export class Shed {
   }
 
   /**
-   * Sets the current value of the global Adze configuration overrides.
+   * Sets the value of the Shed configuration.
    */
   public set config(cfg: ShedUserConfig | undefined) {
     this.cfg = this.formatConfig(cfg);
   }
 
+  /**
+   * Takes a Shed and formats it to merge shed defaults and
+   * global config overrides with defaults. It also pre-parses any level
+   * filters for performance reasons.
+   */
   private formatConfig(cfg: ShedUserConfig | undefined): ShedConfig {
     const global_cfg = cfg?.global_cfg
       ? (defaultsDeep(cfg.global_cfg, defaults) as Defaults)
@@ -191,7 +203,7 @@ export class Shed {
   }
 
   /**
-   * Get a label from the Shed by name.
+   * Get a label instance from the Shed by name.
    */
   public getLabel(name: string): Label | undefined {
     return this.labels.get(name);
@@ -218,7 +230,7 @@ export class Shed {
   \*************************************/
 
   /**
-   * Add a listener callback that fires any time a log of one of the provided levels is generated.
+   * Add a listener callback that fires any time a log of one of the provided levels is terminated.
    */
   public addListener(
     levels: LevelFilter,
@@ -241,7 +253,7 @@ export class Shed {
   }
 
   /**
-   * Remove log listeners at the given bucket locations.
+   * Remove log listeners at the provided locations.
    */
   public removeListener(locations: ListenerLocations): void {
     locations.forEach(([lvl_id, id]) => {
@@ -251,8 +263,8 @@ export class Shed {
   }
 
   /**
-   * Fire any log listeners for the provided log. Passes the log render
-   * and a slimmed down log data object.
+   * Fires any listeners that are watching the log level defined in the provided log data. The log data
+   * and render object will be passed to the listener callback.
    */
   public fireListeners(log: FinalLogData, render: LogRender | null): void {
     this.listeners.get(log.level)?.forEach((listener) => {

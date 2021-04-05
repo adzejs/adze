@@ -1,9 +1,9 @@
 // Run our demo modules
 export default function runDemo(lib, el) {
-  screenshots(lib, el);
+  // screenshots(lib, el);
   // screenshotDemo(lib);
   // defaultLevels(lib);
-  // defaultLevelsWithEmoji(lib);
+  defaultLevelsWithEmoji(lib);
   // defaultLevelsWithGlobalOverride(lib);
   // customLevels(lib);
   // customLevelsWithEmoji(lib);
@@ -25,15 +25,30 @@ export default function runDemo(lib, el) {
 }
 
 function screenshots({ adze }, el) {
-  // Let's generate a log and get its render
-  const { render } = adze().info('This is an info log');
+  const config = {
+    log_level: 11,
+    use_emoji: true,
+    // Overriding some default log level settings
+    log_levels: {
+      log: {
+        emoji: '🧙‍♂️', // We'll change the default log emoji to a wizard for funsies
+      },
+    },
+    custom_levels: {
+      // We'll create a new log level called foobar that goes to 11
+      foobar: {
+        level: 11,
+        method: 'error',
+        style:
+          'padding-right: 25px; background: linear-gradient(to right, white, red); color: white; border-color: black;',
+        terminal: ['bgRed', 'white'],
+        emoji: '🤬',
+      },
+    },
+  };
 
-  // Then we will destructure the log to get the method and arguments
-  const [method, args] = render;
-
-  /* And now we can re-render the log by calling the
-   console method and spreading the args */
-  console[method](...args);
+  adze(config).log("I'm a wizard!"); // Magic!
+  adze(config).custom('foobar', '#$%&%#$@&!'); // Anger!
 }
 
 function screenshotDemo({ adze }) {

@@ -1,5 +1,6 @@
 import { adze } from './adze';
 import { bundle } from './bundle';
+import { Label } from './label';
 import { shedExists, createShed, removeShed } from './Shed';
 import { defaults } from './_defaults';
 import {
@@ -25,6 +26,7 @@ export {
   filterNamespace,
   filterCollection,
   isFinalLogData,
+  Label,
   render,
   rerender,
 };

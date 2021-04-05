@@ -16,7 +16,6 @@ export type ConsoleMethod =
 
 export interface Defaults {
   log_level: number;
-  log_cache_size: number;
   use_emoji: boolean;
   capture_stacktrace: boolean;
   base_style: string;
@@ -24,8 +23,7 @@ export interface Defaults {
   custom_levels: Partial<LogLevels>;
   filters: Filters;
   meta: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key: string]: any;
+    [key: string]: unknown;
   };
 }
 

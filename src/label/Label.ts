@@ -1,5 +1,5 @@
 import hrtime from 'browser-process-hrtime';
-import { MetaData, HrTime } from '../_contracts';
+import { MetaData, HrTime, LabelData } from '../_contracts';
 
 export class Label {
   /**
@@ -150,5 +150,18 @@ export class Label {
    */
   public static formatTime([sec, nano]: HrTime): string {
     return `${sec}s ${nano / 1000000}ms`;
+  }
+
+  /**
+   * Returns a data object containing the values tracked globally
+   * on this label instance.
+   */
+  public get data(): LabelData {
+    return {
+      name: this.name,
+      timeNow: this._timeNow,
+      timeEllapsed: this._timeEllapsed,
+      count: this._count,
+    };
   }
 }

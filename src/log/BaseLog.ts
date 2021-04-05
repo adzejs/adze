@@ -709,11 +709,9 @@ export class BaseLog {
     def: LogLevelDefinition | undefined,
     args: unknown[]
   ): TerminatedLog<this> {
-    if (def && allowed(this.cfg, def)) {
+    if (def) {
       // Apply modifiers in the proper order.
-      // console.log('Running modifier queue!');
       this.runModifierQueue();
-      // console.log('After running the queue', this.modifierQueue);
 
       // Check the test modifiers.
       if (this.evalPasses()) {
@@ -728,30 +726,32 @@ export class BaseLog {
         const log_data = this.data;
 
         if (isFinalLogData(log_data)) {
-          // If a global context exists, check if this log is allowed.
+          // If a global context exists, check if this log is allowed to print.
           const globally_allowed =
             this.env.global.$shed?.logGloballyAllowed(log_data) ?? true;
 
-          if (globally_allowed) {
-            // Render the log and print to the console
-            const render = new Printer(log_data)[this.printer]();
-            this._render = render;
+          // Render the log if it's globally allowed to print
+          this._render =
+            globally_allowed && allowed(this.cfg, def)
+              ? new Printer(log_data)[this.printer]()
+              : null;
 
-            // Write the LogRender to the console.
-            toConsole(render);
+          // Attempt to print the render to the console / terminal
+          toConsole(this._render);
 
-            // Fire log events
-            this.store();
-            this.fireListeners(log_data, render);
+          // Cache the log
+          this.store();
 
-            // Return the terminated log object for testing purposes
-            return { log: this, render };
-          }
+          // Fire the log listeners
+          this.fireListeners(log_data, this._render);
+
+          // Return the terminated log object with a render
+          return { log: this, render: this._render };
         }
       }
     }
 
-    // Return the terminated log object for testing purposes
+    // Return the terminated log object unrendered
     return { log: this, render: null };
   }
 

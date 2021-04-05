@@ -129,11 +129,63 @@ After an Adze log has been terminated a **Terminated Log object** will be return
 
 The log instance is the reference to the instance that was terminated. You can use this to get [meta data about the Log](#log-data) or get a [collection](#collection) of logs if the log was [bundled](factories.md#bundle).
 
+### Interface
+
+```typescript
+interface TerminatedLog<T extends BaseLog> {
+  log: T;
+  render: LogRender | null;
+}
+```
+
+## Label Data Object
+
+A label data object is generated from a label instance. This object contains data that from globally tracked [counters](modifiers.md#count), [timers](modifiers.md#time), and [MDC context](other-terminators.md#thread).
+
+### Interface
+
+```typescript
+interface LabelData {
+  name: string | null;
+  timeNow: string | null;
+  timeEllapsed: string | null;
+  count: number | null;
+}
+```
+
 ## Log Render
 
 A log render is returned as a sub-property of a [terminated log object](#terminated-log-object). The log render is a tuple in the form of `[method, args]` that you can use to [re-render](filtering-and-utility-functions.md#rerender) your log exactly how the Adze log instance rendered it. Here is an example of how [render](filtering-and-utility-functions.md#render) a log using a log render:
 
 ### Manual Example
+
+_NOTE:_ This is not the recommended way of doing this. Please refer to [render](filtering-and-utility-functions.md#render).
+
+```javascript
+import { adze } from 'adze';
+
+// Let's generate a log and get its render
+const { render } = adze().info('This is an info log');
+
+// Then we will destructure the log to get the method and arguments
+const [method, args] = render;
+
+/* And now we can re-render the log by calling the
+   console method and spreading the args */
+console[method](...args);
+```
+
+### Output
+
+![log render example output](../assets/examples/log-render-example.png)
+
+![log render example terminal output](../assets/examples/log-render-terminal-example.png)
+
+## Level Filter
+
+A level filter type is a value that represents one or more log levels. It is in the form of an array of numbers that represent selected log levels or a string that represents a range of levels or all levels.
+
+### Example
 
 _NOTE:_ This is not the recommended way of doing this. Please refer to [render](filtering-and-utility-functions.md#render).
 
