@@ -42,9 +42,9 @@ filterCollection(collection, (data) => {
 
 In these example's of the output we can see our initial four logs and then the logs with a namespace of `'foo'` or a label of `'bar'` are re-rendered.
 
-![filter collection example output](../assets/examples/filterCollection-example.png)
+![filter collection example output](./examples/filterCollection-example.png)
 
-![filter collection example terminal output](../assets/examples/filterCollection-terminal-example.png)
+![filter collection example terminal output](./examples/filterCollection-terminal-example.png)
 
 ## filterLabel
 
@@ -80,13 +80,13 @@ filterLabel(collection, 'bar').forEach(rerender);
 
 In these example's of the output we can see our initial four logs and then the log with a label of `'bar'` is re-rendered.
 
-![filter label example output](../assets/examples/filterLabel-example.png)
+![filter label example output](./examples/filterLabel-example.png)
 
-![filter label example terminal output](../assets/examples/filterLabel-terminal-example.png)
+![filter label example terminal output](./examples/filterLabel-terminal-example.png)
 
 ## filterLevel
 
-Filters a [collection](advanced.md#collections) of logs by the given [level filter](#addmelater).
+Filters a [collection](advanced.md#collections) of logs by the given [level filter](data.md#level-filter).
 
 ### Interface
 
@@ -121,9 +121,9 @@ filterLevel(collection, '0-3').forEach(rerender);
 
 In these example's of the output we can see our initial four logs and then the logs with a level of in the range of 0 - 3 are re-rendered.
 
-![filter level example output](../assets/examples/filterLevel-example.png)
+![filter level example output](./examples/filterLevel-example.png)
 
-![filter level example terminal output](../assets/examples/filterLevel-terminal-example.png)
+![filter level example terminal output](./examples/filterLevel-terminal-example.png)
 
 ## filterNamespace
 
@@ -159,9 +159,40 @@ filterNamespace(collection, ['bar']).forEach(rerender);
 
 In these example's of the output we can see our initial four logs and then the logs with a namespace of `'bar'` are re-rendered.
 
-![filter namespace example output](../assets/examples/filterNamespace-example.png)
+![filter namespace example output](./examples/filterNamespace-example.png)
 
-![filter namespace example terminal output](../assets/examples/filterNamespace-terminal-example.png)
+![filter namespace example terminal output](./examples/filterNamespace-terminal-example.png)
+
+## isFinalLogData
+
+This utility function is a type guard that allows you to validate that a log data object is a final log data object type. This is important for a few methods that require [final log data](data.md#log-data).
+
+### Interface
+
+```typescript
+function isFinalLogData(data: LogData | FinalLogData): data is FinalLogData;
+```
+
+### Example
+
+```javascript
+import { adze, createShed, isFinalLogData } from 'adze';
+
+const shed = createShed();
+
+// Let's create a listener and store it's location in a variable
+shed.addListener('*', (data, render) => {
+  // Do stuff with the log data.
+});
+
+const { log, render } = adze().info('some important info.');
+const data = log.data;
+
+// Listeners only accept finalized log data so we must use a type guard to verify it
+if (isFinalLogData(data)) {
+  shed.fireListeners(data, render);
+}
+```
 
 ## render
 
@@ -190,9 +221,9 @@ render(logRender);
 
 ### Output
 
-![render example output](../assets/examples/render-example.png)
+![render example output](./examples/render-example.png)
 
-![render example terminal output](../assets/examples/render-terminal-example.png)
+![render example terminal output](./examples/render-terminal-example.png)
 
 ## rerender
 
@@ -222,6 +253,6 @@ rerender(silentLog);
 
 ### Output
 
-![re-render example output](../assets/examples/rerender-example.png)
+![re-render example output](./examples/rerender-example.png)
 
-![re-render example terminal output](../assets/examples/rerender-terminal-example.png)
+![re-render example terminal output](./examples/rerender-terminal-example.png)

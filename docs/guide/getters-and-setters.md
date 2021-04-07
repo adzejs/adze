@@ -2,38 +2,6 @@
 
 Adze log instances have a few setters and getters that you can take advantage of.
 
-## render
-
-Use this getter to retrieve the log instance's [render](data.md#log-render). Under normal circumstances you should retrieve the log render from the [terminated log object](data.md#terminated-log-object) that is returned by a terminated log rather than from the getter.
-
-### Example
-
-```javascript
-import { adze } from 'adze';
-
-// Let's generate a log
-const { log } = adze().info('This is an info log');
-
-// Get the render of the log
-const render = log.render;
-```
-
-## level
-
-Use this getter to retrieve the log instance's level.
-
-### Example
-
-```javascript
-import { adze } from 'adze';
-
-// Let's generate a log
-const { log } = adze().info('This is an info log');
-
-// Get the level of the log
-const level = log.level;
-```
-
 ## context
 
 Use this getter to retrieve the log instance's Mapped Diagnostic Context (MDC) value.
@@ -83,4 +51,36 @@ const { log } = adze().label('foo').timeNow.info('This is an info log');
 
 // Let's clone it by using the hydrate setter
 const cloned = adze().hydrate(log.data);
+```
+
+## level
+
+Use this getter to retrieve the log instance's level.
+
+### Example
+
+```javascript
+import { adze } from 'adze';
+
+// Let's generate a log
+const { log } = adze().info('This is an info log');
+
+// Get the level of the log
+const level = log.level;
+```
+
+## render
+
+Use this getter to retrieve the log instance's [render](data.md#log-render). Under normal circumstances you should retrieve the log render from the [terminated log object](data.md#terminated-log-object) that is returned by a terminated log rather than from the getter.
+
+### Example
+
+```javascript
+import { adze } from 'adze';
+
+// Let's generate a log
+const { log } = adze().info('This is an info log');
+
+// Get the render of the log
+const render = log.render;
 ```

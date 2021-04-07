@@ -48,9 +48,9 @@ adze({ use_emoji: true }).alert('Something went horribly wrong!');
 
 ### Output
 
-![alert example output](../assets/examples/alert-example.png)
+![alert example output](./examples/alert-example.png)
 
-![alert terminal example output](../assets/examples/alert-terminal-example.png)
+![alert terminal example output](./examples/alert-terminal-example.png)
 
 ## error
 
@@ -82,9 +82,9 @@ adze({ use_emoji: true }).error('An error occurred!');
 
 ### Output
 
-![error example output](../assets/examples/error-example.png)
+![error example output](./examples/error-example.png)
 
-![error terminal example output](../assets/examples/error-terminal-example.png)
+![error terminal example output](./examples/error-terminal-example.png)
 
 ## warn
 
@@ -116,9 +116,9 @@ adze({ use_emoji: true }).warn("I'm warning you!");
 
 ### Output
 
-![warn example output](../assets/examples/warn-example.png)
+![warn example output](./examples/warn-example.png)
 
-![warn terminal example output](../assets/examples/warn-terminal-example.png)
+![warn terminal example output](./examples/warn-terminal-example.png)
 
 ## info
 
@@ -150,9 +150,9 @@ adze({ use_emoji: true }).info('App information');
 
 ### Output
 
-![info example output](../assets/examples/info-example.png)
+![info example output](./examples/info-example.png)
 
-![info terminal example output](../assets/examples/info-terminal-example.png)
+![info terminal example output](./examples/info-terminal-example.png)
 
 ## fail
 
@@ -184,9 +184,9 @@ adze({ use_emoji: true }).fail('An operation failed to execute!');
 
 ### Output
 
-![fail example output](../assets/examples/fail-example.png)
+![fail example output](./examples/fail-example.png)
 
-![fail terminal example output](../assets/examples/fail-terminal-example.png)
+![fail terminal example output](./examples/fail-terminal-example.png)
 
 ## success
 
@@ -218,9 +218,9 @@ adze({ use_emoji: true }).success('An operation was successful!');
 
 ### Output
 
-![success example output](../assets/examples/success-example.png)
+![success example output](./examples/success-example.png)
 
-![success terminal example output](../assets/examples/success-terminal-example.png)
+![success terminal example output](./examples/success-terminal-example.png)
 
 ## log
 
@@ -252,9 +252,9 @@ adze({ use_emoji: true }).log('Logging a message.');
 
 ### Output
 
-![log example output](../assets/examples/log-example.png)
+![log example output](./examples/log-example.png)
 
-![log terminal example output](../assets/examples/log-terminal-example.png)
+![log terminal example output](./examples/log-terminal-example.png)
 
 ## debug
 
@@ -286,9 +286,9 @@ adze({ use_emoji: true }).debug('Debugging an issue.');
 
 ### Output
 
-![debug example output](../assets/examples/debug-example.png)
+![debug example output](./examples/debug-example.png)
 
-![debug terminal example output](../assets/examples/debug-terminal-example.png)
+![debug terminal example output](./examples/debug-terminal-example.png)
 
 ## verbose
 
@@ -320,6 +320,6 @@ adze({ use_emoji: true }).verbose('Logging some extreme detail.');
 
 ### Output
 
-![verbose example output](../assets/examples/verbose-example.png)
+![verbose example output](./examples/verbose-example.png)
 
-![verbose terminal example output](../assets/examples/verbose-terminal-example.png)
+![verbose terminal example output](./examples/verbose-terminal-example.png)

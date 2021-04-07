@@ -2,7 +2,7 @@
 
 ## Why is this named Adze?
 
-![A drawing of a man using an adze to shape a log](../assets/adze.png)
+![A drawing of a man using an adze to shape a log](./assets/adze.png)
 
 _Photo from [Wikipedia](https://en.wikipedia.org/wiki/Adze)_
 
@@ -32,7 +32,7 @@ Read more about the standard here: [MDN Console Docs](https://developer.mozilla.
 
 ### Here is a simple preview:
 
-![Preview of Adze logs](../assets/demo.png)
+![Preview of Adze logs](./assets/demo.png)
 
 > This preview was generated from the same code executed in both the browser (left) and the node (right) environments.
 
@@ -48,4 +48,4 @@ adze({ use_emoji: true }).ns('tix-456').log('Example log');
 
 The output of this would look like the following:
 
-![Preview of Adze logs](../assets/examples/api_example_output.png)
+![Preview of Adze logs](./examples/api_example_output.png)

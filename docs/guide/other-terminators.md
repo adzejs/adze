@@ -76,9 +76,9 @@ adze().label('foo').dump.info('Results from our thread after closing');
 
 ### Output
 
-![close example output](../assets/examples/close-example.png)
+![close example output](./examples/close-example.png)
 
-![close example output in the terminal](../assets/examples/close-terminal-example.png)
+![close example output in the terminal](./examples/close-terminal-example.png)
 
 ## custom
 
@@ -123,9 +123,9 @@ adze(cfg).custom('leetLevel', 'This log is leet.');
 
 ### Output
 
-![custom example output](../assets/examples/custom-example.png)
+![custom example output](./examples/custom-example.png)
 
-![custom example output in the terminal](../assets/examples/custom-terminal-example.png)
+![custom example output in the terminal](./examples/custom-terminal-example.png)
 
 ## thread
 
@@ -177,6 +177,6 @@ adze().label('foo').dump.info('Results from our thread');
 
 ### Output
 
-![thread example output](../assets/examples/thread-example.png)
+![thread example output](./examples/thread-example.png)
 
-![thread example output in the terminal](../assets/examples/thread-terminal-example.png)
+![thread example output in the terminal](./examples/thread-terminal-example.png)

@@ -6,7 +6,7 @@ A **Shed** is an optional global cache and control hub for your Adze logs. The p
 
 Shed is also a dependency to take advantage of some log features such as [labels](modifiers.md#labels), [counters](modifiers.md#count), and [timers](modifiers.md#time). Without the presence of a Shed, these log modifiers either do not function or their functionality is stunted.
 
-For complete documentation on Shed configuration, go [here](#addmelater).
+For complete documentation on Shed configuration, go [here](/config/#shed-configuration).
 
 ## How does it work?
 
@@ -14,7 +14,7 @@ One of the primary purposes of the Shed is to enable large project to centrally
 control how their logs render. Let's imagine we have a large project where we
 need to split out our code base into multiple packages.
 
-![Large corporate project with broken into packages](../assets/large-project.svg)
+![Large corporate project with broken into packages](./assets/large-project.svg)
 
 Now that our project has been divided up into reusable packages we'll deploy it.
 
@@ -72,7 +72,7 @@ You can also see from this example that we can change how our logs are generated
 
 One of the primary features of Shed is to allow you to recall and filter your logs while developing and debugging.
 
-For more details about Shed configuration, go [here](#addmelater).
+For more details about Shed configuration, go [here](/config/#shed-configuration).
 
 ### Example
 
@@ -176,7 +176,7 @@ Sometimes you need to recall logs for debugging purposes and you may want to fil
 
 When a Shed exists in the global context logs will automatically be cached in it. These logs can then be retrieved at a later time for filtering.
 
-_NOTE:_ The size of the log cache is [configurable](#addmelater) and defaults to 300 logs.
+_NOTE:_ The size of the log cache is [configurable](/config/#shed-configuration) and defaults to 300 logs.
 
 ### Example
 

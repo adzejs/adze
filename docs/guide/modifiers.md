@@ -43,9 +43,9 @@ adze({ use_emoji: true })
 
 ### Output
 
-![assert modifier example output](../assets/examples/assert-example.png)
+![assert modifier example output](./examples/assert-example.png)
 
-![assert modifier example terminal output](../assets/examples/assert-terminal-example.png)
+![assert modifier example terminal output](./examples/assert-terminal-example.png)
 
 ## count
 
@@ -76,9 +76,9 @@ for (let i = 0; i < 5; i += 1) {
 
 ### Output
 
-![Count modifier output](../assets/examples/count-example.png)
+![Count modifier output](./examples/count-example.png)
 
-![Count modifier terminal output](../assets/examples/count-terminal-example.png)
+![Count modifier terminal output](./examples/count-terminal-example.png)
 
 ## countClear
 
@@ -116,7 +116,7 @@ adze().label('my-counter').log('A log with the my-counter label but no count.');
 
 ### Output
 
-![count clear modifier example output](../assets/examples/countClear-example.png)
+![count clear modifier example output](./examples/countClear-example.png)
 
 ## countReset
 
@@ -156,9 +156,9 @@ for (let i = 0; i < 4; i += 1) {
 
 ### Output
 
-![count reset modifier example output](../assets/examples/countReset-example.png)
+![count reset modifier example output](./examples/countReset-example.png)
 
-![count reset modifier example terminal output](../assets/examples/countReset-terminal-example.png)
+![count reset modifier example terminal output](./examples/countReset-terminal-example.png)
 
 ## dir
 
@@ -186,9 +186,9 @@ adze().dir.log({ foo: 'bar' });
 
 ### Output
 
-![dir modifier output](../assets/examples/dir-example.png)
+![dir modifier output](./examples/dir-example.png)
 
-![dir modifier terminal output](../assets/examples/dir-terminal-example.png)
+![dir modifier terminal output](./examples/dir-terminal-example.png)
 
 ## dirxml
 
@@ -224,15 +224,15 @@ adze().dirxml.log(newDiv);
 
 ### Output
 
-![dirxml modifier output](../assets/examples/dirxml-example.png)
+![dirxml modifier output](./examples/dirxml-example.png)
 
-![dirxml modifier terminal output](../assets/examples/dirxml-terminal-example.png)
+![dirxml modifier terminal output](./examples/dirxml-terminal-example.png)
 
 ## dump
 
-This modifier instructs the [labeled](#label) log to print the context values from a [thread](#addmelater).
+This modifier instructs the [labeled](#label) log to print the context values from a [thread](#thread).
 
-Refer to the [Mapped Diagnostic Context (MDC)](#addmelater) page for more information about the purpose of MDC.
+Refer to the [Mapped Diagnostic Context (MDC)](mapped-diagnostic-context.md) page for more information about the purpose of MDC.
 
 This modifier is dependent upon having a [label](#label) and a [Shed](./shed.md).
 
@@ -280,9 +280,9 @@ adze().label('foo').dump.info('Results from our thread');
 
 ### Output
 
-![dump modifier example output](../assets/examples/dump-example.png)
+![dump modifier example output](./examples/dump-example.png)
 
-![dump modifier terminal example output](../assets/examples/dump-terminal-example.png)
+![dump modifier terminal example output](./examples/dump-terminal-example.png)
 
 ## group
 
@@ -315,9 +315,9 @@ adze().groupEnd.info();
 
 ### Output
 
-![group modifier example output](../assets/examples/group-example.png)
+![group modifier example output](./examples/group-example.png)
 
-![group modifier terminal example output](../assets/examples/group-terminal-example.png)
+![group modifier terminal example output](./examples/group-terminal-example.png)
 
 ## groupCollapsed
 
@@ -352,9 +352,9 @@ adze().groupEnd.info();
 
 ### Output
 
-![groupCollapsed modifier example output](../assets/examples/groupCollapsed-example.png)
+![groupCollapsed modifier example output](./examples/groupCollapsed-example.png)
 
-![groupCollapsed modifier terminal example output](../assets/examples/groupCollapsed-terminal-example.png)
+![groupCollapsed modifier terminal example output](./examples/groupCollapsed-terminal-example.png)
 
 ## groupEnd
 
@@ -389,9 +389,9 @@ adze().info('Some other information...');
 
 ### Output
 
-![groupEnd modifier example output](../assets/examples/groupEnd-example.png)
+![groupEnd modifier example output](./examples/groupEnd-example.png)
 
-![groupEnd modifier terminal example output](../assets/examples/groupEnd-terminal-example.png)
+![groupEnd modifier terminal example output](./examples/groupEnd-terminal-example.png)
 
 ## label
 
@@ -430,9 +430,9 @@ adze().label('foo').count.log('Foo');
 
 ### Output
 
-![label modifier example output](../assets/examples/label-example.png)
+![label modifier example output](./examples/label-example.png)
 
-![label modifier terminal example output](../assets/examples/label-terminal-example.png)
+![label modifier terminal example output](./examples/label-terminal-example.png)
 
 ## meta
 
@@ -469,9 +469,9 @@ adze().meta('message', info).log('This log contains an important message.');
 
 ### Output
 
-![meta modifier output with listener output](../assets/examples/meta-example.png)
+![meta modifier output with listener output](./examples/meta-example.png)
 
-![meta modifier terminal output with listener output](../assets/examples/meta-terminal-example.png)
+![meta modifier terminal output with listener output](./examples/meta-terminal-example.png)
 
 ## namespace / ns
 
@@ -503,9 +503,9 @@ adze().ns('tix-456').log('More info');
 
 ### Output
 
-![namespace modifier example output](../assets/examples/namespace-example.png)
+![namespace modifier example output](./examples/namespace-example.png)
 
-![namespace modifier terminal example output](../assets/examples/namespace-terminal-example.png)
+![namespace modifier terminal example output](./examples/namespace-terminal-example.png)
 
 ## silent
 
@@ -533,9 +533,9 @@ adze().log('I guess nobody is home :(');
 
 ### Output
 
-![example of silent log output](../assets/examples/silent-example.png)
+![example of silent log output](./examples/silent-example.png)
 
-![example of silent log terminal output](../assets/examples/silent-terminal-example.png)
+![example of silent log terminal output](./examples/silent-terminal-example.png)
 
 ## table
 
@@ -566,9 +566,9 @@ adze().table.log(tabular_data);
 
 ### Output
 
-![table modifier output](../assets/examples/table-example.png)
+![table modifier output](./examples/table-example.png)
 
-![table modifier terminal output](../assets/examples/table-terminal-example.png)
+![table modifier terminal output](./examples/table-terminal-example.png)
 
 ## test
 
@@ -610,9 +610,9 @@ adze({ use_emoji: true })
 
 ### Output
 
-![test modifier example output](../assets/examples/test-example.png)
+![test modifier example output](./examples/test-example.png)
 
-![test modifier terminal example output](../assets/examples/test-terminal-example.png)
+![test modifier terminal example output](./examples/test-terminal-example.png)
 
 ## time
 
@@ -653,9 +653,9 @@ adze({ use_emoji: true }).label('loop').timeEnd.log('Performance of our loop.');
 
 ### Output
 
-![time modifier example output](../assets/examples/time-example.png)
+![time modifier example output](./examples/time-example.png)
 
-![time modifier terminal example output](../assets/examples/time-terminal-example.png)
+![time modifier terminal example output](./examples/time-terminal-example.png)
 
 ## timeEnd
 
@@ -696,9 +696,9 @@ adze({ use_emoji: true }).label('loop').timeEnd.log('Performance of our loop.');
 
 ### Output
 
-![time end modifier example output](../assets/examples/time-example.png)
+![time end modifier example output](./examples/time-example.png)
 
-![time end modifier example output](../assets/examples/time-terminal-example.png)
+![time end modifier example output](./examples/time-terminal-example.png)
 
 ## timeNow
 
@@ -736,9 +736,9 @@ adze({ use_emoji: true }).timeNow.log(
 
 ### Output
 
-![time now modifier example output](../assets/examples/timeNow-example.png)
+![time now modifier example output](./examples/timeNow-example.png)
 
-![time now modifier terminal example output](../assets/examples/timeNow-terminal-example.png)
+![time now modifier terminal example output](./examples/timeNow-terminal-example.png)
 
 ## trace
 
@@ -766,6 +766,6 @@ adze().trace.log('Trying to find an issue...');
 
 ### Output
 
-![trace modifier example output](../assets/examples/trace-example.png)
+![trace modifier example output](./examples/trace-example.png)
 
-![trace modifier example terminal output](../assets/examples/trace-terminal-example.png)
+![trace modifier example terminal output](./examples/trace-terminal-example.png)

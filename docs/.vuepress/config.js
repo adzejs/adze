@@ -76,6 +76,7 @@ module.exports = {
             'data',
             'shed-concepts',
             'using-shed',
+            'mapped-diagnostic-context',
           ],
         },
       ],

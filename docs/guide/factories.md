@@ -4,7 +4,7 @@ As you know from the high-level concepts, Adze logs are typically generated from
 
 ## adze
 
-The `adze()` factory take a single parameter which is a [Configuration](#add-me-later) object that controls how this log instance will behave. The factory function will then return a new Adze log instance that you can chain modifiers with and ultimately terminate.
+The `adze()` factory take a single parameter which is a [Configuration](/config/#adze-configuration) object that controls how this log instance will behave. The factory function will then return a new Adze log instance that you can chain modifiers with and ultimately terminate.
 
 Here are a few examples of some patterns that you can use:
 
@@ -61,7 +61,7 @@ log().success('This is another log from the same factory');
 
 ### Output
 
-![Output of our sealed log](../assets/examples/seal-example.png)
+![Output of our sealed log](./examples/seal-example.png)
 
 ## bundle
 
@@ -96,4 +96,4 @@ filterLabel(log.bundle, 'foo').forEach(rerender);
 
 ### Output
 
-![Output from bundling logs, running them through a filter, and rerendering the filtered logs](../assets/examples/bundle-example.png)
+![Output from bundling logs, running them through a filter, and rerendering the filtered logs](./examples/bundle-example.png)

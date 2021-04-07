@@ -130,9 +130,9 @@ adze(config).custom('foobar', '#$%&%#$@&!'); // Anger!
 
 ### Output
 
-![log level definition customization example](../assets/examples/log-level-definition-example.png)
+![log level definition customization example](./examples/log-level-definition-example.png)
 
-![log level definition customization terminal example](../assets/examples/log-level-definition-terminal-example.png)
+![log level definition customization terminal example](./examples/log-level-definition-terminal-example.png)
 
 ## Styling
 
@@ -166,7 +166,7 @@ _NOTE: The default styles use [template string interpolation](https://developer.
 
 #### Output
 
-![default browser styles example](../assets/examples/default-browser-styles-example.png)
+![default browser styles example](./examples/default-browser-styles-example.png)
 
 ### Default Terminal Styles
 
@@ -211,7 +211,7 @@ Adze styling for the terminal makes use of a library named [Chalk](https://githu
 
 #### Output
 
-![default terminal styles example](../assets/examples/default-terminal-styles-example.png)
+![default terminal styles example](./examples/default-terminal-styles-example.png)
 
 ## Filters
 
@@ -255,6 +255,6 @@ adze().ns('bar').log('Third log');
 
 ### Output
 
-![filters example](../assets/examples/filters-example.png)
+![filters example](./examples/filters-example.png)
 
-![filters terminal example](../assets/examples/filters-terminal-example.png)
+![filters terminal example](./examples/filters-terminal-example.png)

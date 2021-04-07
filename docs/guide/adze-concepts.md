@@ -13,7 +13,7 @@ natural, Adze provides a chainable API that is similar to the standard `console.
 Let's take a look under the hood to see how the Adze architecture enables its API.
 _Please keep in mind this diagram is not exhaustive._
 
-![Lifecycle Diagram of Adze Logs](../assets/basic-architecture.svg)
+![Lifecycle Diagram of Adze Logs](./assets/basic-architecture.svg)
 
 ## The Log Chain
 
@@ -47,7 +47,7 @@ adze().timeNow.log('This log is being counted!');
 
 And it would output like this:
 
-![Adze log with time now modifier preview](../assets/examples/timenow-example.png)
+![Adze log with time now modifier preview](./examples/modifier-example.png)
 
 ### Terminator
 

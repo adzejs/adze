@@ -152,7 +152,7 @@ shed.config = {
 
 ## fireListeners
 
-Fires any listeners that are watching the log level defined in the provided [final log data](#addmelater). The final log data and render object will be passed to the listener callback.
+Fires any listeners that are watching the log level defined with the provided [final log data](data.md#log-data). The final log data and render object will be passed to the listener callback.
 
 _NOTE:_ It is not necessary to call this method manually to fire listeners. When a log is terminated it will fire it automatically. However, if you are recalling a log and want to fire the listener for it again, you'll need to use the pattern in the example below.
 
@@ -165,6 +165,8 @@ class Shed {
 ```
 
 ### Example
+
+For information about the type guard in this example, refer to [isFinalLogData](filtering-and-utility-functions.md#isfinallogdata).
 
 ```javascript
 import { adze, createShed, isFinalLogData } from 'adze';
