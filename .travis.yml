@@ -16,10 +16,7 @@ jobs:
         email: $NPM_EMAIL
         api_key: $NPM_TOKEN
         on:
+          branch: master
           tags: true
           repo: AJStacy/Adze
         skip_cleanup: 'true'
-branches:
-  only:
-    - master
-    - /^v[0-9]+.*$/ #This validates that the tag formatting is correct
