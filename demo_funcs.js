@@ -1,9 +1,9 @@
 // Run our demo modules
 export default function runDemo(lib, el) {
-  // screenshots(lib, el);
+  screenshots(lib, el);
   // screenshotDemo(lib);
   // defaultLevels(lib);
-  defaultLevelsWithEmoji(lib);
+  // defaultLevelsWithEmoji(lib);
   // defaultLevelsWithGlobalOverride(lib);
   // customLevels(lib);
   // customLevelsWithEmoji(lib);
@@ -24,31 +24,18 @@ export default function runDemo(lib, el) {
   // withTrace(lib);
 }
 
-function screenshots({ adze }, el) {
-  const config = {
-    log_level: 11,
-    use_emoji: true,
-    // Overriding some default log level settings
-    log_levels: {
-      log: {
-        emoji: '🧙‍♂️', // We'll change the default log emoji to a wizard for funsies
+function screenshots({ adze, createShed }, el) {
+  createShed({
+    filters: {
+      namespace: {
+        include: ['foo'],
       },
     },
-    custom_levels: {
-      // We'll create a new log level called foobar that goes to 11
-      foobar: {
-        level: 11,
-        method: 'error',
-        style:
-          'padding-right: 25px; background: linear-gradient(to right, white, red); color: white; border-color: black;',
-        terminal: ['bgRed', 'white'],
-        emoji: '🤬',
-      },
-    },
-  };
+  });
 
-  adze(config).log("I'm a wizard!"); // Magic!
-  adze(config).custom('foobar', '#$%&%#$@&!'); // Anger!
+  adze().ns('foo').log('First log');
+  adze().ns(['foo', 'bar']).log('Second log');
+  adze().ns('bar').log('Third log');
 }
 
 function screenshotDemo({ adze }) {

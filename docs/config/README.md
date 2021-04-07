@@ -4,14 +4,14 @@ sidebar: auto
 
 # Config
 
-Adze is a completely configurable library by design that comes with sensible defaults. There are two primary configurations to understand; the Adze log configuration and the Shed configuration. In this section we'll take a look at each configuration and explain each property in detail.
+Adze is a completely configurable library by design that comes with sensible defaults. There are two primary configurations to understand; the Adze configuration and the Shed configuration. In this section we'll take a look at each configuration and explain each property in detail.
 
-## Adze Log Configuration
+## Adze Configuration
 
 ### Interface
 
 ```typescript
-// This is the top level Adze log configuration
+// This is the top level Adze configuration
 interface Configuration {
   log_level?: number;
   use_emoji?: boolean;
@@ -19,7 +19,6 @@ interface Configuration {
   base_style?: string;
   log_levels?: LogLevels;
   custom_levels?: Partial<LogLevels>;
-  filters?: Filters;
   meta?: {
     [key: string]: unknown;
   };
@@ -43,16 +42,38 @@ type ConsoleMethod =
 
 ### Descriptions
 
-| Property Name      | Default Value              | Description                                                                                   |
-| ------------------ | -------------------------- | --------------------------------------------------------------------------------------------- |
-| log_level          | 8                          | The highest log level that will be allowed to render.                                         |
-| use_emoji          | false                      | Toggle emoji's on or off for log rendering.                                                   |
-| capture_stacktrace | false                      | Logs will record their stacktrace when they are created. Disabled by default for performance. |
-| base_style         | [Reference](#styling)      | These styles will be applied to all default log levels.                                       |
-| log_levels         | [Reference](#log-defaults) | Configuration for default Adze log levels.                                                    |
-| custom_levels      | [Reference](#log-defaults) | Configuration for custom Adze log levels.                                                     |
-| filters            | [Reference](#filters)      | Filters for log levels, labels, and namespaces.                                               |
-| meta               | `{}`                       | Key/value pairs of data to be applied to all logs by default.                                 |
+| Property Name      | Default Value                                 | Description                                                                                   |
+| ------------------ | --------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| log_level          | 8                                             | The highest log level that will be allowed to render.                                         |
+| use_emoji          | false                                         | Toggle emoji's on or off for log rendering.                                                   |
+| capture_stacktrace | false                                         | Logs will record their stacktrace when they are created. Disabled by default for performance. |
+| base_style         | [Reference](#styling)                         | These styles will be applied to all default log levels.                                       |
+| log_levels         | [Reference](#log-levels-log-level-definition) | Configuration for default Adze log levels.                                                    |
+| custom_levels      | [Reference](#log-levels-log-level-definition) | Configuration for custom Adze log levels.                                                     |
+| meta               | `{}`                                          | Key/value pairs of data to be applied to all logs by default.                                 |
+
+## Shed Configuration
+
+When you create a Shed you can provide it with configuration to control it's caching, [filtering](#filters), and [configuration](#adze-configuration) overrides.
+
+### Interface
+
+```typescript
+// This is the top level Adze log configuration
+interface ShedConfig {
+  cache_limit: number;
+  global_cfg: Configuration | null;
+  filters: AdzeFilters;
+}
+```
+
+### Descriptions
+
+| Property Name | Default Value                    | Description                                                                           |
+| ------------- | -------------------------------- | ------------------------------------------------------------------------------------- |
+| cache_limit   | 300                              | The maximum number of logs that Shed will cache. This exists to prevent memory leaks. |
+| global_cfg    | [Reference](#adze-configuration) | Adze configuration that will override all other Adze log configurations.              |
+| filters       | [Reference](#filters)            | Filters for log levels, labels, and namespaces.                                       |
 
 ## Log Levels / Log Level Definition
 
@@ -190,4 +211,50 @@ Adze styling for the terminal makes use of a library named [Chalk](https://githu
 
 #### Output
 
-![defaul terminal styles example](../assets/examples/default-terminal-styles-example.png)
+![default terminal styles example](../assets/examples/default-terminal-styles-example.png)
+
+## Filters
+
+Filters are used with [Shed](shed-concepts.md) to determine whether logs are allowed to print to the console/terminal based on their log level, [label](../guide/modifiers.md#label), or [namespace](../guide/modifiers.md#namespace-ns). When filtering levels, you can provide a [level filter](../guide/data.md#level-filter) data type.
+
+Each filter type can specify and `include` or `exclude` statement. Include tells Adze to only render logs that are included in the value set. Exclude says to not render any logs that are included in the value set. If both are specified, include takes precedence over exclude in case of conflicts.
+
+### Interface
+
+```typescript
+export interface AdzeFilters {
+  hideAll?: boolean;
+  level?: GlobalFilterOptions<LevelFilter>;
+  label?: GlobalFilterOptions<string[]>;
+  namespace?: GlobalFilterOptions<string[]>;
+}
+
+export interface GlobalFilterOptions<T> {
+  include?: T;
+  exclude?: T;
+}
+```
+
+### Example
+
+```typescript
+import { adze, createShed } from 'adze';
+
+createShed({
+  filters: {
+    namespace: {
+      include: ['foo'],
+    },
+  },
+});
+
+adze().ns('foo').log('First log');
+adze().ns(['foo', 'bar']).log('Second log');
+adze().ns('bar').log('Third log');
+```
+
+### Output
+
+![filters example](../assets/examples/filters-example.png)
+
+![filters terminal example](../assets/examples/filters-terminal-example.png)
