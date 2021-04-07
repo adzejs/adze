@@ -38,22 +38,22 @@ export declare type Collection = BaseLog[];
  * primarily used for listeners and log cloning.
  */
 export interface LogData {
-    cfg: Defaults;
-    level: number | null;
-    definition: LogLevelDefinition | null;
     args: unknown[] | null;
-    timestamp: LogTimestamp | null;
-    stacktrace: string | null;
-    namespace: string[] | null;
-    dumpContext: boolean;
-    meta: MetaData;
-    context: MetaData;
-    label: LabelData;
-    timeNow: string | null;
     assertion?: boolean;
+    cfg: Defaults;
+    context: MetaData;
+    definition: LogLevelDefinition | null;
+    dumpContext: boolean;
     expression?: boolean;
     isSilent: boolean;
+    label: LabelData;
+    level: number | null;
+    meta: MetaData;
     modifierQueue: Array<(ctxt: BaseLog) => void>;
+    namespace: string[] | null;
+    stacktrace: string | null;
+    timeNow: string | null;
+    timestamp: LogTimestamp | null;
 }
 /**
  * Log data object generated from a Log instance after it

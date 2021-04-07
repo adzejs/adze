@@ -1,4 +1,4 @@
-import { MetaData, HrTime } from '../_contracts';
+import { MetaData, HrTime, LabelData } from '../_contracts';
 export declare class Label {
     /**
      * The name of the label.
@@ -82,4 +82,9 @@ export declare class Label {
      * string in the format of `{sec}s {ms}ms`.
      */
     static formatTime([sec, nano]: HrTime): string;
+    /**
+     * Returns a data object containing the values tracked globally
+     * on this label instance.
+     */
+    get data(): LabelData;
 }

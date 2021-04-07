@@ -3,15 +3,15 @@ import { BaseLog } from './log/BaseLog';
 import { Label } from './label';
 import { Env } from './Env';
 /**
- * A typeguard that indicates that a global shed store exists.
+ * A typeguard that indicates that a global Shed store exists.
  */
 export declare function shedExists(store: Shed | undefined): store is Shed;
 /**
- * Creates a new shed instance in your environment's global context.
+ * Creates a new Shed instance in your environment's global context.
  */
 export declare function createShed(config?: ShedUserConfig): Shed;
 /**
- * Removes the shed from the environment's global context.
+ * Removes the Shed from the environment's global context.
  */
 export declare function removeShed(): void;
 /**
@@ -33,7 +33,7 @@ export declare class Shed {
      *
      * Do not access this value directly. Use the `cache()` setter and getter.
      */
-    private cache;
+    private _cache;
     /**
      * Cache of label instances. Useful for globally linking labelled logs.
      */
@@ -58,7 +58,7 @@ export declare class Shed {
      * GET/SET METHODS
     \*************************************/
     /**
-     * Store a log in the shed for later recall.
+     * Store a log in the Shed.
      */
     store(log: BaseLog): void;
     /**
@@ -70,12 +70,16 @@ export declare class Shed {
      */
     get cacheLimit(): number;
     /**
+     * Returns the current number of logs cached in the Shed.
+     */
+    get cacheSize(): number;
+    /**
      * Returns all of the cached logs of the provided levels as a bundle.
      * This is useful for recalling logs and applying filters.
      */
     getCollection(levels: LevelFilter): Collection;
     /**
-     * Indicates whether this shed instance has global Adze config overrides set.
+     * Indicates whether this Shed instance has global Adze config overrides set.
      */
     get hasOverrides(): boolean;
     /**
@@ -87,12 +91,17 @@ export declare class Shed {
      */
     private get hideAll();
     /**
-     * Sets the current value of the global Adze configuration overrides.
+     * Sets the value of the Shed configuration.
      */
     set config(cfg: ShedUserConfig | undefined);
+    /**
+     * Takes a Shed and formats it to merge shed defaults and
+     * global config overrides with defaults. It also pre-parses any level
+     * filters for performance reasons.
+     */
     private formatConfig;
     /**
-     * Get a label from the Shed by name.
+     * Get a label instance from the Shed by name.
      */
     getLabel(name: string): Label | undefined;
     /**
@@ -107,16 +116,16 @@ export declare class Shed {
      * LISTENER METHODS
     \*************************************/
     /**
-     * Add a listener callback that fires any time a log of one of the provided levels is generated.
+     * Add a listener callback that fires any time a log of one of the provided levels is terminated.
      */
     addListener(levels: LevelFilter, cb: ListenerCallback): ListenerLocations;
     /**
-     * Remove log listeners at the given bucket locations.
+     * Remove log listeners at the provided locations.
      */
     removeListener(locations: ListenerLocations): void;
     /**
-     * Fire any log listeners for the provided log. Passes the log render
-     * and a slimmed down log data object.
+     * Fires any listeners that are watching the log level defined in the provided log data. The log data
+     * and render object will be passed to the listener callback.
      */
     fireListeners(log: FinalLogData, render: LogRender | null): void;
     /*************************************\

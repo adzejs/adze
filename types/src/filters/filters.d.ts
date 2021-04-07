@@ -11,7 +11,7 @@ export declare function filterLabel(collection: Collection | undefined, lbl: str
 /**
  * Filter the collection of logs by their log level.
  */
-export declare function filterLevels(collection: Collection | undefined, levels: LevelFilter): Collection;
+export declare function filterLevel(collection: Collection | undefined, levels: LevelFilter): Collection;
 /**
  * Executes a callback on each value of a collection. The callback receives a
  * log data object for each log in the collection. If a truthy value is returned the
@@ -25,6 +25,6 @@ export declare function filterCollection(collection: Collection, cb: (log: LogDa
  */
 export declare function rerender(log: Log): void;
 /**
- * Render a log to the console based on a render object.
+ * Render a log to the console based on a log render object.
  */
 export declare function render([method, args]: LogRender): void;

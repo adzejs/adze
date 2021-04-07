@@ -666,10 +666,7 @@ export class BaseLog {
    * Generates a terminating log method the specified log level name.
    */
   private logMethod(levelName: string, args: unknown[]): TerminatedLog<this> {
-    return this.executionPipeline(
-      this.getDefinition('log_levels', levelName),
-      args
-    );
+    return this.terminate(this.getDefinition('log_levels', levelName), args);
   }
 
   /**
@@ -677,10 +674,7 @@ export class BaseLog {
    * log level by key as the format for the log.
    */
   private customMethod(lvlName: string, args: unknown[]): TerminatedLog<this> {
-    return this.executionPipeline(
-      this.getDefinition('custom_levels', lvlName),
-      args
-    );
+    return this.terminate(this.getDefinition('custom_levels', lvlName), args);
   }
 
   /**
@@ -703,9 +697,9 @@ export class BaseLog {
   }
 
   /**
-   * The primary execution pipeline for terminating log methods.
+   * The primary logic for terminating log methods.
    */
-  private executionPipeline(
+  private terminate(
     def: LogLevelDefinition | undefined,
     args: unknown[]
   ): TerminatedLog<this> {

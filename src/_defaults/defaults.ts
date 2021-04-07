@@ -86,4 +86,17 @@ export const defaults: Defaults = {
       emoji: '💤',
     },
   },
+  filters: {
+    hideAll: false,
+    namespace: {
+      hideAll: false,
+      exclude: [],
+      include: [],
+    },
+    label: {
+      hideAll: false,
+      exclude: [],
+      include: [],
+    },
+  },
 };

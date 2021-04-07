@@ -21,6 +21,7 @@ export interface Defaults {
   base_style: string;
   log_levels: LogLevels;
   custom_levels: Partial<LogLevels>;
+  filters: Filters;
   meta: {
     [key: string]: unknown;
   };
@@ -37,6 +38,18 @@ export interface LogLevelDefinition {
   style: string;
   terminal: ChalkStyle[];
   emoji: string;
+}
+
+export interface Filters {
+  hideAll: boolean;
+  namespace: FilterOptions;
+  label: FilterOptions;
+}
+
+export interface FilterOptions {
+  hideAll: boolean;
+  exclude: string[];
+  include: string[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
