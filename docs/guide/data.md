@@ -64,24 +64,36 @@ interface LabelData {
 
 ## Level Filter
 
-A level filter type is a value that represents one or more log levels. It is in the form of an array of numbers that represent selected log levels or a string that represents a range of levels or all levels.
+A level filter type is a value that represents one or more log levels. It is in the form of an array of numbers that represent selected log levels or a string that represents a range of levels or all levels. Level Filters are used with any method that allows you to specify a target log level like [addListener](using-shed.md#addlistener), [filterLevel](filtering-and-utility-functions.md#filterlevel), or within the [filter configurations on Shed](/config/#filters).
+
+| Value   | Description                                                |
+| ------- | ---------------------------------------------------------- |
+| '\*'    | Target all logs of any level.                              |
+| 'x-y'   | Targets logs with levels of `x <= level <= y`.             |
+| [x,y,z] | x, y, and z are variables representing a log level number. |
 
 ### Example
 
-_NOTE:_ This is not the recommended way of doing this. Please refer to [render](filtering-and-utility-functions.md#render).
-
 ```javascript
-import { adze } from 'adze';
+import { adze, createShed } from 'adze';
 
-// Let's generate a log and get its render
-const { render } = adze().info('This is an info log');
+// For our example, we'll create a Shed and add some listeners
+const shed = createShed();
 
-// Then we will destructure the log to get the method and arguments
-const [method, args] = render;
+// Our first listener will target all logs of any level
+shed.addListener('*', (data, render) => {
+  // do stuff...
+});
 
-/* And now we can re-render the log by calling the
-   console method and spreading the args */
-console[method](...args);
+// Our next listener will target logs with a level within our range
+shed.addListener('2-5', (data, render) => {
+  // do stuff...
+});
+
+// Our last listener will target logs of specific levels
+shed.addListener([2, 3, 6, 8], (data, render) => {
+  // do stuff...
+});
 ```
 
 ### Output
