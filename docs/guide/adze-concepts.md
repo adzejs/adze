@@ -56,3 +56,17 @@ chain with [`log()`](default-terminators.md#log). The log method is one of the e
 The library also comes with [other special terminators](other-terminators.md) like
 [custom](other-terminators.md#custom). A log method is considered a terminator when it
 ends your log chain and returns a [terminated log object](data.md#terminated-log-object).
+
+## Common Usage
+
+Most of the time when you are using a logging library you will want to configure an logging instance once and then use it throughout your codebase. This is done with the [seal factory](factories.md#seal).
+
+### Example
+
+```javascript
+import { adze } from 'adze';
+
+const config = {
+  log_level,
+};
+```
