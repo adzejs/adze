@@ -7,7 +7,7 @@ the log instance so that you may chain more modifiers or terminate the instance.
 
 This modifier accepts an assertion boolean expression and will only print if the boolean expression fails (is a falsy value).
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/assert](https://developer.mozilla.org/en-US/docs/Web/API/Console/assert)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/assert)
 
 ### Interface
 
@@ -51,7 +51,7 @@ adze({ use_emoji: true })
 
 The count modifier tells the log to increment a counter associated to the log's [label](#label).
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/count](https://developer.mozilla.org/en-US/docs/Web/API/Console/count)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/count)
 
 ### Interface
 
@@ -125,7 +125,7 @@ The countReset modifier resets the counter associated to the log's [label](#labe
 _NOTE:_
 This method is deliberately a modifier rather than a terminator because it forces you to write a log that gives you insight into when a counter was reset. It also makes the countReset log recallable from a [bundle](#bundle) or the [Shed](/guide/shed) in the order it was created.
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/countReset](https://developer.mozilla.org/en-US/docs/Web/API/Console/countReset)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/countReset)
 
 ### Interface
 
@@ -166,7 +166,7 @@ The dir modifier transforms the output of the log by directing it to use the `co
 
 _NOTE:_ Logs that use `dir` as a modifier should only be given a single argument which is usually an object. If multiple arguments are given, behavior may differ between browser and node environments. Refer to the MDN docs for more details.
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/dir](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
 
 ### Interface
 
@@ -196,7 +196,7 @@ The dirxml modifier transforms the output of the log by directing it to use the 
 
 _NOTE:_ Logs that use `dirxml` as a modifier should only be given a single argument which is usually a DOM Element or other XML object. If multiple arguments are given, behavior may differ between browser and node environments. Refer to the MDN docs for more details.
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml](https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml)
 
 ### Interface
 
@@ -288,7 +288,7 @@ adze().label('foo').dump.info('Results from our thread');
 
 The group modifier starts an uncollapsed group of logs. This means that all subsequent logs will be nested beneath this log until a [groupEnd](#groupEnd) log occurs.
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/group](https://developer.mozilla.org/en-US/docs/Web/API/Console/group)
+[[**MDN Docs**]()
 
 ### Interface
 
@@ -325,7 +325,7 @@ The groupCollapsed modifier starts an collapsed group of logs. This means that a
 
 _Note:_ This will not be collapsed in a terminal environment since there is no way to uncollapse it.
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/groupCollapsed](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupCollapsed)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupCollapsed)
 
 ### Interface
 
@@ -360,7 +360,7 @@ adze().groupEnd.info();
 
 The groupEnd modifier ends a log group. Any logs following a groupEnd will no longer be grouped.
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/groupEnd](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupEnd)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupEnd)
 
 ### Interface
 
@@ -541,7 +541,7 @@ adze().log('I guess nobody is home :(');
 
 The table modifier transforms the output of the log by directing it to use the `console.table()` method for printing purposes only.
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/table](https://developer.mozilla.org/en-US/docs/Web/API/Console/table)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/table)
 
 ### Interface
 
@@ -620,7 +620,7 @@ This modifier starts a timer associated to the log's [label](#label). This is us
 
 This modifier is dependent upon having a [label](#label) and a [Shed](./shed.md).
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/time](https://developer.mozilla.org/en-US/docs/Web/API/Console/time)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/time)
 
 ### Interface
 
@@ -663,7 +663,7 @@ This modifier ends a timer associated to the log's [label](#label). This is usef
 
 This modifier is dependent upon having a [label](#label) and a [Shed](./shed.md).
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/timeEnd](https://developer.mozilla.org/en-US/docs/Web/API/Console/timeEnd)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/timeEnd)
 
 ### Interface
 
@@ -746,7 +746,7 @@ This modifier instructs the log to print a stacktrace using the standard `consol
 
 _NOTE:_ The styling for logs using this modifier varies by browser. Chrome will render the log message with proper styling while Firefox will only render the message unstyled.
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/trace](https://developer.mozilla.org/en-US/docs/Web/API/Console/trace)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/trace)
 
 ### Interface
 

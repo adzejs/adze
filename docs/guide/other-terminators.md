@@ -6,7 +6,7 @@ Aside from the [default terminator methods](default-terminators.md), Adze also e
 
 This terminator simply exists as an alias for `console.clear()`.
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/clear](https://developer.mozilla.org/en-US/docs/Web/API/Console/clear)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/clear)
 
 ### Interface
 

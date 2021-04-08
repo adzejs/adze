@@ -51,11 +51,11 @@ adze().log('Hello World!');
 
 ## Line Numbers / Blackboxing
 
-Although Adze is meant primarily for long-lived logs that should be in production environments you can use it for debugging purposes just like the standard console API. The caveat with using it for debugging is that you will need to enable [**Blackboxing**](https://developer.chrome.com/docs/devtools/javascript/reference/#blackbox).
+Although Adze is meant primarily for long-lived logs that should be in production environments you can use it for debugging purposes just like the standard console API. The caveat with using it for debugging is that you will need to enable [**Blackboxing**](https://bit.ly/3d1eOex).
 
-A common problem with libraries that wrap the standard console API is that they lose line numbers in the browser console. This occurs because the browser console is reporting the line number at which the console API was called, which is usually within the library wrapper. To get around this problem, Chromium based browsers (like Chrome, Edge and Brave) added the [**Blackboxing**](https://developer.chrome.com/docs/devtools/javascript/reference/#blackbox) concept. This tells the browser to pretend like the library source code doesn't exist. This enables Adze logs to print correct line numbers from where they are called.
+A common problem with libraries that wrap the standard console API is that they lose line numbers in the browser console. This occurs because the browser console is reporting the line number at which the console API was called, which is usually within the library wrapper. To get around this problem, Chromium based browsers (like Chrome, Edge and Brave) added the [**Blackboxing**](https://bit.ly/3d1eOex) concept. This tells the browser to pretend like the library source code doesn't exist. This enables Adze logs to print correct line numbers from where they are called.
 
-For information on setting up **Blackboxing**, please go to [https://developer.chrome.com/docs/devtools/javascript/reference/#blackbox](https://developer.chrome.com/docs/devtools/javascript/reference/#blackbox).
+For information on setting up **Blackboxing**, please go to [https://bit.ly/3d1eOex](https://bit.ly/3d1eOex).
 
 _NOTE: The verbiage for this has been changed to **Ignore List** in the console settings._
 

@@ -60,7 +60,7 @@ Use this for logging fatal errors or errors that impact functionality of your ap
 
 **Standard Log Method:** error
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/error](https://developer.mozilla.org/en-US/docs/Web/API/Console/error)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/error)
 
 ### Interface
 
@@ -94,7 +94,7 @@ Use this for logging issues that may impact app performance in a less impactful 
 
 **Standard Log Method:** warn
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/warn](https://developer.mozilla.org/en-US/docs/Web/API/Console/warn)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/warn)
 
 ### Interface
 
@@ -128,7 +128,7 @@ Use this for logging general insights into your application. This level does not
 
 **Standard Log Method:** info
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/info](https://developer.mozilla.org/en-US/docs/Web/API/Console/info)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/info)
 
 ### Interface
 
@@ -230,7 +230,7 @@ Use this for general logging that doesn't apply to any of the lower levels.
 
 **Standard Log Method:** log
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/log](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
 
 ### Interface
 
@@ -264,7 +264,7 @@ Use this for logging information that you typically do not want to see unless yo
 
 **Standard Log Method:** debug
 
-**MDN Docs:** [https://developer.mozilla.org/en-US/docs/Web/API/Console/debug](https://developer.mozilla.org/en-US/docs/Web/API/Console/debug)
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/debug)
 
 ### Interface
 
