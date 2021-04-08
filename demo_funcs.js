@@ -25,17 +25,22 @@ export default function runDemo(lib, el) {
 }
 
 function screenshots({ adze, createShed }, el) {
-  createShed({
-    filters: {
-      namespace: {
-        include: ['foo'],
-      },
-    },
-  });
+  /* We'll create a Shed to enable labels and counting
+   for our example. */
+  createShed();
 
-  adze().ns('foo').log('First log');
-  adze().ns(['foo', 'bar']).log('Second log');
-  adze().ns('bar').log('Third log');
+  // Let's create an Adze configuration
+  var cfg = {
+    log_level: 1,
+  };
+
+  // Now we'll create a new factory using seal
+  var log = adze(cfg).label('foo').count.seal();
+
+  // And now we can create new logs using our new factory
+  log().error('An error occurred! Oh no!');
+  log().error('Another error occurred! Quick! Help!');
+  log().log("I won't display because my log level is too high.");
 }
 
 function screenshotDemo({ adze }) {
