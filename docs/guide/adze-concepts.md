@@ -59,14 +59,37 @@ ends your log chain and returns a [terminated log object](data.md#terminated-log
 
 ## Common Usage
 
-Most of the time when you are using a logging library you will want to configure an logging instance once and then use it throughout your codebase. This is done with the [seal factory](factories.md#seal).
+Most of the time when you are using a logging library you will want to configure an logging instance once and then use it throughout your codebase. This is done with the [seal factory](factories.md#seal). Once your configuration is sealed,
 
 ### Example
 
 ```javascript
-import { adze } from 'adze';
+// ----- setup.js ----- //
+import { adze, createShed } from 'adze';
 
-const config = {
-  log_level,
+/* We'll create a Shed to enable labels and counting
+   for our example. */
+createShed();
+
+// Let's create an Adze configuration
+const cfg = {
+  log_level: 1,
 };
+
+// Now we'll create a new factory using seal
+export const log = adze(cfg).label('foo').count.seal();
+
+// ----- elsewhere.js ----- //
+import { log } from '~/setup.ts';
+
+// And now we can create new logs using our new factory
+log().error('An error occurred! Oh no!');
+log().error('Another error occurred! Quick! Help!');
+log().log("I won't display because my log level is too high.");
 ```
+
+### Output
+
+![common usage example with seal](./examples/common-usage-example.png)
+
+![common usage terminal example with seal](./examples/common-usage-terminal-example.png)
