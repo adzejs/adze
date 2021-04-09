@@ -16,6 +16,15 @@ module.exports = {
    * ref：https://v1.vuepress.vuejs.org/config/#head
    */
   head: [
+    [
+      'script',
+      {
+        async: true,
+        defer: true,
+        'data-domain': 'adzejs.com',
+        src: 'https://plausible.io/js/plausible.js',
+      },
+    ],
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     [
