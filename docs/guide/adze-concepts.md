@@ -42,7 +42,7 @@ you wanted to add a performance timestamp to your log you would use the
 `timeNow` modifier.
 
 ```typescript
-adze().timeNow.log('This log is being counted!');
+adze().timeNow.log('This is the time from pageload.');
 ```
 
 And it would output like this:
@@ -59,7 +59,7 @@ ends your log chain and returns a [terminated log object](data.md#terminated-log
 
 ## Common Usage
 
-Most of the time when you are using a logging library you will want to configure an logging instance once and then use it throughout your codebase. This is done with the [seal factory](factories.md#seal). Once your configuration is sealed,
+Most of the time when you are using a logging library you will want to configure a logging instance once and then use it throughout your codebase. This is done with the [seal factory](factories.md#seal). When your configuration is sealed a new log factory is returned. All subsequent logs generated from that factory will inherit the configuration you sealed.
 
 ### Example
 
