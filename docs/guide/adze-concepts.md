@@ -80,7 +80,7 @@ const cfg = {
 export const log = adze(cfg).label('foo').count.seal();
 
 // ----- elsewhere.js ----- //
-import { log } from '~/setup.ts';
+import { log } from '~/setup.js';
 
 // And now we can create new logs using our new factory
 log().error('An error occurred! Oh no!');
