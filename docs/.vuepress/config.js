@@ -84,6 +84,7 @@ module.exports = {
             'shed-concepts',
             'using-shed',
             'mapped-diagnostic-context',
+            'unit-testing',
           ],
         },
       ],
