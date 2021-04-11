@@ -85,6 +85,7 @@ module.exports = {
             'using-shed',
             'mapped-diagnostic-context',
             'unit-testing',
+            'micro-frontends',
           ],
         },
       ],
