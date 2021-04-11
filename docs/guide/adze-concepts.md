@@ -1,12 +1,12 @@
 # Adze Concepts
 
-Adze as a library has a couple of core goals it attempts to meet. The first goal
-is to provide an API that wraps, extends, or replicates all of the functionality
-of the standard [Console API](https://developer.mozilla.org/en-US/docs/Web/API/console).
+Adze as a library has a few core goals it attempts to meet. The first goal is to provide an API that wraps, extends, or replicates all of the functionality of the standard [Console API](https://developer.mozilla.org/en-US/docs/Web/API/console).
 
-The second goal of the Adze project is to give you a natural log writing experience
-that doesn't feel too different from the standard. To make the experience of using Adze feel
-natural, Adze provides a chainable API that is similar to the standard `console.log()` API.
+The second goal of the Adze project is to give you a natural log writing experience that doesn't feel too different from the standard. To make the experience of using Adze feel natural, Adze provides a chainable API that is similar to the standard `console.log()` API.
+
+Lastly, most other libraries **do too much**. Adze seeks to separate concerns when it comes to generating logs and transporting them to another source. Other libraries tend to try to solve both problems, but over time what ends up occurring is that the library author isn't able to predict all of the different ways someone might want to transport their log data. This ends up creating a lot of bloat in the library. You end up with support for transports you may never use. The library's configuration also ends up becoming a mess to support all of these different transports.
+
+Adze rejects the idea of coupling the log inputs with transport outputs which is why the core library only offers [listeners](shed-concepts.md#listeners) as a way of collecting log data. With access to the listeners the end user can harvest the desired data and do with it as they please. However, we also understand it's nice to have an out-of-the-box solution for transports. Over time we hope to provide some secondary packages that can be installed along side of Adze to provide some simple transport options.
 
 ## Lifecycle
 
