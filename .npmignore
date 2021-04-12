@@ -2,6 +2,9 @@
 .eslintrc.yaml
 .nvmrc
 .prettierrc.yaml
+.github
+.eslintrc.json
+.travis.yml
 ava.config.js
 demo_funcs.js
 demo.ts
