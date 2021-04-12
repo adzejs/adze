@@ -142,11 +142,20 @@ export class BaseLog {
     this.Printer = printer;
     this.env = env;
 
-    // If the Shed exists, use its configuration rather than the config passed in
+    // First merge our user config with our defaults
+    const cfg = user_cfg
+      ? (defaultsDeep(user_cfg, defaults) as Defaults)
+      : defaults;
+
+    // Now check if global overrides exist and apply them over top of our configuration
     const shed = env.global.$shed;
-    const cfg =
-      shedExists(shed) && shed.hasOverrides ? shed.overrides : user_cfg;
-    this.cfg = parseFilterLevels(defaultsDeep(cfg, defaults) as Defaults);
+    const with_overrides =
+      shedExists(shed) && shed.hasOverrides
+        ? (defaultsDeep(shed.overrides, cfg) as Defaults)
+        : cfg;
+
+    // Now we'll pre-parse our filter levels in the config for performance
+    this.cfg = parseFilterLevels(with_overrides);
   }
 
   /**

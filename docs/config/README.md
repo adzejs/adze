@@ -237,15 +237,17 @@ export interface GlobalFilterOptions<T> {
 ### Example
 
 ```typescript
-import { adze, createShed } from 'adze';
+import { adze } from 'adze';
 
-createShed({
+const cfg = {
   filters: {
     namespace: {
       include: ['foo'],
     },
   },
-});
+};
+
+const log = adze(cfg).seal();
 
 adze().ns('foo').log('First log');
 adze().ns(['foo', 'bar']).log('Second log');
