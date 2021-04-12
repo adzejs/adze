@@ -67,6 +67,8 @@ log().success('This is another log from the same factory');
 
 There are occassions where you may want to group logs together in a collection that you can later recall and filter. Adze provides a `bundle()` function that will wrap an Adze factory function and curry each subsequent log that is generated from the bundle.
 
+The primary purpose of bundling is to keep [Shed](shed-concepts.md) as optional as possible. Without bundling you would need to use Shed to get a collection of logs that you would like to recall. With bundling that is no longer necessary.
+
 ### Interface
 
 ```typescript
