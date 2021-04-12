@@ -15,11 +15,13 @@ jobs:
         provider: npm
         email: $NPM_EMAIL
         api_key: $NPM_TOKEN
+        skip_cleanup: true
+        keep_history: true
         on:
           branch: master
           tags: true
           repo: AJStacy/Adze
-        cleanup: false
+
     - stage: docs
       cache:
         directories: node_modules
