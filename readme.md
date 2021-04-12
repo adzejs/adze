@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/AJStacy/Adze.svg?branch=master)](https://travis-ci.com/AJStacy/Adze) ![npm](https://img.shields.io/npm/v/adze) ![node-lts](https://img.shields.io/node/v-lts/adze)
 
-Please visit our official docs at [adzejs.com](http://www.adzejs.com/).
+<span style="font-size: 30px;">**Please visit our official docs at [adzejs.com](http://www.adzejs.com/).**</span>
 
 ## Why is this named Adze?
 
