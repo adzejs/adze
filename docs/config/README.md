@@ -22,6 +22,7 @@ interface Configuration {
   meta?: {
     [key: string]: unknown;
   };
+  filters?: AdzeFilters;
 }
 
 // The allowable values for the method property
@@ -63,7 +64,6 @@ When you create a Shed you can provide it with configuration to control it's cac
 interface ShedConfig {
   cache_limit: number;
   global_cfg: Configuration | null;
-  filters: AdzeFilters;
 }
 ```
 
@@ -73,7 +73,6 @@ interface ShedConfig {
 | ------------- | -------------------------------- | ------------------------------------------------------------------------------------- |
 | cache_limit   | 300                              | The maximum number of logs that Shed will cache. This exists to prevent memory leaks. |
 | global_cfg    | [Reference](#adze-configuration) | Adze configuration that will override all other Adze log configurations.              |
-| filters       | [Reference](#filters)            | Filters for log levels, labels, and namespaces.                                       |
 
 ## Log Levels / Log Level Definition
 
@@ -215,7 +214,7 @@ Adze styling for the terminal makes use of a library named [Chalk](https://githu
 
 ## Filters
 
-Filters are used with [Shed](shed-concepts.md) to determine whether logs are allowed to print to the console/terminal based on their log level, [label](../guide/modifiers.md#label), or [namespace](../guide/modifiers.md#namespace-ns). When filtering levels, you can provide a [level filter](../guide/data.md#level-filter) data type.
+Filters determine whether logs are allowed to print to the console/terminal based on their log level, [label](../guide/modifiers.md#label), or [namespace](../guide/modifiers.md#namespace-ns). When filtering levels, you can provide a [level filter](../guide/data.md#level-filter) data type.
 
 Each filter type can specify and `include` or `exclude` statement. Include tells Adze to only render logs that are included in the value set. Exclude says to not render any logs that are included in the value set. If both are specified, include takes precedence over exclude in case of conflicts.
 
