@@ -88,15 +88,5 @@ export const defaults: Defaults = {
   },
   filters: {
     hideAll: false,
-    namespace: {
-      hideAll: false,
-      exclude: [],
-      include: [],
-    },
-    label: {
-      hideAll: false,
-      exclude: [],
-      include: [],
-    },
   },
 };

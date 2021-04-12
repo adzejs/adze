@@ -23,7 +23,7 @@ import { Label, addLabel, getLabel } from '../label';
 import { defaults } from '../_defaults';
 import { Env } from '../Env';
 import { Printer } from '../printers';
-import { allowed } from '../conditions';
+import { allowed, parseFilterLevels } from '../conditions';
 import { shedExists } from '../Shed';
 
 export class BaseLog {
@@ -141,7 +141,12 @@ export class BaseLog {
   constructor(printer: typeof Printer, env: Env, user_cfg?: Configuration) {
     this.Printer = printer;
     this.env = env;
-    this.cfg = defaultsDeep(user_cfg, defaults) as Defaults;
+
+    // If the Shed exists, use its configuration rather than the config passed in
+    const shed = env.global.$shed;
+    const cfg =
+      shedExists(shed) && shed.hasOverrides ? shed.overrides : user_cfg;
+    this.cfg = parseFilterLevels(defaultsDeep(cfg, defaults) as Defaults);
   }
 
   /**
@@ -684,15 +689,7 @@ export class BaseLog {
     type: 'log_levels' | 'custom_levels',
     levelName: string
   ): LogLevelDefinition | undefined {
-    let definition = this.cfg[type][levelName];
-
-    const shed = this.env.global.$shed;
-    if (shedExists(shed)) {
-      definition = shed.hasOverrides
-        ? shed.overrides?.[type]?.[levelName]
-        : definition;
-    }
-
+    const definition = this.cfg[type][levelName];
     return definition ? { ...definition, levelName } : undefined;
   }
 
@@ -720,15 +717,10 @@ export class BaseLog {
         const log_data = this.data;
 
         if (isFinalLogData(log_data)) {
-          // If a global context exists, check if this log is allowed to print.
-          const globally_allowed =
-            this.env.global.$shed?.logGloballyAllowed(log_data) ?? true;
-
-          // Render the log if it's globally allowed to print
-          this._render =
-            globally_allowed && allowed(this.cfg, def)
-              ? new Printer(log_data)[this.printer]()
-              : null;
+          // Render the log if it's allowed to print
+          this._render = allowed(log_data)
+            ? new Printer(log_data)[this.printer]()
+            : null;
 
           // Attempt to print the render to the console / terminal
           toConsole(this._render);
