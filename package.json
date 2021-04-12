@@ -1,6 +1,6 @@
 {
   "name": "adze",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A library for shaping your logs.",
   "main": "dist/adze.js",
   "sideEffects": false,
