@@ -15,7 +15,7 @@ function filterCollection(
 ): Collection;
 ```
 
-### Example
+### Bundle Example
 
 ```javascript
 import { adze, bundle, filterCollection, rerender } from 'adze';
@@ -30,6 +30,31 @@ const { log } = bundled().label('baz').log('Logging something.');
 
 // Let's get our collection from the bundle
 const collection = log.bundle;
+
+/* Let's filter the collection by logs with namespace of 
+  'foo' or labels of 'bar' and then re-render it. */
+filterCollection(collection, (data) => {
+  return data.namespace?.includes('foo') || data.label?.name === 'bar';
+}).forEach(rerender);
+```
+
+### Shed Example
+
+```javascript
+import { adze, createShed, filterCollection, rerender } from 'adze';
+
+const shed = createShed();
+
+// Let's create a new log factory
+const log = adze({ use_emoji: true }).seal();
+
+log().ns('foo').error('This is an error!');
+log().label('bar').info('This is some info.');
+log().ns('baz').success('Successfully did something!');
+log().label('baz').log('Logging something.');
+
+// Let's get our collection from the Shed
+const collection = shed.getCollection();
 
 /* Let's filter the collection by logs with namespace of 
   'foo' or labels of 'bar' and then re-render it. */
@@ -56,7 +81,7 @@ Filters a [collection](advanced.md#collections) of logs by the given [label](mod
 function filterLabel(collection: Collection = [], label: string): Collection;
 ```
 
-### Example
+### Bundle Example
 
 ```javascript
 import { adze, bundle, filterLabel, rerender } from 'adze';
@@ -71,6 +96,28 @@ const { log } = bundled().label('baz').log('Logging something.');
 
 // Let's get our collection from the bundle
 const collection = log.bundle;
+
+// Let's filter the collection and then re-render it.
+filterLabel(collection, 'bar').forEach(rerender);
+```
+
+### Shed Example
+
+```javascript
+import { adze, createShed, filterLabel, rerender } from 'adze';
+
+const shed = createShed();
+
+// Let's create a new log factory
+const log = adze({ use_emoji: true }).seal();
+
+log().label('foo').error('This is an error!');
+log().label('bar').info('This is some info.');
+log().label('baz').success('Successfully did something!');
+log().label('baz').log('Logging something.');
+
+// Let's get our collection from the Shed
+const collection = shed.getCollection();
 
 // Let's filter the collection and then re-render it.
 filterLabel(collection, 'bar').forEach(rerender);
@@ -97,7 +144,7 @@ function filterLevel(
 ): Collection;
 ```
 
-### Example
+### Bundle Example
 
 ```javascript
 import { adze, bundle, filterLevel, rerender } from 'adze';
@@ -112,6 +159,28 @@ const { log } = bundled().log('Logging something.');
 
 // Let's get our collection from the bundle
 const collection = log.bundle;
+
+// Let's filter the collection and then re-render it.
+filterLevel(collection, '0-3').forEach(rerender);
+```
+
+### Shed Example
+
+```javascript
+import { adze, createShed, filterLevel, rerender } from 'adze';
+
+const shed = createShed();
+
+// Let's create a new log factory
+const log = adze({ use_emoji: true }).seal();
+
+log().error('This is an error!');
+log().info('This is some info.');
+log().success('Successfully did something!');
+log().log('Logging something.');
+
+// Let's get our collection from the Shed
+const collection = shed.getCollection();
 
 // Let's filter the collection and then re-render it.
 filterLevel(collection, '0-3').forEach(rerender);
@@ -135,7 +204,7 @@ Filters a [collection](advanced.md#collections) of logs by the given [namespace]
 function filterNamespace(collection: Collection = [], ns: string[]): Collection;
 ```
 
-### Example
+### Bundle Example
 
 ```javascript
 import { adze, bundle, filterNamespace, rerender } from 'adze';
@@ -150,6 +219,28 @@ const { log } = bundled().ns('baz').log('Logging something.');
 
 // Let's get our collection from the bundle
 const collection = log.bundle;
+
+// Let's filter the collection and then re-render it.
+filterNamespace(collection, ['bar']).forEach(rerender);
+```
+
+### Shed Example
+
+```javascript
+import { adze, createShed, filterNamespace, rerender } from 'adze';
+
+const shed = createShed();
+
+// Let's create a new log factory
+const log = adze({ use_emoji: true }).seal();
+
+log().ns('bar').error('This is an error!');
+log().ns(['foo', 'bar']).info('This is some info.');
+log().ns('baz').success('Successfully did something!');
+log().ns('baz').log('Logging something.');
+
+// Let's get our collection from the Shed
+const collection = shed.getCollection();
 
 // Let's filter the collection and then re-render it.
 filterNamespace(collection, ['bar']).forEach(rerender);

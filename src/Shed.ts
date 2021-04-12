@@ -1,23 +1,21 @@
 import defaultsDeep from 'lodash/defaultsDeep';
 import {
   ShedConfig,
-  Defaults,
   ShedUserConfig,
   Collection,
   LevelFilter,
-  GlobalFilter,
   ListenerLocations,
   ListenerBuckets,
   ListenerBucket,
   ListenerCallback,
   LabelMap,
-  FilterAllowedCallback,
   FinalLogData,
   LogRender,
+  Configuration,
 } from './_contracts';
 import { BaseLog } from './log/BaseLog';
 import { Label } from './label';
-import { defaults, shed_defaults } from './_defaults';
+import { shed_defaults } from './_defaults';
 import { formatLevels } from './util';
 import { Env } from './Env';
 
@@ -87,34 +85,6 @@ export class Shed {
     this.cfg = this.formatConfig(config);
   }
 
-  /**
-   * Parses the level filter on the configuration and reassigns it.
-   * This is for increased performance so this calculation isn't done each
-   * time a log is checking against the filter.
-   */
-  private parseFilterLevels(cfg: ShedConfig) {
-    const new_cfg: ShedConfig = { ...cfg };
-    if (
-      this.filterIsSet(cfg, 'include', 'level') &&
-      new_cfg.filters.level?.include
-    ) {
-      new_cfg.filters.level.include = formatLevels(
-        new_cfg.filters.level.include,
-        new_cfg.global_cfg
-      );
-    }
-    if (
-      this.filterIsSet(cfg, 'exclude', 'level') &&
-      new_cfg.filters.level?.exclude
-    ) {
-      new_cfg.filters.level.exclude = formatLevels(
-        new_cfg.filters.level.exclude,
-        new_cfg.global_cfg
-      );
-    }
-    return new_cfg;
-  }
-
   /*************************************\
    * GET/SET METHODS
   \*************************************/
@@ -170,15 +140,8 @@ export class Shed {
   /**
    * Returns the current value of the global Adze configuration overrides.
    */
-  public get overrides(): Defaults | null {
+  public get overrides(): Configuration | null {
     return this.cfg.global_cfg;
-  }
-
-  /**
-   * Getter for configuration of the hideAll filter property.
-   */
-  private get hideAll(): boolean {
-    return this.cfg?.filters.hideAll ?? false;
   }
 
   /**
@@ -194,12 +157,10 @@ export class Shed {
    * filters for performance reasons.
    */
   private formatConfig(cfg: ShedUserConfig | undefined): ShedConfig {
-    const global_cfg = cfg?.global_cfg
-      ? (defaultsDeep(cfg.global_cfg, defaults) as Defaults)
-      : null;
+    const global_cfg = cfg?.global_cfg ?? null;
+
     const cfg_global_defaults = { ...cfg, global_cfg };
-    const cfg_defaults = defaultsDeep(cfg_global_defaults, shed_defaults);
-    return this.parseFilterLevels(cfg_defaults);
+    return defaultsDeep(cfg_global_defaults, shed_defaults) as ShedConfig;
   }
 
   /**
@@ -270,129 +231,6 @@ export class Shed {
     this.listeners.get(log.level)?.forEach((listener) => {
       listener(log, render);
     });
-  }
-
-  /*************************************\
-   * GLOBAL FILTER METHODS
-  \*************************************/
-
-  /**
-   * Returns a boolean indicating if this log instance should be
-   * allowed to print.
-   */
-  public logGloballyAllowed(log: FinalLogData): boolean {
-    return (
-      !this.hideAll &&
-      this.levelAllowed(log) &&
-      this.labelAllowed(log) &&
-      this.namespaceAllowed(log)
-    );
-  }
-
-  /**
-   * Validate that the current level set on the log is allowed based on
-   * the global filter rules.
-   */
-  private levelAllowed(log: FinalLogData): boolean {
-    return this.filterAllowed('level', (filter, func) => {
-      const source = this.cfg.filters?.level?.[filter] ?? ([] as number[]);
-      return this[func]<number>(source, log.level);
-    });
-  }
-
-  /**
-   * Validate that the current label set on the log is allowed based on
-   * the global filter rules.
-   */
-  private labelAllowed(log: FinalLogData): boolean {
-    return this.filterAllowed('label', (filter, func) => {
-      const source = this.cfg.filters?.label?.[filter] ?? ([] as string[]);
-      return this[func]<string>(source, log.label.name ?? '');
-    });
-  }
-
-  /**
-   * Validate that at least one of the current namespaces set on the log
-   * is allowed based on the global filter rules.
-   */
-  private namespaceAllowed(log: FinalLogData): boolean {
-    return this.filterAllowed('namespace', (filter, func) => {
-      const filter_ns =
-        this.cfg.filters?.namespace?.[filter] ?? ([] as string[]);
-
-      const log_ns = log.namespace;
-
-      if (log_ns) {
-        // Namespace log value is an array. Check each namespace value.
-        const arr = log_ns.map((val) => this[func]<string>(filter_ns, val));
-
-        // If filter is include, namspace is allowed if at least one passes
-        if (func === 'isIncluded') {
-          return arr.includes(true);
-        }
-        // If filter is exclude, namspace is allowed if all pass
-        return !arr.includes(false);
-      }
-    });
-  }
-
-  /**
-   * Wrapper around the filter methods to handle some basic setup for validating
-   * the filter values.
-   */
-  private filterAllowed(
-    category: GlobalFilter,
-    cb: FilterAllowedCallback
-  ): boolean {
-    const filter_type = this.filterType(category);
-    if (filter_type) {
-      const [filter, func] = filter_type;
-      const result = cb(filter, func);
-      if (result !== undefined) {
-        return result;
-      }
-    }
-    return true;
-  }
-
-  /**
-   * Returns tuples indicating what filter type is active. Include gets precedence over exclude.
-   */
-  private filterType(
-    category: GlobalFilter
-  ): ['include', 'isIncluded'] | ['exclude', 'isNotExcluded'] | undefined {
-    switch (true) {
-      case this.filterIsSet(this.cfg, 'include', category):
-        return ['include', 'isIncluded'];
-      case this.filterIsSet(this.cfg, 'exclude', category):
-        return ['exclude', 'isNotExcluded'];
-    }
-  }
-
-  /**
-   * Is the log in the included filter?
-   */
-  private isIncluded<T>(source: T[], value: T): boolean {
-    return source.length > 0 && source.indexOf(value) !== -1;
-  }
-
-  /**
-   * Is the log not in the excluded filter?
-   */
-  private isNotExcluded<T>(source: T[], value: T): boolean {
-    return source.length > 0 && source.indexOf(value) === -1;
-  }
-
-  /**
-   * Has the user defined rules for a specific filter?
-   */
-  private filterIsSet(
-    cfg: ShedConfig,
-    type: 'include' | 'exclude',
-    filter: GlobalFilter
-  ): boolean {
-    const include_prop = cfg?.filters?.[filter]?.[type] ?? [];
-    return include_prop.length > 0;
   }
 
   /*************************************\

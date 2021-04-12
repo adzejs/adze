@@ -1,12 +1,17 @@
-import { Defaults, LogLevelDefinition } from '../_contracts';
+import { Defaults, FinalLogData, LogLevelDefinition } from '../_contracts';
+import { levelAllowed, labelAllowed, namespaceAllowed } from '.';
 import { Env } from '../Env';
 import { getSearchParams } from '../util';
 
 /**
  * Determine the fate of whether this log will terminate.
  */
-export function allowed(cfg: Defaults, def: LogLevelDefinition): boolean {
-  return levelActive(def, cfg.log_level) && notTestEnv();
+export function allowed(data: FinalLogData): boolean {
+  return (
+    levelActive(data.definition, data.cfg.log_level) &&
+    notTestEnv() &&
+    passesFilters(data.cfg, data)
+  );
 }
 
 /**
@@ -14,6 +19,18 @@ export function allowed(cfg: Defaults, def: LogLevelDefinition): boolean {
  */
 export function levelActive(def: LogLevelDefinition, level: number): boolean {
   return def.level <= level;
+}
+
+/**
+ * Validates the log against the configured filters.
+ */
+export function passesFilters(cfg: Defaults, data: FinalLogData): boolean {
+  return (
+    !(cfg?.filters.hideAll ?? false) &&
+    levelAllowed(data) &&
+    labelAllowed(data) &&
+    namespaceAllowed(data)
+  );
 }
 
 /**

@@ -297,51 +297,15 @@ const has_overrides = shed.hasOverrides;
 // has_overrides => false
 ```
 
-## logGloballyAllowed
-
-Returns a boolean indicating if this log instance should be allowed to print based on global configuration from a Shed.
-
-### Interface
-
-```typescript
-class Shed {
-  public logGloballyAllowed(log: FinalLogData): boolean;
-}
-```
-
-### Example
-
-```javascript
-import { adze, createShed, isFinalLogData } from 'adze';
-
-const shed = createShed({
-  global_cfg: {
-    log_level: 2,
-  },
-});
-
-// Let's create a info log which has a level of 3
-const { log, render } = adze().info('some important info.');
-const data = log.data;
-
-// Listeners only accept finalized log data so we must use a type guard to verify it
-if (isFinalLogData(data)) {
-  const canPrint = shed.logGloballyAllowed(data);
-  // canPrint => false
-}
-```
-
 ## overrides
 
-Returns the current value of the global Adze configuration overrides.
-
-_NOTE:_ The configuration overrides object that is returned will have been merged with the Adze configuration defaults.
+Returns the current value of the global [Adze configuration](/config/#adze-configuration) overrides.
 
 ### Interface
 
 ```typescript
 class Shed {
-  public get overrides(): Defaults | null;
+  public get overrides(): Configuration | null;
 }
 ```
 

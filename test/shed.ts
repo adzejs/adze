@@ -87,7 +87,7 @@ test('store returns global config overrides from getter', (t) => {
     },
   });
   const cfg = shed.overrides;
-  t.is(cfg?.log_levels.log.level, 100);
+  t.is(cfg?.log_levels?.log?.level, 100);
 });
 
 test('store hasOverrides correctly indicates that global config override has been set', (t) => {
@@ -204,26 +204,6 @@ test('fires the log listeners', (t) => {
   }
 });
 
-test('logGloballyAllowed correctly indicates that a log is allowed to render', (t) => {
-  const shed = createShed({
-    filters: {
-      hideAll: true,
-    },
-  });
-  const { log } = adze().log('This is a test.');
-  const data = log.data;
-
-  if (isFinalLogData(data)) {
-    if (shed.logGloballyAllowed(data)) {
-      t.fail();
-    } else {
-      t.pass();
-    }
-  } else {
-    t.fail();
-  }
-});
-
 test('configured cache limit works properly', (t) => {
   const shed = createShed({ cache_limit: 2 });
 
@@ -233,156 +213,4 @@ test('configured cache limit works properly', (t) => {
 
   const collection = shed.getCollection('*');
   t.is(collection.length, 2);
-});
-
-test('hideAll global log filter prevents all logs rendering', (t) => {
-  createShed({
-    filters: {
-      hideAll: true,
-    },
-  });
-
-  const { render: a_render } = adze().alert('This is an alert!');
-  const { render: e_render } = adze().error('This is an error!');
-  const { render: w_render } = adze().warn('This is a warn!');
-  const { render: i_render } = adze().info('This is an info!');
-  const { render: f_render } = adze().fail('This is a failure!');
-  const { render: s_render } = adze().success('This is a success!');
-  const { render: l_render } = adze().log('This is a log!');
-  const { render: d_render } = adze().debug('This is a debug!');
-  const { render: v_render } = adze().verbose('This is a verbose!');
-
-  t.falsy(a_render);
-  t.falsy(e_render);
-  t.falsy(w_render);
-  t.falsy(i_render);
-  t.falsy(f_render);
-  t.falsy(s_render);
-  t.falsy(l_render);
-  t.falsy(d_render);
-  t.falsy(v_render);
-});
-
-test('global filter excludes logs based on label', (t) => {
-  createShed({
-    filters: {
-      label: {
-        exclude: ['test', 'test2'],
-      },
-    },
-  });
-
-  const { render: a_render } = adze().alert('This is an alert!');
-  const { render: e_render } = adze().label('test').error('This is an error!');
-  const { render: w_render } = adze().warn('This is a warn!');
-  const { render: i_render } = adze().label('test').info('This is an info!');
-  const { render: f_render } = adze().fail('This is a failure!');
-  const { render: s_render } = adze().success('This is a success!');
-  const { render: l_render } = adze().label('test2').log('This is a log!');
-  const { render: d_render } = adze().label('test2').debug('This is a debug!');
-  const { render: v_render } = adze().verbose('This is a verbose!');
-
-  t.truthy(a_render);
-  t.falsy(e_render);
-  t.truthy(w_render);
-  t.falsy(i_render);
-  t.truthy(f_render);
-  t.truthy(s_render);
-  t.falsy(l_render);
-  t.falsy(d_render);
-  t.truthy(v_render);
-});
-
-test('global filter includes logs based on label', (t) => {
-  createShed({
-    filters: {
-      label: {
-        include: ['test', 'test2'],
-      },
-    },
-  });
-
-  const { render: a_render } = adze().alert('This is an alert!');
-  const { render: e_render } = adze().label('test').error('This is an error!');
-  const { render: w_render } = adze().warn('This is a warn!');
-  const { render: i_render } = adze().label('test').info('This is an info!');
-  const { render: f_render } = adze().fail('This is a failure!');
-  const { render: s_render } = adze().success('This is a success!');
-  const { render: l_render } = adze().label('test2').log('This is a log!');
-  const { render: d_render } = adze().label('test2').debug('This is a debug!');
-  const { render: v_render } = adze().verbose('This is a verbose!');
-
-  t.falsy(a_render);
-  t.truthy(e_render);
-  t.falsy(w_render);
-  t.truthy(i_render);
-  t.falsy(f_render);
-  t.falsy(s_render);
-  t.truthy(l_render);
-  t.truthy(d_render);
-  t.falsy(v_render);
-});
-
-test('global filter excludes logs based on namespace', (t) => {
-  createShed({
-    filters: {
-      namespace: {
-        exclude: ['testWOW'],
-      },
-    },
-  });
-
-  const { render: a_render } = adze().alert('This is an alert!');
-  const { render: e_render } = adze().ns('testWOW').error('This is an error!');
-  const { render: w_render } = adze().warn('This is a warn!');
-  const { render: i_render } = adze().ns('testWOW').info('This is an info!');
-  const { render: f_render } = adze().fail('This is a failure!');
-  const { render: s_render } = adze().success('This is a success!');
-  const { render: l_render } = adze()
-    .ns(['testWOW', 'test2'])
-    .log('This is a log!');
-  const { render: d_render } = adze().ns('test2').debug('This is a debug!');
-  const { render: v_render } = adze().verbose('This is a verbose!');
-
-  t.truthy(a_render);
-  t.falsy(e_render);
-  t.truthy(w_render);
-  t.falsy(i_render);
-  t.truthy(f_render);
-  t.truthy(s_render);
-  t.falsy(l_render);
-  t.truthy(d_render);
-  t.truthy(v_render);
-});
-
-test('global filter includes logs based on namespace', (t) => {
-  createShed({
-    filters: {
-      namespace: {
-        include: ['test'],
-      },
-    },
-  });
-
-  const { render: a_render } = adze().alert('This is an alert!');
-  const { render: e_render } = adze().ns('test').error('This is an error!');
-  const { render: w_render } = adze().warn('This is a warn!');
-  const { render: i_render } = adze().ns('test').info('This is an info!');
-  const { render: f_render } = adze().fail('This is a failure!');
-  const { render: s_render } = adze().success('This is a success!');
-  const { render: l_render } = adze()
-    .ns(['test', 'test2'])
-    .log('This is a log!');
-  const { render: d_render } = adze().ns('test2').debug('This is a debug!');
-  const { render: v_render } = adze().verbose('This is a verbose!');
-
-  t.truthy(a_render);
-  t.truthy(e_render);
-  t.truthy(w_render);
-  t.truthy(i_render);
-  t.truthy(f_render);
-  t.truthy(s_render);
-  t.truthy(l_render);
-  t.falsy(d_render);
-  t.truthy(v_render);
 });

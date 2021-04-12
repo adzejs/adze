@@ -93,3 +93,63 @@ log().log("I won't display because my log level is too high.");
 ![common usage example with seal](./examples/common-usage-example.png)
 
 ![common usage terminal example with seal](./examples/common-usage-terminal-example.png)
+
+## Filtering
+
+One of the primary features of Adze is to allow you to filter your logs while developing and debugging. These filters are created within the optional [configuration](/config/#adze-configuration) that you provide Adze logs.
+
+### Example
+
+In our app's boot file (named `main.ts` for our example) we'll create a [Shed](shed-concepts.md) for [listening](shed-concepts.md#listeners) to our logs and we'll configure our adze factory with some [filters](/config/#filters) that we'll [seal](modifiers.md#seal) into a new factory named `log`.
+
+```javascript
+// Main.ts
+import { adze, createShed } from 'adze';
+
+// Generate our shed for listening to our logs
+const shed = createShed();
+
+// Let's use the shed instance reference to add a log listener.
+shed.addListener('*', (data, render) => {
+  // Render will be null if the log was never written to the console.
+  if (render) {
+    // do something with data
+  }
+});
+
+/* Let's create an Adze configuration with some filters. In a real-world environment
+   you would import this configuration from a environment file. */
+const cfg = {
+  filters: {
+    namespace: {
+      exclude: ['new-feature'],
+    },
+  },
+};
+
+// Now we'll seal our configuration into a new factory named log
+export const log = adze(cfg).seal();
+
+// Doing some boot stuff...
+```
+
+Now, elsewhere in our codebase we'll import our `log` factory for creating new logs.
+
+```javascript
+// ----- MyNewFeature.ts -----
+// Import our log factory
+import { log } from './main.ts';
+
+function myNewFeature() {
+  // ns() is an alias for namespace()
+  log().ns('new-feature').debug('Staring to run myNewFeature');
+  // Do some logic for our new feature...
+  log().ns('new-feature').log('Dumping a value in our code', X);
+  // Do some more logic...
+  log().ns('new-feature').success('Completed execution of myNewFeature!');
+}
+```
+
+The code above will exclude any logs with a namespace of "new-feature" from being written to the console. Also take notice of the listener we created in our `main.ts`. It watches all log levels (represented by the `'*'`) and will fire for the logs with a namespace of `'new-feature'` even though they are being filtered out. This is done to give you flexibility in how you want to handle your logs in your listeners.
+
+Also notice in our code we are checking if the render value is truthy. We are doing this because any log that was not written to the console will have a `null` log render. This is an easy way to ignore logs that are hidden by any of our filters.

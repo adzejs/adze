@@ -2,7 +2,7 @@
 
 ## What is a Shed?
 
-A **Shed** is an optional global cache and control hub for your Adze logs. The primary purpose of a Shed is to enable global log filtering, configuration overrides, and log listeners. To see how a Shed fits into the architecture, refer to the [Lifecycle Diagram](adze-concepts.html#lifecycle).
+A **Shed** is an optional global cache and control hub for your Adze logs. The primary purposes of a Shed are to enable global configuration overrides and log listeners. To see how a Shed fits into the architecture, refer to the [Lifecycle Diagram](adze-concepts.html#lifecycle).
 
 Shed is also a dependency to take advantage of some log features such as [labels](modifiers.md#labels), [counters](modifiers.md#count), and [timers](modifiers.md#time). Without the presence of a Shed, these log modifiers either do not function or their functionality is stunted.
 
@@ -10,9 +10,7 @@ For complete documentation on Shed configuration, go [here](/config/#shed-config
 
 ## How does it work?
 
-One of the primary purposes of the Shed is to enable large project to centrally
-control how their logs render. Let's imagine we have a large project where we
-need to split out our code base into multiple packages.
+One of the primary purposes of the Shed is to enable large project to centrally control how their logs render. Let's imagine we have a large project where we need to split out our code base into multiple packages.
 
 ![Large corporate project with broken into packages](./assets/large-project.svg)
 
@@ -61,67 +59,9 @@ createShed({
 Authentication.authenticate(); // <- No logs are printed
 ```
 
-As you can see in the example code above, although the Authentication class has logs
-defined our Shed configuration overrides the allowed `log_level` and sets it to 0. Our
-debug log has a level of 7 and our success log has a level of 5 thus they are both hidden
-because their levels are **greater than 0**.
+As you can see in the example code above, although the Authentication class has logs defined our Shed configuration overrides the allowed `log_level` and sets it to 0. Our debug log has a level of 7 and our success log has a level of 5 thus they are both hidden because their levels are **greater than 0**.
 
 You can also see from this example that we can change how our logs are generated in production by changing the value of `ENV.level`. If we were to change this value to **7** in production we would start seeing our success and debug logs.
-
-## Filtering
-
-One of the primary features of Shed is to allow you to recall and filter your logs while developing and debugging.
-
-For more details about Shed configuration, go [here](/config/#shed-configuration).
-
-### Example
-
-Let's say that throughout our app we have declared some logs with a namespace of "new-feature" to represent a new feature that we are building.
-
-```javascript
-// MyNewFeature.ts
-import { adze } from 'adze';
-
-function myNewFeature() {
-  // ns() is an alias for namespace()
-  adze().ns('new-feature').debug('Staring to run myNewFeature');
-  // Do some logic for our new feature...
-  adze().ns('new-feature').log('Dumping a value in our code', X);
-  // Do some more logic...
-  adze().ns('new-feature').success('Completed execution of myNewFeature!');
-}
-```
-
-Now, elsewhere in our codebase, usually sometime during boot of our application we will create a Shed.
-
-```javascript
-// Main.ts
-import { adze, createShed } from 'adze';
-
-/* This will register a shed globally at either Window.$shed or global.$shed
-depending on your environment. It also returns a reference to itself. */
-const shed = createShed({
-  filters: {
-    namespace: {
-      exclude: ['new-feature'],
-    },
-  },
-});
-
-// Let's use the shed instance reference to add a log listener.
-shed.addListener('*', (data, render) => {
-  // Render will be null if the log was never written to the console.
-  if (render) {
-    // do something with data
-  }
-});
-
-// Doing some boot stuff...
-```
-
-The code above will globally exclude any logs with a namespace of "new-feature" from being written to the console. Also take notice of the listener we created. It watches all log levels (represented by the `'*'`) and will fire for the logs with a namespace of `'new-feature'` even though they are being filtered out. This is done to give you flexibility in how you want to handle your logs in your listeners.
-
-Also notice in our code we are checking if the render value is truthy. We are doing this because any log that was not written to the console will have a `null` log render. This is an easy way to ignore logs that are hidden by any of our filters.
 
 ## Listeners
 

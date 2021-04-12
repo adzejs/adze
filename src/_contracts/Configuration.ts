@@ -1,4 +1,5 @@
 import { RecursivePartial, ChalkStyle } from '.';
+import { AdzeFilters, UserAdzeFilters } from './Filters';
 
 export type ConsoleMethod =
   | 'error'
@@ -21,7 +22,7 @@ export interface Defaults {
   base_style: string;
   log_levels: LogLevels;
   custom_levels: Partial<LogLevels>;
-  filters: Filters;
+  filters: AdzeFilters;
   meta: {
     [key: string]: unknown;
   };
@@ -40,17 +41,8 @@ export interface LogLevelDefinition {
   emoji: string;
 }
 
-export interface Filters {
-  hideAll: boolean;
-  namespace: FilterOptions;
-  label: FilterOptions;
-}
-
-export interface FilterOptions {
-  hideAll: boolean;
-  exclude: string[];
-  include: string[];
-}
-
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface Configuration extends RecursivePartial<Defaults> {}
+export interface Configuration
+  extends RecursivePartial<Omit<Defaults, 'filters'>> {
+  filters?: UserAdzeFilters;
+}
