@@ -117,7 +117,8 @@ shed.addListener('*', (data, render) => {
   }
 });
 
-// Let's create an Adze configuration with some filters
+/* Let's create an Adze configuration with some filters. In a real-world environment
+   you would import this configuration from a environment file. */
 const cfg = {
   filters: {
     namespace: {
