@@ -32,9 +32,7 @@ export function formatLevels(
     if (isRange(levels)) {
       return createArrayOfNumbers(...parseRange(levels));
     }
-    console.warn(
-      'The provided level filter string is invalid. This will cause logs to stop printing.'
-    );
+    console.warn('The provided level filter string is invalid.');
   } else if (isArray(levels)) {
     return levels;
   }
