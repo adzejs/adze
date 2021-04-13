@@ -185,3 +185,17 @@ test('renders a custom log', (t) => {
     t.fail();
   }
 });
+
+test('terminal styles color fidelity is customizable', (t) => {
+  const t_log = adze({ terminal_color_fidelity: 0 }).log('testing');
+  t.truthy(t_log.log);
+
+  if (t_log.render) {
+    const [method, args] = t_log.render;
+    t.is(method, 'log');
+    t.is(args[0], ' Log(1)        ');
+    t.is(args[1], 'testing');
+  } else {
+    t.fail();
+  }
+});

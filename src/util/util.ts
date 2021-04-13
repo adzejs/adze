@@ -9,9 +9,6 @@ import {
 import { isString, isArray, isDefined } from './type-guards';
 import { Env } from '../Env';
 
-// Force chalk colors
-const chalk = new _chalk.Instance({ level: 1 });
-
 /**
  * Capitalizes the first character of the provided string.
  */
@@ -103,9 +100,18 @@ export function toConsole(render: LogRender | null): void {
 }
 
 /**
- * Applies array of chalk styles to the provided string.
+ * Applies array of chalk styles to the provided string. An optional terminal color fidelity
+ * value can be passed to enable different color fidelities for different terminals.
+ *
+ * Refer to https://github.com/chalk/chalk#chalklevel
  */
-export function applyChalkStyles(str: string, styles: ChalkStyle[]): string {
+export function applyChalkStyles(
+  str: string,
+  styles: ChalkStyle[],
+  fidelity: 0 | 1 | 2 | 3 = 1
+): string {
+  // Force chalk colors
+  const chalk = new _chalk.Instance({ level: fidelity });
   return styles.reduce((acc, style) => {
     return chalk[style](acc);
   }, str);
