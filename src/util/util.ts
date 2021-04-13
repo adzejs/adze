@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import * as _chalk from 'chalk';
 import {
   Defaults,
   LogLevels,
@@ -8,6 +8,9 @@ import {
 } from '../_contracts';
 import { isString, isArray, isDefined } from './type-guards';
 import { Env } from '../Env';
+
+// Force chalk colors
+const chalk = new _chalk.Instance({ level: 1 });
 
 /**
  * Capitalizes the first character of the provided string.

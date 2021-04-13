@@ -1,4 +1,5 @@
 import { RecursivePartial, ChalkStyle } from '.';
+import { AdzeFilters, UserAdzeFilters } from './Filters';
 export declare type ConsoleMethod = 'error' | 'warn' | 'info' | 'log' | 'debug' | 'trace' | 'group' | 'groupCollapsed' | 'groupEnd' | 'table' | 'dir' | 'dirxml';
 export interface Defaults {
     log_level: number;
@@ -7,6 +8,7 @@ export interface Defaults {
     base_style: string;
     log_levels: LogLevels;
     custom_levels: Partial<LogLevels>;
+    filters: AdzeFilters;
     meta: {
         [key: string]: unknown;
     };
@@ -22,5 +24,6 @@ export interface LogLevelDefinition {
     terminal: ChalkStyle[];
     emoji: string;
 }
-export interface Configuration extends RecursivePartial<Defaults> {
+export interface Configuration extends RecursivePartial<Omit<Defaults, 'filters'>> {
+    filters?: UserAdzeFilters;
 }
