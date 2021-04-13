@@ -68,7 +68,11 @@ export class NodePrinter extends SharedPrinter {
       padding
     );
 
-    return applyChalkStyles(padded_leader, this.data.definition.terminal);
+    return applyChalkStyles(
+      padded_leader,
+      this.data.definition.terminal,
+      this.data.cfg.terminal_color_fidelity
+    );
   }
 
   /**

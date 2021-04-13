@@ -5,6 +5,7 @@ export const defaults: Defaults = {
   log_level: 8,
   use_emoji: false,
   capture_stacktrace: false,
+  terminal_color_fidelity: 1,
   base_style:
     'font-size: 10px; font-weight: bold; border-radius: 0 10px 10px 0; border-width: 1px; border-style: solid;',
   custom_levels: {},

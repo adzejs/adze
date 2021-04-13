@@ -18,6 +18,7 @@ export type ConsoleMethod =
 export interface Defaults {
   log_level: number;
   use_emoji: boolean;
+  terminal_color_fidelity: 0 | 1 | 2 | 3;
   capture_stacktrace: boolean;
   base_style: string;
   log_levels: LogLevels;

@@ -1,4 +1,4 @@
-import { Defaults, ShedUserConfig, Collection, LevelFilter, ListenerLocations, ListenerCallback, FinalLogData, LogRender } from './_contracts';
+import { ShedUserConfig, Collection, LevelFilter, ListenerLocations, ListenerCallback, FinalLogData, LogRender, Configuration } from './_contracts';
 import { BaseLog } from './log/BaseLog';
 import { Label } from './label';
 import { Env } from './Env';
@@ -48,12 +48,6 @@ export declare class Shed {
      */
     private listeners;
     constructor(env: Env, config?: ShedUserConfig);
-    /**
-     * Parses the level filter on the configuration and reassigns it.
-     * This is for increased performance so this calculation isn't done each
-     * time a log is checking against the filter.
-     */
-    private parseFilterLevels;
     /*************************************\
      * GET/SET METHODS
     \*************************************/
@@ -85,11 +79,7 @@ export declare class Shed {
     /**
      * Returns the current value of the global Adze configuration overrides.
      */
-    get overrides(): Defaults | null;
-    /**
-     * Getter for configuration of the hideAll filter property.
-     */
-    private get hideAll();
+    get overrides(): Configuration | null;
     /**
      * Sets the value of the Shed configuration.
      */
@@ -128,50 +118,6 @@ export declare class Shed {
      * and render object will be passed to the listener callback.
      */
     fireListeners(log: FinalLogData, render: LogRender | null): void;
-    /*************************************\
-     * GLOBAL FILTER METHODS
-    \*************************************/
-    /**
-     * Returns a boolean indicating if this log instance should be
-     * allowed to print.
-     */
-    logGloballyAllowed(log: FinalLogData): boolean;
-    /**
-     * Validate that the current level set on the log is allowed based on
-     * the global filter rules.
-     */
-    private levelAllowed;
-    /**
-     * Validate that the current label set on the log is allowed based on
-     * the global filter rules.
-     */
-    private labelAllowed;
-    /**
-     * Validate that at least one of the current namespaces set on the log
-     * is allowed based on the global filter rules.
-     */
-    private namespaceAllowed;
-    /**
-     * Wrapper around the filter methods to handle some basic setup for validating
-     * the filter values.
-     */
-    private filterAllowed;
-    /**
-     * Returns tuples indicating what filter type is active. Include gets precedence over exclude.
-     */
-    private filterType;
-    /**
-     * Is the log in the included filter?
-     */
-    private isIncluded;
-    /**
-     * Is the log not in the excluded filter?
-     */
-    private isNotExcluded;
-    /**
-     * Has the user defined rules for a specific filter?
-     */
-    private filterIsSet;
     /*************************************\
      * HELPER METHODS
     \*************************************/
