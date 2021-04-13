@@ -1,5 +1,6 @@
 import test from 'ava';
-import { adze } from '../../../src';
+import { adze, defaults } from '../../../src';
+import { applyChalkStyles } from '../../../src/util';
 
 global.ADZE_ENV = 'dev';
 
@@ -13,7 +14,10 @@ test('log renders when assertion is false (fails)', (t) => {
   if (render) {
     const [method, args] = render;
     t.is(method, 'log');
-    t.is(args[0], ' Log(1)        ');
+    t.is(
+      args[0],
+      applyChalkStyles(' Log(1)        ', defaults.log_levels.log.terminal)
+    );
     t.is(args[1], 'Assertion failed:');
     t.is(args[2], 'Asserts that x is 3.');
   } else {
@@ -31,7 +35,10 @@ test('log renders with emoji when assertion is false (fails)', (t) => {
   if (render) {
     const [method, args] = render;
     t.is(method, 'log');
-    t.is(args[0], ' 📌 Log(1)        ');
+    t.is(
+      args[0],
+      applyChalkStyles(' 📌 Log(1)        ', defaults.log_levels.log.terminal)
+    );
     t.is(args[1], '❌ Assertion failed:');
     t.is(args[2], 'Asserts that x is 3.');
   } else {
@@ -48,7 +55,10 @@ test('log renders when expression is true (passes)', (t) => {
   if (render) {
     const [method, args] = render;
     t.is(method, 'log');
-    t.is(args[0], ' Log(1)        ');
+    t.is(
+      args[0],
+      applyChalkStyles(' Log(1)        ', defaults.log_levels.log.terminal)
+    );
     t.is(args[1], 'Expression Passed:');
     t.is(args[2], 'Value of x is 2.');
   } else {
@@ -65,7 +75,10 @@ test('log renders with emoji when expression is true (passes)', (t) => {
   if (render) {
     const [method, args] = render;
     t.is(method, 'log');
-    t.is(args[0], ' 📌 Log(1)        ');
+    t.is(
+      args[0],
+      applyChalkStyles(' 📌 Log(1)        ', defaults.log_levels.log.terminal)
+    );
     t.is(args[1], '✅ Expression Passed:');
     t.is(args[2], 'Value of x is 2.');
   } else {

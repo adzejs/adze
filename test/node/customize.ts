@@ -1,18 +1,20 @@
 import test from 'ava';
-import { adze } from '../../src';
+import { adze, ChalkStyle, defaults } from '../../src';
+import { applyChalkStyles } from '../../src/util';
 
 global.ADZE_ENV = 'dev';
 
 test('renders a custom log', (t) => {
   const style =
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
+  const terminal: ChalkStyle[] = ['bgCyanBright', 'cyan'];
   const { log, render } = adze({
     custom_levels: {
       custom: {
         level: 1,
         emoji: '🤪',
         method: 'log',
-        terminal: ['bgCyanBright', 'cyan'],
+        terminal,
         style,
       },
     },
@@ -22,7 +24,7 @@ test('renders a custom log', (t) => {
   if (render) {
     const [method, args] = render;
     t.is(method, 'log');
-    t.is(args[0], ' Custom(1)     ');
+    t.is(args[0], applyChalkStyles(' Custom(1)     ', terminal));
     t.is(args[1], 'This is a custom log.');
   } else {
     t.fail();
@@ -32,6 +34,7 @@ test('renders a custom log', (t) => {
 test('renders a custom log with emoji', (t) => {
   const style =
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
+  const terminal: ChalkStyle[] = ['bgCyanBright', 'cyan'];
   const { log, render } = adze({
     use_emoji: true,
     custom_levels: {
@@ -39,7 +42,7 @@ test('renders a custom log with emoji', (t) => {
         level: 1,
         emoji: '🤪',
         method: 'log',
-        terminal: ['bgCyanBright', 'cyan'],
+        terminal,
         style,
       },
     },
@@ -49,7 +52,7 @@ test('renders a custom log with emoji', (t) => {
   if (render) {
     const [method, args] = render;
     t.is(method, 'log');
-    t.is(args[0], ' 🤪 Custom(1)     ');
+    t.is(args[0], applyChalkStyles(' 🤪 Custom(1)     ', terminal));
     t.is(args[1], 'This is a custom log.');
   } else {
     t.fail();
