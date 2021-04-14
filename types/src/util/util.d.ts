@@ -1,4 +1,4 @@
-import { Defaults, LogLevels, LevelFilter, LogRender, ChalkStyle } from '../_contracts';
+import { Defaults, LogLevels, LevelFilter, LogRender, ChalkStyle, Range } from '../_contracts';
 /**
  * Capitalizes the first character of the provided string.
  */
@@ -13,7 +13,7 @@ export declare function formatLevels(levels: LevelFilter, cfg?: Defaults | null)
  * Type Guard that validates that a given string represents a
  * range of numbers.
  */
-export declare function isRange(val: string): boolean;
+export declare function isRange(val: unknown[]): val is Range;
 /**
  * Returns the highest level from the provided configuration.
  */
@@ -21,7 +21,7 @@ export declare function getMaxLevel(cfg: Defaults | null): number;
 /**
  * Parse a range string into a tuple of numbers containing low and high.
  */
-export declare function parseRange(range: string): [number, number];
+export declare function parseRange(range: Range): [number, number];
 /**
  * Get all level values from a config of type LogLevels.
  */

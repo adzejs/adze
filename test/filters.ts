@@ -53,7 +53,7 @@ test('filters a log collection by levels', (t) => {
   const collection = log.bundle;
   t.is(collection.length, 4);
 
-  const filtered = filterLevel(collection, '3-5');
+  const filtered = filterLevel(collection, [3, '-', 5]);
 
   t.is(filtered.length, 2);
 });

@@ -12,7 +12,8 @@ export interface GlobalFilterOptions<T> {
     exclude?: T;
 }
 export declare type GlobalFilter = 'label' | 'namespace' | 'level';
-export declare type LevelFilter = string | number[];
+export declare type Range = [number, '-', number];
+export declare type LevelFilter = '*' | Range | number[];
 export declare type FilterType = 'include' | 'exclude';
 export declare type FilterFunction = <T>(source: T[], value: T) => boolean;
 export declare type FilterAllowedCallback = (filter: FilterType, func: FilterFunction) => boolean | undefined;

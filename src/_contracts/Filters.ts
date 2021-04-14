@@ -16,7 +16,9 @@ export interface GlobalFilterOptions<T> {
 
 export type GlobalFilter = 'label' | 'namespace' | 'level';
 
-export type LevelFilter = string | number[];
+export type Range = [number, '-', number];
+
+export type LevelFilter = '*' | Range | number[];
 
 export type FilterType = 'include' | 'exclude';
 
