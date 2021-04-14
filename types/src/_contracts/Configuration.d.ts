@@ -4,10 +4,11 @@ export declare type ConsoleMethod = 'error' | 'warn' | 'info' | 'log' | 'debug' 
 export interface Defaults {
     log_level: number;
     use_emoji: boolean;
+    terminal_color_fidelity: 0 | 1 | 2 | 3;
     capture_stacktrace: boolean;
     base_style: string;
     log_levels: LogLevels;
-    custom_levels: Partial<LogLevels>;
+    custom_levels: LogLevels;
     filters: AdzeFilters;
     meta: {
         [key: string]: unknown;
@@ -24,6 +25,7 @@ export interface LogLevelDefinition {
     terminal: ChalkStyle[];
     emoji: string;
 }
-export interface Configuration extends RecursivePartial<Omit<Defaults, 'filters'>> {
+export interface Configuration extends Partial<Omit<Defaults, 'filters' | 'log_levels'>> {
+    log_levels?: RecursivePartial<LogLevels>;
     filters?: UserAdzeFilters;
 }

@@ -36,6 +36,9 @@ export declare function createArrayOfNumbers(start: number, end: number): number
  */
 export declare function toConsole(render: LogRender | null): void;
 /**
- * Applies array of chalk styles to the provided string.
+ * Applies array of chalk styles to the provided string. An optional terminal color fidelity
+ * value can be passed to enable different color fidelities for different terminals.
+ *
+ * Refer to https://github.com/chalk/chalk#chalklevel
  */
-export declare function applyChalkStyles(str: string, styles: ChalkStyle[]): string;
+export declare function applyChalkStyles(str: string, styles: ChalkStyle[], fidelity?: 0 | 1 | 2 | 3): string;

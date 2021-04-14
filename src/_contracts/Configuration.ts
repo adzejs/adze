@@ -22,7 +22,7 @@ export interface Defaults {
   capture_stacktrace: boolean;
   base_style: string;
   log_levels: LogLevels;
-  custom_levels: Partial<LogLevels>;
+  custom_levels: LogLevels;
   filters: AdzeFilters;
   meta: {
     [key: string]: unknown;
@@ -44,6 +44,7 @@ export interface LogLevelDefinition {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface Configuration
-  extends RecursivePartial<Omit<Defaults, 'filters'>> {
+  extends Partial<Omit<Defaults, 'filters' | 'log_levels'>> {
+  log_levels?: RecursivePartial<LogLevels>;
   filters?: UserAdzeFilters;
 }
