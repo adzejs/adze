@@ -12,7 +12,7 @@
     "prebuild": "rm -rf ./types && mkdir types",
     "build": "tsc && webpack --env.development",
     "prebuild:production": "rm -rf ./types && mkdir types",
-    "build:production": "tsc; webpack --env.production",
+    "build:production": "tsc && webpack --env.production",
     "demo:browser": "http-server -o -p 8082",
     "demo:node": "ts-node ./demo.ts",
     "docs:dev": "vuepress dev docs",
