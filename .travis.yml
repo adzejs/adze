@@ -10,7 +10,7 @@ jobs:
         - yarn test
         - yarn build
     - stage: release
-      script: yarn build:production
+      before_deploy: yarn build:production
       deploy:
         provider: npm
         email: $NPM_EMAIL
@@ -26,7 +26,6 @@ jobs:
       cache:
         directories: node_modules
       script: yarn docs:build
-      script: ls .
       deploy:
         provider: pages
         skip_cleanup: true
