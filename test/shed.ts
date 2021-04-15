@@ -153,7 +153,7 @@ test('adds a log listener targeting all log levels', (t) => {
 test('adds a log listener targeting a range of log levels', (t) => {
   t.plan(2);
   const shed = createShed();
-  shed.addListener('1-6', (data) => {
+  shed.addListener([1, '-', 6], (data) => {
     if (data.level) {
       t.truthy([1, 6].includes(data.level));
     } else {
@@ -169,7 +169,7 @@ test('adds a log listener targeting a range of log levels', (t) => {
 test('removes a log listener', (t) => {
   t.plan(3);
   const shed = createShed();
-  const location = shed.addListener('1-3', (data) => {
+  const location = shed.addListener([1, '-', 3], (data) => {
     if (data.level) {
       t.truthy([1, 2, 3].includes(data.level));
     } else {

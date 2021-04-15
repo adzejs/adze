@@ -1,12 +1,13 @@
-import chalk from 'chalk';
+import * as _chalk from 'chalk';
 import {
   Defaults,
   LogLevels,
   LevelFilter,
   LogRender,
   ChalkStyle,
+  Range,
 } from '../_contracts';
-import { isString, isArray, isDefined } from './type-guards';
+import { isNumber, isArray, isDefined } from './type-guards';
 import { Env } from '../Env';
 
 /**
@@ -25,17 +26,13 @@ export function formatLevels(
   levels: LevelFilter,
   cfg: Defaults | null = null
 ): number[] {
-  if (isString(levels)) {
-    if (levels === '*') {
-      return createArrayOfNumbers(0, getMaxLevel(cfg));
-    }
-    if (isRange(levels)) {
-      return createArrayOfNumbers(...parseRange(levels));
-    }
-    console.warn(
-      'The provided level filter string is invalid. This will cause logs to stop printing.'
-    );
-  } else if (isArray(levels)) {
+  if (levels === '*') {
+    return createArrayOfNumbers(0, getMaxLevel(cfg));
+  }
+  if (isRange(levels)) {
+    return createArrayOfNumbers(...parseRange(levels));
+  }
+  if (isArray(levels)) {
     return levels;
   }
   return [] as number[];
@@ -45,10 +42,8 @@ export function formatLevels(
  * Type Guard that validates that a given string represents a
  * range of numbers.
  */
-export function isRange(val: string): boolean {
-  const vals = val.split('-');
-  const [low, high] = vals;
-  return vals.length === 2 && Number(low) !== NaN && Number(high) !== NaN;
+export function isRange(val: unknown[]): val is Range {
+  return isNumber(val[0]) && val[1] === '-' && isNumber(val[2]);
 }
 
 /**
@@ -61,9 +56,8 @@ export function getMaxLevel(cfg: Defaults | null): number {
 /**
  * Parse a range string into a tuple of numbers containing low and high.
  */
-export function parseRange(range: string): [number, number] {
-  const [low, high] = range.split('-');
-  return [Number(low), Number(high)];
+export function parseRange(range: Range): [number, number] {
+  return [range[0], range[2]];
 }
 
 /**
@@ -100,9 +94,18 @@ export function toConsole(render: LogRender | null): void {
 }
 
 /**
- * Applies array of chalk styles to the provided string.
+ * Applies array of chalk styles to the provided string. An optional terminal color fidelity
+ * value can be passed to enable different color fidelities for different terminals.
+ *
+ * Refer to https://github.com/chalk/chalk#chalklevel
  */
-export function applyChalkStyles(str: string, styles: ChalkStyle[]): string {
+export function applyChalkStyles(
+  str: string,
+  styles: ChalkStyle[],
+  fidelity: 0 | 1 | 2 | 3 = 1
+): string {
+  // Force chalk colors
+  const chalk = new _chalk.Instance({ level: fidelity });
   return styles.reduce((acc, style) => {
     return chalk[style](acc);
   }, str);

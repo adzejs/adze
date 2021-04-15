@@ -8,6 +8,13 @@ export function isString(val: unknown): val is string {
 }
 
 /**
+ * Type Guard to check if the given value is a String.
+ */
+export function isNumber(val: unknown): val is number {
+  return typeof val === 'number';
+}
+
+/**
  * Type Guard to check if the given value is an Array.
  */
 export function isArray(val: unknown): val is [] {

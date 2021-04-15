@@ -63,12 +63,18 @@ export class NodePrinter extends SharedPrinter {
   private fLeader(): string {
     const emoji = this.use_emoji ? this.fEmoji() : '';
     const padding = this.use_emoji ? 14 + emoji.length : 14;
-    const padded_leader = this.addPadding(
-      `${emoji} ${this.fName()}(${this.data.args.length})`,
-      padding
-    );
 
-    return applyChalkStyles(padded_leader, this.data.definition.terminal);
+    // If the leader length is greater than the padding, add a space to the end for pretty formatting
+    const leader_raw = `${emoji} ${this.fName()}(${this.data.args.length})`;
+    const leader = leader_raw.length >= padding ? `${leader_raw} ` : leader_raw;
+
+    const padded_leader = this.addPadding(leader, padding);
+
+    return applyChalkStyles(
+      padded_leader,
+      this.data.definition.terminal,
+      this.data.cfg.terminal_color_fidelity
+    );
   }
 
   /**

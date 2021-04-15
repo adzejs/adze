@@ -409,9 +409,9 @@ export declare class BaseLog {
      */
     private getDefinition;
     /**
-     * The primary execution pipeline for terminating log methods.
+     * The primary logic for terminating log methods.
      */
-    private executionPipeline;
+    private terminate;
     /**
      * Check if any assertions or expressions pass for this log to terminate.
      */

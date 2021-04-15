@@ -1,5 +1,6 @@
 import test from 'ava';
-import { adze } from '../../src';
+import { adze, ChalkStyle, defaults } from '../../src';
+import { applyChalkStyles } from '../../src/util';
 
 global.ADZE_ENV = 'dev';
 
@@ -12,7 +13,10 @@ test('renders a default alert log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'error');
-    t.is(args[0], ' Alert(1)      ');
+    t.is(
+      args[0],
+      applyChalkStyles(' Alert(1)      ', defaults.log_levels.alert.terminal)
+    );
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -26,7 +30,10 @@ test('renders a default error log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'error');
-    t.is(args[0], ' Error(1)      ');
+    t.is(
+      args[0],
+      applyChalkStyles(' Error(1)      ', defaults.log_levels.error.terminal)
+    );
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -40,7 +47,10 @@ test('renders a default warn log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'warn');
-    t.is(args[0], ' Warn(1)       ');
+    t.is(
+      args[0],
+      applyChalkStyles(' Warn(1)       ', defaults.log_levels.warn.terminal)
+    );
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -54,7 +64,10 @@ test('renders a default info log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'info');
-    t.is(args[0], ' Info(1)       ');
+    t.is(
+      args[0],
+      applyChalkStyles(' Info(1)       ', defaults.log_levels.info.terminal)
+    );
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -68,7 +81,10 @@ test('renders a default fail log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'info');
-    t.is(args[0], ' Fail(1)       ');
+    t.is(
+      args[0],
+      applyChalkStyles(' Fail(1)       ', defaults.log_levels.fail.terminal)
+    );
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -82,7 +98,10 @@ test('renders a default success log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'info');
-    t.is(args[0], ' Success(1)    ');
+    t.is(
+      args[0],
+      applyChalkStyles(' Success(1)    ', defaults.log_levels.success.terminal)
+    );
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -96,7 +115,10 @@ test('renders a default log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'log');
-    t.is(args[0], ' Log(1)        ');
+    t.is(
+      args[0],
+      applyChalkStyles(' Log(1)        ', defaults.log_levels.log.terminal)
+    );
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -110,7 +132,10 @@ test('renders a default debug log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'debug');
-    t.is(args[0], ' Debug(1)      ');
+    t.is(
+      args[0],
+      applyChalkStyles(' Debug(1)      ', defaults.log_levels.debug.terminal)
+    );
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -124,7 +149,10 @@ test('renders a default verbose log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'debug');
-    t.is(args[0], ' Verbose(1)    ');
+    t.is(
+      args[0],
+      applyChalkStyles(' Verbose(1)    ', defaults.log_levels.verbose.terminal)
+    );
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -134,13 +162,14 @@ test('renders a default verbose log', (t) => {
 test('renders a custom log', (t) => {
   const style =
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
+  const terminal: ChalkStyle[] = ['bgCyanBright', 'cyan'];
   const { log, render } = adze({
     custom_levels: {
       custom: {
         level: 1,
         emoji: '🤪',
         method: 'log',
-        terminal: ['bgCyanBright', 'cyan'],
+        terminal,
         style,
       },
     },
@@ -150,8 +179,22 @@ test('renders a custom log', (t) => {
   if (render) {
     const [method, args] = render;
     t.is(method, 'log');
-    t.is(args[0], ' Custom(1)     ');
+    t.is(args[0], applyChalkStyles(' Custom(1)     ', terminal));
     t.is(args[1], 'This is a custom log.');
+  } else {
+    t.fail();
+  }
+});
+
+test('terminal styles color fidelity is customizable', (t) => {
+  const t_log = adze({ terminal_color_fidelity: 0 }).log('testing');
+  t.truthy(t_log.log);
+
+  if (t_log.render) {
+    const [method, args] = t_log.render;
+    t.is(method, 'log');
+    t.is(args[0], ' Log(1)        ');
+    t.is(args[1], 'testing');
   } else {
     t.fail();
   }

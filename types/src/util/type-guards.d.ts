@@ -4,6 +4,10 @@ import { LogData, FinalLogData } from '../_contracts';
  */
 export declare function isString(val: unknown): val is string;
 /**
+ * Type Guard to check if the given value is a String.
+ */
+export declare function isNumber(val: unknown): val is number;
+/**
  * Type Guard to check if the given value is an Array.
  */
 export declare function isArray(val: unknown): val is [];

@@ -9,30 +9,10 @@ export declare type ListenerCallback = (LogData: LogData | FinalLogData, render:
 export interface ShedConfig {
     cache_limit: number;
     global_cfg: Defaults | null;
-    filters: AdzeFilters;
 }
-export interface AdzeFilters {
-    hideAll?: boolean;
-    level?: GlobalFilterOptions<number[]>;
-    label?: GlobalFilterOptions<string[]>;
-    namespace?: GlobalFilterOptions<string[]>;
-}
-export interface UserAdzeFilters extends Omit<AdzeFilters, 'level'> {
-    level?: GlobalFilterOptions<LevelFilter>;
-}
-export interface GlobalFilterOptions<T> {
-    include?: T;
-    exclude?: T;
-}
-export interface ShedUserConfig extends Partial<Omit<ShedConfig, 'filters' | 'global_cfg'>> {
-    filters?: UserAdzeFilters;
+export interface ShedUserConfig extends Partial<Omit<ShedConfig, 'global_cfg'>> {
     global_cfg?: Configuration | null;
 }
-export declare type GlobalFilter = 'label' | 'namespace' | 'level';
-export declare type LevelFilter = string | number[];
-export declare type FilterType = 'include' | 'exclude';
-export declare type FilterFunction = 'isIncluded' | 'isNotExcluded';
-export declare type FilterAllowedCallback = (filter: FilterType, func: FilterFunction) => boolean | undefined;
 export interface LabelData {
     name: string | null;
     timeNow: string | null;

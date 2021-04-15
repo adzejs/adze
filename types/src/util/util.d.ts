@@ -1,4 +1,4 @@
-import { Defaults, LogLevels, LevelFilter, LogRender, ChalkStyle } from '../_contracts';
+import { Defaults, LogLevels, LevelFilter, LogRender, ChalkStyle, Range } from '../_contracts';
 /**
  * Capitalizes the first character of the provided string.
  */
@@ -13,7 +13,7 @@ export declare function formatLevels(levels: LevelFilter, cfg?: Defaults | null)
  * Type Guard that validates that a given string represents a
  * range of numbers.
  */
-export declare function isRange(val: string): boolean;
+export declare function isRange(val: unknown[]): val is Range;
 /**
  * Returns the highest level from the provided configuration.
  */
@@ -21,7 +21,7 @@ export declare function getMaxLevel(cfg: Defaults | null): number;
 /**
  * Parse a range string into a tuple of numbers containing low and high.
  */
-export declare function parseRange(range: string): [number, number];
+export declare function parseRange(range: Range): [number, number];
 /**
  * Get all level values from a config of type LogLevels.
  */
@@ -36,6 +36,9 @@ export declare function createArrayOfNumbers(start: number, end: number): number
  */
 export declare function toConsole(render: LogRender | null): void;
 /**
- * Applies array of chalk styles to the provided string.
+ * Applies array of chalk styles to the provided string. An optional terminal color fidelity
+ * value can be passed to enable different color fidelities for different terminals.
+ *
+ * Refer to https://github.com/chalk/chalk#chalklevel
  */
-export declare function applyChalkStyles(str: string, styles: ChalkStyle[]): string;
+export declare function applyChalkStyles(str: string, styles: ChalkStyle[], fidelity?: 0 | 1 | 2 | 3): string;

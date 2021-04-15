@@ -64,13 +64,13 @@ interface LabelData {
 
 ## Level Filter
 
-A level filter type is a value that represents one or more log levels. It is in the form of an array of numbers that represent selected log levels or a string that represents a range of levels or all levels. Level Filters are used with any method that allows you to specify a target log level like [addListener](using-shed.md#addlistener), [filterLevel](filtering-and-utility-functions.md#filterlevel), or within the [filter configurations on Adze logs](/config/#filters).
+A level filter type is a value that represents one or more log levels. Level Filters are used with any method that allows you to specify a target log level like [addListener](using-shed.md#addlistener), [filterLevel](filtering-and-utility-functions.md#filterlevel), or within the [filter configurations on Adze logs](/config/#filters).
 
-| Value   | Description                                                |
-| ------- | ---------------------------------------------------------- |
-| '\*'    | Target all logs of any level.                              |
-| 'x-y'   | Targets logs with levels of `x <= level <= y`.             |
-| [x,y,z] | x, y, and z are variables representing a log level number. |
+| Value              | Description                                               |
+| ------------------ | --------------------------------------------------------- |
+| `'*'`              | Target all logs of any level.                             |
+| `[min, '-', max]`  | Targets logs with levels of `min <= level <= max`.        |
+| `[n1, n2, n3, n*]` | Array of numbers representing targeted log level numbers. |
 
 ### Example
 
@@ -86,7 +86,7 @@ shed.addListener('*', (data, render) => {
 });
 
 // Our next listener will target logs with a level within our range
-shed.addListener('2-5', (data, render) => {
+shed.addListener([2, '-', 5], (data, render) => {
   // do stuff...
 });
 
