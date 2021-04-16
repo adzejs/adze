@@ -1,9 +1,9 @@
-import { adze } from './adze';
-import { bundle } from './bundle';
-import { Label } from './label';
-import { shedExists, createShed, removeShed } from './Shed';
-import { defaults } from './_defaults';
-import {
+export { adze } from './adze';
+export { bundle } from './bundle';
+export { Label } from './label';
+export { shedExists, createShed, removeShed } from './Shed';
+export { defaults } from './_defaults';
+export {
   filterLabel,
   filterLevel,
   filterNamespace,
@@ -11,22 +11,5 @@ import {
   render,
   rerender,
 } from './filters';
-import { isFinalLogData } from './util';
-
+export { isFinalLogData } from './util';
 export * from './_contracts';
-export {
-  adze,
-  shedExists,
-  createShed,
-  removeShed,
-  defaults,
-  bundle,
-  filterLabel,
-  filterLevel,
-  filterNamespace,
-  filterCollection,
-  isFinalLogData,
-  Label,
-  render,
-  rerender,
-};

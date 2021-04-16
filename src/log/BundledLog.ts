@@ -1,6 +1,6 @@
-import { Env } from 'src/Env';
+import { Env } from '../Env';
 import { Printer } from '../printers';
-import { Bundle, Configuration } from 'src/_contracts';
+import { Bundle, Configuration } from '../_contracts';
 import { BaseLog } from './BaseLog';
 
 export class BundledLog extends BaseLog {
