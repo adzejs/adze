@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2018",
+    "target": "es5",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -9,19 +9,7 @@
     "outDir": "dist",
     "lib": ["DOM", "ES2018"],
     "declaration": true,
-    "declarationDir": "types",
-    "emitDeclarationOnly": true,
-    "preserveConstEnums": true,
-    "baseUrl": "."
+    "preserveConstEnums": true
   },
-  "include": ["src/**/*.ts", "test/**/*.ts"],
-  "exclude": [
-    "old",
-    "dist",
-    "node_modules",
-    "demo.js",
-    "img",
-    "webpack.config.js",
-    "ava.config.js"
-  ]
+  "include": ["src/**/*.ts"],
 }

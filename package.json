@@ -7,13 +7,16 @@
   "engines": {
     "node": ">=10"
   },
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "analyze": "tsc; webpack --env.production --env.withAnalysis",
     "commit": "cz",
-    "prebuild": "rm -rf ./types && mkdir types",
-    "build": "tsc && webpack --env.development",
-    "prebuild:production": "rm -rf ./types && mkdir types",
-    "build:production": "tsc && webpack --env.production",
+    "prebuild": "npm run clean",
+    "build": "tsc",
+    "clean": "rm -rf ./dist",
+    "prepare": "npm run build",
     "demo:browser": "http-server -o -p 8082",
     "demo:node": "ts-node ./demo.ts",
     "docs:dev": "vuepress dev docs",
