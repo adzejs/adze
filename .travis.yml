@@ -10,7 +10,7 @@ jobs:
         - yarn test
         - yarn build
     - stage: release
-      before_deploy: yarn build:production
+      before_deploy: yarn build
       deploy:
         provider: npm
         email: $NPM_EMAIL
