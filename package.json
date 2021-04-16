@@ -2,7 +2,7 @@
   "name": "adze",
   "version": "0.4.2",
   "description": "A library for shaping your logs.",
-  "main": "dist/src/index.js",
+  "main": "./dist/src/index.js",
   "sideEffects": false,
   "engines": {
     "node": ">=10"
@@ -36,7 +36,6 @@
     "log",
     "logging"
   ],
-  "types": "types/src/index.d.ts",
   "author": "Andrew Stacy",
   "license": "Apache-2.0",
   "devDependencies": {

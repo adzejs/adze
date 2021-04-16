@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "moduleResolution": "node",
+    "module": "commonjs",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
