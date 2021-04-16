@@ -13,7 +13,6 @@
   ],
   "scripts": {
     "analyze": "tsc; webpack --env.production --env.withAnalysis",
-    "commit": "cz",
     "prebuild": "npm run clean",
     "build": "tsc",
     "clean": "rm -rf ./dist",
