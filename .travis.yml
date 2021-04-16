@@ -1,27 +1,28 @@
-language: nodejs
+language: node_js
+os: linux
+dist: xenial
+
+node_js:
+  - 14
+  - 12
+  - 10
+
+script:
+  - yarn lint
+  - yarn test
+  - yarn build
+
 cache: yarn
-install:
-  - yarn install
 jobs:
   include:
-    - stage: lint, test and build
-      script:
-        - yarn lint
-        - yarn test
-        - yarn build
     - stage: release
-      before_deploy: yarn build:production
+      node_js: lts/*
+      before_deploy: yarn build
       deploy:
-        provider: npm
-        email: $NPM_EMAIL
-        api_key: $NPM_TOKEN
+        provider: script
         skip_cleanup: true
-        keep_history: true
-        on:
-          branch: master
-          tags: true
-          repo: AJStacy/Adze
-
+        script:
+          - npx semantic-release
     - stage: docs
       cache:
         directories: node_modules

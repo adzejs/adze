@@ -1,5 +1,5 @@
 import anyTest, { TestInterface } from 'ava';
-import { Shed } from 'src/Shed';
+import { Shed } from '../src/Shed';
 import {
   createShed,
   adze,
