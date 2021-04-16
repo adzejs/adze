@@ -7,26 +7,22 @@ node_js:
   - 12
   - 10
 
+script:
+  - yarn lint
+  - yarn test
+  - yarn build
+
 cache: yarn
 jobs:
   include:
-    - stage: lint, test and build
-      script:
-        - yarn lint
-        - yarn test
-        - yarn build
     - stage: release
+      node_js: lts/*
       before_deploy: yarn build
       deploy:
         provider: script
         skip_cleanup: true
-        on:
-          branch: master
-          tags: true
-          repo: AJStacy/Adze
         script:
           - npx semantic-release
-
     - stage: docs
       cache:
         directories: node_modules
