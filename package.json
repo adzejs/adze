@@ -14,6 +14,7 @@
     "prebuild": "npm run clean",
     "build": "tsc --project tsconfig.prod.json",
     "clean": "rm -rf ./dist",
+    "commit": "cz",
     "prepare": "husky install",
     "prepack": "npm run build",
     "demo:browser": "http-server -o -p 8082",
