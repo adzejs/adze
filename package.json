@@ -2,20 +2,19 @@
   "name": "adze",
   "version": "0.0.0-development",
   "description": "A library for shaping your logs.",
-  "main": "./dist/src/index.js",
+  "main": "./dist/index.js",
   "sideEffects": false,
   "engines": {
     "node": ">=10"
   },
   "files": [
-    "dist/src/**/*",
-    "!dist/test/**/*"
+    "dist/**/*"
   ],
   "scripts": {
-    "analyze": "tsc; webpack --env.production --env.withAnalysis",
     "prebuild": "npm run clean",
-    "build": "tsc",
+    "build": "tsc --project tsconfig.prod.json",
     "clean": "rm -rf ./dist",
+    "commit": "cz",
     "prepare": "husky install",
     "prepack": "npm run build",
     "demo:browser": "http-server -o -p 8082",
@@ -25,7 +24,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "ava",
-    "watch": "webpack --env.development --watch",
+    "watch": "tsc --watch",
     "semantic-release": "semantic-release"
   },
   "homepage": "http://adzejs.com/",
@@ -80,7 +79,6 @@
     "window": "^4.2.6"
   },
   "dependencies": {
-    "@babel/runtime": "^7.3.4",
     "browser-process-hrtime": "^1.0.0",
     "chalk": "^4.1.0",
     "lodash": "^4.17.20"
