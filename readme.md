@@ -1,8 +1,10 @@
+# Adze
+
 ![Adze Logo](docs/assets/logo_small.png)
 
 [![Build Status](https://travis-ci.com/AJStacy/Adze.svg?branch=master)](https://travis-ci.com/AJStacy/Adze) ![npm](https://img.shields.io/npm/v/adze) ![node-lts](https://img.shields.io/node/v-lts/adze)
 
-<span style="font-size: 30px;">**Please visit our official docs at [adzejs.com](http://www.adzejs.com/).**</span>
+**Please visit our official docs at [adzejs.com](http://www.adzejs.com/).**
 
 ## Why is this named Adze?
 
@@ -53,3 +55,7 @@ adze({ use_emoji: true }).ns('tix-456').log('Example log');
 The output of this would look like the following:
 
 ![Preview of Adze logs](./docs/guide/examples/api_example_output.png)
+
+## Documentation
+
+**Please visit our official docs at [adzejs.com](http://www.adzejs.com/).**
