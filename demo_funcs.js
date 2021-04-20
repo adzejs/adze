@@ -272,7 +272,6 @@ function bundleLogs({
   log().log('Here is another log in the bundle.');
 
   divider.info('---- Next is a recall of all logs in the bundle ----');
-  console.log({ bundle: log().bundle });
   log().bundle.forEach(rerender);
 
   divider.info(

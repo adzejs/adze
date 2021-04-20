@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "moduleResolution": "node",
-    "module": "commonjs",
+    "module": "umd",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
@@ -11,6 +11,5 @@
     "lib": ["DOM", "ES2018"],
     "declaration": true,
     "preserveConstEnums": true
-  },
-  "include": ["src/**/*.ts", "test/**/*.ts"],
+  }
 }
