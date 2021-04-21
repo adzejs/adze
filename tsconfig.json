@@ -2,13 +2,13 @@
   "compilerOptions": {
     "target": "es5",
     "moduleResolution": "node",
-    "module": "umd",
+    "module": "commonjs",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "strict": true,
     "outDir": "dist",
-    "lib": ["DOM", "ES2018"],
+    "lib": ["DOM", "ES2015"],
     "declaration": true,
     "preserveConstEnums": true
   }

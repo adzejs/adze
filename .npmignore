@@ -1,8 +1,9 @@
 .babelrc
-.eslintrc.yaml
+.eslintrc.json
 .nvmrc
 .prettierrc.yaml
 .github
+.husky
 .eslintrc.json
 .travis.yml
 ava.config.js
@@ -16,3 +17,6 @@ docs
 assets
 src
 tsconfig.json
+tsconfig.prod.json
+tsconfig.dev.json
+yarn.lock
