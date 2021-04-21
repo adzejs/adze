@@ -1,0 +1,42 @@
+name: Deploy
+on: 
+  push:
+    branches: [ master ]
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+      - name: Build Content
+        run: yarn docs:build
+      - name: Publish
+        uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
+        with:
+          dir: docs/.vuepress/dist
+          branch: gh-pages
+          token: ${{ secrets.PAGES_TOKEN }}
