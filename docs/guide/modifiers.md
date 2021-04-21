@@ -288,7 +288,7 @@ adze().label('foo').dump.info('Results from our thread');
 
 The group modifier starts an uncollapsed group of logs. This means that all subsequent logs will be nested beneath this log until a [groupEnd](#groupEnd) log occurs.
 
-[[**MDN Docs**]()
+[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/group)
 
 ### Interface
 
@@ -325,7 +325,7 @@ The groupCollapsed modifier starts an collapsed group of logs. This means that a
 
 _Note:_ This will not be collapsed in a terminal environment since there is no way to uncollapse it.
 
-[**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupCollapsed)
+[**MDN Docs**](1)
 
 ### Interface
 
