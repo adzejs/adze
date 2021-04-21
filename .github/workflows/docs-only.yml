@@ -1,4 +1,4 @@
-name: Build
+name: Docs Only
 on:
   push:
     branches: [master]

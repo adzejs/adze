@@ -52,7 +52,7 @@ jobs:
         run: npx semantic-release
   docs:
     runs-on: ubuntu-latest
-    needs: [lint, test, release]
+    needs: [lint, test]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
