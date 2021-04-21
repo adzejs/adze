@@ -12,16 +12,47 @@ npm install --save adze
 yarn add adze
 ```
 
+## Version Requirements
+
+| Dependency | Supported Versions | Notes                                    |
+| ---------- | ------------------ | ---------------------------------------- |
+| node       | >= 10.x            | When running Adze in a Node environment. |
+| typescript | >= 4.1             | When using Adze with TypeScript          |
+
+## TypeScript Configuration
+
+Adze is built to be used with TypeScript and we highly encourage using it in this way.
+
+When building your project with TypeScript, you need to make sure you use the `"DOM"` lib because Adze supports both the web browser and Node.
+
+For more information about configuring TypeScript, go to [https://www.typescriptlang.org/docs/handbook/tsconfig-json.html](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
+
+### Example
+
+```json
+{
+  "compilerOptions": {
+    // ...your other options
+    "lib": ["DOM"]
+  }
+}
+```
+
 ## Importing Adze
 
 Adze comes bundled with a few different ways of accessing it. Here are some examples:
 
-### Browser
+### CDN
+
+You can import the library directly into your HTML from the [jsDelivr](https://www.jsdelivr.com/package/npm/adze) CDN.
+
+_**NOTE:** In the script tag in the example below, replace `<version>` with the version of Adze you would like to use._
 
 ```html
 <!-- In the head of your html -->
 <head>
-  <script src="path/to/adze.js"></script>
+  <!-- To use v0.5.3 you would write https://cdn.jsdelivr.net/npm/adze@0.5.3/dist/adze.min.js -->
+  <script src="https://cdn.jsdelivr.net/npm/adze@<version>/dist/adze.min.js"></script>
 </head>
 
 <!-- Using adze elsewhere in JS -->
