@@ -30,6 +30,7 @@ jobs:
         run: yarn test
   release:
     name: Release
+    needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -49,6 +50,7 @@ jobs:
         run: npx semantic-release
   docs:
     runs-on: ubuntu-latest
+    needs: [lint, test, release]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
