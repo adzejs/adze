@@ -19,6 +19,7 @@
     "commit": "cz",
     "prepare": "husky install",
     "prepack": "npm run build",
+    "predemo:browser": "npm run build",
     "demo:browser": "http-server -o -p 8082",
     "demo:node": "ts-node ./demo.ts",
     "docs:dev": "vuepress dev docs",

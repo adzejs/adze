@@ -5,7 +5,7 @@
     <title>Adze - JavaScript Logging Library</title>
     <link rel="icon" type="image/png" href="docs/assets/favicon.png" />
 
-    <script src="https://cdn.jsdelivr.net/npm/adze@0.5.3/dist/adze.min.js"></script>
+    <script src="dist/adze.min.js"></script>
     <style>
       html,
       body {
@@ -46,9 +46,25 @@
 
     <script type="module">
       import runDemo from './demo_funcs.js';
-      // console.log(window.adze);
 
-      runDemo(AdzeLib, document.querySelector('.main'));
+      if (undefined !== window.AdzeLib) {
+        runDemo(AdzeLib, document.querySelector('.main'));
+      } else {
+        console.warn(
+          '%c If you would like to see the browser demo, please run a build first. Commands below.',
+          'font-size: 16px;'
+        );
+        console.info(
+          '%c Build with Yarn -> %c$: yarn build',
+          'font-size: 14px; font-weight: bold;',
+          'font-size: 14px; background-color: #d1d1d1; color: #3d3d3d; border: 1px solid #b5b5b5;'
+        );
+        console.info(
+          '%c Build with npm -> %c$: npm run build',
+          'font-size: 14px; font-weight: bold;',
+          'font-size: 14px; background-color: #d1d1d1; color: #3d3d3d; border: 1px solid #b5b5b5;'
+        );
+      }
     </script>
   </body>
 </html>
