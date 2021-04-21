@@ -1,4 +1,4 @@
-import { Env } from '../Env';
+import { Env } from '../env';
 import { Printer } from '../printers';
 import { Bundle, Configuration } from '../_contracts';
 import { BaseLog } from './BaseLog';

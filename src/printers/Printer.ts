@@ -1,5 +1,5 @@
 import { LogRender, FinalLogData } from '../_contracts';
-import { Env } from '../Env';
+import { Env } from '../env';
 import { BrowserPrinter } from './BrowserPrinter';
 import { NodePrinter } from './NodePrinter';
 

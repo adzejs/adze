@@ -1,7 +1,5 @@
 export { adze } from './adze';
-export { bundle } from './bundle';
 export { Label } from './label';
-export { shedExists, createShed, removeShed } from './Shed';
 export { defaults } from './_defaults';
 export {
   filterLabel,
@@ -11,5 +9,11 @@ export {
   render,
   rerender,
 } from './filters';
-export { isFinalLogData } from './util';
+export {
+  isFinalLogData,
+  bundle,
+  shedExists,
+  createShed,
+  removeShed,
+} from './util';
 export * from './_contracts';

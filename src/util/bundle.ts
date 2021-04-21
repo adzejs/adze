@@ -1,7 +1,7 @@
-import { Bundle, Bundler } from './_contracts';
-import { Printer } from './printers';
-import { Env } from './Env';
-import { Log, BundledLog } from './log';
+import { Bundle, Bundler } from '../_contracts';
+import { Printer } from '../printers';
+import { Env } from '../env';
+import { Log, BundledLog } from '../log';
 
 /**
  * Bundles logs together by wrapping all subsequent logs in a Bundle callback

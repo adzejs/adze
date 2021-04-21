@@ -1,7 +1,7 @@
 import { Configuration } from './_contracts';
 import { Log } from './log';
 import { Printer } from './printers';
-import { Env } from './Env';
+import { Env } from './env';
 
 /*
  * Planned features:

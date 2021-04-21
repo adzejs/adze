@@ -1,5 +1,5 @@
 import { LogTimestamp } from '../_contracts';
-import { Env } from '../Env';
+import { Env } from '../env';
 
 /**
  * Generate a unique ID for your log.

@@ -12,34 +12,12 @@ import {
   FinalLogData,
   LogRender,
   Configuration,
-} from './_contracts';
-import { BaseLog } from './log/BaseLog';
-import { Label } from './label';
-import { shed_defaults } from './_defaults';
-import { formatLevels } from './util';
-import { Env } from './Env';
-
-/**
- * A typeguard that indicates that a global Shed store exists.
- */
-export function shedExists(store: Shed | undefined): store is Shed {
-  return store !== undefined;
-}
-/**
- * Creates a new Shed instance in your environment's global context.
- */
-export function createShed(config?: ShedUserConfig): Shed {
-  const env = new Env();
-  env.global.$shed = new Shed(env, config);
-  return env.global.$shed;
-}
-
-/**
- * Removes the Shed from the environment's global context.
- */
-export function removeShed(): void {
-  delete Env.global().$shed;
-}
+} from '../_contracts';
+import { BaseLog } from '../log/BaseLog';
+import { Label } from '../label';
+import { shed_defaults } from '../_defaults';
+import { formatLevels } from '../util';
+import { Env } from '../env';
 
 /**
  * A global store for caching, listening, and recalling Adze logs.

@@ -1,5 +1,5 @@
 import { FinalLogData } from '../_contracts';
-import { Env } from '../Env';
+import { Env } from '../env';
 import { isString } from '../util';
 
 export class SharedPrinter {

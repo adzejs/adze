@@ -1,6 +1,6 @@
 import { Configuration } from '../_contracts';
 import { BaseLog } from './BaseLog';
-import { Env } from '../Env';
+import { Env } from '../env';
 import { Printer } from '../printers';
 
 export class Log extends BaseLog {
