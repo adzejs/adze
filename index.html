@@ -5,7 +5,10 @@
     <title>Adze - JavaScript Logging Library</title>
     <link rel="icon" type="image/png" href="docs/assets/favicon.png" />
 
-    <script src="dist/src/adze.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/adze@0.5.0/dist/index.min.js"
+      type="module"
+    ></script>
     <style>
       html,
       body {
@@ -46,6 +49,8 @@
 
     <script type="module">
       import runDemo from './demo_funcs.js';
+
+      console.log(window.adze);
 
       runDemo(AdzeLib, document.querySelector('.main'));
     </script>

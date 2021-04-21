@@ -1,6 +1,6 @@
 import { Label } from './Label';
-import { Env } from '../Env';
-import { shedExists } from '../Shed';
+import { Env } from '../env';
+import { shedExists } from '../util';
 
 /**
  * Attempts to get a label by the given name from the shed if it exists.

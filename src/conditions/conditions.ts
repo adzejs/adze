@@ -1,6 +1,6 @@
 import { Defaults, FinalLogData, LogLevelDefinition } from '../_contracts';
 import { levelAllowed, labelAllowed, namespaceAllowed } from '.';
-import { Env } from '../Env';
+import { Env } from '../env';
 import { getSearchParams } from '../util';
 
 /**

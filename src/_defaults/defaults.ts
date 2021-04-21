@@ -1,4 +1,4 @@
-import { Env } from '../Env';
+import { Env } from '../env';
 import { Defaults } from '../_contracts';
 
 export const defaults: Defaults = {

@@ -18,13 +18,13 @@ import {
   timestamp,
   toConsole,
   isFinalLogData,
+  shedExists,
 } from '../util';
 import { Label, addLabel, getLabel } from '../label';
 import { defaults } from '../_defaults';
-import { Env } from '../Env';
+import { Env } from '../env';
 import { Printer } from '../printers';
 import { allowed, parseFilterLevels } from '../conditions';
-import { shedExists } from '../Shed';
 
 export class BaseLog {
   /**

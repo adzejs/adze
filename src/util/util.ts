@@ -8,7 +8,7 @@ import {
   Range,
 } from '../_contracts';
 import { isNumber, isArray, isDefined } from './type-guards';
-import { Env } from '../Env';
+import { Env } from '../env';
 
 /**
  * Capitalizes the first character of the provided string.
