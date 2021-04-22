@@ -15,7 +15,7 @@ jobs:
       - name: Yarn Cache
         uses: c-hive/gha-yarn-cache@v1
       - name: Install Dependencies
-        run: yarn install
+        run: yarn install --force
       - name: Run Linter
         run: yarn lint
   test:
@@ -29,7 +29,7 @@ jobs:
       - name: Yarn Cache
         uses: c-hive/gha-yarn-cache@v1
       - name: Install Dependencies
-        run: yarn install
+        run: yarn install --force
       - name: Run Unit Tests
         run: yarn test
   build:
@@ -48,6 +48,6 @@ jobs:
       - name: Yarn Cache
         uses: c-hive/gha-yarn-cache@v1
       - name: Install Dependencies
-        run: yarn install
+        run: yarn install --force
       - name: Build
       - run: yarn build
