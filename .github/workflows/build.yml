@@ -14,8 +14,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Install Dependencies
         uses: bahmutov/npm-install@v1
-          with:
-            useRollingCache: true
+        with:
+          useRollingCache: true
       - name: Run Linter
         run: yarn lint
   test:
@@ -28,8 +28,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Install Dependencies
         uses: bahmutov/npm-install@v1
-          with:
-            useRollingCache: true
+        with:
+          useRollingCache: true
       - name: Run Unit Tests
         run: yarn test
   release:
@@ -47,8 +47,8 @@ jobs:
           node-version: 12
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
-          with:
-            useRollingCache: true
+        with:
+          useRollingCache: true
       - name: Build
         run: yarn build
       - name: Release
@@ -66,8 +66,8 @@ jobs:
         uses: actions/setup-node@v1
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
-          with:
-            useRollingCache: true
+        with:
+          useRollingCache: true
       - name: Build Content
         run: yarn docs:build
       - name: Publish
