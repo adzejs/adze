@@ -1,5 +1,3 @@
-import defaultsDeep from 'lodash/defaultsDeep';
-import cloneDeep from 'lodash/cloneDeep';
 import {
   Configuration,
   Defaults,
@@ -19,6 +17,8 @@ import {
   toConsole,
   isFinalLogData,
   shedExists,
+  defaultsDeep,
+  cloneDeep,
 } from '../util';
 import { Label, addLabel, getLabel } from '../label';
 import { defaults } from '../_defaults';

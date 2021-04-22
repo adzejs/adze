@@ -1,4 +1,3 @@
-import defaultsDeep from 'lodash/defaultsDeep';
 import {
   ShedConfig,
   ShedUserConfig,
@@ -16,7 +15,7 @@ import {
 import { BaseLog } from '../log/BaseLog';
 import { Label } from '../label';
 import { shed_defaults } from '../_defaults';
-import { formatLevels } from '../util';
+import { formatLevels, defaultsDeep } from '../util';
 import { Env } from '../env';
 
 /**
