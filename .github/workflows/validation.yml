@@ -50,4 +50,4 @@ jobs:
       - name: Install Dependencies
         run: yarn install --force
       - name: Build
-      - run: yarn build
+        run: yarn build
