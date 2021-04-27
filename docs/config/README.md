@@ -46,16 +46,17 @@ type ConsoleMethod =
 
 ### Descriptions
 
-| Property Name           | Default Value                                 | Description                                                                                   |
-| ----------------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| log_level               | 8                                             | The highest log level that will be allowed to render.                                         |
-| use_emoji               | false                                         | Toggle emoji's on or off for log rendering.                                                   |
-| terminal_color_fidelity | 1                                             | Control terminal color fidelity with [Chalk](https://github.com/chalk/chalk#chalklevel).      |
-| capture_stacktrace      | false                                         | Logs will record their stacktrace when they are created. Disabled by default for performance. |
-| base_style              | [Reference](#styling)                         | These styles will be applied to all default log levels.                                       |
-| log_levels              | [Reference](#log-levels-log-level-definition) | Configuration for default Adze log levels.                                                    |
-| custom_levels           | [Reference](#log-levels-log-level-definition) | Configuration for custom Adze log levels.                                                     |
-| meta                    | `{}`                                          | Key/value pairs of data to be applied to all logs by default.                                 |
+| Property Name           | Default Value                                 | Description                                                                                                                |
+| ----------------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| log_level               | 8                                             | The highest log level that will be allowed to render.                                                                      |
+| use_emoji               | false                                         | Toggle emoji's on or off for log rendering.                                                                                |
+| terminal_color_fidelity | 1                                             | Control terminal color fidelity with [Chalk](https://github.com/chalk/chalk#chalklevel).                                   |
+| capture_stacktrace      | false                                         | Logs will record their stacktrace when they are created. Disabled by default for performance.                              |
+| base_style              | [Reference](#styling)                         | These styles will be applied to all default log levels.                                                                    |
+| log_levels              | [Reference](#log-levels-log-level-definition) | Configuration for default Adze log levels.                                                                                 |
+| custom_levels           | [Reference](#log-levels-log-level-definition) | Configuration for custom Adze log levels.                                                                                  |
+| meta                    | `{}`                                          | Key/value pairs of data to be applied to all logs by default.                                                              |
+| filters                 | [Reference](#filters)                         | Filters determine whether logs are allowed to print to the console/terminal based on their log level, label, or namespace. |
 
 ## Shed Configuration
 
