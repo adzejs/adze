@@ -80,7 +80,7 @@ yarn add adze
 
 Adze is built to be used with TypeScript and we highly encourage using it in this way.
 
-When building your project with TypeScript, you need to make sure you use the `"DOM"` lib because Adze supports both the web browser and Node.
+When building your project with TypeScript, you need to make sure you use the `"DOM"` lib because Adze supports both the web browser and Node. Also, to support the dependencies of Adze, you'll need to add `"esModuleInterop": true` to your tsconfig as well.
 
 For more information about configuring TypeScript, go to [https://www.typescriptlang.org/docs/handbook/tsconfig-json.html](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
 
@@ -90,7 +90,8 @@ For more information about configuring TypeScript, go to [https://www.typescript
 {
   "compilerOptions": {
     // ...your other options
-    "lib": ["DOM"]
+    "lib": ["DOM"],
+    "esModuleInterop": true,
   }
 }
 ```

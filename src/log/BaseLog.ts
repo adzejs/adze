@@ -102,8 +102,7 @@ export class BaseLog {
 
   /**
    * Meta data attached to this log instance through the
-   * meta modifier or through MDC threads. This is retrievable
-   * in log listeners.
+   * meta modifier. This is retrievable in log listeners.
    */
   private metaData: MetaData = {};
 
