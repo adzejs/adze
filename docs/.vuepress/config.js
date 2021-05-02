@@ -28,7 +28,6 @@ module.exports = {
     [
       'script',
       {
-        async: true,
         src: 'https://cdn.jsdelivr.net/npm/adze@0.5.5/dist/adze.min.js'
       }
     ],
