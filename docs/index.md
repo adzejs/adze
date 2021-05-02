@@ -71,3 +71,11 @@ Made by [Andrew Stacy](https://github.com/AJStacy) with ❤️
 
 Find Adze on [GitHub](https://github.com/AJStacy/adze)
 :::
+
+::: slot learn-more
+
+## And much more...
+
+To learn more about Adze and how to use it in your project, take a look at the [Guide](/guide) and 
+watch the introduction video.
+:::

@@ -119,6 +119,24 @@
       </section>
     </div>
 
+    <!-- Learn More -->
+    <div class="full-width-container alt-bg">
+      <div class="content-container">
+        <section class="content-block no-border">
+          <div class="image">
+            <img :src="$withBase('/shaped-wood.svg')" style="max-height: 150px;" />
+          </div>
+          <div class="content">
+            <Content slot-key="learn-more" />
+            <br>
+            <p class="action">
+              <nav-link class="action-button" :item="actionLink" />
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+
     <div clas="content-container">
       <footer class="footer">
         <Content slot-key="footer" />
@@ -148,7 +166,7 @@ export default {
         link: this.data.actionLink,
         text: this.data.actionText
       };
-    }
+    },
   },
 
   mounted() {
@@ -201,6 +219,19 @@ export default {
   margin 0px auto
   display block
 
+.action-button
+  display inline-block
+  font-size 1.2rem
+  color #fff
+  background-color $accentColor
+  padding 0.8rem 1.6rem
+  border-radius 4px
+  transition background-color .1s ease
+  box-sizing border-box
+  border-bottom 1px solid darken($accentColor, 10%)
+  &:hover
+    background-color lighten($accentColor, 10%)
+
 .hero
   text-align center
   img
@@ -217,18 +248,6 @@ export default {
     font-size 1.6rem
     line-height 1.3
     color lighten($textColor, 40%)
-  .action-button
-    display inline-block
-    font-size 1.2rem
-    color #fff
-    background-color $accentColor
-    padding 0.8rem 1.6rem
-    border-radius 4px
-    transition background-color .1s ease
-    box-sizing border-box
-    border-bottom 1px solid darken($accentColor, 10%)
-    &:hover
-      background-color lighten($accentColor, 10%)
 
 .features
   border-top 1px solid $borderColor
