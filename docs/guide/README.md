@@ -10,6 +10,11 @@ _Photo from [Wikipedia](https://en.wikipedia.org/wiki/Adze)_
 
 Adze was chosen as a name for this library to maintain solidarity with the logging puns and to emphasize that this library is a tool for shaping the logs of your application.
 
+## Adze Demo
+
+<br>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/8Ht3LKowKR0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Why should I use Adze?
 
 As you may already be aware there are a number of other good JS libraries out there to assist with logging. The focus of Adze is to provide a convenient and clean API, provide first-class TypeScript support, and to empower you to take command of your logs rather than pigeon-hole you into a specific way of handling them.
@@ -30,7 +35,7 @@ Here is a list of the features that Adze provides:
 Beyond the new features that Adze provides you, it also wraps the entire console web standard.
 Read more about the standard here: [MDN Console Docs](https://developer.mozilla.org/en-US/docs/Web/API/console)
 
-### Here is a simple preview:
+### Here is a simple preview
 
 ![Preview of Adze logs](./assets/demo.png)
 
@@ -49,3 +54,5 @@ adze({ use_emoji: true }).ns('tix-456').log('Example log');
 The output of this would look like the following:
 
 ![Preview of Adze logs](./examples/api_example_output.png)
+
+
