@@ -25,6 +25,18 @@ module.exports = {
         src: 'https://plausible.io/js/plausible.js',
       },
     ],
+    ['link',
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+      }
+    ],
+    ['link', 
+      {
+        href: "https://fonts.googleapis.com/css2?family=Share&display=swap",
+        rel: "stylesheet",
+      }
+    ],
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     [
