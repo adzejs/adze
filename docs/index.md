@@ -3,7 +3,7 @@ layout: Home
 home: true
 heroImage: /logo.svg
 heroText: A Library for Shaping Your Logs
-tagline: ... and other neat stuff too
+tagline: Open the dev console for a demo
 actionText: Quick Start →
 actionLink: /guide/
 features:

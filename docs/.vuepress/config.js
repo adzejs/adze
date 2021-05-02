@@ -25,6 +25,13 @@ module.exports = {
         src: 'https://plausible.io/js/plausible.js',
       },
     ],
+    [
+      'script',
+      {
+        async: true,
+        src: 'https://cdn.jsdelivr.net/npm/adze@0.5.5/dist/adze.min.js'
+      }
+    ],
     ['link',
       {
         rel: "preconnect",

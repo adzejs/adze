@@ -149,6 +149,47 @@ export default {
         text: this.data.actionText
       };
     }
+  },
+
+  mounted() {
+    // Default logs for example
+    const { adze } = window.AdzeLib;
+    adze().alert('Example alert log');
+    adze().error('Example error log');
+    adze().warn('Example warning log');
+    adze().info('Example info log');
+    adze().fail('Example fail log');
+    adze().success('Example success log');
+    adze().log('Example log');
+    adze().debug('Example debug log');
+    adze().verbose('Example verbose log');
+
+    // Logs with emoji's
+    const log = adze({ use_emoji: true }).seal();
+    log().alert('Example alert log');
+    log().error('Example error log');
+    log().warn('Example warning log');
+    log().info('Example info log');
+    log().fail('Example fail log');
+    log().success('Example success log');
+    log().log('Example log');
+    log().debug('Example debug log');
+    log().verbose('Example verbose log');
+
+    // Custom Emoji
+    adze({
+      use_emoji: true,
+      custom_levels: {
+        customError: {
+          level: 1,
+          method: 'error',
+          style:
+            'font-size: 10px; font-weight: bold; border-radius: 0 10px 10px 0; border-width: 1px; border-style: solid; padding-right: 10px; background: linear-gradient(to right, #ffcafc, #ff02f2); color: #fff; border-color: #e3bbbb;',
+          terminal: ['bgRed', 'white'],
+          emoji: '😭',
+        },
+      },
+    }).custom('customError', 'This is a custom error log');
   }
 }
 </script>
