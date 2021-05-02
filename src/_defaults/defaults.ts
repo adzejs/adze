@@ -13,8 +13,9 @@ export const defaults: Defaults = {
   log_levels: {
     alert: {
       level: 0,
-      style:
-        'padding-right: 26px; background: linear-gradient(to right, #fc8585, #fc2323); color: #fff; border-color: #b70101;',
+      style: `padding-right: ${
+        Env.isChrome() ? '29' : '26'
+      }px; background: linear-gradient(to right, #fc8585, #fc2323); color: #fff; border-color: #b70101;`,
       terminal: ['white', 'bold', 'bgRed'],
       method: 'error',
       emoji: '🚨',

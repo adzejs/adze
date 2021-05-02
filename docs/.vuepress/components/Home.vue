@@ -313,6 +313,9 @@ export default {
       color: $textColor
       border-bottom: none
       border-left: 10px solid $adzeBrown
+    p
+      a
+        display inline
 
 .footer
   padding 2.5rem
