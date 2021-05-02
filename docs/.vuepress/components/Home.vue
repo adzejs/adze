@@ -109,9 +109,9 @@
     <!-- Shed -->
     <div class="content-container">
       <!-- Chainable API -->
-      <section class="content-block no-border left">
+      <section class="content-block left">
         <div class="image">
-          <img :src="$withBase('/woodmill.svg')" style="max-height: 200px;" />
+          <img :src="$withBase('/woodmill.svg')" style="max-height: 172px;" />
         </div>
         <div class="content">
           <Content slot-key="shed" />
