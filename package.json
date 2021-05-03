@@ -15,7 +15,7 @@
     "build": "tsc --project tsconfig.prod.json",
     "postbuild": "npm run bundle",
     "clean": "rm -rf ./dist",
-    "bundle": "parcel build ./src/index.ts --global AdzeLib --out-file adze.min.js",
+    "bundle": "parcel build ./src/index.ts --global AdzeLib --out-file adze.min.js --no-source-maps",
     "commit": "cz",
     "prepare": "husky install",
     "prepack": "npm run build",
