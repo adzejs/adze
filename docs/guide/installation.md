@@ -52,7 +52,7 @@ _**NOTE:** In the script tag in the example below, replace `<version>` with the 
 ```html
 <!-- In the head of your html -->
 <head>
-  <!-- To use v0.5.3 you would write https://cdn.jsdelivr.net/npm/adze@0.5.3/dist/adze.min.js -->
+  <!-- To use v0.5.7 you would write https://cdn.jsdelivr.net/npm/adze@0.5.7/dist/adze.min.js -->
   <script src="https://cdn.jsdelivr.net/npm/adze@<version>/dist/adze.min.js"></script>
 </head>
 
