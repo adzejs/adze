@@ -4,7 +4,7 @@
 
 A **Shed** is an optional global cache and control hub for your Adze logs. The primary purposes of a Shed are to enable global configuration overrides and log listeners. To see how a Shed fits into the architecture, refer to the [Lifecycle Diagram](adze-concepts.html#lifecycle).
 
-Shed is also a dependency to take advantage of some log features such as [labels](modifiers.md#labels), [counters](modifiers.md#count), and [timers](modifiers.md#time). Without the presence of a Shed, these log modifiers either do not function or their functionality is stunted.
+Shed is also a dependency to take advantage of some log features such as [labels](modifiers.md#label), [counters](modifiers.md#count), and [timers](modifiers.md#time). Without the presence of a Shed, these log modifiers either do not function or their functionality is stunted.
 
 For complete documentation on Shed configuration, go [here](/config/#shed-configuration).
 
