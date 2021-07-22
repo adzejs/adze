@@ -25,7 +25,7 @@ test('timer starts and ends and prints correctly', (t) => {
 });
 
 test('timer starts and ends and prints correctly with emoji', (t) => {
-  const log = adze({ use_emoji: true }).seal();
+  const log = adze({ useEmoji: true }).seal();
   log().label('test').time.log('Starting the timer.');
   const { render } = log().label('test').timeEnd.log('Stopping the timer.');
   if (render) {

@@ -4,7 +4,7 @@ import { adze, bundle, createShed, removeShed } from '../src';
 global.ADZE_ENV = 'dev';
 
 test('bundles logs', (t) => {
-  const bundled = bundle(adze({ use_emoji: true }));
+  const bundled = bundle(adze({ useEmoji: true }));
 
   const { log, render } = bundled().ns('SPACE').error('This is an error!');
   const { log: log2, render: render2 } = bundled()
@@ -24,9 +24,7 @@ test('bundles logs', (t) => {
 
 test('can bundle sealed log instance', (t) => {
   createShed();
-  const bundled = bundle(
-    adze({ use_emoji: true }).count.label('SEALED').seal()
-  );
+  const bundled = bundle(adze({ useEmoji: true }).count.label('SEALED').seal());
 
   const { log } = bundled().ns('SPACE').error('This is an error!');
   const { log: log2 } = bundled()

@@ -15,29 +15,29 @@ export class BrowserPrinter extends SharedPrinter {
   public printLog(): LogRender {
     const method = this.data.definition.method;
     const leader = this.fLeader();
-    const style = this.data.cfg.base_style + this.data.definition.style;
+    const style = this.data.cfg.baseStyle + this.data.definition.style;
     const meta = this.fMeta();
 
-    const render_args =
+    const renderArgs =
       meta === ''
         ? [leader, style, ...this.data.args]
         : [leader, style, meta, ...this.data.args];
 
-    return [method, render_args];
+    return [method, renderArgs];
   }
 
   /**
    * The method for rendering group logs.
    */
   public printGroup(): LogRender {
-    const partial_args = [
+    const partialArgs = [
       this.fLeader(),
-      this.data.cfg.base_style + this.data.definition.style,
+      this.data.cfg.baseStyle + this.data.definition.style,
     ];
     const render_args =
       typeof this.data.args[0] === 'string'
-        ? [...partial_args, this.data.args[0]]
-        : partial_args;
+        ? [...partialArgs, this.data.args[0]]
+        : partialArgs;
 
     return ['group', render_args];
   }
@@ -48,7 +48,7 @@ export class BrowserPrinter extends SharedPrinter {
   public printGroupCollapsed(): LogRender {
     const partial_args = [
       this.fLeader(),
-      this.data.cfg.base_style + this.data.definition.style,
+      this.data.cfg.baseStyle + this.data.definition.style,
     ];
     const render_args =
       typeof this.data.args[0] === 'string'
@@ -86,7 +86,7 @@ export class BrowserPrinter extends SharedPrinter {
    * Adds the emoji to the log leader if enabled.
    */
   public fEmoji(): string {
-    const global_use_emoji = this.env.global.$shed?.overrides?.use_emoji;
+    const global_use_emoji = this.env.global.$shed?.overrides?.useEmoji;
     return global_use_emoji || this.use_emoji
       ? ` ${this.data.definition.emoji}`
       : '';
@@ -116,12 +116,12 @@ export class BrowserPrinter extends SharedPrinter {
   public fTime(): string {
     const timeNow = this.data.label.timeNow ?? this.data.timeNow;
     const timeEllapsed = this.data.label?.timeEllapsed;
-    const label_txt = `${timeNow ?? timeEllapsed ?? ''}`;
+    const labelTxt = `${timeNow ?? timeEllapsed ?? ''}`;
 
-    const global_use_emoji = this.env.global.$shed?.overrides?.use_emoji;
+    const globalUseEmoji = this.env.global.$shed?.overrides?.useEmoji;
 
-    return label_txt !== ''
-      ? ` (${global_use_emoji || this.use_emoji ? '⏱' : ''}${label_txt}) `
+    return labelTxt !== ''
+      ? ` (${globalUseEmoji || this.use_emoji ? '⏱' : ''}${labelTxt}) `
       : '';
   }
 

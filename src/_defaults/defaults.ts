@@ -2,15 +2,16 @@ import { Env } from '../env';
 import { Defaults } from '../_contracts';
 
 export const defaults: Defaults = {
-  log_level: 8,
-  use_emoji: false,
-  capture_stacktrace: false,
-  terminal_color_fidelity: 1,
-  base_style:
+  logLevel: 8,
+  useEmoji: false,
+  captureStacktrace: false,
+  terminalColorFidelity: 1,
+  stdout: false,
+  baseStyle:
     'font-size: 10px; font-weight: bold; border-radius: 0 10px 10px 0; border-width: 1px; border-style: solid;',
-  custom_levels: {},
+  customLevels: {},
   meta: {},
-  log_levels: {
+  logLevels: {
     alert: {
       level: 0,
       style: `padding-right: ${

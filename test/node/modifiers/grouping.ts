@@ -12,7 +12,7 @@ test('group log renders correctly', (t) => {
     t.is(log.data.level, 5);
     t.is(
       args[0],
-      applyChalkStyles(' Success(1)    ', defaults.log_levels.success.terminal)
+      applyChalkStyles(' Success(1)    ', defaults.logLevels.success.terminal)
     );
     t.is(args[1], 'Opening a log group.');
   } else {
@@ -30,7 +30,7 @@ test('group collapsed renders correctly', (t) => {
     t.is(log.data.level, 5);
     t.is(
       args[0],
-      applyChalkStyles(' Success(1)    ', defaults.log_levels.success.terminal)
+      applyChalkStyles(' Success(1)    ', defaults.logLevels.success.terminal)
     );
     t.is(args[1], 'Opening a collapsed log group.');
   } else {

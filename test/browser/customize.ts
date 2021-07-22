@@ -12,7 +12,7 @@ test('renders a custom log', (t) => {
   const style =
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
   const { log, render } = adze({
-    custom_levels: {
+    customLevels: {
       custom: {
         level: 1,
         emoji: '🤪',
@@ -28,7 +28,7 @@ test('renders a custom log', (t) => {
     const [method, args] = render;
     t.is(method, 'log');
     t.is(args[0], ' %c Custom(1)');
-    t.is(args[1], defaults.base_style + style);
+    t.is(args[1], defaults.baseStyle + style);
     t.is(args[2], 'This is a custom log.');
   } else {
     t.fail();
@@ -39,8 +39,8 @@ test('renders a custom log with emoji', (t) => {
   const style =
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
   const { log, render } = adze({
-    use_emoji: true,
-    custom_levels: {
+    useEmoji: true,
+    customLevels: {
       custom: {
         level: 1,
         emoji: '🤪',
@@ -56,7 +56,7 @@ test('renders a custom log with emoji', (t) => {
     const [method, args] = render;
     t.is(method, 'log');
     t.is(args[0], ' %c 🤪 Custom(1)');
-    t.is(args[1], defaults.base_style + style);
+    t.is(args[1], defaults.baseStyle + style);
     t.is(args[2], 'This is a custom log.');
   } else {
     t.fail();
@@ -68,10 +68,10 @@ test('renders a custom log with emoji', (t) => {
 // =========================
 
 test('renders a log with altered base style', (t) => {
-  const base_style =
+  const baseStyle =
     'font-size: 12px; font-weight: normal; border-radius: 0 5px 5px 0; border-width: 2px; border-style: dashed;';
   const t_log = adze({
-    base_style,
+    baseStyle,
   }).log('testing');
   t.truthy(t_log.log);
 
@@ -79,7 +79,7 @@ test('renders a log with altered base style', (t) => {
     const [method, args] = t_log.render;
     t.is(method, 'log');
     t.is(args[0], ' %c Log(1)');
-    t.is(args[1], base_style + defaults.log_levels.log.style);
+    t.is(args[1], baseStyle + defaults.logLevels.log.style);
     t.is(args[2], 'testing');
   } else {
     t.fail();

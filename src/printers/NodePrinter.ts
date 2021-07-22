@@ -73,7 +73,7 @@ export class NodePrinter extends SharedPrinter {
     return applyChalkStyles(
       padded_leader,
       this.data.definition.terminal,
-      this.data.cfg.terminal_color_fidelity
+      this.data.cfg.terminalColorFidelity
     );
   }
 
@@ -122,7 +122,7 @@ export class NodePrinter extends SharedPrinter {
     const timeEllapsed = this.data.label.timeEllapsed;
     const label_txt = `${timeNow ?? timeEllapsed ?? ''}`;
 
-    const use_emoji_global = this.env.global.$shed?.overrides?.use_emoji;
+    const use_emoji_global = this.env.global.$shed?.overrides?.useEmoji;
 
     return label_txt !== ''
       ? `(${use_emoji_global || this.use_emoji ? '⏱' : ''}${label_txt}) `

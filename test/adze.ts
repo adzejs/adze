@@ -33,9 +33,9 @@ test('create a new logger with defaults', (t) => {
     t.is(emoji, cfg_emoji);
   };
 
-  Object.keys(cfg.log_levels).forEach((name) => {
-    t.truthy(Object.keys(defaults.log_levels).includes(name));
-    testLevel(cfg.log_levels[name], defaults.log_levels[name]);
+  Object.keys(cfg.logLevels).forEach((name) => {
+    t.truthy(Object.keys(defaults.logLevels).includes(name));
+    testLevel(cfg.logLevels[name], defaults.logLevels[name]);
   });
 
   // Test congruity of filters
@@ -44,7 +44,7 @@ test('create a new logger with defaults', (t) => {
 });
 
 test('prevents log render when the log level is lowered', (t) => {
-  const terminated = adze({ log_level: 5 }).log('testing');
+  const terminated = adze({ logLevel: 5 }).log('testing');
   t.truthy(terminated.log);
   t.is(terminated.render, null);
 });
