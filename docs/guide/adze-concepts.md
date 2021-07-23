@@ -69,9 +69,18 @@ import { adze, createShed } from 'adze';
 
 /* We'll create a Shed to enable labels and counting
    for our example. */
-createShed();
+const shed = createShed();
 
-// Let's create an Adze configuration
+/* Let's create a log listener to transport our log data
+   to a destination. We'll listen to all log levels. */
+shed.addListener('*', (data, render) => {
+  // If a log does not render then we will ignore transporting it.
+  if (render) {
+    // Do transport logic here.
+  }
+});
+
+// Let's create an Adze configuration (or import it from an env file).
 const cfg = {
   logLevel: 1,
 };

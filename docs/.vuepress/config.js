@@ -4,7 +4,7 @@ module.exports = {
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
-  title: 'Adze JS',
+  title: 'Adze JS - Better JavaScript Logging',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
@@ -37,7 +37,7 @@ module.exports = {
         href: "https://fonts.gstatic.com",
       }
     ],
-    ['link', 
+    ['link',
       {
         href: "https://fonts.googleapis.com/css2?family=Share&display=swap",
         rel: "stylesheet",
