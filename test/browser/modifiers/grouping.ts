@@ -15,7 +15,7 @@ test('group log renders correctly', (t) => {
     t.is(method, 'group');
     t.is(log.data.level, 5);
     t.is(args[0], ' %c Success(1)');
-    t.is(args[1], `${defaults.base_style}${defaults.log_levels.success.style}`);
+    t.is(args[1], `${defaults.baseStyle}${defaults.logLevels.success.style}`);
     t.is(args[2], 'Opening a log group.');
   } else {
     t.fail();
@@ -31,7 +31,7 @@ test('group collapsed renders correctly', (t) => {
     t.is(method, 'groupCollapsed');
     t.is(log.data.level, 5);
     t.is(args[0], ' %c Success(1)');
-    t.is(args[1], `${defaults.base_style}${defaults.log_levels.success.style}`);
+    t.is(args[1], `${defaults.baseStyle}${defaults.logLevels.success.style}`);
     t.is(args[2], 'Opening a collapsed log group.');
   } else {
     t.fail();

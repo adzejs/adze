@@ -9,7 +9,7 @@ test('renders a custom log', (t) => {
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
   const terminal: ChalkStyle[] = ['bgCyanBright', 'cyan'];
   const { log, render } = adze({
-    custom_levels: {
+    customLevels: {
       custom: {
         level: 1,
         emoji: '🤪',
@@ -36,8 +36,8 @@ test('renders a custom log with emoji', (t) => {
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
   const terminal: ChalkStyle[] = ['bgCyanBright', 'cyan'];
   const { log, render } = adze({
-    use_emoji: true,
-    custom_levels: {
+    useEmoji: true,
+    customLevels: {
       custom: {
         level: 1,
         emoji: '🤪',
@@ -56,5 +56,25 @@ test('renders a custom log with emoji', (t) => {
     t.is(args[1], 'This is a custom log.');
   } else {
     t.fail();
+  }
+});
+
+// =========================
+// UNSTYLED FOR STDOUT
+// =========================
+
+test('renders an unstyled log', (t) => {
+  const unstyled = adze({ unstyled: true })
+    .label('unstyled')
+    .log('This log should have no style.');
+
+  t.truthy(unstyled.log);
+
+  if (unstyled.render) {
+    const [method, args] = unstyled.render;
+    t.is(method, 'log');
+    t.is(args[0], ' Log(1)        ');
+    t.is(args[1], '[unstyled] ');
+    t.is(args[2], 'This log should have no style.');
   }
 });

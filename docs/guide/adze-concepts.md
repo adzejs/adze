@@ -73,7 +73,7 @@ createShed();
 
 // Let's create an Adze configuration
 const cfg = {
-  log_level: 1,
+  logLevel: 1,
 };
 
 // Now we'll create a new factory using seal
@@ -93,6 +93,26 @@ log().log("I won't display because my log level is too high.");
 ![common usage example with seal](./examples/common-usage-example.png)
 
 ![common usage terminal example with seal](./examples/common-usage-terminal-example.png)
+
+## Standard Output (stdout)
+
+When writing adze logs in a Node environment there may be times where logs in stdout need to be unstyled to avoid styling artifacts polluting the log strings. Adze provides a simple [configuration option](/config/#adze-configuration) to turn off styling.
+
+### Example
+
+```javascript
+// ----- setup.js ----- //
+import { adze } from 'adze';
+
+// Let's create a new unstyled log factory using seal
+export const stdout = adze({ unstyled: true }).seal();
+
+// ----- elsewhere.js ----- //
+import { stdout } from '~/setup.js';
+
+// And now we can create new unstyled logs using our unstyled factory
+stdout().error('An error occurred! This log has no styles applied.');
+```
 
 ## Filtering
 

@@ -15,7 +15,7 @@ test('renders a default alert log', (t) => {
     t.is(method, 'error');
     t.is(
       args[0],
-      applyChalkStyles(' Alert(1)      ', defaults.log_levels.alert.terminal)
+      applyChalkStyles(' Alert(1)      ', defaults.logLevels.alert.terminal)
     );
     t.is(args[1], 'testing');
   } else {
@@ -32,7 +32,7 @@ test('renders a default error log', (t) => {
     t.is(method, 'error');
     t.is(
       args[0],
-      applyChalkStyles(' Error(1)      ', defaults.log_levels.error.terminal)
+      applyChalkStyles(' Error(1)      ', defaults.logLevels.error.terminal)
     );
     t.is(args[1], 'testing');
   } else {
@@ -49,7 +49,7 @@ test('renders a default warn log', (t) => {
     t.is(method, 'warn');
     t.is(
       args[0],
-      applyChalkStyles(' Warn(1)       ', defaults.log_levels.warn.terminal)
+      applyChalkStyles(' Warn(1)       ', defaults.logLevels.warn.terminal)
     );
     t.is(args[1], 'testing');
   } else {
@@ -66,7 +66,7 @@ test('renders a default info log', (t) => {
     t.is(method, 'info');
     t.is(
       args[0],
-      applyChalkStyles(' Info(1)       ', defaults.log_levels.info.terminal)
+      applyChalkStyles(' Info(1)       ', defaults.logLevels.info.terminal)
     );
     t.is(args[1], 'testing');
   } else {
@@ -83,7 +83,7 @@ test('renders a default fail log', (t) => {
     t.is(method, 'info');
     t.is(
       args[0],
-      applyChalkStyles(' Fail(1)       ', defaults.log_levels.fail.terminal)
+      applyChalkStyles(' Fail(1)       ', defaults.logLevels.fail.terminal)
     );
     t.is(args[1], 'testing');
   } else {
@@ -100,7 +100,7 @@ test('renders a default success log', (t) => {
     t.is(method, 'info');
     t.is(
       args[0],
-      applyChalkStyles(' Success(1)    ', defaults.log_levels.success.terminal)
+      applyChalkStyles(' Success(1)    ', defaults.logLevels.success.terminal)
     );
     t.is(args[1], 'testing');
   } else {
@@ -117,7 +117,7 @@ test('renders a default log', (t) => {
     t.is(method, 'log');
     t.is(
       args[0],
-      applyChalkStyles(' Log(1)        ', defaults.log_levels.log.terminal)
+      applyChalkStyles(' Log(1)        ', defaults.logLevels.log.terminal)
     );
     t.is(args[1], 'testing');
   } else {
@@ -134,7 +134,7 @@ test('renders a default debug log', (t) => {
     t.is(method, 'debug');
     t.is(
       args[0],
-      applyChalkStyles(' Debug(1)      ', defaults.log_levels.debug.terminal)
+      applyChalkStyles(' Debug(1)      ', defaults.logLevels.debug.terminal)
     );
     t.is(args[1], 'testing');
   } else {
@@ -151,7 +151,7 @@ test('renders a default verbose log', (t) => {
     t.is(method, 'debug');
     t.is(
       args[0],
-      applyChalkStyles(' Verbose(1)    ', defaults.log_levels.verbose.terminal)
+      applyChalkStyles(' Verbose(1)    ', defaults.logLevels.verbose.terminal)
     );
     t.is(args[1], 'testing');
   } else {
@@ -164,7 +164,7 @@ test('renders a custom log', (t) => {
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
   const terminal: ChalkStyle[] = ['bgCyanBright', 'cyan'];
   const { log, render } = adze({
-    custom_levels: {
+    customLevels: {
       custom: {
         level: 1,
         emoji: '🤪',
@@ -187,7 +187,7 @@ test('renders a custom log', (t) => {
 });
 
 test('terminal styles color fidelity is customizable', (t) => {
-  const t_log = adze({ terminal_color_fidelity: 0 }).log('testing');
+  const t_log = adze({ terminalColorFidelity: 0 }).log('testing');
   t.truthy(t_log.log);
 
   if (t_log.render) {

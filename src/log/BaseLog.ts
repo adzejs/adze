@@ -679,7 +679,7 @@ export class BaseLog {
    * Generates a terminating log method the specified log level name.
    */
   private logMethod(levelName: string, args: unknown[]): TerminatedLog<this> {
-    return this.terminate(this.getDefinition('log_levels', levelName), args);
+    return this.terminate(this.getDefinition('logLevels', levelName), args);
   }
 
   /**
@@ -687,14 +687,14 @@ export class BaseLog {
    * log level by key as the format for the log.
    */
   private customMethod(lvlName: string, args: unknown[]): TerminatedLog<this> {
-    return this.terminate(this.getDefinition('custom_levels', lvlName), args);
+    return this.terminate(this.getDefinition('customLevels', lvlName), args);
   }
 
   /**
    * Gets the log level definition from the log configuration.
    */
   private getDefinition(
-    type: 'log_levels' | 'custom_levels',
+    type: 'logLevels' | 'customLevels',
     levelName: string
   ): LogLevelDefinition | undefined {
     const definition = this.cfg[type][levelName];
@@ -719,7 +719,7 @@ export class BaseLog {
         this._level = def.level;
         this.definition = def;
         this.timestamp = timestamp();
-        this.stacktrace = this.cfg.capture_stacktrace ? stacktrace() : null;
+        this.stacktrace = this.cfg.captureStacktrace ? stacktrace() : null;
 
         // Set this log data to a variable for type checking
         const log_data = this.data;

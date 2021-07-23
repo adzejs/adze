@@ -16,13 +16,12 @@ export type ListenerCallback = (
 ) => void;
 
 export interface ShedConfig {
-  cache_limit: number;
-  global_cfg: Defaults | null;
+  cacheLimit: number;
+  globalCfg: Defaults | null;
 }
 
-export interface ShedUserConfig
-  extends Partial<Omit<ShedConfig, 'global_cfg'>> {
-  global_cfg?: Configuration | null;
+export interface ShedUserConfig extends Partial<Omit<ShedConfig, 'globalCfg'>> {
+  globalCfg?: Configuration | null;
 }
 
 export interface LabelData {

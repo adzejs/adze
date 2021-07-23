@@ -103,9 +103,9 @@ import { adze } from 'adze';
 
 // Create our Adze configuration
 const cfg = {
-  log_level: Infinity,
-  use_emoji: true,
-  custom_levels: {
+  logLevel: Infinity,
+  useEmoji: true,
+  customLevels: {
     leetLevel: {
       level: 1337,
       method: 'log',

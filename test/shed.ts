@@ -41,7 +41,7 @@ test('shedExists correctly indicates that a shed instance exists in the global c
 
 test('stores a log instance', (t) => {
   // We have a log instance before a shed existed
-  const { log } = adze({ use_emoji: true })
+  const { log } = adze({ useEmoji: true })
     .ns('Foo')
     .info('This is an info log.');
   // Create a shed
@@ -71,15 +71,15 @@ test('store returns the cache limit from getter', (t) => {
 
 test('store accepts global config overrides with setter', (t) => {
   const shed = createShed();
-  shed.config = { cache_limit: 50 };
+  shed.config = { cacheLimit: 50 };
 
   t.is(shed.cacheLimit, 50);
 });
 
 test('store returns global config overrides from getter', (t) => {
   const shed = createShed({
-    global_cfg: {
-      log_levels: {
+    globalCfg: {
+      logLevels: {
         log: {
           level: 100,
         },
@@ -87,13 +87,13 @@ test('store returns global config overrides from getter', (t) => {
     },
   });
   const cfg = shed.overrides;
-  t.is(cfg?.log_levels?.log?.level, 100);
+  t.is(cfg?.logLevels?.log?.level, 100);
 });
 
 test('store hasOverrides correctly indicates that global config override has been set', (t) => {
   const shed = createShed({
-    global_cfg: {
-      log_levels: {
+    globalCfg: {
+      logLevels: {
         log: {
           level: 100,
         },
@@ -205,7 +205,7 @@ test('fires the log listeners', (t) => {
 });
 
 test('configured cache limit works properly', (t) => {
-  const shed = createShed({ cache_limit: 2 });
+  const shed = createShed({ cacheLimit: 2 });
 
   adze().log('Log 1');
   adze().log('Log 2');

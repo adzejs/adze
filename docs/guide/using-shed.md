@@ -79,15 +79,15 @@ class Shed {
 import { adze, createShed } from 'adze';
 
 const shed = createShed({
-  cache_limit: 300,
+  cacheLimit: 300,
 });
 
 // Override the cache limit
 shed.cacheLimit = 500;
 
 // Let's get the cache limit
-const cache_limit = shed.cacheLimit;
-// cache_limit => 500
+const cacheLimit = shed.cacheLimit;
+// cacheLimit => 500
 ```
 
 ## cacheSize
@@ -137,15 +137,15 @@ import { adze, createShed } from 'adze';
 
 // Creating a Shed instance with no config overrides
 const shed = createShed({
-  global_cfg: {
-    log_level: 0,
+  globalCfg: {
+    logLevel: 0,
   },
 });
 
 // Now we'll override the configuration
 shed.config = {
-  global_cfg: {
-    log_level: 3,
+  globalCfg: {
+    logLevel: 3,
   },
 };
 ```
@@ -316,8 +316,8 @@ import { adze, createShed } from 'adze';
 
 // Creating a Shed instance with no config overrides
 const shed = createShed({
-  global_cfg: {
-    log_level: 0,
+  globalCfg: {
+    logLevel: 0,
   },
 });
 

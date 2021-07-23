@@ -21,7 +21,7 @@ function filterCollection(
 import { adze, bundle, filterCollection, rerender } from 'adze';
 
 // Let's create a bundle so we can collect our logs
-const bundled = bundle(adze({ use_emoji: true }));
+const bundled = bundle(adze({ useEmoji: true }));
 
 bundled().ns('foo').error('This is an error!');
 bundled().label('bar').info('This is some info.');
@@ -46,7 +46,7 @@ import { adze, createShed, filterCollection, rerender } from 'adze';
 const shed = createShed();
 
 // Let's create a new log factory
-const log = adze({ use_emoji: true }).seal();
+const log = adze({ useEmoji: true }).seal();
 
 log().ns('foo').error('This is an error!');
 log().label('bar').info('This is some info.');
@@ -87,7 +87,7 @@ function filterLabel(collection: Collection = [], label: string): Collection;
 import { adze, bundle, filterLabel, rerender } from 'adze';
 
 // Let's create a bundle so we can collect our logs
-const bundled = bundle(adze({ use_emoji: true }));
+const bundled = bundle(adze({ useEmoji: true }));
 
 bundled().label('foo').error('This is an error!');
 bundled().label('bar').info('This is some info.');
@@ -109,7 +109,7 @@ import { adze, createShed, filterLabel, rerender } from 'adze';
 const shed = createShed();
 
 // Let's create a new log factory
-const log = adze({ use_emoji: true }).seal();
+const log = adze({ useEmoji: true }).seal();
 
 log().label('foo').error('This is an error!');
 log().label('bar').info('This is some info.');
@@ -150,7 +150,7 @@ function filterLevel(
 import { adze, bundle, filterLevel, rerender } from 'adze';
 
 // Let's create a bundle so we can collect our logs
-const bundled = bundle(adze({ use_emoji: true }));
+const bundled = bundle(adze({ useEmoji: true }));
 
 bundled().error('This is an error!');
 bundled().info('This is some info.');
@@ -172,7 +172,7 @@ import { adze, createShed, filterLevel, rerender } from 'adze';
 const shed = createShed();
 
 // Let's create a new log factory
-const log = adze({ use_emoji: true }).seal();
+const log = adze({ useEmoji: true }).seal();
 
 log().error('This is an error!');
 log().info('This is some info.');
@@ -210,7 +210,7 @@ function filterNamespace(collection: Collection = [], ns: string[]): Collection;
 import { adze, bundle, filterNamespace, rerender } from 'adze';
 
 // Let's create a bundle so we can collect our logs
-const bundled = bundle(adze({ use_emoji: true }));
+const bundled = bundle(adze({ useEmoji: true }));
 
 bundled().ns('bar').error('This is an error!');
 bundled().ns(['foo', 'bar']).info('This is some info.');
@@ -232,7 +232,7 @@ import { adze, createShed, filterNamespace, rerender } from 'adze';
 const shed = createShed();
 
 // Let's create a new log factory
-const log = adze({ use_emoji: true }).seal();
+const log = adze({ useEmoji: true }).seal();
 
 log().ns('bar').error('This is an error!');
 log().ns(['foo', 'bar']).info('This is some info.');

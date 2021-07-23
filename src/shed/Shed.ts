@@ -70,7 +70,7 @@ export class Shed {
    * Store a log in the Shed.
    */
   public store(log: BaseLog): void {
-    if (this.cacheSize < this.cfg.cache_limit) {
+    if (this.cacheSize < this.cfg.cacheLimit) {
       this._cache = this._cache.concat([log]);
     }
   }
@@ -79,14 +79,14 @@ export class Shed {
    * Sets the limit for the maximum number of logs that Shed will cache.
    */
   public set cacheLimit(limit: number) {
-    this.cfg.cache_limit = limit;
+    this.cfg.cacheLimit = limit;
   }
 
   /**
    * Gets the limit for the maximum number of logs that Shed will cache.
    */
   public get cacheLimit(): number {
-    return this.cfg.cache_limit;
+    return this.cfg.cacheLimit;
   }
 
   /**
@@ -101,7 +101,7 @@ export class Shed {
    * This is useful for recalling logs and applying filters.
    */
   public getCollection(levels: LevelFilter): Collection {
-    const lvls = formatLevels(levels, this.cfg.global_cfg);
+    const lvls = formatLevels(levels, this.cfg.globalCfg);
     return this._cache.reduce((acc, log) => {
       return acc.concat(lvls.includes(log.level ?? Infinity) ? [log] : []);
     }, [] as Collection);
@@ -111,14 +111,14 @@ export class Shed {
    * Indicates whether this Shed instance has global Adze config overrides set.
    */
   public get hasOverrides(): boolean {
-    return this.cfg.global_cfg !== null;
+    return this.cfg.globalCfg !== null;
   }
 
   /**
    * Returns the current value of the global Adze configuration overrides.
    */
   public get overrides(): Configuration | null {
-    return this.cfg.global_cfg;
+    return this.cfg.globalCfg;
   }
 
   /**
@@ -134,9 +134,9 @@ export class Shed {
    * filters for performance reasons.
    */
   private formatConfig(cfg: ShedUserConfig | undefined): ShedConfig {
-    const global_cfg = cfg?.global_cfg ?? null;
+    const globalCfg = cfg?.globalCfg ?? null;
 
-    const cfg_global_defaults = { ...cfg, global_cfg };
+    const cfg_global_defaults = { ...cfg, globalCfg };
     return defaultsDeep(cfg_global_defaults, shed_defaults) as ShedConfig;
   }
 
@@ -174,7 +174,7 @@ export class Shed {
     levels: LevelFilter,
     cb: ListenerCallback
   ): ListenerLocations {
-    const lvls = formatLevels(levels, this.cfg.global_cfg);
+    const lvls = formatLevels(levels, this.cfg.globalCfg);
     return lvls.map((lvl: number) => {
       // Get the map for the listeners of the given log level.
       const level_map = this.listenerBucket(lvl);

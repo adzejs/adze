@@ -23,14 +23,18 @@ As you may already be aware there are a number of other good JS libraries out th
 Here is a list of the features that Adze provides:
 
 - First-class TypeScript support
-- Runs in both the browser and node
-- A fluent, chainable API for creating logs
-- Log Listeners that empower you to do with your logs as you wish
-- Annotate your logs with namespaces, labels, and other meta data
+- Multi-environment support for the Browser and Node
+- Wraps and extends the entire standard API
+- A fluent, chainable API
+- Log Listeners for capturing log data
+- Log annotation namespaces, labels, and other meta data
 - Attractive styling (EMOJI'S INCLUDED and consistent across major browsers)
 - Everything is configurable
-- Create custom log levels
-- A global log store for recalling logs and overriding configuration
+- Enables completely custom log levels
+- A global log store for recalling logs and overriding configuration (supports micro-frontends and modules)
+- Support for Mapped Diagnostic Context
+- Convenient unit testing environment controls
+- Advanced Log Filtering
 - and much more...
 
 Beyond the new features that Adze provides you, it also wraps the entire console web standard.
@@ -49,11 +53,9 @@ As stated above, Adze offers an easy to use, chainable API. To create a log you 
 ```typescript
 import { adze } from 'adze';
 
-adze({ use_emoji: true }).ns('tix-456').log('Example log');
+adze({ useEmoji: true }).ns('tix-456').log('Example log');
 ```
 
 The output of this would look like the following:
 
 ![Preview of Adze logs](./examples/api_example_output.png)
-
-

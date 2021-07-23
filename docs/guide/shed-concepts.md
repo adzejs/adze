@@ -50,8 +50,8 @@ const level = ENV.level; // <- Env.level currently is set to 0.
 
 // Let's create a shed to globally control our modules
 createShed({
-  global_cfg: {
-    log_level: level, // <- level is 0 so all logs except alert's are hidden
+  globalCfg: {
+    logLevel: level, // <- level is 0 so all logs except alert's are hidden
   },
 });
 

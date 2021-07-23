@@ -65,15 +65,20 @@ export class NodePrinter extends SharedPrinter {
     const padding = this.use_emoji ? 14 + emoji.length : 14;
 
     // If the leader length is greater than the padding, add a space to the end for pretty formatting
-    const leader_raw = `${emoji} ${this.fName()}(${this.data.args.length})`;
-    const leader = leader_raw.length >= padding ? `${leader_raw} ` : leader_raw;
+    const leaderRaw = `${emoji} ${this.fName()}(${this.data.args.length})`;
+    const leader = leaderRaw.length >= padding ? `${leaderRaw} ` : leaderRaw;
 
-    const padded_leader = this.addPadding(leader, padding);
+    const paddedLeader = this.addPadding(leader, padding);
 
+    // If the log instance is configured as unstyled, prevent applying chalk styles.
+    if (this.data.cfg.unstyled) {
+      return paddedLeader;
+    }
+    //
     return applyChalkStyles(
-      padded_leader,
+      paddedLeader,
       this.data.definition.terminal,
-      this.data.cfg.terminal_color_fidelity
+      this.data.cfg.terminalColorFidelity
     );
   }
 
@@ -120,13 +125,9 @@ export class NodePrinter extends SharedPrinter {
   private fTime(): string {
     const timeNow = this.data.label.timeNow ?? this.data.timeNow;
     const timeEllapsed = this.data.label.timeEllapsed;
-    const label_txt = `${timeNow ?? timeEllapsed ?? ''}`;
+    const labelTxt = `${timeNow ?? timeEllapsed ?? ''}`;
 
-    const use_emoji_global = this.env.global.$shed?.overrides?.use_emoji;
-
-    return label_txt !== ''
-      ? `(${use_emoji_global || this.use_emoji ? '⏱' : ''}${label_txt}) `
-      : '';
+    return labelTxt !== '' ? `(${this.use_emoji ? '⏱' : ''}${labelTxt}) ` : '';
   }
 
   /**

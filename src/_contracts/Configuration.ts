@@ -16,13 +16,14 @@ export type ConsoleMethod =
   | 'dirxml';
 
 export interface Defaults {
-  log_level: number;
-  use_emoji: boolean;
-  terminal_color_fidelity: 0 | 1 | 2 | 3;
-  capture_stacktrace: boolean;
-  base_style: string;
-  log_levels: LogLevels;
-  custom_levels: LogLevels;
+  logLevel: number;
+  useEmoji: boolean;
+  terminalColorFidelity: 0 | 1 | 2 | 3;
+  captureStacktrace: boolean;
+  unstyled: boolean;
+  baseStyle: string;
+  logLevels: LogLevels;
+  customLevels: LogLevels;
   filters: AdzeFilters;
   meta: {
     [key: string]: unknown;
@@ -44,7 +45,7 @@ export interface LogLevelDefinition {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface Configuration
-  extends Partial<Omit<Defaults, 'filters' | 'log_levels'>> {
-  log_levels?: RecursivePartial<LogLevels>;
+  extends Partial<Omit<Defaults, 'filters' | 'logLevels'>> {
+  logLevels?: RecursivePartial<LogLevels>;
   filters?: UserAdzeFilters;
 }

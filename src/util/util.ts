@@ -50,7 +50,7 @@ export function isRange(val: unknown[]): val is Range {
  * Returns the highest level from the provided configuration.
  */
 export function getMaxLevel(cfg: Defaults | null): number {
-  return Math.max(...[8, ...levelsFromConfig(cfg?.custom_levels ?? {})]);
+  return Math.max(...[8, ...levelsFromConfig(cfg?.customLevels ?? {})]);
 }
 
 /**

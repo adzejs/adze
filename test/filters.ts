@@ -11,7 +11,7 @@ import {
 global.ADZE_ENV = 'dev';
 
 test('filters a log collection by namespace', (t) => {
-  const bundled = bundle(adze({ use_emoji: true }));
+  const bundled = bundle(adze({ useEmoji: true }));
 
   bundled().ns('SPACE').error('This is an error!');
   bundled().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
@@ -27,7 +27,7 @@ test('filters a log collection by namespace', (t) => {
 });
 
 test('filters a log collection by label', (t) => {
-  const bundled = bundle(adze({ use_emoji: true }));
+  const bundled = bundle(adze({ useEmoji: true }));
 
   bundled().ns('SPACE').error('This is an error!');
   bundled().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
@@ -43,7 +43,7 @@ test('filters a log collection by label', (t) => {
 });
 
 test('filters a log collection by levels', (t) => {
-  const bundled = bundle(adze({ use_emoji: true }));
+  const bundled = bundle(adze({ useEmoji: true }));
 
   bundled().ns('SPACE').error('This is an error!');
   bundled().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
@@ -59,7 +59,7 @@ test('filters a log collection by levels', (t) => {
 });
 
 test('filterCollection filters collection by a log data value', (t) => {
-  const bundled = bundle(adze({ use_emoji: true }));
+  const bundled = bundle(adze({ useEmoji: true }));
 
   bundled().ns('SPACE').silent.error('This is an error!');
   bundled().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
