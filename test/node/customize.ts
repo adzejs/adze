@@ -58,3 +58,23 @@ test('renders a custom log with emoji', (t) => {
     t.fail();
   }
 });
+
+// =========================
+// UNSTYLED FOR STDOUT
+// =========================
+
+test('renders an unstyled log', (t) => {
+  const unstyled = adze({ unstyled: true })
+    .label('unstyled')
+    .log('This log should have no style.');
+
+  t.truthy(unstyled.log);
+
+  if (unstyled.render) {
+    const [method, args] = unstyled.render;
+    t.is(method, 'log');
+    t.is(args[0], ' Log(1)        ');
+    t.is(args[1], '[unstyled] ');
+    t.is(args[2], 'This log should have no style.');
+  }
+});
