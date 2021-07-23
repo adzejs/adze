@@ -6,7 +6,7 @@ sidebar: auto
 
 Adze is a completely configurable library by design that comes with sensible defaults. There are two primary configurations to understand; the Adze configuration and the Shed configuration. In this section we'll take a look at each configuration and explain each property in detail.
 
-_NOTE: [Chalk](https://github.com/chalk/chalk#chalklevel) is what Adze uses under the hood for terminal coloring. Because terminals differ in their color fidelity, Chalk exposes a setting allowing you to specify your fidelity. Adze is basic with its colors so the low level of 1 is sufficient, however, you can change it to your liking with the `terminal_color_fidelity` option described below. Please refer to the [Chalk](https://github.com/chalk/chalk#chalklevel) docs for information about what the fidelity levels mean._
+_NOTE: [Chalk](https://github.com/chalk/chalk#chalklevel) is what Adze uses under the hood for terminal coloring. Because terminals differ in their color fidelity, Chalk exposes a setting allowing you to specify your fidelity. Adze is basic with its colors so the low level of 1 is sufficient, however, you can change it to your liking with the `terminalColorFidelity` option described below. Please refer to the [Chalk](https://github.com/chalk/chalk#chalklevel) docs for information about what the fidelity levels mean._
 
 ## Adze Configuration
 
@@ -15,13 +15,14 @@ _NOTE: [Chalk](https://github.com/chalk/chalk#chalklevel) is what Adze uses unde
 ```typescript
 // This is the top level Adze configuration
 interface Configuration {
-  log_level?: number;
-  use_emoji?: boolean;
-  terminal_color_fidelity?: 0 | 1 | 2 | 3;
-  capture_stacktrace?: boolean;
-  base_style?: string;
-  log_levels?: LogLevels;
-  custom_levels?: Partial<LogLevels>;
+  logLevel?: number;
+  useEmoji?: boolean;
+  unstyled?: boolean;
+  terminalColorFidelity?: 0 | 1 | 2 | 3;
+  captureStacktrace?: boolean;
+  baseStyle?: string;
+  logLevels?: LogLevels;
+  customLevels?: Partial<LogLevels>;
   meta?: {
     [key: string]: unknown;
   };
@@ -46,17 +47,18 @@ type ConsoleMethod =
 
 ### Descriptions
 
-| Property Name           | Default Value                                 | Description                                                                                                                |
-| ----------------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| log_level               | 8                                             | The highest log level that will be allowed to render.                                                                      |
-| use_emoji               | false                                         | Toggle emoji's on or off for log rendering.                                                                                |
-| terminal_color_fidelity | 1                                             | Control terminal color fidelity with [Chalk](https://github.com/chalk/chalk#chalklevel).                                   |
-| capture_stacktrace      | false                                         | Logs will record their stacktrace when they are created. Disabled by default for performance.                              |
-| base_style              | [Reference](#styling)                         | These styles will be applied to all default log levels.                                                                    |
-| log_levels              | [Reference](#log-levels-log-level-definition) | Configuration for default Adze log levels.                                                                                 |
-| custom_levels           | [Reference](#log-levels-log-level-definition) | Configuration for custom Adze log levels.                                                                                  |
-| meta                    | `{}`                                          | Key/value pairs of data to be applied to all logs by default.                                                              |
-| filters                 | [Reference](#filters)                         | Filters determine whether logs are allowed to print to the console/terminal based on their log level, label, or namespace. |
+| Property Name         | Default Value                                 | Description                                                                                                                |
+| --------------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| logLevel              | 8                                             | The highest log level that will be allowed to render.                                                                      |
+| useEmoji              | false                                         | Toggle emoji's on or off for log rendering.                                                                                |
+| unstyled              | false                                         | Disables all styling of logs. Useful for stdout use cases.                                                                 |
+| terminalColorFidelity | 1                                             | Control terminal color fidelity with [Chalk](https://github.com/chalk/chalk#chalklevel).                                   |
+| captureStacktrace     | false                                         | Logs will record their stacktrace when they are created. Disabled by default for performance.                              |
+| baseStyle             | [Reference](#styling)                         | These styles will be applied to all default log levels.                                                                    |
+| logLevels             | [Reference](#log-levels-log-level-definition) | Configuration for default Adze log levels.                                                                                 |
+| customLevels          | [Reference](#log-levels-log-level-definition) | Configuration for custom Adze log levels.                                                                                  |
+| meta                  | `{}`                                          | Key/value pairs of data to be applied to all logs by default.                                                              |
+| filters               | [Reference](#filters)                         | Filters determine whether logs are allowed to print to the console/terminal based on their log level, label, or namespace. |
 
 ## Shed Configuration
 
@@ -67,8 +69,8 @@ When you create a Shed you can provide it with configuration to control it's cac
 ```typescript
 // This is the top level Adze log configuration
 interface ShedConfig {
-  cache_limit: number;
-  global_cfg: Configuration | null;
+  cacheLimit: number;
+  globalCfg: Configuration | null;
 }
 ```
 
@@ -76,8 +78,8 @@ interface ShedConfig {
 
 | Property Name | Default Value                    | Description                                                                           |
 | ------------- | -------------------------------- | ------------------------------------------------------------------------------------- |
-| cache_limit   | 300                              | The maximum number of logs that Shed will cache. This exists to prevent memory leaks. |
-| global_cfg    | [Reference](#adze-configuration) | Adze configuration that will override all other Adze log configurations.              |
+| cacheLimit    | 300                              | The maximum number of logs that Shed will cache. This exists to prevent memory leaks. |
+| globalCfg     | [Reference](#adze-configuration) | Adze configuration that will override all other Adze log configurations.              |
 
 ## Log Levels / Log Level Definition
 
@@ -107,15 +109,15 @@ interface LogLevelDefinition {
 import { adze } from 'adze';
 
 const config = {
-  log_level: 11,
-  use_emoji: true,
+  logLevel: 11,
+  useEmoji: true,
   // Overriding some default log level settings
-  log_levels: {
+  logLevels: {
     log: {
       emoji: '🧙‍♂️', // We'll change the default log emoji to a wizard for funsies
     },
   },
-  custom_levels: {
+  customLevels: {
     // We'll create a new log level called foobar that goes to 11
     foobar: {
       level: 11,
@@ -140,7 +142,7 @@ adze(config).custom('foobar', '#$%&%#$@&!'); // Anger!
 
 ## Styling
 
-Although Adze comes with some pretty default styles, all logs within Adze can have their styling customized. Default log level styling is a combination of the `base_style` property plus the `style` property on its [log level definition](#log-levels--log-level-definition). For styling logs in the terminal, each log level definition exposes a `terminal` property that is an array of [Chalk](https://github.com/chalk/chalk) style functions. This section contains a breakdown of what those default styles are as well as a list of possible values for the chalk styles.
+Although Adze comes with some pretty default styles, all logs within Adze can have their styling customized. Default log level styling is a combination of the `baseStyle` property plus the `style` property on its [log level definition](#log-levels--log-level-definition). For styling logs in the terminal, each log level definition exposes a `terminal` property that is an array of [Chalk](https://github.com/chalk/chalk) style functions. This section contains a breakdown of what those default styles are as well as a list of possible values for the chalk styles.
 
 ### Default Browser Styles
 
@@ -176,7 +178,7 @@ _NOTE: The default styles use [template string interpolation](https://developer.
 
 Adze styling for the terminal makes use of a library named [Chalk](https://github.com/chalk/chalk). Chalk exposes several formatting functions for terminal text styling that Adze exposes in its configuration.
 
-_NOTE: [Chalk](https://github.com/chalk/chalk#chalklevel) is what Adze uses under the hood for terminal coloring. Because terminals differ in their color fidelity, Chalk exposes a setting allowing you to specify your fidelity. Adze is basic with its colors so the low level of 1 is sufficient, however, you can change it to your liking with the `terminal_color_fidelity` option described in the [Adze Configuration](#adze-configuration) section above. Please refer to the [Chalk](https://github.com/chalk/chalk#chalklevel) docs for information about what the fidelity levels mean._
+_NOTE: [Chalk](https://github.com/chalk/chalk#chalklevel) is what Adze uses under the hood for terminal coloring. Because terminals differ in their color fidelity, Chalk exposes a setting allowing you to specify your fidelity. Adze is basic with its colors so the low level of 1 is sufficient, however, you can change it to your liking with the `terminalColorFidelity` option described in the [Adze Configuration](#adze-configuration) section above. Please refer to the [Chalk](https://github.com/chalk/chalk#chalklevel) docs for information about what the fidelity levels mean._
 
 #### Default Level Styles
 

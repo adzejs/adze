@@ -43,7 +43,7 @@ import { adze } from 'adze';
 
 adze().alert('Something went horribly wrong!');
 // With emoji's enabled
-adze({ use_emoji: true }).alert('Something went horribly wrong!');
+adze({ useEmoji: true }).alert('Something went horribly wrong!');
 ```
 
 ### Output
@@ -77,7 +77,7 @@ import { adze } from 'adze';
 
 adze().error('An error occurred!');
 // With emoji's enabled
-adze({ use_emoji: true }).error('An error occurred!');
+adze({ useEmoji: true }).error('An error occurred!');
 ```
 
 ### Output
@@ -111,7 +111,7 @@ import { adze } from 'adze';
 
 adze().warn("I'm warning you!");
 // With emoji's enabled
-adze({ use_emoji: true }).warn("I'm warning you!");
+adze({ useEmoji: true }).warn("I'm warning you!");
 ```
 
 ### Output
@@ -145,7 +145,7 @@ import { adze } from 'adze';
 
 adze().info('App information');
 // With emoji's enabled
-adze({ use_emoji: true }).info('App information');
+adze({ useEmoji: true }).info('App information');
 ```
 
 ### Output
@@ -179,7 +179,7 @@ import { adze } from 'adze';
 
 adze().fail('An operation failed to execute!');
 // With emoji's enabled
-adze({ use_emoji: true }).fail('An operation failed to execute!');
+adze({ useEmoji: true }).fail('An operation failed to execute!');
 ```
 
 ### Output
@@ -213,7 +213,7 @@ import { adze } from 'adze';
 
 adze().success('An operation was successful!');
 // With emoji's enabled
-adze({ use_emoji: true }).success('An operation was successful!');
+adze({ useEmoji: true }).success('An operation was successful!');
 ```
 
 ### Output
@@ -247,7 +247,7 @@ import { adze } from 'adze';
 
 adze().log('Logging a message.');
 // With emoji's enabled
-adze({ use_emoji: true }).log('Logging a message.');
+adze({ useEmoji: true }).log('Logging a message.');
 ```
 
 ### Output
@@ -281,7 +281,7 @@ import { adze } from 'adze';
 
 adze().debug('Debugging an issue.');
 // With emoji's enabled
-adze({ use_emoji: true }).debug('Debugging an issue.');
+adze({ useEmoji: true }).debug('Debugging an issue.');
 ```
 
 ### Output
@@ -315,7 +315,7 @@ import { adze } from 'adze';
 
 adze().verbose('Logging some extreme detail.');
 // With emoji's enabled
-adze({ use_emoji: true }).verbose('Logging some extreme detail.');
+adze({ useEmoji: true }).verbose('Logging some extreme detail.');
 ```
 
 ### Output

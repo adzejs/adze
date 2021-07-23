@@ -24,7 +24,7 @@ type Collection = BaseLog[];
 import { adze, createShed } from 'adze';
 
 // Let's create a log bundle
-const bundled = bundle(adze({ use_emoji: true }));
+const bundled = bundle(adze({ useEmoji: true }));
 
 bundled().label('collect').error('This is an error!');
 bundled().label('collect').info('A bundled log with namespaces.');

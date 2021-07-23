@@ -36,7 +36,7 @@ adze()
   .log('X does not equal 2');
 
 // Let's look at the output with emoji's enabled
-adze({ use_emoji: true })
+adze({ useEmoji: true })
   .assert(x === y)
   .log('X does not equal Y');
 ```
@@ -603,7 +603,7 @@ adze()
   .log('X does not equal Y');
 
 // Let's look at the output with emoji's enabled
-adze({ use_emoji: true })
+adze({ useEmoji: true })
   .test(y === 3)
   .log('Y equals 3');
 ```
@@ -648,7 +648,7 @@ for (let i = 0; i < 10000; i += 1) {
 adze().label('loop').timeEnd.log('Performance of our loop.');
 
 // Let's see the output with emoji's
-adze({ use_emoji: true }).label('loop').timeEnd.log('Performance of our loop.');
+adze({ useEmoji: true }).label('loop').timeEnd.log('Performance of our loop.');
 ```
 
 ### Output
@@ -691,7 +691,7 @@ for (let i = 0; i < 10000; i += 1) {
 adze().label('loop').timeEnd.log('Performance of our loop.');
 
 // Let's see the output with emoji's
-adze({ use_emoji: true }).label('loop').timeEnd.log('Performance of our loop.');
+adze({ useEmoji: true }).label('loop').timeEnd.log('Performance of our loop.');
 ```
 
 ### Output
@@ -729,7 +729,7 @@ for (let i = 0; i < 10000; i += 1) {
 adze().timeNow.log('Recording the time ellapsed since page load.');
 
 // Let's see what it looks like with emoji's enabled.
-adze({ use_emoji: true }).timeNow.log(
+adze({ useEmoji: true }).timeNow.log(
   'Recording the time ellapsed since page load.'
 );
 ```

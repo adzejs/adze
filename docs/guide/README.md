@@ -49,11 +49,9 @@ As stated above, Adze offers an easy to use, chainable API. To create a log you 
 ```typescript
 import { adze } from 'adze';
 
-adze({ use_emoji: true }).ns('tix-456').log('Example log');
+adze({ useEmoji: true }).ns('tix-456').log('Example log');
 ```
 
 The output of this would look like the following:
 
 ![Preview of Adze logs](./examples/api_example_output.png)
-
-

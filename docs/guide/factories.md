@@ -12,11 +12,11 @@ Here are a few examples of some patterns that you can use:
 import { adze } from 'adze';
 
 // Here we are creating a log with a configuration that will only apply to this instance
-adze({ use_emoji: true }).log('Hello World with emoji!');
+adze({ useEmoji: true }).log('Hello World with emoji!');
 
 // But... what if we want to apply the same configuration to multiple logs?
 const cfg = {
-  use_emoji: true,
+  useEmoji: true,
 };
 
 adze(cfg).log('A log with emoji enabled.');
@@ -51,7 +51,7 @@ class BaseLog {
 import { adze } from 'adze';
 
 // Let's seal a configuration and namespace into a new log factory
-const log = adze({ use_emoji: true }).ns('my-project').seal();
+const log = adze({ useEmoji: true }).ns('my-project').seal();
 
 /* Now we can create new logs from our factory that enable emoji's and all
  * have the 'my-project' namespace! */
