@@ -22,6 +22,7 @@ export default function runDemo(lib, el) {
   asGroupCollapsed(lib);
   evaluation(lib);
   withTrace(lib);
+  unstyled(lib);
 }
 
 function screenshots({ adze, createShed }, el) {
@@ -31,7 +32,7 @@ function screenshots({ adze, createShed }, el) {
 
   // Let's create an Adze configuration
   var cfg = {
-    log_level: 1,
+    logLevel: 1,
   };
 
   // Now we'll create a new factory using seal
@@ -54,7 +55,7 @@ function screenshotDemo({ adze }) {
   log.log('Example log');
   log.debug('Example debug log');
   log.verbose('Example verbose log');
-  const log2 = adze({ use_emoji: true });
+  const log2 = adze({ useEmoji: true });
   log2.alert('Example alert log');
   log2.error('Example error log');
   log2.warn('Example warning log');
@@ -65,8 +66,8 @@ function screenshotDemo({ adze }) {
   log2.debug('Example debug log');
   log2.verbose('Example verbose log');
   adze({
-    use_emoji: true,
-    custom_levels: {
+    useEmoji: true,
+    customLevels: {
       customError: {
         level: 1,
         method: 'error',
@@ -94,7 +95,7 @@ function defaultLevels({ adze }) {
 
 function defaultLevelsWithEmoji({ adze }) {
   console.log('\n----- Default Levels w/ Emoji -----\n');
-  const log = adze({ use_emoji: true });
+  const log = adze({ useEmoji: true });
   log.alert('This is an alert!');
   log.error('This is an error!');
   log.warn('This is a warn!');
@@ -110,8 +111,8 @@ function defaultLevelsWithGlobalOverride({ adze, createShed, removeShed }) {
   console.log('\n----- Default Verbose Level w/ Global Overrides -----\n');
   createShed({
     global_cfg: {
-      use_emoji: true,
-      log_levels: {
+      useEmoji: true,
+      logLevels: {
         verbose: {
           style:
             'padding-right: 26px; background-color: CornflowerBlue; border-color: 1px solid black; color: white; border-color: #cbc9c9;',
@@ -127,7 +128,7 @@ function defaultLevelsWithGlobalOverride({ adze, createShed, removeShed }) {
 function customLevels({ adze }) {
   console.log('\n----- Custom Levels -----\n');
   const log = adze({
-    custom_levels: {
+    customLevels: {
       special: {
         level: 4,
         method: 'info',
@@ -154,8 +155,8 @@ function customLevels({ adze }) {
 function customLevelsWithEmoji({ adze }) {
   console.log('\n----- Custom Levels w/ Emoji -----\n');
   const log = adze({
-    use_emoji: true,
-    custom_levels: {
+    useEmoji: true,
+    customLevels: {
       special: {
         level: 4,
         method: 'info',
@@ -215,9 +216,9 @@ function thread({ adze, createShed, removeShed, render }) {
 function logLevelOf2({ adze }) {
   console.log('\n----- Log Level of 2 -----\n');
   const log = adze({
-    log_level: 2,
-    use_emoji: true,
-    custom_levels: {
+    logLevel: 2,
+    useEmoji: true,
+    customLevels: {
       special: {
         level: 3,
         method: 'info',
@@ -263,8 +264,8 @@ function bundleLogs({
   filterLevel,
 }) {
   console.log('\n----- Bundle Logs & Recall All -----\n');
-  const log = bundle(adze({ use_emoji: true }));
-  const divider = adze({ use_emoji: true });
+  const log = bundle(adze({ useEmoji: true }));
+  const divider = adze({ useEmoji: true });
 
   log().ns('SPACE').error('This is an error!');
   log().ns(['foo', 'SPACE']).info('A bundled log with multiple namespaces.');
@@ -292,7 +293,7 @@ function bundleLogs({
 
 function sealLogModifiers({ adze }) {
   console.log('\n----- Seals Log Modifiers for New Logs -----\n');
-  const sealed = adze({ use_emoji: true })
+  const sealed = adze({ useEmoji: true })
     .ns('sealed')
     .label('sealed-label')
     .seal();
@@ -322,7 +323,7 @@ function withTime({ adze }) {
   adze().time.log('Testing time with no store.');
   adze().timeEnd.log('Testing time with no store.');
   adze().timeNow.log('Testing timeNow with no store.');
-  adze({ use_emoji: true }).timeNow.log(
+  adze({ useEmoji: true }).timeNow.log(
     "Testing timeNow with no store and emoji's enabled."
   );
 }
@@ -366,7 +367,7 @@ function evaluation({ adze }) {
   adze()
     .assert(1 === 2)
     .log('1 does not equal 2');
-  adze({ use_emoji: true })
+  adze({ useEmoji: true })
     .assert(1 === 2)
     .log('1 does not equal 2. Testing emoji.');
   adze()
@@ -383,4 +384,9 @@ function evaluation({ adze }) {
 function withTrace({ adze }) {
   console.log('\n----- Default Log w/ Trace -----\n');
   adze().trace.log('Tracing...');
+}
+
+function unstyled({ adze }) {
+  console.log('\n----- Unstyled Log -----\n');
+  adze({ unstyled: true }).label('unstyled').log("I'm an unstyled log.");
 }

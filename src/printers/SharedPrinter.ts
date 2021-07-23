@@ -13,9 +13,14 @@ export class SharedPrinter {
 
   get use_emoji(): boolean {
     return (
-      this.env.global.$shed?.overrides?.useEmoji === true ||
-      this.data.cfg.useEmoji === true
+      (this.env.global.$shed?.overrides?.useEmoji === true &&
+        !this.env.global.$shed?.overrides?.unstyled === false) ||
+      (this.data.cfg.useEmoji === true && this.data.cfg.unstyled === false)
     );
+  }
+
+  get unstyled(): boolean {
+    return this.data.cfg.unstyled;
   }
 
   // ------ Shared Formatters ------- //

@@ -6,7 +6,7 @@ export const defaults: Defaults = {
   useEmoji: false,
   captureStacktrace: false,
   terminalColorFidelity: 1,
-  stdout: false,
+  unstyled: false,
   baseStyle:
     'font-size: 10px; font-weight: bold; border-radius: 0 10px 10px 0; border-width: 1px; border-style: solid;',
   customLevels: {},

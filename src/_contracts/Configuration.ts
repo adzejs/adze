@@ -20,7 +20,7 @@ export interface Defaults {
   useEmoji: boolean;
   terminalColorFidelity: 0 | 1 | 2 | 3;
   captureStacktrace: boolean;
-  stdout: boolean;
+  unstyled: boolean;
   baseStyle: string;
   logLevels: LogLevels;
   customLevels: LogLevels;

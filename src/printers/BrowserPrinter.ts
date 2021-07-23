@@ -15,13 +15,15 @@ export class BrowserPrinter extends SharedPrinter {
   public printLog(): LogRender {
     const method = this.data.definition.method;
     const leader = this.fLeader();
-    const style = this.data.cfg.baseStyle + this.data.definition.style;
+    const style = this.unstyled
+      ? ''
+      : this.data.cfg.baseStyle + this.data.definition.style;
     const meta = this.fMeta();
 
-    const renderArgs =
-      meta === ''
-        ? [leader, style, ...this.data.args]
-        : [leader, style, meta, ...this.data.args];
+    // Assemble the args
+    const renderArgsRaw = [leader, style, meta];
+    const renderArgsFiltered = renderArgsRaw.filter((val) => val !== '');
+    const renderArgs = [...renderArgsFiltered, ...this.data.args];
 
     return [method, renderArgs];
   }
@@ -79,17 +81,16 @@ export class BrowserPrinter extends SharedPrinter {
    * the log level name, and the number of arguments being printed.
    */
   public fLeader(): string {
-    return ` %c${this.fEmoji()} ${this.fName()}(${this.data.args.length})`;
+    const styleFlag = this.unstyled ? '' : '%c';
+    const argCount = this.data.args.length;
+    return ` ${styleFlag}${this.fEmoji()} ${this.fName()}(${argCount})`;
   }
 
   /**
    * Adds the emoji to the log leader if enabled.
    */
   public fEmoji(): string {
-    const global_use_emoji = this.env.global.$shed?.overrides?.useEmoji;
-    return global_use_emoji || this.use_emoji
-      ? ` ${this.data.definition.emoji}`
-      : '';
+    return this.use_emoji ? ` ${this.data.definition.emoji}` : '';
   }
 
   /**
@@ -118,11 +119,7 @@ export class BrowserPrinter extends SharedPrinter {
     const timeEllapsed = this.data.label?.timeEllapsed;
     const labelTxt = `${timeNow ?? timeEllapsed ?? ''}`;
 
-    const globalUseEmoji = this.env.global.$shed?.overrides?.useEmoji;
-
-    return labelTxt !== ''
-      ? ` (${globalUseEmoji || this.use_emoji ? '⏱' : ''}${labelTxt}) `
-      : '';
+    return labelTxt !== '' ? ` (${this.use_emoji ? '⏱' : ''}${labelTxt}) ` : '';
   }
 
   /**
