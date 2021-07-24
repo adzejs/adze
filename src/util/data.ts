@@ -8,7 +8,19 @@ export function timestamp(): LogTimestamp {
   const unixMilli = Date.now();
   const date = new Date(unixMilli);
   const utc = date.toUTCString();
-  return { unixMilli, utc };
+  const utcTimezoneOffset = date.getTimezoneOffset();
+  return { unixMilli, utc, utcTimezoneOffset };
+}
+
+/**
+ * Converts a JavaScript timezone offset into a UTC offset string.
+ */
+export function formatTimezoneOffset(raw: number): string {
+  const offset = Math.abs(raw / 60);
+  const isNegative = raw < 0;
+  return `${isNegative ? '-' : '+'}${
+    offset > 9 ? `${offset}` : `0${offset}`
+  }00`;
 }
 
 /**

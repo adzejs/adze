@@ -83,6 +83,7 @@ export class BrowserPrinter extends SharedPrinter {
   public fLeader(): string {
     const styleFlag = this.unstyled ? '' : '%c';
     const argCount = this.data.args.length;
+    // const timestamp = this.data.showTimestamp ? `this.data.timestamp.utc`
     return ` ${styleFlag}${this.fEmoji()} ${this.fName()}(${argCount})`;
   }
 

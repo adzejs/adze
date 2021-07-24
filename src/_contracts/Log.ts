@@ -22,6 +22,7 @@ export type TerminatingMethodKeys =
 export interface LogTimestamp {
   unixMilli: number;
   utc: string;
+  utcTimezoneOffset: number;
 }
 
 type PrintMethodNames =
@@ -68,6 +69,7 @@ export interface LogData {
   cfg: Defaults;
   context: MetaData;
   definition: LogLevelDefinition | null;
+  showTimestamp: boolean;
   dumpContext: boolean;
   expression?: boolean;
   isSilent: boolean;

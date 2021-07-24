@@ -23,6 +23,11 @@ export class SharedPrinter {
     return this.data.cfg.unstyled;
   }
 
+  get timestamp(): string {
+    // TODO
+    return this.data.timestamp.utc;
+  }
+
   // ------ Shared Formatters ------- //
 
   /**
