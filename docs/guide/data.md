@@ -156,6 +156,7 @@ interface FinalLogData extends LogData {
 | dumpContext   | Boolean indicating if the mapped diagnostic context (MDC) should be rendered.                | [MDC](mapped-diagnostic-context.md)                              |
 | expression    | The boolean result of the test expression on the log instance.                               | [test](modifiers.md#test)                                        |
 | isSilent      | Boolean value indicating if the log should execute silently.                                 | [silent](modifiers.md#silent)                                    |
+| showTimestamp | Boolean value indicating that the log should render an ISO 8601 timestamp.                   | [timestamp](modifiers.md#timestamp)                              |
 | label         | The values of a label instance attached to the log instance.                                 | [Label](#label-data-object)                                      |
 | level         | The log level of the instance.                                                               | [Log Level Definition](/config/#log-levels-log-level-definition) |
 | meta          | Meta data attached to the instance.                                                          | [meta](modifiers.md#meta)                                        |
@@ -218,7 +219,7 @@ console[method](...args);
 
 ## Log Timestamp
 
-The log timestamp data object contains two equivalent timestamp values for use of knowing when the log instance was terminated.
+The log timestamp data object contains timestamp values in multiple formats from when the log instance was terminated.
 
 ### Interface
 
@@ -226,6 +227,8 @@ The log timestamp data object contains two equivalent timestamp values for use o
 interface LogTimestamp {
   unixMilli: number;
   utc: string;
+  utcTimezoneOffset: string;
+  iso8601: string;
 }
 ```
 
@@ -239,7 +242,7 @@ const { log } = adze().info('This is an info log');
 
 // Now let's export its meta data and select the timestamp data object
 const timestamp = log.data.timestamp;
-// => { unixMilli: 1617827970649, utc: 'Wed, 07 Apr 2021 20:39:30 GMT' }
+// => { unixMilli: 1617827970649, utc: 'Wed, 07 Apr 2021 20:39:30 GMT', utcTimezoneOffset: '+04:00', iso8601: '2021-04-07T20:39:30+04:00' }
 ```
 
 ## Terminated Log Object
