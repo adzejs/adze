@@ -23,6 +23,7 @@ export default function runDemo(lib, el) {
   evaluation(lib);
   withTrace(lib);
   unstyled(lib);
+  withTimestamp(lib);
 }
 
 function screenshots({ adze, createShed }, el) {
@@ -389,4 +390,10 @@ function withTrace({ adze }) {
 function unstyled({ adze }) {
   console.log('\n----- Unstyled Log -----\n');
   adze({ unstyled: true }).label('unstyled').log("I'm an unstyled log.");
+}
+
+function withTimestamp({ adze }) {
+  console.log('\n----- With Timestamp -----\n');
+  adze().label('timestamped').timestamp.log("I have a timestamp.");
+  adze({ unstyled: true }).label('timestamped').timestamp.log("I have a timestamp and no styles.");
 }

@@ -115,7 +115,9 @@ export class NodePrinter extends SharedPrinter {
    * these modifiers were applied to this log.
    */
   private fMeta(): string {
-    return `${this.fNamespace()}${this.fLabel()}${this.fTime()}${this.fCount()}${this.fAssert()}${this.fTest()}`;
+    return `${
+      this.timestamp
+    }${this.fNamespace()}${this.fLabel()}${this.fTime()}${this.fCount()}${this.fAssert()}${this.fTest()}`;
   }
 
   /**

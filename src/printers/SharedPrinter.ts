@@ -23,6 +23,15 @@ export class SharedPrinter {
     return this.data.cfg.unstyled;
   }
 
+  /**
+   * Returns a UTC formatted timestamp.
+   *
+   * Example: 2002-10-10T12:00:00−05:00
+   */
+  get timestamp(): string {
+    return this.data.showTimestamp ? `${this.data.timestamp.iso8601}  ` : '';
+  }
+
   // ------ Shared Formatters ------- //
 
   /**

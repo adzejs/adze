@@ -66,7 +66,7 @@ export class BaseLog {
   /**
    * The timestamp object generated when this log has been terminated.
    */
-  private timestamp: LogTimestamp | null = null;
+  private _timestamp: LogTimestamp | null = null;
 
   /**
    * The stacktrace of the log when it has been terminated.
@@ -137,6 +137,12 @@ export class BaseLog {
    */
   private dumpContext = false;
 
+  /**
+   * Flag which tells the log instance to render the
+   * timestamp.
+   */
+  private showTimestamp = false;
+
   constructor(printer: typeof Printer, env: Env, user_cfg?: Configuration) {
     this.Printer = printer;
     this.env = env;
@@ -192,6 +198,8 @@ export class BaseLog {
    *
    * You should use this sparingly since it's level is lower
    * than error.
+   *
+   * This is a non-standard API.
    */
   public alert(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('alert', args);
@@ -204,6 +212,8 @@ export class BaseLog {
    *
    * Use this for logging fatal errors or errors that
    * impact functionality of your application.
+   *
+   * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/error)
    */
   public error(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('error', args);
@@ -217,6 +227,8 @@ export class BaseLog {
    * Use this for logging issues that may impact
    * app performance in a less impactful way than
    * an error.
+   *
+   * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/warn)
    */
   public warn(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('warn', args);
@@ -230,6 +242,8 @@ export class BaseLog {
    * Use this for logging general insights into your
    * application. This level does not indicate any
    * problems.
+   *
+   * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/info)
    */
   public info(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('info', args);
@@ -242,6 +256,8 @@ export class BaseLog {
    *
    * Use this for logging network communication errors
    * that do not break your application.
+   *
+   * This is a non-standard API.
    */
   public fail(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('fail', args);
@@ -253,6 +269,8 @@ export class BaseLog {
    * **Default Level = 5**
    *
    * Use this for logging successful network communication.
+   *
+   * This is a non-standard API.
    */
   public success(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('success', args);
@@ -265,6 +283,8 @@ export class BaseLog {
    *
    * Use this for general logging that doesn't apply
    * to any of the lower levels.
+   *
+   * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
   public log(...args: unknown[]): TerminatedLog<this> {
     // console.log('MODIFIER QUEUE', this.modifierQueue);
@@ -280,6 +300,8 @@ export class BaseLog {
    * do not want to see unless you are debugging a problem
    * with your application. This is typically hidden by
    * default.
+   *
+   * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/debug)
    */
   public debug(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('debug', args);
@@ -294,6 +316,8 @@ export class BaseLog {
    * information. Use this level when the values you are
    * logging are granular enough that they are no longer
    * easily human readable.
+   *
+   * This is a non-standard API.
    */
   public verbose(...args: unknown[]): TerminatedLog<this> {
     return this.logMethod('verbose', args);
@@ -304,6 +328,8 @@ export class BaseLog {
    *
    * Custom log levels are defined within the Adze configuration object
    * under the `custom_levels` property.
+   *
+   * This is a non-standard API.
    */
   public custom(level_name: string, ...args: unknown[]): TerminatedLog<this> {
     return this.customMethod(level_name, args);
@@ -348,6 +374,8 @@ export class BaseLog {
    * // Info => Results from our thread, { a: 1, b: 2, answer: 3 }, { x: 4, y: 3, answer: 1 }
    *
    * ```
+   *
+   * This is a non-standard API.
    */
   public thread<T>(key: string, value: T): void {
     // Check if the log has a label. If not, console.warn the user.
@@ -362,6 +390,8 @@ export class BaseLog {
 
   /**
    * Closes a thread assigned to the log by clearing the context values.
+   *
+   * This is a non-standard API.
    */
   public close(): void {
     this.runModifierQueue();
@@ -372,6 +402,8 @@ export class BaseLog {
 
   /**
    * Alias for console.clear().
+   *
+   * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/clear)
    */
   public clear(): void {
     console.clear();
@@ -379,6 +411,8 @@ export class BaseLog {
 
   /**
    * Alias for clear() which is an alias for console.clear().
+   *
+   * This is a non-standard API.
    */
   public clr(): void {
     this.clear();
@@ -430,6 +464,8 @@ export class BaseLog {
   /**
    * Instructs the log terminator to add the key/value pairs from the
    * thread context to the console output.
+   *
+   * This is a non-standard API.
    */
   public get dump(): this {
     return this.modifier((ctxt) => {
@@ -440,6 +476,8 @@ export class BaseLog {
   /**
    * Assign meta data to this log instance that is meant to be
    * retrievable in a log listener or from a `log.data()` dump.
+   *
+   * This is a non-standard API.
    */
   public meta<T>(key: string, val: T): this {
     return this.modifier((ctxt) => {
@@ -553,6 +591,8 @@ export class BaseLog {
 
   /**
    * An alias for `namespace()`.
+   *
+   * This is a non-standard API.
    */
   public ns(ns: string | string[]): this {
     return this.namespace(ns);
@@ -643,6 +683,17 @@ export class BaseLog {
     accomplished by created a new log with the same label.
   */
 
+  /**
+   * This modifier method tells the log to render a timestamp.
+   *
+   * This is a non-standard API.
+   */
+  public get timestamp(): this {
+    return this.modifier((ctxt) => {
+      ctxt.showTimestamp = true;
+    });
+  }
+
   // ==============================
   //   Private Methods
   // ==============================
@@ -718,7 +769,7 @@ export class BaseLog {
         this.args = args;
         this._level = def.level;
         this.definition = def;
-        this.timestamp = timestamp();
+        this._timestamp = timestamp();
         this.stacktrace = this.cfg.captureStacktrace ? stacktrace() : null;
 
         // Set this log data to a variable for type checking
@@ -805,7 +856,7 @@ export class BaseLog {
       level: this._level,
       definition: this.definition ? { ...this.definition } : null,
       args: this.args ? [...this.args] : null,
-      timestamp: this.timestamp ? { ...this.timestamp } : null,
+      timestamp: this._timestamp ? { ...this._timestamp } : null,
       stacktrace: this.stacktrace,
       namespace: this._namespaceVal ? [...this._namespaceVal] : null,
       label: {
@@ -818,6 +869,7 @@ export class BaseLog {
       expression: this.expression,
       dumpContext: this.dumpContext,
       isSilent: this.isSilent,
+      showTimestamp: this.showTimestamp,
       timeNow: this.timeNowVal,
       meta: { ...this.metaData },
       context: { ...this.context },
@@ -834,7 +886,7 @@ export class BaseLog {
     this._level = data.level;
     this.definition = data.definition ? { ...data.definition } : null;
     this.args = data.args ? [...data.args] : null;
-    this.timestamp = data.timestamp ? { ...data.timestamp } : null;
+    this._timestamp = data.timestamp ? { ...data.timestamp } : null;
     this.stacktrace = data.stacktrace;
     this._namespaceVal = data.namespace ? [...data.namespace] : null;
     this._labelVal = this.resolveLabel(data);
@@ -842,6 +894,7 @@ export class BaseLog {
     this.expression = data.expression;
     this.dumpContext = data.dumpContext;
     this.isSilent = data.isSilent;
+    this.showTimestamp = data.showTimestamp;
     this.timeNowVal = data.timeNow;
     this.metaData = { ...data.meta };
     this.modifierQueue = [...data.modifierQueue];
