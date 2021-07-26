@@ -50,6 +50,10 @@ export function twoDigitWholeNumber(val: number): string {
  */
 export function formatTimezoneOffset(raw: number): string {
   const offset = Math.abs(raw / 60);
+  if (offset === 0) {
+    return 'Z';
+  }
+
   const isNegative = raw < 0;
   return `${isNegative ? '+' : '-'}${
     offset > 9 ? `${offset}` : `0${offset}`
