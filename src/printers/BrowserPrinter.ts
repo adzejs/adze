@@ -83,7 +83,6 @@ export class BrowserPrinter extends SharedPrinter {
   public fLeader(): string {
     const styleFlag = this.unstyled ? '' : '%c';
     const argCount = this.data.args.length;
-    // const timestamp = this.data.showTimestamp ? `this.data.timestamp.utc`
     return ` ${styleFlag}${this.fEmoji()} ${this.fName()}(${argCount})`;
   }
 
@@ -108,7 +107,9 @@ export class BrowserPrinter extends SharedPrinter {
    * these modifiers were applied to this log.
    */
   public fMeta(): string {
-    return `${this.fNamespace()}${this.fLabel()}${this.fTime()}${this.fCount()}${this.fAssert()}${this.fTest()}`;
+    return `${
+      this.timestamp
+    }${this.fNamespace()}${this.fLabel()}${this.fTime()}${this.fCount()}${this.fAssert()}${this.fTest()}`;
   }
 
   /**

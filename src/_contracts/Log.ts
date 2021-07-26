@@ -23,6 +23,7 @@ export interface LogTimestamp {
   unixMilli: number;
   utc: string;
   utcTimezoneOffset: number;
+  iso8601: string;
 }
 
 type PrintMethodNames =
