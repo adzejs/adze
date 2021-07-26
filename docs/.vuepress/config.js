@@ -16,6 +16,65 @@ module.exports = {
    * ref：https://v1.vuepress.vuejs.org/config/#head
    */
   head: [
+    // Facebook Link Meta
+    [
+      'meta',
+      {
+        property: 'og:title',
+        content: 'Adze - Better JavaScript Logging'
+      }
+    ],
+    [
+      'meta',
+      {
+        property: 'og:description',
+        content: 'A TypeScript enabled library with a beautiful API that simplifies JavaScript logging.'
+      }
+    ],
+    [
+      'meta',
+      {
+        property: 'og:image',
+        content: 'https://adzejs.com/assets/img/demo.ce24f23e.png'
+      }
+    ],
+    [
+      'meta',
+      {
+        property: 'og:url',
+        content: 'https://www.adzejs.com/'
+      }
+    ],
+    // Twitter Link Meta
+    [
+      'meta',
+      {
+        property: 'twitter:title',
+        content: 'Adze - Better JavaScript Logging'
+      }
+    ],
+    [
+      'meta',
+      {
+        property: 'twitter:description',
+        content: 'A TypeScript enabled library with a beautiful API that simplifies JavaScript logging.'
+      }
+    ],
+    [
+      'meta',
+      {
+        property: 'twitter:image',
+        content: 'https://adzejs.com/assets/img/demo.ce24f23e.png'
+      }
+    ],
+    [
+      'meta',
+      {
+        property: 'twitter:card',
+        content: 'summary_large_image'
+      }
+    ],
+    // --- Others
     [
       'script',
       {
