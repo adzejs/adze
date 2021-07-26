@@ -221,6 +221,8 @@ console[method](...args);
 
 The log timestamp data object contains timestamp values in multiple formats from when the log instance was terminated.
 
+> utcTimezoneOffset and iso8601 properties: Version >= 1.1
+
 ### Interface
 
 ```typescript
