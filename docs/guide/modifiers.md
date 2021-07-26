@@ -740,6 +740,36 @@ adze({ useEmoji: true }).timeNow.log(
 
 ![time now modifier terminal example output](./examples/timeNow-terminal-example.png)
 
+## timestamp
+
+This modifier instructs the log to render an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+
+_This is not a standard API._
+
+> Version >= 1.1
+
+### Interface
+
+```typescript
+class BaseLog {
+  public get timestamp(): this;
+}
+```
+
+### Example
+
+```javascript
+import { adze } from 'adze';
+
+adze().label('timestamped').timestamp.log('This log has a timestamp.');
+```
+
+### Output
+
+![timestamp modifier example output](./examples/timestamp-example.png)
+
+![timestamp modifier terminal example output](./examples/timestamp-terminal-example.png)
+
 ## trace
 
 This modifier instructs the log to print a stacktrace using the standard `console.trace()` method.
