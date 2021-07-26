@@ -112,6 +112,8 @@ A log data object can also be used to create a clone of a log by [hydrating](get
 
 Final log data extends log data and changes the possible values of some properties. Certain methods require final log data to be provided to it. Use the [isFinalLogData](filtering-and-utility-functions.md#isfinallogdata) type guard to verify it.
 
+> Property showTimestamp available in Version >= 1.1
+
 ### Interface
 
 ```typescript
@@ -125,6 +127,7 @@ interface LogData {
   dumpContext: boolean;
   expression?: boolean;
   isSilent: boolean;
+  showTimestamp: boolean;
   label: LabelData;
   level: number | null;
   meta: MetaData;
