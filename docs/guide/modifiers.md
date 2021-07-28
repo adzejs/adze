@@ -234,7 +234,7 @@ This modifier instructs the [labeled](#label) log to print the context values fr
 
 Refer to the [Mapped Diagnostic Context (MDC)](mapped-diagnostic-context.md) page for more information about the purpose of MDC.
 
-This modifier is dependent upon having a [label](#label) and a [Shed](./shed.md).
+This modifier is dependent upon having a [label](#label) and a [Shed](./shed-concepts.md).
 
 _This is not a standard API._
 
@@ -395,9 +395,9 @@ adze().info('Some other information...');
 
 ## label
 
-Applies an identifying label to a log. If a [Shed](../shed.md) is present, all logs that share the same label will be linked together behind the scenes. This enables global tracking for modifiers that require a label as a prerequisite.
+Applies an identifying label to a log. If a [Shed](../shed-concepts.md) is present, all logs that share the same label will be linked together behind the scenes. This enables global tracking for modifiers that require a label as a prerequisite.
 
-These are the modifiers that require a label and a [Shed](../shed.md) to be useful:
+These are the modifiers that require a label and a [Shed](../shed-concepts.md) to be useful:
 
 - [count](#count)
 - [countReset](#countreset)
@@ -618,7 +618,7 @@ adze({ useEmoji: true })
 
 This modifier starts a timer associated to the log's [label](#label). This is useful for taking performance measurements. A log with a time modifier must be followed by a log with a [timeEnd](#timeend) modifier in order to get the final measurement.
 
-This modifier is dependent upon having a [label](#label) and a [Shed](./shed.md).
+This modifier is dependent upon having a [label](#label) and a [Shed](./shed-concepts.md).
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/time)
 
@@ -661,7 +661,7 @@ adze({ useEmoji: true }).label('loop').timeEnd.log('Performance of our loop.');
 
 This modifier ends a timer associated to the log's [label](#label). This is useful for taking performance measurements. A log with a timeEnd modifier must be preceded by a log with a [time](#time) modifier in order to get the final measurement.
 
-This modifier is dependent upon having a [label](#label) and a [Shed](./shed.md).
+This modifier is dependent upon having a [label](#label) and a [Shed](./shed-concepts.md).
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/timeEnd)
 
@@ -702,9 +702,9 @@ adze({ useEmoji: true }).label('loop').timeEnd.log('Performance of our loop.');
 
 ## timeNow
 
-This modifier logs the time ellapsed since the page has loaded. This is useful for measuring page load performance rather than performance of a particular piece of code. This modifier is **not** dependent upon a [label](#label) or [Shed](./shed.md).
+This modifier logs the time ellapsed since the page has loaded. This is useful for measuring page load performance rather than performance of a particular piece of code. This modifier is **not** dependent upon a [label](#label) or [Shed](./shed-concepts.md).
 
-If a [label](#label) and a [Shed](./shed.md) exist, this modifier will record it's timestamp to the label.
+If a [label](#label) and a [Shed](./shed-concepts.md) exist, this modifier will record it's timestamp to the label.
 
 _This is not a standard API._
 
