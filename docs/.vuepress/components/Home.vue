@@ -9,37 +9,49 @@
           v-if="data.heroImage"
           :src="$withBase(data.heroImage)"
           :alt="data.heroAlt || 'hero'"
-        >
+        />
 
-        <h1
-          v-if="data.heroText !== null"
-          id="main-title"
-        >
+        <h1 v-if="data.heroText !== null" id="main-title">
           {{ data.heroText || $title || 'Hello' }}
         </h1>
 
-        <p
-          v-if="data.tagline !== null"
-          class="description"
-        >
+        <p v-if="data.tagline !== null" class="description">
           {{ data.tagline || $description || 'Welcome to your VuePress site' }}
         </p>
 
-        <p
-          v-if="data.actionText && data.actionLink"
-          class="action"
-        >
-          <nav-link
-            class="action-button"
-            :item="actionLink"
-          />
+        <p v-if="data.actionText && data.actionLink" class="action">
+          <iframe
+            src="https://ghbtns.com/github-btn.html?user=AJStacy&repo=adze&type=star&count=true&size=large"
+            frameborder="0"
+            scrolling="0"
+            width="115"
+            height="30"
+            title="GitHub"
+          ></iframe
+          >&nbsp;&nbsp;&nbsp;
+          <iframe
+            src="https://ghbtns.com/github-btn.html?user=AJStacy&repo=adze&type=watch&count=true&size=large&v=2"
+            frameborder="0"
+            scrolling="0"
+            width="130"
+            height="30"
+            title="GitHub"
+          ></iframe
+          >&nbsp;&nbsp;&nbsp;
+          <iframe
+            src="https://ghbtns.com/github-btn.html?user=AJStacy&repo=adze&type=fork&count=true&size=large"
+            frameborder="0"
+            scrolling="0"
+            width="170"
+            height="30"
+            title="GitHub"
+          ></iframe
+          ><br /><br />
+          <nav-link class="action-button" :item="actionLink" />
         </p>
       </header>
 
-      <div
-        v-if="data.features && data.features.length"
-        class="features"
-      >
+      <div v-if="data.features && data.features.length" class="features">
         <div
           v-for="(feature, index) in data.features"
           :key="index"
@@ -52,11 +64,10 @@
       </div>
     </div>
     <div class="content-container">
-
       <!-- TypeScript -->
       <section class="content-block">
         <div class="image">
-          <img :src="$withBase('/trees-1.svg')" style="max-height: 200px;" />
+          <img :src="$withBase('/trees-1.svg')" style="max-height: 200px" />
         </div>
         <div class="content">
           <Content slot-key="browser-and-node" />
@@ -66,7 +77,7 @@
       <!-- Chainable API -->
       <section class="content-block left">
         <div class="image">
-          <img :src="$withBase('/chainsaw.svg')" style="max-height: 150px;" />
+          <img :src="$withBase('/chainsaw.svg')" style="max-height: 150px" />
         </div>
         <div class="content">
           <Content slot-key="chainable-api" />
@@ -84,7 +95,10 @@
       <div class="content-container">
         <section class="content-block no-border centered">
           <div class="image">
-            <img :src="$withBase('/lumber-scene-1.svg')" style="width: 100%; max-height: 300px;" />
+            <img
+              :src="$withBase('/lumber-scene-1.svg')"
+              style="width: 100%; max-height: 300px"
+            />
           </div>
           <div class="content">
             <Content slot-key="everything-configurable" />
@@ -98,7 +112,10 @@
       <!-- Chainable API -->
       <section class="content-block no-border">
         <div class="image">
-          <img :src="$withBase('/truck-loaded.svg')" style="max-height: 200px;" />
+          <img
+            :src="$withBase('/truck-loaded.svg')"
+            style="max-height: 200px"
+          />
         </div>
         <div class="content">
           <Content slot-key="typescript-support" />
@@ -111,7 +128,7 @@
       <!-- Chainable API -->
       <section class="content-block left">
         <div class="image">
-          <img :src="$withBase('/woodmill.svg')" style="max-height: 172px;" />
+          <img :src="$withBase('/woodmill.svg')" style="max-height: 172px" />
         </div>
         <div class="content">
           <Content slot-key="shed" />
@@ -124,11 +141,14 @@
       <div class="content-container">
         <section class="content-block no-border">
           <div class="image">
-            <img :src="$withBase('/shaped-wood.svg')" style="max-height: 150px;" />
+            <img
+              :src="$withBase('/shaped-wood.svg')"
+              style="max-height: 150px"
+            />
           </div>
           <div class="content">
             <Content slot-key="learn-more" />
-            <br>
+            <br />
             <p class="action">
               <nav-link class="action-button" :item="actionLink" />
             </p>
@@ -142,7 +162,6 @@
         <Content slot-key="footer" />
       </footer>
     </div>
-
   </main>
 </template>
 
@@ -153,18 +172,18 @@ export default {
   name: 'Home',
 
   components: {
-    'nav-link': NavLink
+    'nav-link': NavLink,
   },
 
   computed: {
-    data () {
+    data() {
       return this.$page.frontmatter;
     },
 
-    actionLink () {
+    actionLink() {
       return {
         link: this.data.actionLink,
-        text: this.data.actionText
+        text: this.data.actionText,
       };
     },
   },
@@ -208,8 +227,8 @@ export default {
         },
       },
     }).custom('customError', 'This is a custom error log');
-  }
-}
+  },
+};
 </script>
 
 <style lang="stylus">
@@ -271,7 +290,7 @@ export default {
     color lighten($textColor, 10%)
   p
     color lighten($textColor, 25%)
-  img 
+  img
     display: block
     float: left
     margin-right: 15px
@@ -355,7 +374,7 @@ export default {
     justify-content center
     .content
       max-width 100%
-    
+
 
 @media (max-width: $MQMobileNarrow)
   .home
@@ -384,5 +403,4 @@ export default {
       max-width initial
       h2
         font-size 1.25rem
-
 </style>
