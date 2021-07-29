@@ -33,7 +33,7 @@
             src="https://ghbtns.com/github-btn.html?user=AJStacy&repo=adze&type=watch&count=true&size=large&v=2"
             frameborder="0"
             scrolling="0"
-            width="130"
+            width="128"
             height="30"
             title="GitHub"
           ></iframe
@@ -42,7 +42,7 @@
             src="https://ghbtns.com/github-btn.html?user=AJStacy&repo=adze&type=fork&count=true&size=large"
             frameborder="0"
             scrolling="0"
-            width="170"
+            width="115"
             height="30"
             title="GitHub"
           ></iframe
