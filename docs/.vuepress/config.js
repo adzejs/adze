@@ -141,6 +141,10 @@ module.exports = {
         text: 'Config',
         link: '/config/',
       },
+      {
+        text: "FAQ's",
+        link: '/faqs/'
+      }
     ],
     sidebar: {
       '/guide/': [
