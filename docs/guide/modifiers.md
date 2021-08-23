@@ -444,13 +444,30 @@ _This is not a standard API._
 
 ```typescript
 class BaseLog {
-  public meta<T>(key: string, value: T): this;
+  public meta<KV extends [string, any]>(...[key, val]: KV): this;
 }
 ```
 
 ### Example
 
 ```javascript
+import { adze, createShed } from 'adze';
+
+// Let's optionally create a shed to show the use of meta data on listeners
+const shed = createShed();
+
+// We'll listen only to logs of level 6 which is "log"
+shed.addListener([6], (data) => {
+  adze().info("My log's meta data!", data.meta);
+});
+
+// Let's create a super important message to attach as meta data
+const info = 'Hello World!';
+
+adze().meta('message', info).log('This log contains an important message.');
+```
+
+```typescript
 import { adze, createShed } from 'adze';
 
 // Let's optionally create a shed to show the use of meta data on listeners
