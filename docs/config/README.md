@@ -258,9 +258,10 @@ const cfg = {
 
 const log = adze(cfg).seal();
 
-adze().ns('foo').log('First log');
-adze().ns(['foo', 'bar']).log('Second log');
-adze().ns('bar').log('Third log');
+log().ns('foo').success('I should print.');
+log().ns(['foo', 'bar']).success('I should print.');
+log().ns('bar').fail('I should not print.');
+log().fail('I should not print because I do not have a namespace.');
 ```
 
 ### Output

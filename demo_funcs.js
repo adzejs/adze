@@ -1,6 +1,6 @@
 // Run our demo modules
 export default function runDemo(lib, el) {
-  // screenshots(lib, el);
+  screenshots(lib, el);
   // screenshotDemo(lib);
   defaultLevels(lib);
   defaultLevelsWithEmoji(lib);
@@ -31,22 +31,20 @@ export default function runDemo(lib, el) {
 }
 
 function screenshots({ adze, createShed }, el) {
-  /* We'll create a Shed to enable labels and counting
-   for our example. */
-  createShed();
-
-  // Let's create an Adze configuration
-  var cfg = {
-    logLevel: 1,
+  const cfg = {
+    filters: {
+      namespace: {
+        include: ['foo'],
+      },
+    },
   };
 
-  // Now we'll create a new factory using seal
-  var log = adze(cfg).label('foo').count.seal();
+  const log = adze(cfg).seal();
 
-  // And now we can create new logs using our new factory
-  log().error('An error occurred! Oh no!');
-  log().error('Another error occurred! Quick! Help!');
-  log().log("I won't display because my log level is too high.");
+  log().ns('foo').success('I should print.');
+  log().ns(['foo', 'bar']).success('I should print.');
+  log().ns('bar').fail('I should not print.');
+  log().fail('I should not print because I do not have a namespace.');
 }
 
 function screenshotDemo({ adze }) {
