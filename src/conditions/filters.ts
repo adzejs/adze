@@ -50,6 +50,10 @@ export function levelAllowed(data: FinalLogData): boolean {
  */
 export function labelAllowed(data: FinalLogData): boolean {
   return filterAllowed(data.cfg, 'label', (filter, func) => {
+    if (filter === 'include' && data.label.name === null) {
+      // Do not include logs that do not have a label
+      return false;
+    }
     const source = data.cfg.filters?.label?.[filter] ?? ([] as string[]);
     return func<string>(source, data.label.name ?? '');
   });
@@ -69,12 +73,16 @@ export function namespaceAllowed(data: FinalLogData): boolean {
       // Namespace log value is an array. Check each namespace value.
       const arr = log_ns.map((val) => func<string>(filter_ns, val));
 
-      // If filter is include, namspace is allowed if at least one passes
+      // If filter is include, namespace is allowed if at least one passes and the log has
+      // at least one namespace. Logs without namespaces are thrown out.
       if (filter === 'include') {
         return arr.includes(true);
       }
       // If filter is exclude, namspace is allowed if all pass
       return !arr.includes(false);
+    } else if (filter === 'include') {
+      // If the log has no namespaces defined and the filter is include we should hide the log.
+      return false;
     }
   });
 }
