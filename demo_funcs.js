@@ -24,6 +24,10 @@ export default function runDemo(lib, el) {
   withTrace(lib);
   unstyled(lib);
   withTimestamp(lib);
+  namespaceIncludeFilter(lib);
+  namespaceExcludeFilter(lib);
+  labelIncludeFilter(lib);
+  labelExcludeFilter(lib);
 }
 
 function screenshots({ adze, createShed }, el) {
@@ -396,4 +400,70 @@ function withTimestamp({ adze }) {
   console.log('\n----- With Timestamp -----\n');
   adze().label('timestamped').timestamp.log("I have a timestamp.");
   adze({ unstyled: true }).label('timestamped').timestamp.log("I have a timestamp and no styles.");
+}
+
+function namespaceIncludeFilter({ adze }) {
+  console.log('\n----- Global Namespace Include Filter -----\n');
+  const logger = adze({
+    useEmoji: true,
+    filters: {
+      namespace: {
+        include: ['foo'],
+      },
+    },
+  }).seal();
+
+  logger().ns('foo').success("I should print.");
+  logger().ns('bar').fail("I should not print.");
+  logger().ns(['foo', 'bar']).success("I should print.");
+  logger().fail("I should not print.");
+}
+
+function namespaceExcludeFilter({ adze }) {
+  console.log('\n----- Global Namespace Exclude Filter -----\n');
+  const logger = adze({
+    useEmoji: true,
+    filters: {
+      namespace: {
+        exclude: ['foo'],
+      },
+    },
+  }).seal();
+
+  logger().ns('foo').fail("I should not print.");
+  logger().ns('bar').success("I should print.");
+  logger().ns(['foo', 'bar']).fail("I should not print.");
+  logger().success("I should print.");
+}
+
+function labelIncludeFilter({ adze }) {
+  console.log('\n----- Global Label Include Filter -----\n');
+  const logger = adze({
+    useEmoji: true,
+    filters: {
+      label: {
+        include: ['foo'],
+      },
+    },
+  }).seal();
+
+  logger().label('foo').success("I should print.");
+  logger().label('bar').fail("I should not print.");
+  logger().fail("I should not print.");
+}
+
+function labelExcludeFilter({ adze }) {
+  console.log('\n----- Global Label Exclude Filter -----\n');
+  const logger = adze({
+    useEmoji: true,
+    filters: {
+      label: {
+        exclude: ['foo'],
+      },
+    },
+  }).seal();
+
+  logger().label('foo').fail("I should not print.");
+  logger().label('bar').success("I should print.");
+  logger().success("I should not print.");
 }

@@ -227,13 +227,13 @@ test('global filter includes logs based on namespace', (t) => {
   const { render: d_render } = log().ns('test2').debug('This is a debug!');
   const { render: v_render } = log().verbose('This is a verbose!');
 
-  t.truthy(a_render);
+  t.falsy(a_render);
   t.truthy(e_render);
-  t.truthy(w_render);
+  t.falsy(w_render);
   t.truthy(i_render);
-  t.truthy(f_render);
-  t.truthy(s_render);
+  t.falsy(f_render);
+  t.falsy(s_render);
   t.truthy(l_render);
   t.falsy(d_render);
-  t.truthy(v_render);
+  t.falsy(v_render);
 });
