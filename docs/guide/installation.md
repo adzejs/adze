@@ -34,7 +34,7 @@ For more information about configuring TypeScript, go to [https://www.typescript
   "compilerOptions": {
     // ...your other options
     "lib": ["DOM"],
-    "esModuleInterop": true,
+    "esModuleInterop": true
   }
 }
 ```
@@ -90,5 +90,11 @@ A common problem with libraries that wrap the standard console API is that they 
 For information on setting up **Blackboxing**, please go to [https://bit.ly/3d1eOex](https://bit.ly/3d1eOex).
 
 _NOTE: The verbiage for this has been changed to **Ignore List** in the console settings._
+
+To **blackbox** the adze library you will need to supply the following regular expression:
+
+```typescript
+/\b(?:util|BaseLog)\b\.js/g
+```
 
 For non-chromium based browsers, right now there is no easy way to work around this issue. We suggest using the standard console API for debugging purposes where line numbers are important and reserving Adze logs for long-lived logs that will be used in production environments.
