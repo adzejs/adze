@@ -479,7 +479,9 @@ export class BaseLog {
    *
    * This is a non-standard API.
    */
-  public meta<T>(key: string, val: T): this {
+  public meta<T>(key: string, val: T): this;
+  public meta<KV extends [string, any]>(...[key, val]: KV): this;
+  public meta(key: string, val: unknown): this {
     return this.modifier((ctxt) => {
       ctxt.metaData[key] = val;
     });
