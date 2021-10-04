@@ -442,8 +442,12 @@ _This is not a standard API._
 
 ### Interface
 
+> The interface of `meta<KV extends [string, any]>(...[key, val]: KV): this;` is available for Adze versions >= 1.2.0
+
 ```typescript
 class BaseLog {
+  // Types are Overloaded
+  public meta<T>(key: string, val: T): this;
   public meta<KV extends [string, any]>(...[key, val]: KV): this;
 }
 ```
