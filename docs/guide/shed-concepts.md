@@ -81,6 +81,13 @@ class Shed {
   ): ListenerLocations;
 }
 
+// version < 1.3.0
+type ListenerCallback = (
+  LogData: LogData | FinalLogData,
+  render: LogRender | null,
+) => void;
+
+// version >= 1.3.0
 type ListenerCallback = (
   LogData: LogData | FinalLogData,
   render: LogRender | null,
@@ -98,7 +105,7 @@ const shed = createShed();
 // Let's only listen to levels 1, 2 and 3
 shed.addListener([1, 2, 3], ({ definition, timestamp, args }, render, printed) => {
   // We only want write logs if they printed to the console
-  if (printed) {
+  if (printed) { // If version is < 1.3.0 use `if (render)`
     // Let's write our log as a JSON object
     const log = {
       level: definition.level,
@@ -142,6 +149,8 @@ filterLabel(collection, 'test').forEach(rerender);
 There may be occasions where you need to do manual debugging in a browser environment by [recalling logs](#recalling-logs). The shed instance gives you access to functions for rerendering logs in the global context.
 
 This is mostly useful in cases where you are deploying your application to a QA or test environment that has the same log level set as that of production. Because of this, you will likely have some of your logs hidden from rendering. If a bug has popped up and you need these logs this can be problematic. With the use of the shed tools you can work around this limitation and render logs that were previously hidden.
+
+> Supported in versions >= 1.4.0
 
 ### Example
 

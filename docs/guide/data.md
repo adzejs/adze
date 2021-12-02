@@ -160,7 +160,7 @@ interface FinalLogData extends LogData {
 | dumpContext   | Boolean indicating if the mapped diagnostic context (MDC) should be rendered.                | [MDC](mapped-diagnostic-context.md)                              |
 | expression    | The boolean result of the test expression on the log instance.                               | [test](modifiers.md#test)                                        |
 | isSilent      | Boolean value indicating if the log should execute silently.                                 | [silent](modifiers.md#silent)                                    |
-| printed       | Boolean value indicating if the log has been printed to the console.                         | [Terminated Log Object](#terminated-log-object)                  |
+| printed       | Boolean value indicating if the log has been printed to the console (versions >= 1.3.0).     | [Terminated Log Object](#terminated-log-object)                  |
 | showTimestamp | Boolean value indicating that the log should render an ISO 8601 timestamp.                   | [timestamp](modifiers.md#timestamp)                              |
 | label         | The values of a label instance attached to the log instance.                                 | [Label](#label-data-object)                                      |
 | level         | The log level of the instance.                                                               | [Log Level Definition](/config/#log-levels-log-level-definition) |
@@ -258,9 +258,18 @@ After an Adze log has been terminated a **Terminated Log object** will be return
 
 The log instance is the reference to the instance that was terminated. You can use this to get [meta data about the Log](#log-data) or get a [collection](#collection) of logs if the log was [bundled](factories.md#bundle).
 
+> `printed` property supported in versions >= 1.3.0
+
 ### Interface
 
 ```typescript
+// Versions < 1.3.0
+interface TerminatedLog<T extends BaseLog> {
+  log: T;
+  render: LogRender | null;
+}
+
+// Versions >= 1.3.0
 interface TerminatedLog<T extends BaseLog> {
   log: T;
   render: LogRender | null;

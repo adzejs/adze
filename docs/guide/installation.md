@@ -52,7 +52,7 @@ _**NOTE:** In the script tag in the example below, replace `<version>` with the 
 ```html
 <!-- In the head of your html -->
 <head>
-  <!-- To use v0.5.7 you would write https://cdn.jsdelivr.net/npm/adze@0.5.7/dist/adze.min.js -->
+  <!-- To use v1.4.0 you would write https://cdn.jsdelivr.net/npm/adze@1.4.0/dist/adze.min.js -->
   <script src="https://cdn.jsdelivr.net/npm/adze@<version>/dist/adze.min.js"></script>
 </head>
 
@@ -68,7 +68,7 @@ _**NOTE:** In the script tag in the example below, replace `<version>` with the 
 ### Node JS (CommonJS)
 
 ```javascript
-const { adze } = require('adze');
+const adze = require('adze');
 
 adze().log('Hello World!');
 ```
@@ -76,7 +76,7 @@ adze().log('Hello World!');
 ### ES6 / TypeScript
 
 ```typescript
-import { adze } from 'adze';
+import adze from 'adze';
 
 adze().log('Hello World!');
 ```

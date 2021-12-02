@@ -51,7 +51,18 @@ Read more about the standard here: [MDN Console Docs](https://developer.mozilla.
 As stated above, Adze offers an easy to use, chainable API. To create a log you simply chain together an Adze log instance with a series of modifiers and then end with a terminator. Here's an example of creating a log with emoji's and a namespace:
 
 ```typescript
-import { adze } from 'adze';
+import adze, { createShed } from 'adze';
+
+// Create our global log in-memory cache
+const shed = createShed();
+
+// Listen to logs that are generated and operate on them
+shed.addListener('*', (data, render, printed) => {
+  // if my log printed to the console
+  if (printed) {
+    // do stuff with my log data like sending to an API or localStorage
+  }
+});
 
 adze({ useEmoji: true }).ns('tix-456').log('Example log');
 ```

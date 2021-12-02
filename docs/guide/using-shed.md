@@ -159,6 +159,12 @@ _NOTE:_ It is not necessary to call this method manually to fire listeners. When
 ### Interface
 
 ```typescript
+// Versions < 1.3.0
+class Shed {
+  public fireListeners(log: FinalLogData, render: LogRender | null): void;
+}
+
+// Versions >= 1.3.0
 class Shed {
   public fireListeners(log: FinalLogData, render: LogRender | null, printed: boolean): void;
 }
@@ -384,6 +390,8 @@ shed.store(log);
 ## $shed.tools
 
 Manual debugging tools primarily for use in the web browser. To use the tools, access them via `window.$shed.tools` or simply `$shed.tools` in your browser console. Any of the methods listed in the interface below will be made available to you. For all methods other than `renderCache` please refer to the documentation for [Filtering & Utility Functions](filtering-and-utility-functions.md).
+
+> Supported in versions >= 1.4.0
 
 ### Interface
 
