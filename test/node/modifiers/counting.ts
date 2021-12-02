@@ -1,5 +1,5 @@
 import test from 'ava';
-import { adze, createShed, removeShed } from '../../../src';
+import adze, { createShed, removeShed } from '../../../src';
 
 global.ADZE_ENV = 'dev';
 

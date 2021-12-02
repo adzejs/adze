@@ -1,5 +1,5 @@
 import test from 'ava';
-import { adze, defaults } from '../../../src';
+import adze, { defaults } from '../../../src';
 import { applyChalkStyles } from '../../../src/util';
 
 global.ADZE_ENV = 'dev';

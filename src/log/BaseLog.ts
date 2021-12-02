@@ -132,6 +132,11 @@ export class BaseLog {
   private isSilent = false;
 
   /**
+   * Flag which indicates if the log is allowed to print to the console.
+   */
+  private printed = false;
+
+  /**
    * Flag which tells the log instance to add the
    * MDC context to the log render arguments.
    */
@@ -765,41 +770,41 @@ export class BaseLog {
       // Apply modifiers in the proper order.
       this.runModifierQueue();
 
-      // Check the test modifiers.
-      if (this.evalPasses()) {
-        // Save values to this log instance for later recall
-        this.args = args;
-        this._level = def.level;
-        this.definition = def;
-        this._timestamp = timestamp();
-        this.stacktrace = this.cfg.captureStacktrace ? stacktrace() : null;
+      // Save values to this log instance for later recall
+      this.args = args;
+      this._level = def.level;
+      this.definition = def;
+      this._timestamp = timestamp();
+      this.stacktrace = this.cfg.captureStacktrace ? stacktrace() : null;
 
-        // Set this log data to a variable for type checking
-        const log_data = this.data;
+      // Set this log data to a variable for type checking
+      const log_data = this.data;
 
-        if (isFinalLogData(log_data)) {
-          // Render the log if it's allowed to print
-          this._render = allowed(log_data)
-            ? new Printer(log_data)[this.printer]()
-            : null;
+      if (isFinalLogData(log_data)) {
+        // Render the log
+        this._render = new Printer(log_data)[this.printer]();
 
-          // Attempt to print the render to the console / terminal
+        // Evaluates if this log can print
+        this.printed = allowed(log_data) && this.evalPasses();
+
+        // Attempt to print the render to the console / terminal
+        if (this.printed) {
           toConsole(this._render);
-
-          // Cache the log
-          this.store();
-
-          // Fire the log listeners
-          this.fireListeners(log_data, this._render);
-
-          // Return the terminated log object with a render
-          return { log: this, render: this._render };
         }
+
+        // Cache the log
+        this.store();
+
+        // Fire the log listeners
+        this.fireListeners(log_data, this._render, this.printed);
+
+        // Return the terminated log object with a render
+        return { log: this, render: this._render, printed: this.printed };
       }
     }
 
     // Return the terminated log object unrendered
-    return { log: this, render: null };
+    return { log: this, render: null, printed: false };
   }
 
   /**
@@ -838,10 +843,14 @@ export class BaseLog {
   /**
    * Fires listeners for this log instance if a Shed exists.
    */
-  private fireListeners(data: FinalLogData, render: LogRender | null): void {
+  private fireListeners(
+    data: FinalLogData,
+    render: LogRender | null,
+    printed: boolean
+  ): void {
     const shed = this.env.global.$shed;
     if (shedExists(shed)) {
-      shed.fireListeners(data, render);
+      shed.fireListeners(data, render, printed);
     }
   }
 
@@ -871,6 +880,7 @@ export class BaseLog {
       expression: this.expression,
       dumpContext: this.dumpContext,
       isSilent: this.isSilent,
+      printed: this.printed,
       showTimestamp: this.showTimestamp,
       timeNow: this.timeNowVal,
       meta: { ...this.metaData },
@@ -896,6 +906,7 @@ export class BaseLog {
     this.expression = data.expression;
     this.dumpContext = data.dumpContext;
     this.isSilent = data.isSilent;
+    this.printed = data.printed;
     this.showTimestamp = data.showTimestamp;
     this.timeNowVal = data.timeNow;
     this.metaData = { ...data.meta };
