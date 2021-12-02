@@ -1,5 +1,5 @@
 import test from 'ava';
-import { adze, createShed, removeShed } from '../src';
+import adze, { createShed, removeShed } from '../src';
 
 // Our global context is the window not global
 global.ADZE_ENV = 'dev';

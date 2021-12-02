@@ -1,5 +1,5 @@
 import test from 'ava';
-import { adze } from '../src';
+import adze from '../src';
 
 // Our global context is the window not global
 global.ADZE_ENV = 'dev';

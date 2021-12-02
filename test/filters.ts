@@ -1,6 +1,5 @@
 import test from 'ava';
-import {
-  adze,
+import adze, {
   bundle,
   filterNamespace,
   filterLabel,

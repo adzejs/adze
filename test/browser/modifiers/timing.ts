@@ -2,7 +2,7 @@
 const browserEnv = require('browser-env');
 import test from 'ava';
 import { formatISO } from 'date-fns';
-import { adze, createShed, removeShed } from '../../../src';
+import adze, { createShed, removeShed } from '../../../src';
 
 // Simulate the browser environment for testing
 browserEnv();

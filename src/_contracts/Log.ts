@@ -74,6 +74,7 @@ export interface LogData {
   dumpContext: boolean;
   expression?: boolean;
   isSilent: boolean;
+  printed: boolean;
   label: LabelData;
   level: number | null;
   meta: MetaData;
@@ -104,4 +105,5 @@ export interface FinalLogData extends LogData {
 export interface TerminatedLog<I extends BaseLog> {
   log: I;
   render: LogRender | null;
+  printed: boolean;
 }

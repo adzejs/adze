@@ -12,7 +12,8 @@ export type ListenerBucket = Map<number, ListenerCallback>;
 
 export type ListenerCallback = (
   LogData: LogData | FinalLogData,
-  render: LogRender | null
+  render: LogRender | null,
+  printed: boolean
 ) => void;
 
 export interface ShedConfig {

@@ -1,4 +1,6 @@
-export { adze } from './adze';
+import { adze } from './adze';
+export { adze };
+export default adze;
 export { Label } from './label';
 export { defaults } from './_defaults';
 export {

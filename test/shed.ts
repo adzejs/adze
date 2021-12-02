@@ -1,8 +1,7 @@
 import anyTest, { TestInterface } from 'ava';
 import { Shed } from '../src/shed/Shed';
-import {
+import adze, {
   createShed,
-  adze,
   removeShed,
   shedExists,
   isFinalLogData,
@@ -189,7 +188,7 @@ test('removes a log listener', (t) => {
 });
 
 test('fires the log listeners', (t) => {
-  const { log, render } = adze().info('A basic log.');
+  const { log, render, printed } = adze().info('A basic log.');
 
   const shed = createShed();
   shed.addListener([3], () => {
@@ -198,7 +197,7 @@ test('fires the log listeners', (t) => {
 
   const data = log.data;
   if (isFinalLogData(data)) {
-    shed.fireListeners(data, render);
+    shed.fireListeners(data, render, printed);
   } else {
     t.fail();
   }

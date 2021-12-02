@@ -1,6 +1,6 @@
 import test from 'ava';
 import { passesFilters } from '../src/conditions';
-import { adze, defaults, isFinalLogData } from '../src';
+import adze, { defaults, isFinalLogData } from '../src';
 import { Defaults, LogLevelDefinition } from '../src/_contracts';
 
 global.ADZE_ENV = 'dev';
@@ -43,21 +43,23 @@ test('create a new logger with defaults', (t) => {
   t.is(cfg.filters.hideAll, defaults.filters.hideAll);
 });
 
-test('prevents log render when the log level is lowered', (t) => {
+test('prevents log from printing when the log level is lowered', (t) => {
   const terminated = adze({ logLevel: 5 }).log('testing');
   t.truthy(terminated.log);
-  t.is(terminated.render, null);
+  t.truthy(terminated.render);
+  t.falsy(terminated.printed);
 });
 
-test('prevents log render when in a test environment', (t) => {
+test('prevents log from printing when in a test environment', (t) => {
   global.ADZE_ENV = 'test';
   const terminated = adze().log('testing');
   t.truthy(terminated.log);
-  t.is(terminated.render, null);
+  t.truthy(terminated.render);
+  t.falsy(terminated.printed);
   global.ADZE_ENV = 'dev';
 });
 
-test('passesFilters correctly indicates that a log is allowed to render', (t) => {
+test('passesFilters correctly indicates that a log is allowed to print', (t) => {
   const { log } = adze({
     filters: {
       hideAll: true,
@@ -76,7 +78,7 @@ test('passesFilters correctly indicates that a log is allowed to render', (t) =>
   }
 });
 
-test('hideAll global log filter prevents all logs rendering', (t) => {
+test('hideAll global log filter prevents all logs printing', (t) => {
   const cfg = {
     filters: {
       hideAll: true,
@@ -85,25 +87,25 @@ test('hideAll global log filter prevents all logs rendering', (t) => {
 
   const log = adze(cfg).seal();
 
-  const { render: a_render } = log().alert('This is an alert!');
-  const { render: e_render } = log().error('This is an error!');
-  const { render: w_render } = log().warn('This is a warn!');
-  const { render: i_render } = log().info('This is an info!');
-  const { render: f_render } = log().fail('This is a failure!');
-  const { render: s_render } = log().success('This is a success!');
-  const { render: l_render } = log().log('This is a log!');
-  const { render: d_render } = log().debug('This is a debug!');
-  const { render: v_render } = log().verbose('This is a verbose!');
+  const { printed: a_printed } = log().alert('This is an alert!');
+  const { printed: e_printed } = log().error('This is an error!');
+  const { printed: w_printed } = log().warn('This is a warn!');
+  const { printed: i_printed } = log().info('This is an info!');
+  const { printed: f_printed } = log().fail('This is a failure!');
+  const { printed: s_printed } = log().success('This is a success!');
+  const { printed: l_printed } = log().log('This is a log!');
+  const { printed: d_printed } = log().debug('This is a debug!');
+  const { printed: v_printed } = log().verbose('This is a verbose!');
 
-  t.falsy(a_render);
-  t.falsy(e_render);
-  t.falsy(w_render);
-  t.falsy(i_render);
-  t.falsy(f_render);
-  t.falsy(s_render);
-  t.falsy(l_render);
-  t.falsy(d_render);
-  t.falsy(v_render);
+  t.falsy(a_printed);
+  t.falsy(e_printed);
+  t.falsy(w_printed);
+  t.falsy(i_printed);
+  t.falsy(f_printed);
+  t.falsy(s_printed);
+  t.falsy(l_printed);
+  t.falsy(d_printed);
+  t.falsy(v_printed);
 });
 
 test('global filter excludes logs based on label', (t) => {
@@ -117,25 +119,25 @@ test('global filter excludes logs based on label', (t) => {
 
   const log = adze(cfg).seal();
 
-  const { render: a_render } = log().alert('This is an alert!');
-  const { render: e_render } = log().label('test').error('This is an error!');
-  const { render: w_render } = log().warn('This is a warn!');
-  const { render: i_render } = log().label('test').info('This is an info!');
-  const { render: f_render } = log().fail('This is a failure!');
-  const { render: s_render } = log().success('This is a success!');
-  const { render: l_render } = log().label('test2').log('This is a log!');
-  const { render: d_render } = log().label('test2').debug('This is a debug!');
-  const { render: v_render } = log().verbose('This is a verbose!');
+  const { printed: a_printed } = log().alert('This is an alert!');
+  const { printed: e_printed } = log().label('test').error('This is an error!');
+  const { printed: w_printed } = log().warn('This is a warn!');
+  const { printed: i_printed } = log().label('test').info('This is an info!');
+  const { printed: f_printed } = log().fail('This is a failure!');
+  const { printed: s_printed } = log().success('This is a success!');
+  const { printed: l_printed } = log().label('test2').log('This is a log!');
+  const { printed: d_printed } = log().label('test2').debug('This is a debug!');
+  const { printed: v_printed } = log().verbose('This is a verbose!');
 
-  t.truthy(a_render);
-  t.falsy(e_render);
-  t.truthy(w_render);
-  t.falsy(i_render);
-  t.truthy(f_render);
-  t.truthy(s_render);
-  t.falsy(l_render);
-  t.falsy(d_render);
-  t.truthy(v_render);
+  t.truthy(a_printed);
+  t.falsy(e_printed);
+  t.truthy(w_printed);
+  t.falsy(i_printed);
+  t.truthy(f_printed);
+  t.truthy(s_printed);
+  t.falsy(l_printed);
+  t.falsy(d_printed);
+  t.truthy(v_printed);
 });
 
 test('global filter includes logs based on label', (t) => {
@@ -149,25 +151,25 @@ test('global filter includes logs based on label', (t) => {
 
   const log = adze(cfg).seal();
 
-  const { render: a_render } = log().alert('This is an alert!');
-  const { render: e_render } = log().label('test').error('This is an error!');
-  const { render: w_render } = log().warn('This is a warn!');
-  const { render: i_render } = log().label('test').info('This is an info!');
-  const { render: f_render } = log().fail('This is a failure!');
-  const { render: s_render } = log().success('This is a success!');
-  const { render: l_render } = log().label('test2').log('This is a log!');
-  const { render: d_render } = log().label('test2').debug('This is a debug!');
-  const { render: v_render } = log().verbose('This is a verbose!');
+  const { printed: a_printed } = log().alert('This is an alert!');
+  const { printed: e_printed } = log().label('test').error('This is an error!');
+  const { printed: w_printed } = log().warn('This is a warn!');
+  const { printed: i_printed } = log().label('test').info('This is an info!');
+  const { printed: f_printed } = log().fail('This is a failure!');
+  const { printed: s_printed } = log().success('This is a success!');
+  const { printed: l_printed } = log().label('test2').log('This is a log!');
+  const { printed: d_printed } = log().label('test2').debug('This is a debug!');
+  const { printed: v_printed } = log().verbose('This is a verbose!');
 
-  t.falsy(a_render);
-  t.truthy(e_render);
-  t.falsy(w_render);
-  t.truthy(i_render);
-  t.falsy(f_render);
-  t.falsy(s_render);
-  t.truthy(l_render);
-  t.truthy(d_render);
-  t.falsy(v_render);
+  t.falsy(a_printed);
+  t.truthy(e_printed);
+  t.falsy(w_printed);
+  t.truthy(i_printed);
+  t.falsy(f_printed);
+  t.falsy(s_printed);
+  t.truthy(l_printed);
+  t.truthy(d_printed);
+  t.falsy(v_printed);
 });
 
 test('global filter excludes logs based on namespace', (t) => {
@@ -181,27 +183,27 @@ test('global filter excludes logs based on namespace', (t) => {
 
   const log = adze(cfg).seal();
 
-  const { render: a_render } = log().alert('This is an alert!');
-  const { render: e_render } = log().ns('testWOW').error('This is an error!');
-  const { render: w_render } = log().warn('This is a warn!');
-  const { render: i_render } = log().ns('testWOW').info('This is an info!');
-  const { render: f_render } = log().fail('This is a failure!');
-  const { render: s_render } = log().success('This is a success!');
-  const { render: l_render } = log()
+  const { printed: a_printed } = log().alert('This is an alert!');
+  const { printed: e_printed } = log().ns('testWOW').error('This is an error!');
+  const { printed: w_printed } = log().warn('This is a warn!');
+  const { printed: i_printed } = log().ns('testWOW').info('This is an info!');
+  const { printed: f_printed } = log().fail('This is a failure!');
+  const { printed: s_printed } = log().success('This is a success!');
+  const { printed: l_printed } = log()
     .ns(['testWOW', 'test2'])
     .log('This is a log!');
-  const { render: d_render } = log().ns('test2').debug('This is a debug!');
-  const { render: v_render } = log().verbose('This is a verbose!');
+  const { printed: d_printed } = log().ns('test2').debug('This is a debug!');
+  const { printed: v_printed } = log().verbose('This is a verbose!');
 
-  t.truthy(a_render);
-  t.falsy(e_render);
-  t.truthy(w_render);
-  t.falsy(i_render);
-  t.truthy(f_render);
-  t.truthy(s_render);
-  t.falsy(l_render);
-  t.truthy(d_render);
-  t.truthy(v_render);
+  t.truthy(a_printed);
+  t.falsy(e_printed);
+  t.truthy(w_printed);
+  t.falsy(i_printed);
+  t.truthy(f_printed);
+  t.truthy(s_printed);
+  t.falsy(l_printed);
+  t.truthy(d_printed);
+  t.truthy(v_printed);
 });
 
 test('global filter includes logs based on namespace', (t) => {
@@ -215,25 +217,25 @@ test('global filter includes logs based on namespace', (t) => {
 
   const log = adze(cfg).seal();
 
-  const { render: a_render } = log().alert('This is an alert!');
-  const { render: e_render } = log().ns('test').error('This is an error!');
-  const { render: w_render } = log().warn('This is a warn!');
-  const { render: i_render } = log().ns('test').info('This is an info!');
-  const { render: f_render } = log().fail('This is a failure!');
-  const { render: s_render } = log().success('This is a success!');
-  const { render: l_render } = log()
+  const { printed: a_printed } = log().alert('This is an alert!');
+  const { printed: e_printed } = log().ns('test').error('This is an error!');
+  const { printed: w_printed } = log().warn('This is a warn!');
+  const { printed: i_printed } = log().ns('test').info('This is an info!');
+  const { printed: f_printed } = log().fail('This is a failure!');
+  const { printed: s_printed } = log().success('This is a success!');
+  const { printed: l_printed } = log()
     .ns(['test', 'test2'])
     .log('This is a log!');
-  const { render: d_render } = log().ns('test2').debug('This is a debug!');
-  const { render: v_render } = log().verbose('This is a verbose!');
+  const { printed: d_printed } = log().ns('test2').debug('This is a debug!');
+  const { printed: v_printed } = log().verbose('This is a verbose!');
 
-  t.falsy(a_render);
-  t.truthy(e_render);
-  t.falsy(w_render);
-  t.truthy(i_render);
-  t.falsy(f_render);
-  t.falsy(s_render);
-  t.truthy(l_render);
-  t.falsy(d_render);
-  t.falsy(v_render);
+  t.falsy(a_printed);
+  t.truthy(e_printed);
+  t.falsy(w_printed);
+  t.truthy(i_printed);
+  t.falsy(f_printed);
+  t.falsy(s_printed);
+  t.truthy(l_printed);
+  t.falsy(d_printed);
+  t.falsy(v_printed);
 });
