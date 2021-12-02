@@ -6,14 +6,13 @@ global.ADZE_ENV = 'dev';
 test('bundles logs', (t) => {
   const bundled = bundle(adze({ useEmoji: true }));
 
-  const { log, render } = bundled().ns('SPACE').error('This is an error!');
-  const { log: log2, render: render2 } = bundled()
+  const { log, printed } = bundled().ns('SPACE').error('This is an error!');
+  const { log: log2, printed: printed2 } = bundled()
     .ns(['foo', 'SPACE'])
     .info('Multiple namespaces.');
 
-  if (render === null || render2 === null) {
-    t.fail();
-  }
+  t.truthy(printed);
+  t.truthy(printed2);
 
   t.deepEqual(log.bundle[0].data.namespace, ['SPACE']);
   t.deepEqual(log.bundle[1].data.namespace, ['foo', 'SPACE']);

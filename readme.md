@@ -52,7 +52,18 @@ Read more about the standard here: [MDN Console Docs](https://developer.mozilla.
 As stated above, Adze offers an easy to use, chainable API. To create a log you simply chain together an Adze log instance with a series of modifiers and then end with a terminator. Here's an example of creating a log with emoji's and a namespace:
 
 ```typescript
-import { adze } from 'adze';
+import adze, { createShed } from 'adze';
+
+// Create our global log in-memory cache
+const shed = createShed();
+
+// Listen to logs that are generated and operate on them
+shed.addListener('*', (data, render, printed) => {
+  // if my log printed to the console
+  if (printed) {
+    // do stuff with my log data like sending to an API or localStorage
+  }
+});
 
 adze({ useEmoji: true }).ns('tix-456').log('Example log');
 ```
@@ -113,7 +124,7 @@ _**NOTE:** In the script tag in the example below, replace `<version>` with the 
 ```html
 <!-- In the head of your html -->
 <head>
-  <!-- To use v0.5.3 you would write https://cdn.jsdelivr.net/npm/adze@0.5.3/dist/adze.min.js -->
+  <!-- To use v1.3.0 you would write https://cdn.jsdelivr.net/npm/adze@1.3.0/dist/adze.min.js -->
   <script src="https://cdn.jsdelivr.net/npm/adze@<version>/dist/adze.min.js"></script>
 </head>
 
@@ -129,7 +140,7 @@ _**NOTE:** In the script tag in the example below, replace `<version>` with the 
 ### Node JS (CommonJS)
 
 ```javascript
-const { adze } = require('adze');
+const adze = require('adze');
 
 adze().log('Hello World!');
 ```
@@ -137,7 +148,7 @@ adze().log('Hello World!');
 ### ES6 / TypeScript
 
 ```typescript
-import { adze } from 'adze';
+import adze from 'adze';
 
 adze().log('Hello World!');
 ```
