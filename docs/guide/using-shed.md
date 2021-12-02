@@ -160,7 +160,7 @@ _NOTE:_ It is not necessary to call this method manually to fire listeners. When
 
 ```typescript
 class Shed {
-  public fireListeners(log: FinalLogData, render: LogRender | null): void;
+  public fireListeners(log: FinalLogData, render: LogRender | null, printed: boolean): void;
 }
 ```
 
@@ -178,12 +178,12 @@ shed.addListener('*', (data, render) => {
   // Do stuff with the log data.
 });
 
-const { log, render } = adze().info('some important info.');
+const { log, render, printed } = adze().info('some important info.');
 const data = log.data;
 
 // Listeners only accept finalized log data so we must use a type guard to verify it
 if (isFinalLogData(data)) {
-  shed.fireListeners(data, render);
+  shed.fireListeners(data, render, printed);
 }
 ```
 
@@ -380,3 +380,57 @@ const { log } = adze().info('Some important info.');
 // Store the log
 shed.store(log);
 ```
+
+## $shed.tools
+
+Manual debugging tools primarily for use in the web browser. To use the tools, access them via `window.$shed.tools` or simply `$shed.tools` in your browser console. Any of the methods listed in the interface below will be made available to you. For all methods other than `renderCache` please refer to the documentation for [Filtering & Utility Functions](filtering-and-utility-functions.md).
+
+### Interface
+
+```typescript
+class Shed {
+  public tools: Tools;
+}
+
+class Tools {
+
+  /**
+   * Pass-through alias for the render function.
+   */
+  public render = render;
+
+  /**
+   * Pass-through alias for the rerender function.
+   */
+  public rerender = rerender;
+
+  /**
+   * Pass-through alias for the filterCollection function.
+   */
+  public filterCollection = filterCollection;
+
+  /**
+   * Pass-through alias for the filterLabel function.
+   */
+  public filterLabel = filterLabel;
+
+  /**
+   * Pass-through alias for the filterLevel function.
+   */
+  public filterLevel = filterLevel;
+
+  /**
+   * Pass-through alias for the filterNamespace function.
+   */
+  public filterNamespace = filterNamespace;
+
+  /**
+   * Shortcut method for rendering a level-filtered collection from the Shed cache.
+   */
+  public renderCache(filter: LevelFilter): Collection;
+}
+```
+
+### Example
+
+![Shed tools example](./examples/shed-tools-example.png)

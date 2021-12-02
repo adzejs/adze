@@ -73,9 +73,9 @@ const shed = createShed();
 
 /* Let's create a log listener to transport our log data
    to a destination. We'll listen to all log levels. */
-shed.addListener('*', (data, render) => {
-  // If a log does not render then we will ignore transporting it.
-  if (render) {
+shed.addListener('*', (data, render, printed) => {
+  // If a log did not print then we will ignore transporting it.
+  if (printed) {
     // Do transport logic here.
   }
 });
@@ -139,9 +139,9 @@ import { adze, createShed } from 'adze';
 const shed = createShed();
 
 // Let's use the shed instance reference to add a log listener.
-shed.addListener('*', (data, render) => {
-  // Render will be null if the log was never written to the console.
-  if (render) {
+shed.addListener('*', (data, render, printed) => {
+  // printed will be false if the log was never written to the console.
+  if (printed) {
     // do something with data
   }
 });
@@ -181,4 +181,4 @@ function myNewFeature() {
 
 The code above will exclude any logs with a namespace of "new-feature" from being written to the console. Also take notice of the listener we created in our `main.ts`. It watches all log levels (represented by the `'*'`) and will fire for the logs with a namespace of `'new-feature'` even though they are being filtered out. This is done to give you flexibility in how you want to handle your logs in your listeners.
 
-Also notice in our code we are checking if the render value is truthy. We are doing this because any log that was not written to the console will have a `null` log render. This is an easy way to ignore logs that are hidden by any of our filters.
+Also notice in our code we are checking if the printed value is true. We are doing this because any log that was not written to the console will have a `false` value for `printed`. This is an easy way to ignore logs that are hidden by any of our filters.

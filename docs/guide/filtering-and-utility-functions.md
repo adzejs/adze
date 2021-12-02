@@ -272,16 +272,16 @@ import { adze, createShed, isFinalLogData } from 'adze';
 const shed = createShed();
 
 // Let's create a listener and store it's location in a variable
-shed.addListener('*', (data, render) => {
+shed.addListener('*', (data, render, printed) => {
   // Do stuff with the log data.
 });
 
-const { log, render } = adze().info('some important info.');
+const { log, render, printed } = adze().info('some important info.');
 const data = log.data;
 
 // Listeners only accept finalized log data so we must use a type guard to verify it
 if (isFinalLogData(data)) {
-  shed.fireListeners(data, render);
+  shed.fireListeners(data, render, printed);
 }
 ```
 

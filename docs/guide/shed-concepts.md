@@ -83,7 +83,8 @@ class Shed {
 
 type ListenerCallback = (
   LogData: LogData | FinalLogData,
-  render: LogRender | null
+  render: LogRender | null,
+  printed: boolean,
 ) => void;
 ```
 
@@ -95,9 +96,9 @@ import { adze, createShed } from 'adze';
 const shed = createShed();
 
 // Let's only listen to levels 1, 2 and 3
-shed.addListener([1, 2, 3], ({ definition, timestamp, args }, render) => {
-  // We only want write logs if they were allowed to render
-  if (render) {
+shed.addListener([1, 2, 3], ({ definition, timestamp, args }, render, printed) => {
+  // We only want write logs if they printed to the console
+  if (printed) {
     // Let's write our log as a JSON object
     const log = {
       level: definition.level,
@@ -135,3 +136,29 @@ const collection = shed.getCollection('*');
 // And then we can filter them, re-render them, etc.
 filterLabel(collection, 'test').forEach(rerender);
 ```
+
+## Manual Debugging Tools
+
+There may be occasions where you need to do manual debugging in a browser environment by [recalling logs](#recalling-logs). The shed instance gives you access to functions for rerendering logs in the global context.
+
+This is mostly useful in cases where you are deploying your application to a QA or test environment that has the same log level set as that of production. Because of this, you will likely have some of your logs hidden from rendering. If a bug has popped up and you need these logs this can be problematic. With the use of the shed tools you can work around this limitation and render logs that were previously hidden.
+
+### Example
+
+```javascript
+import { adze, createShed, filterLabel, rerender } from 'adze';
+
+const shed = createShed();
+
+// In our production environment we only want alert and error level logs to render.
+const log = adze({ logLevel: 1 }).seal();
+
+// Throughout our app we generate some debugging logs...
+log().label('test').debug('This has some important debugging information.');
+log().info('This also has some important debugging information.');
+
+// However, these logs will not print. Now, that your app is in QA you discover a bug. You now need
+// to get some of your debugging information without creating a new build and redeploying...
+```
+
+![Shed tools example](./examples/shed-tools-example.png)

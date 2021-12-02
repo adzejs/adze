@@ -81,17 +81,17 @@ import { adze, createShed } from 'adze';
 const shed = createShed();
 
 // Our first listener will target all logs of any level
-shed.addListener('*', (data, render) => {
+shed.addListener('*', (data, render, printed) => {
   // do stuff...
 });
 
 // Our next listener will target logs with a level within our range
-shed.addListener([2, '-', 5], (data, render) => {
+shed.addListener([2, '-', 5], (data, render, printed) => {
   // do stuff...
 });
 
 // Our last listener will target logs of specific levels
-shed.addListener([2, 3, 6, 8], (data, render) => {
+shed.addListener([2, 3, 6, 8], (data, render, printed) => {
   // do stuff...
 });
 ```
@@ -127,6 +127,7 @@ interface LogData {
   dumpContext: boolean;
   expression?: boolean;
   isSilent: boolean;
+  printed: boolean;
   showTimestamp: boolean;
   label: LabelData;
   level: number | null;
@@ -159,6 +160,7 @@ interface FinalLogData extends LogData {
 | dumpContext   | Boolean indicating if the mapped diagnostic context (MDC) should be rendered.                | [MDC](mapped-diagnostic-context.md)                              |
 | expression    | The boolean result of the test expression on the log instance.                               | [test](modifiers.md#test)                                        |
 | isSilent      | Boolean value indicating if the log should execute silently.                                 | [silent](modifiers.md#silent)                                    |
+| printed       | Boolean value indicating if the log has been printed to the console.                         | [Terminated Log Object](#terminated-log-object)                  |
 | showTimestamp | Boolean value indicating that the log should render an ISO 8601 timestamp.                   | [timestamp](modifiers.md#timestamp)                              |
 | label         | The values of a label instance attached to the log instance.                                 | [Label](#label-data-object)                                      |
 | level         | The log level of the instance.                                                               | [Log Level Definition](/config/#log-levels-log-level-definition) |
@@ -252,7 +254,7 @@ const timestamp = log.data.timestamp;
 
 ## Terminated Log Object
 
-After an Adze log has been terminated a **Terminated Log object** will be returned (with a couple of exceptions, like [clear](other-terminators.md#clear-clr)). A terminated log object consists of two parts, the **Log Instance** and the [Log Render](#log-render).
+After an Adze log has been terminated a **Terminated Log object** will be returned (with a couple of exceptions, like [clear](other-terminators.md#clear-clr)). A terminated log object consists of three parts, the **Log Instance**, the [Log Render](#log-render), and the **printed** value that indicates if the log was printed to the console.
 
 The log instance is the reference to the instance that was terminated. You can use this to get [meta data about the Log](#log-data) or get a [collection](#collection) of logs if the log was [bundled](factories.md#bundle).
 
@@ -262,5 +264,6 @@ The log instance is the reference to the instance that was terminated. You can u
 interface TerminatedLog<T extends BaseLog> {
   log: T;
   render: LogRender | null;
+  printed: boolean;
 }
 ```
