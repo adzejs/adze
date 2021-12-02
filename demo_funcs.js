@@ -463,5 +463,5 @@ function labelExcludeFilter({ adze }) {
 
   logger().label('foo').fail("I should not print.");
   logger().label('bar').success("I should print.");
-  logger().success("I should not print.");
+  logger().success("I should print.");
 }

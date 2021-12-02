@@ -12,6 +12,7 @@ import {
   LogRender,
   Configuration,
 } from '../_contracts';
+import { Tools } from './Tools';
 import { BaseLog } from '../log/BaseLog';
 import { Label } from '../label';
 import { shed_defaults } from '../_defaults';
@@ -23,15 +24,15 @@ import { Env } from '../env';
  */
 export class Shed {
   /**
-   * Instance of the Env class.
-   */
-  private env: Env = new Env();
-
-  /**
    * The configuration for Shed. Shed is constructed with a set of
    * defaults that can overriden by the configuration supplied by the user.
    */
   private cfg: ShedConfig;
+
+  /**
+   * Instance of the Env class.
+   */
+  private env: Env;
 
   /**
    * In-memory cache of finalized logs (terminated and have meta data applied to them). This
@@ -57,9 +58,15 @@ export class Shed {
    */
   private listeners: ListenerBuckets = new Map();
 
+  /**
+   * Collections of useful tools for browser debugging.
+   */
+  public tools: Tools;
+
   constructor(env: Env, config?: ShedUserConfig) {
-    this.env = env;
     this.cfg = this.formatConfig(config);
+    this.env = env;
+    this.tools = new Tools(this.env, this);
   }
 
   /*************************************\
