@@ -144,6 +144,10 @@ module.exports = {
       {
         text: "FAQ's",
         link: '/faqs/'
+      },
+      {
+        text: "Add-on's",
+        link: '/addons/creating-addons'
       }
     ],
     sidebar: {
@@ -167,6 +171,16 @@ module.exports = {
             'unit-testing',
             'mapped-diagnostic-context',
             'micro-frontends',
+          ],
+        },
+      ],
+      '/addons/': [
+        {
+          title: "Add-on's",
+          collapsable: false,
+          children: [
+            'creating-addons',
+            'official-addons',
           ],
         },
       ],
