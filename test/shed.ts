@@ -213,3 +213,21 @@ test('configured cache limit works properly', (t) => {
   const collection = shed.getCollection('*');
   t.is(collection.length, 2);
 });
+
+test('shed tools renderCache renders appropriate log levels from the shed cache', (t) => {
+  const shed = createShed();
+
+  adze().alert('This is an alert!');
+  adze().error('This is an error!');
+  adze().warn('This is a warn!');
+  adze().info('This is an info!');
+  adze().fail('This is a failure!');
+  adze().success('This is a success!');
+  adze().log('This is a log!');
+  adze().debug('This is a debug!');
+  adze().verbose('This is a verbose!');
+
+  const rendered = shed.tools.renderCache([0, '-', 3]);
+
+  t.truthy(rendered.length === 4);
+});
