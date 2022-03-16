@@ -53,7 +53,7 @@ test('renders iso8601 timestamp properly', (t) => {
     // Get a date object to generate a timestamp with date-fns to check for accuracy
     const compareDate = new Date(milli);
     const ymd = format(compareDate, 'yyyy-MM-dd');
-    const hmsSx = format(compareDate, 'HH:mm:ss.SSSxxx');
+    const hmsSx = format(compareDate, 'HH:mm:ss.SSSXXX');
     const compareDateStr = `${ymd}T${hmsSx}  `;
 
     t.regex(

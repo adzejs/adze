@@ -13,10 +13,7 @@ test('renders a default alert log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'error');
-    t.is(
-      args[0],
-      applyChalkStyles(' Alert(1)      ', defaults.logLevels.alert.terminal)
-    );
+    t.is(args[0], applyChalkStyles(' Alert(1)      ', defaults.logLevels.alert.terminal));
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -30,10 +27,7 @@ test('renders a default error log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'error');
-    t.is(
-      args[0],
-      applyChalkStyles(' Error(1)      ', defaults.logLevels.error.terminal)
-    );
+    t.is(args[0], applyChalkStyles(' Error(1)      ', defaults.logLevels.error.terminal));
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -47,10 +41,7 @@ test('renders a default warn log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'warn');
-    t.is(
-      args[0],
-      applyChalkStyles(' Warn(1)       ', defaults.logLevels.warn.terminal)
-    );
+    t.is(args[0], applyChalkStyles(' Warn(1)       ', defaults.logLevels.warn.terminal));
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -64,10 +55,7 @@ test('renders a default info log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'info');
-    t.is(
-      args[0],
-      applyChalkStyles(' Info(1)       ', defaults.logLevels.info.terminal)
-    );
+    t.is(args[0], applyChalkStyles(' Info(1)       ', defaults.logLevels.info.terminal));
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -81,10 +69,7 @@ test('renders a default fail log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'info');
-    t.is(
-      args[0],
-      applyChalkStyles(' Fail(1)       ', defaults.logLevels.fail.terminal)
-    );
+    t.is(args[0], applyChalkStyles(' Fail(1)       ', defaults.logLevels.fail.terminal));
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -98,10 +83,7 @@ test('renders a default success log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'info');
-    t.is(
-      args[0],
-      applyChalkStyles(' Success(1)    ', defaults.logLevels.success.terminal)
-    );
+    t.is(args[0], applyChalkStyles(' Success(1)    ', defaults.logLevels.success.terminal));
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -115,10 +97,7 @@ test('renders a default log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'log');
-    t.is(
-      args[0],
-      applyChalkStyles(' Log(1)        ', defaults.logLevels.log.terminal)
-    );
+    t.is(args[0], applyChalkStyles(' Log(1)        ', defaults.logLevels.log.terminal));
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -132,10 +111,7 @@ test('renders a default debug log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'debug');
-    t.is(
-      args[0],
-      applyChalkStyles(' Debug(1)      ', defaults.logLevels.debug.terminal)
-    );
+    t.is(args[0], applyChalkStyles(' Debug(1)      ', defaults.logLevels.debug.terminal));
     t.is(args[1], 'testing');
   } else {
     t.fail();
@@ -149,10 +125,7 @@ test('renders a default verbose log', (t) => {
   if (t_log.render) {
     const [method, args] = t_log.render;
     t.is(method, 'debug');
-    t.is(
-      args[0],
-      applyChalkStyles(' Verbose(1)    ', defaults.logLevels.verbose.terminal)
-    );
+    t.is(args[0], applyChalkStyles(' Verbose(1)    ', defaults.logLevels.verbose.terminal));
     t.is(args[1], 'testing');
   } else {
     t.fail();

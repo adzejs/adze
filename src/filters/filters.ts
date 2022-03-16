@@ -5,17 +5,12 @@ import { formatLevels, isString } from '../util';
 /**
  * Filter a collection of logs by the namespace.
  */
-export function filterNamespace(
-  collection: Collection = [],
-  ns: string[]
-): Collection {
+export function filterNamespace(collection: Collection = [], ns: string[]): Collection {
   return filterCollection(collection, (log) => {
     const log_ns = log.namespace;
     if (log_ns) {
       // Loop over each log ns value and see if any match any ns value.
-      return log_ns
-        .map((val) => (isString(ns) ? val === ns : ns.includes(val)))
-        .includes(true);
+      return log_ns.map((val) => (isString(ns) ? val === ns : ns.includes(val))).includes(true);
     }
     return false;
   });
@@ -24,20 +19,14 @@ export function filterNamespace(
 /**
  * Filter and render the collection of logs by the label.
  */
-export function filterLabel(
-  collection: Collection = [],
-  lbl: string
-): Collection {
+export function filterLabel(collection: Collection = [], lbl: string): Collection {
   return filterCollection(collection, (log) => log.label?.name === lbl);
 }
 
 /**
  * Filter the collection of logs by their log level.
  */
-export function filterLevel(
-  collection: Collection = [],
-  levels: LevelFilter
-): Collection {
+export function filterLevel(collection: Collection = [], levels: LevelFilter): Collection {
   return filterCollection(collection, (log) => {
     // Calculating the formatted levels for each log because they could have different config
     return formatLevels(levels, log.cfg).includes(log.level ?? Infinity);
