@@ -18,9 +18,7 @@ export class NodePrinter extends SharedPrinter {
     const meta = this.fMeta();
 
     const render_args =
-      meta === ''
-        ? [leader, ...this.data.args]
-        : [leader, meta, ...this.data.args];
+      meta === '' ? [leader, ...this.data.args] : [leader, meta, ...this.data.args];
 
     return [method, render_args];
   }
@@ -154,9 +152,7 @@ export class NodePrinter extends SharedPrinter {
    * the assertion fails.
    */
   private fAssert(): string {
-    return this.data.assertion === false
-      ? `${this.use_emoji ? '❌ ' : ''}Assertion failed:`
-      : '';
+    return this.data.assertion === false ? `${this.use_emoji ? '❌ ' : ''}Assertion failed:` : '';
   }
 
   /**
@@ -164,8 +160,6 @@ export class NodePrinter extends SharedPrinter {
    * the test expression passes.
    */
   public fTest(): string {
-    return this.data.expression === true
-      ? `${this.use_emoji ? '✅ ' : ''}Expression Passed:`
-      : '';
+    return this.data.expression === true ? `${this.use_emoji ? '✅ ' : ''}Expression Passed:` : '';
   }
 }

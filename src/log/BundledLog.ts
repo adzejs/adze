@@ -6,12 +6,7 @@ import { BaseLog } from './BaseLog';
 export class BundledLog extends BaseLog {
   private _bundle: Bundle;
 
-  constructor(
-    printer: typeof Printer,
-    env: Env,
-    bundle: Bundle,
-    user_cfg?: Configuration
-  ) {
+  constructor(printer: typeof Printer, env: Env, bundle: Bundle, user_cfg?: Configuration) {
     super(printer, env, user_cfg);
     this._bundle = bundle;
   }

@@ -22,9 +22,7 @@ export class Printer {
 
   constructor(data: FinalLogData) {
     this.data = data;
-    this.printer = this.env.isBrowser
-      ? new BrowserPrinter(data)
-      : new NodePrinter(data);
+    this.printer = this.env.isBrowser ? new BrowserPrinter(data) : new NodePrinter(data);
   }
 
   get args(): unknown[] {
@@ -42,9 +40,7 @@ export class Printer {
   }
 
   public printGroupCollapsed(): LogRender | null {
-    return this.checkSilent(
-      this.attachContext(this.printer.printGroupCollapsed())
-    );
+    return this.checkSilent(this.attachContext(this.printer.printGroupCollapsed()));
   }
 
   public printTrace(): LogRender | null {

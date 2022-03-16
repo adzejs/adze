@@ -1,12 +1,5 @@
 import * as _chalk from 'chalk';
-import {
-  Defaults,
-  LogLevels,
-  LevelFilter,
-  LogRender,
-  ChalkStyle,
-  Range,
-} from '../_contracts';
+import { Defaults, LogLevels, LevelFilter, LogRender, ChalkStyle, Range } from '../_contracts';
 import { isNumber, isArray, isDefined } from './type-guards';
 import { Env } from '../env';
 
@@ -22,10 +15,7 @@ export function initialCaps(str: string): string {
  * value defined by the user configuration. If levels is already a number array
  * it is returned unchanged.
  */
-export function formatLevels(
-  levels: LevelFilter,
-  cfg: Defaults | null = null
-): number[] {
+export function formatLevels(levels: LevelFilter, cfg: Defaults | null = null): number[] {
   if (levels === '*') {
     return createArrayOfNumbers(0, getMaxLevel(cfg));
   }
@@ -63,9 +53,7 @@ export function parseRange(range: Range): [number, number] {
 /**
  * Get all level values from a config of type LogLevels.
  */
-export function levelsFromConfig(
-  lvls: LogLevels | Partial<LogLevels>
-): number[] {
+export function levelsFromConfig(lvls: LogLevels | Partial<LogLevels>): number[] {
   return Object.values(lvls)
     .map((lvl) => lvl?.level)
     .filter(isDefined);

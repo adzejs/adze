@@ -23,9 +23,7 @@ test('group log renders correctly', (t) => {
 });
 
 test('group collapsed renders correctly', (t) => {
-  const { log, render } = adze().groupCollapsed.success(
-    'Opening a collapsed log group.'
-  );
+  const { log, render } = adze().groupCollapsed.success('Opening a collapsed log group.');
   if (render) {
     const [method, args] = render;
     t.is(method, 'groupCollapsed');

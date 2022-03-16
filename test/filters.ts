@@ -1,11 +1,5 @@
 import test from 'ava';
-import adze, {
-  bundle,
-  filterNamespace,
-  filterLabel,
-  filterLevel,
-  filterCollection,
-} from '../src';
+import adze, { bundle, filterNamespace, filterLabel, filterLevel, filterCollection } from '../src';
 
 global.ADZE_ENV = 'dev';
 
@@ -68,9 +62,6 @@ test('filterCollection filters collection by a log data value', (t) => {
   const collection = log.bundle;
   t.is(collection.length, 4);
 
-  const filtered = filterCollection(
-    collection,
-    (log_data) => log_data.isSilent === false
-  );
+  const filtered = filterCollection(collection, (log_data) => log_data.isSilent === false);
   t.is(filtered.length, 3);
 });

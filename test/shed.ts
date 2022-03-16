@@ -1,11 +1,6 @@
 import anyTest, { TestInterface } from 'ava';
 import { Shed } from '../src/shed/Shed';
-import adze, {
-  createShed,
-  removeShed,
-  shedExists,
-  isFinalLogData,
-} from '../src';
+import adze, { createShed, removeShed, shedExists, isFinalLogData } from '../src';
 import { Label } from '../src/label';
 
 global.ADZE_ENV = 'dev';
@@ -40,9 +35,7 @@ test('shedExists correctly indicates that a shed instance exists in the global c
 
 test('stores a log instance', (t) => {
   // We have a log instance before a shed existed
-  const { log } = adze({ useEmoji: true })
-    .ns('Foo')
-    .info('This is an info log.');
+  const { log } = adze({ useEmoji: true }).ns('Foo').info('This is an info log.');
   // Create a shed
   const shed = createShed();
   // Let's add our orphaned log instance to the shed

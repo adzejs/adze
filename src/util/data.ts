@@ -87,10 +87,7 @@ export function hrtime(prev?: [number, number]): [number, number] {
   }
 }
 
-function hrtimeBrowser(
-  ctxt: Window,
-  prev?: [number, number]
-): [number, number] {
+function hrtimeBrowser(ctxt: Window, prev?: [number, number]): [number, number] {
   const time = ctxt.performance.now() * 0.001;
   const seconds = Math.floor(time);
   const nanoseconds = Math.floor((time % 1) * 1000000000);

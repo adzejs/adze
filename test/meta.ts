@@ -13,9 +13,7 @@ test('log saves meta data correctly with Tuple generic type', (t) => {
   const with_meta = adze()
     .meta<Test>('test', { a: 12, b: 34 })
     .seal();
-  const { log, render } = with_meta()
-    .meta('test2', 5678)
-    .log('Added meta twice.');
+  const { log, render } = with_meta().meta('test2', 5678).log('Added meta twice.');
 
   t.truthy(render);
   t.deepEqual(log.data.meta, {
@@ -31,9 +29,7 @@ test('log saves meta data correctly with generic type', (t) => {
   const with_meta = adze()
     .meta<TestMeta>('test', { a: 12, b: 34 })
     .seal();
-  const { log, render } = with_meta()
-    .meta('test2', 5678)
-    .log('Added meta twice.');
+  const { log, render } = with_meta().meta('test2', 5678).log('Added meta twice.');
 
   t.truthy(render);
   t.deepEqual(log.data.meta, {

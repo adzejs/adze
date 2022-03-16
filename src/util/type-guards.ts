@@ -31,14 +31,9 @@ export function isDefined<T>(val: T | undefined): val is T {
 /**
  * Type guard that indicates a log data object is finalized.
  */
-export function isFinalLogData(
-  data: LogData | FinalLogData
-): data is FinalLogData {
+export function isFinalLogData(data: LogData | FinalLogData): data is FinalLogData {
   return (
-    data.level !== null &&
-    data.definition !== null &&
-    data.args !== null &&
-    data.timestamp !== null
+    data.level !== null && data.definition !== null && data.args !== null && data.timestamp !== null
   );
 }
 

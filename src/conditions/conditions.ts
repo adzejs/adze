@@ -8,9 +8,7 @@ import { getSearchParams } from '../util';
  */
 export function allowed(data: FinalLogData): boolean {
   return (
-    levelActive(data.definition, data.cfg.logLevel) &&
-    notTestEnv() &&
-    passesFilters(data.cfg, data)
+    levelActive(data.definition, data.cfg.logLevel) && notTestEnv() && passesFilters(data.cfg, data)
   );
 }
 

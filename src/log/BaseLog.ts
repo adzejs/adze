@@ -153,16 +153,12 @@ export class BaseLog {
     this.env = env;
 
     // First merge our user config with our defaults
-    const cfg = user_cfg
-      ? (defaultsDeep(user_cfg, defaults) as Defaults)
-      : defaults;
+    const cfg = user_cfg ? (defaultsDeep(user_cfg, defaults) as Defaults) : defaults;
 
     // Now check if global overrides exist and apply them over top of our configuration
     const shed = env.global.$shed;
     const with_overrides =
-      shedExists(shed) && shed.hasOverrides
-        ? (defaultsDeep(shed.overrides, cfg) as Defaults)
-        : cfg;
+      shedExists(shed) && shed.hasOverrides ? (defaultsDeep(shed.overrides, cfg) as Defaults) : cfg;
 
     // Now we'll pre-parse our filter levels in the config for performance
     this.cfg = parseFilterLevels(with_overrides);
@@ -762,10 +758,7 @@ export class BaseLog {
   /**
    * The primary logic for terminating log methods.
    */
-  private terminate(
-    def: LogLevelDefinition | undefined,
-    args: unknown[]
-  ): TerminatedLog<this> {
+  private terminate(def: LogLevelDefinition | undefined, args: unknown[]): TerminatedLog<this> {
     if (def) {
       // Apply modifiers in the proper order.
       this.runModifierQueue();
@@ -843,11 +836,7 @@ export class BaseLog {
   /**
    * Fires listeners for this log instance if a Shed exists.
    */
-  private fireListeners(
-    data: FinalLogData,
-    render: LogRender | null,
-    printed: boolean
-  ): void {
+  private fireListeners(data: FinalLogData, render: LogRender | null, printed: boolean): void {
     const shed = this.env.global.$shed;
     if (shedExists(shed)) {
       shed.fireListeners(data, render, printed);

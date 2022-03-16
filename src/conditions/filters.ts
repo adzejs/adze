@@ -17,16 +17,10 @@ import { formatLevels } from '../util';
 export function parseFilterLevels(cfg: Defaults): Defaults {
   const new_cfg: Defaults = { ...cfg };
   if (filterIsSet(cfg, 'include', 'level') && new_cfg.filters.level?.include) {
-    new_cfg.filters.level.include = formatLevels(
-      new_cfg.filters.level.include,
-      new_cfg
-    );
+    new_cfg.filters.level.include = formatLevels(new_cfg.filters.level.include, new_cfg);
   }
   if (filterIsSet(cfg, 'exclude', 'level') && new_cfg.filters.level?.exclude) {
-    new_cfg.filters.level.exclude = formatLevels(
-      new_cfg.filters.level.exclude,
-      new_cfg
-    );
+    new_cfg.filters.level.exclude = formatLevels(new_cfg.filters.level.exclude, new_cfg);
   }
   return new_cfg;
 }
@@ -91,11 +85,7 @@ export function namespaceAllowed(data: FinalLogData): boolean {
  * Wrapper around the filter methods to handle some basic setup for validating
  * the filter values.
  */
-function filterAllowed(
-  cfg: Defaults,
-  category: GlobalFilter,
-  cb: FilterAllowedCallback
-): boolean {
+function filterAllowed(cfg: Defaults, category: GlobalFilter, cb: FilterAllowedCallback): boolean {
   const filter_type = filterType(cfg, category);
   if (filter_type) {
     const [filter, func] = filter_type;
@@ -139,11 +129,7 @@ function isNotExcluded<T>(source: T[], value: T): boolean {
 /**
  * Has the user defined rules for a specific filter?
  */
-function filterIsSet(
-  cfg: Defaults,
-  type: 'include' | 'exclude',
-  filter: GlobalFilter
-): boolean {
+function filterIsSet(cfg: Defaults, type: 'include' | 'exclude', filter: GlobalFilter): boolean {
   const include_prop = cfg?.filters?.[filter]?.[type] ?? [];
   return include_prop.length > 0;
 }

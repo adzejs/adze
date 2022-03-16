@@ -110,9 +110,7 @@ export class Env {
   public static isSafari(): boolean {
     const _glbl = Env.global();
     if (Env.envIsWindow(_glbl)) {
-      return (
-        _glbl.navigator?.userAgent?.indexOf('Safari') > -1 && !Env.isChrome()
-      );
+      return _glbl.navigator?.userAgent?.indexOf('Safari') > -1 && !Env.isChrome();
     }
     return false;
   }
