@@ -177,10 +177,7 @@ export class Shed {
   /**
    * Add a listener callback that fires any time a log of one of the provided levels is terminated.
    */
-  public addListener(
-    levels: LevelFilter,
-    cb: ListenerCallback
-  ): ListenerLocations {
+  public addListener(levels: LevelFilter, cb: ListenerCallback): ListenerLocations {
     const lvls = formatLevels(levels, this.cfg.globalCfg);
     return lvls.map((lvl: number) => {
       // Get the map for the listeners of the given log level.
@@ -211,11 +208,7 @@ export class Shed {
    * Fires any listeners that are watching the log level defined in the provided log data. The log data
    * and render object will be passed to the listener callback.
    */
-  public fireListeners(
-    log: FinalLogData,
-    render: LogRender | null,
-    printed: boolean
-  ): void {
+  public fireListeners(log: FinalLogData, render: LogRender | null, printed: boolean): void {
     this.listeners.get(log.level)?.forEach((listener) => {
       listener(log, render, printed);
     });

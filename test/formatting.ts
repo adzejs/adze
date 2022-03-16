@@ -15,9 +15,7 @@ test('dir log terminates properly', (t) => {
 });
 
 test('dirxml log terminates properly', (t) => {
-  const { render } = adze().dirxml.info(
-    '<a href="http://www.andrewstacy.com/></a>'
-  );
+  const { render } = adze().dirxml.info('<a href="http://www.andrewstacy.com/></a>');
   if (render) {
     const [method, args] = render;
     t.is(method, 'dirxml');

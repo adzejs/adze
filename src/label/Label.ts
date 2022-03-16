@@ -1,4 +1,4 @@
-import hrtime from 'browser-process-hrtime';
+import { hrtime } from '../util';
 import { MetaData, HrTime, LabelData } from '../_contracts';
 
 export class Label {

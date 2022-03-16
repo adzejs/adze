@@ -15,9 +15,7 @@ export class BrowserPrinter extends SharedPrinter {
   public printLog(): LogRender {
     const method = this.data.definition.method;
     const leader = this.fLeader();
-    const style = this.unstyled
-      ? ''
-      : this.data.cfg.baseStyle + this.data.definition.style;
+    const style = this.unstyled ? '' : this.data.cfg.baseStyle + this.data.definition.style;
     const meta = this.fMeta();
 
     // Assemble the args
@@ -32,14 +30,9 @@ export class BrowserPrinter extends SharedPrinter {
    * The method for rendering group logs.
    */
   public printGroup(): LogRender {
-    const partialArgs = [
-      this.fLeader(),
-      this.data.cfg.baseStyle + this.data.definition.style,
-    ];
+    const partialArgs = [this.fLeader(), this.data.cfg.baseStyle + this.data.definition.style];
     const render_args =
-      typeof this.data.args[0] === 'string'
-        ? [...partialArgs, this.data.args[0]]
-        : partialArgs;
+      typeof this.data.args[0] === 'string' ? [...partialArgs, this.data.args[0]] : partialArgs;
 
     return ['group', render_args];
   }
@@ -48,14 +41,9 @@ export class BrowserPrinter extends SharedPrinter {
    * The method for rendering collapsed group logs.
    */
   public printGroupCollapsed(): LogRender {
-    const partial_args = [
-      this.fLeader(),
-      this.data.cfg.baseStyle + this.data.definition.style,
-    ];
+    const partial_args = [this.fLeader(), this.data.cfg.baseStyle + this.data.definition.style];
     const render_args =
-      typeof this.data.args[0] === 'string'
-        ? [...partial_args, this.data.args[0]]
-        : partial_args;
+      typeof this.data.args[0] === 'string' ? [...partial_args, this.data.args[0]] : partial_args;
 
     return ['groupCollapsed', render_args];
   }
@@ -146,9 +134,7 @@ export class BrowserPrinter extends SharedPrinter {
    * the assertion fails.
    */
   public fAssert(): string {
-    return this.data.assertion === false
-      ? `${this.use_emoji ? '❌ ' : ''}Assertion failed:`
-      : '';
+    return this.data.assertion === false ? `${this.use_emoji ? '❌ ' : ''}Assertion failed:` : '';
   }
 
   /**
@@ -156,8 +142,6 @@ export class BrowserPrinter extends SharedPrinter {
    * the test expression passes.
    */
   public fTest(): string {
-    return this.data.expression === true
-      ? `${this.use_emoji ? '✅ ' : ''}Expression Passed:`
-      : '';
+    return this.data.expression === true ? `${this.use_emoji ? '✅ ' : ''}Expression Passed:` : '';
   }
 }

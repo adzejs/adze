@@ -64,9 +64,7 @@ test('renders a custom log with emoji', (t) => {
 // =========================
 
 test('renders an unstyled log', (t) => {
-  const unstyled = adze({ unstyled: true })
-    .label('unstyled')
-    .log('This log should have no style.');
+  const unstyled = adze({ unstyled: true }).label('unstyled').log('This log should have no style.');
 
   t.truthy(unstyled.log);
 

@@ -26,9 +26,7 @@ test('can bundle sealed log instance', (t) => {
   const bundled = bundle(adze({ useEmoji: true }).count.label('SEALED').seal());
 
   const { log } = bundled().ns('SPACE').error('This is an error!');
-  const { log: log2 } = bundled()
-    .ns(['foo', 'SPACE'])
-    .info('Multiple namespaces.');
+  const { log: log2 } = bundled().ns(['foo', 'SPACE']).info('Multiple namespaces.');
 
   t.is(log.bundle[0].data.label.name, 'SEALED');
   t.is(log.bundle[0].data.label.count, 2);

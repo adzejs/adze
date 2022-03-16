@@ -22,9 +22,7 @@ export function bundle(_log: Log | (() => Log)): Bundler {
   const bundle_arr = [] as Bundle;
   return () => {
     const log = typeof _log === 'function' ? _log() : _log;
-    const bundled_log = new BundledLog(Printer, new Env(), bundle_arr).hydrate(
-      log.data
-    );
+    const bundled_log = new BundledLog(Printer, new Env(), bundle_arr).hydrate(log.data);
     bundle_arr.push(bundled_log);
     return bundled_log;
   };
