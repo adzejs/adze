@@ -21,28 +21,29 @@ export function timestamp(): LogTimestamp {
 export function iso8601Timestamp(milli: number): string {
   const d = new Date(milli);
 
-  const year = d.getUTCFullYear();
-  const month = twoDigitWholeNumber(d.getUTCMonth() + 1);
-  const day = twoDigitWholeNumber(d.getUTCDate());
-  // console.log('====', d.getTimezoneOffset(), d.getTimezoneOffset() / 60);
-  const hours = twoDigitWholeNumber(
-    d.getUTCHours() - d.getTimezoneOffset() / 60
-  );
-  const minutes = twoDigitWholeNumber(d.getUTCMinutes());
-  const seconds = twoDigitWholeNumber(d.getUTCSeconds());
+  const year = d.getFullYear();
+  const month = leadingZeros(2, d.getMonth() + 1);
+  const day = leadingZeros(2, d.getDate());
+  const hours = leadingZeros(2, d.getHours());
+  const minutes = leadingZeros(2, d.getMinutes());
+  const seconds = leadingZeros(2, d.getSeconds());
   const timezone = formatTimezoneOffset(d.getTimezoneOffset());
+  const milliseconds = leadingZeros(3, d.getMilliseconds());
 
-  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${timezone}`;
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}${timezone}`;
 }
 
 /**
- * Converts a number to a two digit positive whole number string.
+ * Adds leading zeros to a number to make it equal the provided digit count.
  *
- * Example: twoDigitWholeNumber(4) => '04'
+ * Example: leadingZeros(2, 4) => '04'
  */
-export function twoDigitWholeNumber(val: number): string {
-  const num = Math.abs(val);
-  return num < 10 ? `0${num}` : `${num}`;
+export function leadingZeros(digits: number, num: number): string {
+  let leadingZeros = '';
+  for (let i = 0; i < digits - `${num}`.length; i += 1) {
+    leadingZeros += '0';
+  }
+  return `${leadingZeros}${num}`;
 }
 
 /**
@@ -54,10 +55,8 @@ export function formatTimezoneOffset(raw: number): string {
     return 'Z';
   }
 
-  const isNegative = raw < 0;
-  return `${isNegative ? '+' : '-'}${
-    offset > 9 ? `${offset}` : `0${offset}`
-  }:00`;
+  const sign = raw < 0 ? '+' : '-';
+  return `${sign}${leadingZeros(2, offset)}:00`;
 }
 
 /**
