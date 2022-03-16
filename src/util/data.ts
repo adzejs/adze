@@ -76,3 +76,35 @@ export function getSearchParams(): URLSearchParams | undefined {
     return new URLSearchParams(ctxt.document.location.search.substring(1));
   }
 }
+
+export function hrtime(prev?: [number, number]): [number, number] {
+  const env = new Env();
+  const ctxt = env.global;
+  if (Env.envIsWindow(ctxt)) {
+    return hrtimeBrowser(ctxt, prev);
+  } else {
+    return process?.hrtime(prev);
+  }
+}
+
+function hrtimeBrowser(
+  ctxt: Window,
+  prev?: [number, number]
+): [number, number] {
+  const time = ctxt.performance.now() * 0.001;
+  const seconds = Math.floor(time);
+  const nanoseconds = Math.floor((time % 1) * 1000000000);
+
+  // If a previous value has been provided
+  if (prev === undefined) {
+    return [seconds, nanoseconds];
+  }
+
+  let secondsDiff = seconds - prev[0];
+  let nanosecondsDiff = nanoseconds - prev[1];
+  if (nanosecondsDiff < 0) {
+    secondsDiff -= 1;
+    nanosecondsDiff += 1e9;
+  }
+  return [secondsDiff, nanosecondsDiff];
+}
