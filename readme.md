@@ -140,7 +140,7 @@ _**NOTE:** In the script tag in the example below, replace `<version>` with the 
 ### Node JS (CommonJS)
 
 ```javascript
-const adze = require('adze');
+const { adze } = require('adze'); // Or alternatively `const adze = require('adze').adze;`
 
 adze().log('Hello World!');
 ```
