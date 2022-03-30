@@ -15,7 +15,7 @@ _Photo from [Wikipedia](https://en.wikipedia.org/wiki/Adze)_
 
 > Adze - [a cutting tool that ... is used chiefly for shaping wood](https://www.merriam-webster.com/dictionary/adze).
 
-(Pronounced like ["Ads"](https://dictionary.cambridge.org/us/pronunciation/english/adze)) Adze was chosen as a name for this library to maintain solidarity with the logging puns and to emphasize that this library is a tool for shaping the logs of your application.
+(Pronounced ["Ads"](https://dictionary.cambridge.org/us/pronunciation/english/adze)) Adze was chosen as a name for this library to maintain solidarity with the logging puns and to emphasize that this library is a tool for shaping the logs of your application.
 
 ## Why should I use Adze?
 
