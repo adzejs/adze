@@ -37,3 +37,13 @@ test('log with multiple namespaces prints correctly', (t) => {
     t.fail();
   }
 });
+
+test('log with multiple namespaces using rest parameters prints correctly', (t) => {
+  const { render } = adze().ns('test', 'test2').log('This log has a label.');
+  if (render) {
+    const [_, args] = render;
+    t.is(args[2], '#test #test2 ');
+  } else {
+    t.fail();
+  }
+});
