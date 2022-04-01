@@ -586,9 +586,11 @@ export class BaseLog {
    *
    * This is a non-standard API.
    */
-  public namespace(ns: string | string[]): this {
+  public namespace(ns: string[]): this;
+  public namespace(...rest: string[]): this;
+  public namespace(ns: string | string[], ...rest: string[]): this {
     return this.modifier((ctxt) => {
-      ctxt._namespaceVal = isString(ns) ? [ns] : ns;
+      ctxt._namespaceVal = isString(ns) ? [ns, ...rest] : ns;
     });
   }
 
@@ -597,8 +599,10 @@ export class BaseLog {
    *
    * This is a non-standard API.
    */
-  public ns(ns: string | string[]): this {
-    return this.namespace(ns);
+  public ns(ns: string[]): this;
+  public ns(...rest: string[]): this;
+  public ns(ns: string | string[], ...rest: string[]): this {
+    return this.namespace(ns as string, ...rest);
   }
 
   /**

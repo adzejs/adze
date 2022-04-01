@@ -319,6 +319,8 @@ function withNamespace({ adze }) {
 function withMultiNamespace({ adze }) {
   console.log('\n----- Default Multiple Namespace Log w/ No Store -----\n');
   adze().ns(['foo', 'bar']).info('This log has multiple namespaces.');
+  adze().namespace('foo', 'bar', 'baz').info('Testing multiple namespaces using rest parameters.');
+  adze().ns('foo', 'bar', 'baz').info('Testing multiple namespaces using rest parameters with the ns() alias.');
 }
 
 function withTime({ adze }) {
