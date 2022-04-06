@@ -36,6 +36,88 @@
         font-size: 1.8rem;
       }
     </style>
+    <script>
+      const { adze, createShed, removeShed, rerender } = AdzeLib;
+      window.adze = adze;
+      window.createShed = createShed;
+      window.removeShed = removeShed;
+      window.rerender = rerender;
+
+      const methods = [
+        'alert',
+        'error',
+        'warn',
+        'info',
+        'success',
+        'fail',
+        'log',
+        'debug',
+        'verbose',
+      ];
+
+      const sentences = [
+        'I just wanted to tell you I could see the love you have for your child by the way you look at her.',
+        'Love is not like pizza.',
+        'With a single flip of the coin, his life changed forever.',
+        'There was coal in his stocking and he was thrilled.',
+        'The view from the lighthouse excited even the most seasoned traveler.',
+        'He ran out of money, so he had to stop playing poker.',
+        "It took me too long to realize that the ceiling hadn't been painted to look like the sky.",
+        'They were excited to see their first sloth.',
+        'I was offended by the suggestion that my baby brother was a jewel thief.',
+        'I became paranoid that the school of jellyfish was spying on me.',
+        'There was no ice cream in the freezer, nor did they have money to go to the store.',
+        'The tears of a clown make my lipstick run, but my shower cap is still intact.',
+        "It's never comforting to know that your fate depends on something as unpredictable as the popping of corn.",
+        'David subscribes to the "stuff your tent into the bag" strategy over nicely folding it.',
+        'Cursive writing is the best way to build a race track.',
+        "For some unfathomable reason, the response team didn't consider a lack of milk for my cereal as a proper emergency.",
+        'The external scars tell only part of the story.',
+        'I don’t respect anybody who can’t tell the difference between Pepsi and Coke.',
+        'The manager of the fruit stand always sat and only sold vegetables.',
+        "That must be the tenth time I've been arrested for selling deep-fried cigars.",
+        'Some bathing suits just shouldn’t be worn by some people.',
+        'He learned the hardest lesson of his life and had the scars, both physical and mental, to prove it.',
+        'They wandered into a strange Tiki bar on the edge of the small beach town.',
+        'Fluffy pink unicorns are a popular status symbol among macho men.',
+        'Eating eggs on Thursday for choir practice was recommended.',
+        'The dead trees waited to be ignited by the smallest spark and seek their revenge.',
+        'Excitement replaced fear until the final moment.',
+        "I'd rather be a bird than a fish.",
+        "I'm confused: when people ask me what's up, and I point, they groan.",
+        "I've always wanted to go to Tajikistan, but my cat would miss me.",
+        'The light in his life was actually a fire burning all around him.',
+        'He dreamed of leaving his law firm to open a portable dog wash.',
+        'I received a heavy fine but it failed to crush my spirit.',
+        'Red is greener than purple, for sure.',
+        'He drank life before spitting it out.',
+        'The underground bunker was filled with chips and candy.',
+        'Harrold felt confident that nobody would ever suspect his spy pigeon.',
+        'He wore the surgical mask in public not to keep from catching a virus, but to keep people away from him.',
+        'Rock music approaches at high velocity.',
+        'The heat',
+        'I caught my squirrel rustling through my gym bag.',
+        'The chic gangster liked to start the day with a pink scarf.',
+        'Swim at your own risk was taken as a challenge for the group of Kansas City college students.',
+        "Yeah, I think it's a good environment for learning English.",
+        'We should play with legos at camp.',
+        'The near-death experience brought new ideas to light.',
+        "Most shark attacks occur about 10 feet from the beach since that's where the people are.",
+        'The balloons floated away along with all my hopes and dreams.',
+        'He found his art never progressed when he literally used his sweat and tears.',
+        'She had convinced her kids that any mushroom found on the ground would kill them if they touched it.',
+      ];
+
+      function randomLog(logger, count = 1) {
+        for (let i = 0; i < count; i += 1) {
+          const methodIndex = Math.floor(Math.random() * 9);
+          const sentenceIndex = Math.floor(Math.random() * 50);
+          logger()[methods[methodIndex]](sentences[sentenceIndex]);
+        }
+      }
+
+      window.randomLog = randomLog;
+    </script>
   </head>
 
   <body>
