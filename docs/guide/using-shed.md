@@ -389,7 +389,7 @@ shed.store(log);
 
 ## $shed.tools
 
-Manual debugging tools primarily for use in the web browser. To use the tools, access them via `window.$shed.tools` or simply `$shed.tools` in your browser console. Any of the methods listed in the interface below will be made available to you. For all methods other than `renderCache` please refer to the documentation for [Filtering & Utility Functions](filtering-and-utility-functions.md).
+Manual debugging tools primarily for use in the web browser. To use the tools, access them via `window.$shed.tools` or simply `$shed.tools` in your browser console. Any of the methods listed in the interface below will be made available to you. For all methods other than `renderCache`, `renderNamespace`, and `renderLabel` please refer to the documentation for [Filtering & Utility Functions](filtering-and-utility-functions.md).
 
 > Supported in versions >= 1.4.0
 
@@ -436,6 +436,16 @@ class Tools {
    * Shortcut method for rendering a level-filtered collection from the Shed cache.
    */
   public renderCache(filter: LevelFilter): Collection;
+
+  /**
+   * Shortcut method for rendering a level and namespace filtered collection from the Shed cache.
+   */
+  public renderNamespace(filter: LevelFilter, ...ns: string[]): Collection;
+
+  /**
+   * Shortcut method for rendering a level and label filtered collection from the Shed cache.
+   */
+  public renderLabel(filter: LevelFilter, label: string): Collection;
 }
 ```
 

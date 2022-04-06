@@ -496,8 +496,9 @@ adze().meta('message', info).log('This log contains an important message.');
 
 ## namespace / ns
 
-This modifier adds one or more namespaces to a log. These are mainly used as human
-readable group identifiers but are also useful for filtering recalled logs and for identifying logs from a log listener. This modifier does not do any special grouping under the hood.
+This modifier adds one or more namespaces to a log. These are mainly used as human readable group identifiers but are 
+also useful for filtering recalled logs and for identifying logs from a log listener. This modifier does not do any
+special grouping under the hood. The `ns()` method is just a shorter alias for `namespace()`.
 
 _This is not a standard API._
 
@@ -506,6 +507,10 @@ _This is not a standard API._
 ```typescript
 class BaseLog {
   public namespace(ns: string | string[]): this;
+  public ns(ns: string | string[]): this;
+  // Or alternatively with the restof operator
+  public namespace(...ns: string[]): this;
+  public ns(...ns: string[]): this;
 }
 ```
 
@@ -518,6 +523,9 @@ adze().namespace('tix-123').log('Important info for a feature.');
 adze()
   .namespace(['tix-123', 'tix-456'])
   .log('Important info for multiple features.');
+adze()
+  .namespace('tix-123', 'tix-456', 'tix-789')
+  .log('Multiple namespace entry simplified by the restof operator.');
 // ns() is a shorthand alias for namespace()
 adze().ns('tix-456').log('More info');
 ```
