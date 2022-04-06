@@ -15,11 +15,6 @@ test('properly returns a valid hrtime', (t) => {
   const time = hrtime();
   const diff = hrtime(time);
 
-  console.log({
-    time,
-    diff,
-  });
-
   t.is(time.length, 2);
   t.is(diff.length, 2);
 });

@@ -70,4 +70,26 @@ export class Tools {
     }
     return filtered;
   }
+
+  /**
+   * Shortcut method for rendering a level and namespace filtered collection from the Shed cache.
+   */
+  public renderNamespace(filter: LevelFilter, ...ns: string[]): Collection {
+    const filtered = this.filterNamespace(this.shed.getCollection(filter), ns);
+    if (this.env.global.ADZE_ENV !== 'dev') {
+      filtered.forEach(rerender);
+    }
+    return filtered;
+  }
+
+  /**
+   * Shortcut method for rendering a level and label filtered collection from the Shed cache.
+   */
+  public renderLabel(filter: LevelFilter, label: string): Collection {
+    const filtered = this.filterLabel(this.shed.getCollection(filter), label);
+    if (this.env.global.ADZE_ENV !== 'dev') {
+      filtered.forEach(rerender);
+    }
+    return filtered;
+  }
 }

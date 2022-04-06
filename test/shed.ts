@@ -222,5 +222,46 @@ test('shed tools renderCache renders appropriate log levels from the shed cache'
 
   const rendered = shed.tools.renderCache([0, '-', 3]);
 
-  t.truthy(rendered.length === 4);
+  t.is(rendered.length, 4);
+});
+
+test('shed tools renderNamespace renders appropriate logs with provided level and namespace filter from the shed cache', (t) => {
+  const shed = createShed();
+
+  adze().ns('foo', 'bar').alert('This is an alert!');
+  adze().ns('bar').error('This is an error!');
+  adze().ns('hello').warn('This is a warn!');
+  adze().ns('world').info('This is an info!');
+  adze().ns('hello', 'world').fail('This is a failure!');
+  adze().ns('baz').success('This is a success!');
+  adze().ns('foo', 'baz').log('This is a log!');
+  adze().ns('foo').debug('This is a debug!');
+  adze().ns('foo', 'hello', 'world').verbose('This is a verbose!');
+
+  const renderedAll = shed.tools.renderNamespace('*', 'bar', 'baz');
+
+  const renderedAlert = shed.tools.renderNamespace([0], 'bar', 'baz');
+
+  t.is(renderedAll.length, 4);
+  t.is(renderedAlert.length, 1);
+});
+
+test('shed tools renderLabel renders appropriate logs with provided level and label filter from the shed cache', (t) => {
+  const shed = createShed();
+
+  adze().label('foo').alert('This is an alert!');
+  adze().error('This is an error!');
+  adze().label('foo').warn('This is a warn!');
+  adze().label('bar').info('This is an info!');
+  adze().label('hello').fail('This is a failure!');
+  adze().success('This is a success!');
+  adze().label('foo').log('This is a log!');
+  adze().label('world').debug('This is a debug!');
+  adze().label('foo').verbose('This is a verbose!');
+
+  const renderedAll = shed.tools.renderLabel('*', 'foo');
+  const renderedWarn = shed.tools.renderLabel([2], 'foo');
+
+  t.is(renderedAll.length, 4);
+  t.is(renderedWarn.length, 1);
 });
