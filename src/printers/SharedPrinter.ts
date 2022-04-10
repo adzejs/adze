@@ -5,9 +5,9 @@ import { isString } from '../util';
 export class SharedPrinter {
   protected env: Env = new Env();
 
-  protected data: FinalLogData;
+  protected data: FinalLogData<any>;
 
-  constructor(data: FinalLogData) {
+  constructor(data: FinalLogData<any>) {
     this.data = data;
   }
 

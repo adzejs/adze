@@ -43,7 +43,6 @@ export interface LogLevelDefinition {
   emoji: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface Configuration extends Partial<Omit<Defaults, 'filters' | 'logLevels'>> {
   logLevels?: RecursivePartial<LogLevels>;
   filters?: UserAdzeFilters;

@@ -1,9 +1,9 @@
-import { Configuration } from '../_contracts';
+import { Configuration, Constraints } from '../_contracts';
 import { BaseLog } from './BaseLog';
 import { Env } from '../env';
 import { Printer } from '../printers';
 
-export class Log extends BaseLog {
+export class Log<C extends Constraints> extends BaseLog<C> {
   constructor(printer: typeof Printer, env: Env, user_cfg?: Configuration) {
     super(printer, env, user_cfg);
   }
@@ -19,7 +19,7 @@ export class Log extends BaseLog {
    * sealed().log('Another log.'); // -> prints "#sealed [sealed-label] Another log."
    * ```
    */
-  public seal(): () => Log {
-    return () => new Log(this.Printer, this.env).hydrate(this.data);
+  public seal(): () => Log<C> {
+    return () => new Log<C>(this.Printer, this.env).hydrate(this.data);
   }
 }

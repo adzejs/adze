@@ -1,4 +1,4 @@
-import { Configuration } from './_contracts';
+import { Configuration, Constraints } from './_contracts';
 import { Log } from './log';
 import { Printer } from './printers';
 import { Env } from './env';
@@ -32,6 +32,6 @@ import { Env } from './env';
  * + (7) debug
  * + (8) verbose
  */
-export function adze(user_cfg: Configuration = {}): Log {
-  return new Log(Printer, new Env(), user_cfg);
+export function adze<C extends Constraints>(user_cfg: Configuration = {}): Log<C> {
+  return new Log<C>(Printer, new Env(), user_cfg);
 }

@@ -6,7 +6,7 @@ import { getSearchParams } from '../util';
 /**
  * Determine the fate of whether this log will terminate.
  */
-export function allowed(data: FinalLogData): boolean {
+export function allowed(data: FinalLogData<any>): boolean {
   return (
     levelActive(data.definition, data.cfg.logLevel) && notTestEnv() && passesFilters(data.cfg, data)
   );
@@ -22,7 +22,7 @@ export function levelActive(def: LogLevelDefinition, level: number): boolean {
 /**
  * Validates the log against the configured filters.
  */
-export function passesFilters(cfg: Defaults, data: FinalLogData): boolean {
+export function passesFilters(cfg: Defaults, data: FinalLogData<any>): boolean {
   return (
     !(cfg?.filters.hideAll ?? false) &&
     levelAllowed(data) &&

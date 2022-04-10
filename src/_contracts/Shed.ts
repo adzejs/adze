@@ -11,7 +11,7 @@ export type ListenerBuckets = Map<number, ListenerBucket>;
 export type ListenerBucket = Map<number, ListenerCallback>;
 
 export type ListenerCallback = (
-  LogData: LogData | FinalLogData,
+  LogData: LogData<any> | FinalLogData<any>,
   render: LogRender | null,
   printed: boolean
 ) => void;

@@ -3,7 +3,7 @@ import { LogRender, FinalLogData } from '../_contracts';
 import { applyChalkStyles, initialCaps } from '../util';
 
 export class NodePrinter extends SharedPrinter {
-  constructor(data: FinalLogData) {
+  constructor(data: FinalLogData<any>) {
     super(data);
   }
 

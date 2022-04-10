@@ -76,7 +76,7 @@ export class Shed {
   /**
    * Store a log in the Shed.
    */
-  public store(log: BaseLog): void {
+  public store(log: BaseLog<any>): void {
     if (this.cacheSize < this.cfg.cacheLimit) {
       this._cache = this._cache.concat([log]);
     }
@@ -208,7 +208,7 @@ export class Shed {
    * Fires any listeners that are watching the log level defined in the provided log data. The log data
    * and render object will be passed to the listener callback.
    */
-  public fireListeners(log: FinalLogData, render: LogRender | null, printed: boolean): void {
+  public fireListeners(log: FinalLogData<any>, render: LogRender | null, printed: boolean): void {
     this.listeners.get(log.level)?.forEach((listener) => {
       listener(log, render, printed);
     });

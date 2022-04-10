@@ -18,7 +18,7 @@ import { Log, BundledLog } from '../log';
  * filterAll(log.bundle); // -> reprints all "bundled" logs.
  * ```
  */
-export function bundle(_log: Log | (() => Log)): Bundler {
+export function bundle(_log: Log<any> | (() => Log<any>)): Bundler {
   const bundle_arr = [] as Bundle;
   return () => {
     const log = typeof _log === 'function' ? _log() : _log;

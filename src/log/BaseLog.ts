@@ -1,5 +1,6 @@
 import {
   Configuration,
+  Constraints,
   Defaults,
   LogRender,
   LogTimestamp,
@@ -26,7 +27,7 @@ import { Env } from '../env';
 import { Printer } from '../printers';
 import { allowed, parseFilterLevels } from '../conditions';
 
-export class BaseLog {
+export class BaseLog<C extends Constraints> {
   /**
    * The Printer class constructor.
    */
@@ -76,7 +77,7 @@ export class BaseLog {
   /**
    * The namespaces assigned to this log.
    */
-  private _namespaceVal: string[] | null = null;
+  private _namespaceVal: C['allowedNamespaces'][] | null = null;
 
   /**
    * The label instance assigned to this log.
@@ -92,7 +93,7 @@ export class BaseLog {
    * Queue of modifiers applied to this log instance.
    * These will be executed in order when the log is terminated.
    */
-  protected modifierQueue: Array<(ctxt: BaseLog) => void> = [];
+  protected modifierQueue: Array<(ctxt: BaseLog<C>) => void> = [];
 
   /**
    * The function used to generate a log render when
@@ -202,7 +203,7 @@ export class BaseLog {
    *
    * This is a non-standard API.
    */
-  public alert(...args: unknown[]): TerminatedLog<this> {
+  public alert(...args: unknown[]): TerminatedLog<C, this> {
     return this.logMethod('alert', args);
   }
 
@@ -216,7 +217,7 @@ export class BaseLog {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/error)
    */
-  public error(...args: unknown[]): TerminatedLog<this> {
+  public error(...args: unknown[]): TerminatedLog<C, this> {
     return this.logMethod('error', args);
   }
 
@@ -231,7 +232,7 @@ export class BaseLog {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/warn)
    */
-  public warn(...args: unknown[]): TerminatedLog<this> {
+  public warn(...args: unknown[]): TerminatedLog<C, this> {
     return this.logMethod('warn', args);
   }
 
@@ -246,7 +247,7 @@ export class BaseLog {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/info)
    */
-  public info(...args: unknown[]): TerminatedLog<this> {
+  public info(...args: unknown[]): TerminatedLog<C, this> {
     return this.logMethod('info', args);
   }
 
@@ -260,7 +261,7 @@ export class BaseLog {
    *
    * This is a non-standard API.
    */
-  public fail(...args: unknown[]): TerminatedLog<this> {
+  public fail(...args: unknown[]): TerminatedLog<C, this> {
     return this.logMethod('fail', args);
   }
 
@@ -273,7 +274,7 @@ export class BaseLog {
    *
    * This is a non-standard API.
    */
-  public success(...args: unknown[]): TerminatedLog<this> {
+  public success(...args: unknown[]): TerminatedLog<C, this> {
     return this.logMethod('success', args);
   }
 
@@ -287,7 +288,7 @@ export class BaseLog {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
-  public log(...args: unknown[]): TerminatedLog<this> {
+  public log(...args: unknown[]): TerminatedLog<C, this> {
     // console.log('MODIFIER QUEUE', this.modifierQueue);
     return this.logMethod('log', args);
   }
@@ -304,7 +305,7 @@ export class BaseLog {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/debug)
    */
-  public debug(...args: unknown[]): TerminatedLog<this> {
+  public debug(...args: unknown[]): TerminatedLog<C, this> {
     return this.logMethod('debug', args);
   }
 
@@ -320,7 +321,7 @@ export class BaseLog {
    *
    * This is a non-standard API.
    */
-  public verbose(...args: unknown[]): TerminatedLog<this> {
+  public verbose(...args: unknown[]): TerminatedLog<C, this> {
     return this.logMethod('verbose', args);
   }
 
@@ -332,7 +333,7 @@ export class BaseLog {
    *
    * This is a non-standard API.
    */
-  public custom(level_name: string, ...args: unknown[]): TerminatedLog<this> {
+  public custom(level_name: string, ...args: unknown[]): TerminatedLog<C, this> {
     return this.customMethod(level_name, args);
   }
 
@@ -586,9 +587,12 @@ export class BaseLog {
    *
    * This is a non-standard API.
    */
-  public namespace(ns: string[]): this;
-  public namespace(...rest: string[]): this;
-  public namespace(ns: string | string[], ...rest: string[]): this {
+  public namespace(ns: C['allowedNamespaces'][]): this;
+  public namespace(...rest: C['allowedNamespaces'][]): this;
+  public namespace(
+    ns: C['allowedNamespaces'] | C['allowedNamespaces'][],
+    ...rest: C['allowedNamespaces'][]
+  ): this {
     return this.modifier((ctxt) => {
       ctxt._namespaceVal = isString(ns) ? [ns, ...rest] : ns;
     });
@@ -599,9 +603,12 @@ export class BaseLog {
    *
    * This is a non-standard API.
    */
-  public ns(ns: string[]): this;
-  public ns(...rest: string[]): this;
-  public ns(ns: string | string[], ...rest: string[]): this {
+  public ns(ns: C['allowedNamespaces'][]): this;
+  public ns(...rest: C['allowedNamespaces'][]): this;
+  public ns(
+    ns: C['allowedNamespaces'] | C['allowedNamespaces'][],
+    ...rest: C['allowedNamespaces'][]
+  ): this {
     return this.namespace(ns as string, ...rest);
   }
 
@@ -708,7 +715,7 @@ export class BaseLog {
   /**
    * Queues a modifier method for execution when the log is terminated.
    */
-  private modifier(func: (ctxt: BaseLog) => void): this {
+  private modifier(func: (ctxt: BaseLog<C>) => void): this {
     this.modifierQueue = this.modifierQueue.concat([func]);
     return this;
   }
@@ -717,7 +724,7 @@ export class BaseLog {
    * Queues a modifier method for execution at the beginning of the queue when the log is terminated.
    * This is used to ensure that labels are applied before modifiers that use labels are executed.
    */
-  private prependModifier(func: (ctxt: BaseLog) => void): this {
+  private prependModifier(func: (ctxt: BaseLog<C>) => void): this {
     this.modifierQueue = [func].concat(this.modifierQueue);
     return this;
   }
@@ -736,7 +743,7 @@ export class BaseLog {
   /**
    * Generates a terminating log method the specified log level name.
    */
-  private logMethod(levelName: string, args: unknown[]): TerminatedLog<this> {
+  private logMethod(levelName: string, args: unknown[]): TerminatedLog<C, this> {
     return this.terminate(this.getDefinition('logLevels', levelName), args);
   }
 
@@ -744,7 +751,7 @@ export class BaseLog {
    * Generates a terminating log method that enables the user to specify a custom
    * log level by key as the format for the log.
    */
-  private customMethod(lvlName: string, args: unknown[]): TerminatedLog<this> {
+  private customMethod(lvlName: string, args: unknown[]): TerminatedLog<C, this> {
     return this.terminate(this.getDefinition('customLevels', lvlName), args);
   }
 
@@ -762,7 +769,7 @@ export class BaseLog {
   /**
    * The primary logic for terminating log methods.
    */
-  private terminate(def: LogLevelDefinition | undefined, args: unknown[]): TerminatedLog<this> {
+  private terminate(def: LogLevelDefinition | undefined, args: unknown[]): TerminatedLog<C, this> {
     if (def) {
       // Apply modifiers in the proper order.
       this.runModifierQueue();
@@ -840,7 +847,7 @@ export class BaseLog {
   /**
    * Fires listeners for this log instance if a Shed exists.
    */
-  private fireListeners(data: FinalLogData, render: LogRender | null, printed: boolean): void {
+  private fireListeners(data: FinalLogData<C>, render: LogRender | null, printed: boolean): void {
     const shed = this.env.global.$shed;
     if (shedExists(shed)) {
       shed.fireListeners(data, render, printed);
@@ -854,8 +861,8 @@ export class BaseLog {
   /**
    * Creates a slimmed down object comprised of data from a log.
    */
-  public get data(): LogData | FinalLogData {
-    const values: LogData = {
+  public get data(): LogData<C> | FinalLogData<C> {
+    const values: LogData<C> = {
       cfg: cloneDeep(this.cfg),
       level: this._level,
       definition: this.definition ? { ...this.definition } : null,
@@ -886,7 +893,7 @@ export class BaseLog {
   /**
    * Hydrate this log's properties from a log data object.
    */
-  public hydrate(data: LogData | FinalLogData): this {
+  public hydrate(data: LogData<C> | FinalLogData<C>): this {
     this.cfg = cloneDeep(data.cfg);
     this._level = data.level;
     this.definition = data.definition ? { ...data.definition } : null;
@@ -913,7 +920,7 @@ export class BaseLog {
    * If it's not in the store, generate a new log with the provided data
    * properties. If the label name is null in the data, return null.
    */
-  private resolveLabel(data: LogData | FinalLogData): Label | null {
+  private resolveLabel(data: LogData<C> | FinalLogData<C>): Label | null {
     if (data.label.name) {
       const stored_label = getLabel(data.label.name) ?? null;
       if (stored_label) {

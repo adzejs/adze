@@ -1,4 +1,4 @@
-import { LogData, FinalLogData } from '../_contracts';
+import { LogData, FinalLogData, Constraints } from '../_contracts';
 
 /**
  * Type Guard to check if the given value is a String.
@@ -31,7 +31,9 @@ export function isDefined<T>(val: T | undefined): val is T {
 /**
  * Type guard that indicates a log data object is finalized.
  */
-export function isFinalLogData(data: LogData | FinalLogData): data is FinalLogData {
+export function isFinalLogData<C extends Constraints>(
+  data: LogData<C> | FinalLogData<C>
+): data is FinalLogData<C> {
   return (
     data.level !== null && data.definition !== null && data.args !== null && data.timestamp !== null
   );

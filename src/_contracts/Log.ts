@@ -58,13 +58,13 @@ export type LogRender = [ConsoleMethod, Arguments];
 /**
  * Type alias for an array of Log instances.
  */
-export type Collection = BaseLog[];
+export type Collection = BaseLog<Constraints>[];
 
 /**
  * Log data object generated from a Log instance. This is
  * primarily used for listeners and log cloning.
  */
-export interface LogData {
+export interface LogData<C extends Constraints> {
   args: unknown[] | null;
   assertion?: boolean;
   cfg: Defaults;
@@ -78,7 +78,7 @@ export interface LogData {
   label: LabelData;
   level: number | null;
   meta: MetaData;
-  modifierQueue: Array<(ctxt: BaseLog) => void>;
+  modifierQueue: Array<(ctxt: BaseLog<C>) => void>;
   namespace: string[] | null;
   stacktrace: string | null;
   timeNow: string | null;
@@ -90,7 +90,7 @@ export interface LogData {
  * has been terminated. The values in this extended interface
  * reflect that they are no longer possibly null.
  */
-export interface FinalLogData extends LogData {
+export interface FinalLogData<C extends Constraints> extends LogData<C> {
   level: number;
   definition: LogLevelDefinition;
   args: unknown[];
@@ -102,8 +102,12 @@ export interface FinalLogData extends LogData {
  * gleaning the final render information and getting the Log instance for
  * unit testing purposes.
  */
-export interface TerminatedLog<I extends BaseLog> {
+export interface TerminatedLog<C extends Constraints, I extends BaseLog<C>> {
   log: I;
   render: LogRender | null;
   printed: boolean;
+}
+
+export interface Constraints {
+  allowedNamespaces: string;
 }

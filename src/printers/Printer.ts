@@ -18,9 +18,9 @@ export class Printer {
 
   private printer: BrowserPrinter | NodePrinter;
 
-  private data: FinalLogData;
+  private data: FinalLogData<any>;
 
-  constructor(data: FinalLogData) {
+  constructor(data: FinalLogData<any>) {
     this.data = data;
     this.printer = this.env.isBrowser ? new BrowserPrinter(data) : new NodePrinter(data);
   }

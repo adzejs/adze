@@ -3,7 +3,7 @@ import { LogRender, FinalLogData } from '../_contracts';
 import { initialCaps } from '../util';
 
 export class BrowserPrinter extends SharedPrinter {
-  constructor(data: FinalLogData) {
+  constructor(data: FinalLogData<any>) {
     super(data);
   }
 
