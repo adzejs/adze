@@ -500,6 +500,12 @@ This modifier adds one or more namespaces to a log. These are mainly used as hum
 also useful for filtering recalled logs and for identifying logs from a log listener. This modifier does not do any
 special grouping under the hood. The `ns()` method is just a shorter alias for `namespace()`.
 
+As of version 1.7.0, Adze now supports passing a Constraints type to the log factory that will allow you to centrally specify what namespaces are allowed to be used. This is beneficial because it will force users to add any new namespace that they might want to add to the central `allowedNamespaces` type property. This will make it easier to filter namespaces throughout your application because you will only have a single place to look to understand what namespaces are being used.
+
+> Rest-of operator for namespace/ns available in Adze >= v1.5.0
+
+> Namespace constraint type available in Adze >= 1.7.0
+
 _This is not a standard API._
 
 ### Interface
@@ -508,7 +514,7 @@ _This is not a standard API._
 class BaseLog {
   public namespace(ns: string | string[]): this;
   public ns(ns: string | string[]): this;
-  // Or alternatively with the restof operator
+  // Or alternatively with the restof operator (versions >= 1.5.0)
   public namespace(...ns: string[]): this;
   public ns(...ns: string[]): this;
 }
@@ -528,6 +534,23 @@ adze()
   .log('Multiple namespace entry simplified by the restof operator.');
 // ns() is a shorthand alias for namespace()
 adze().ns('tix-456').log('More info');
+
+//----- Example with TS Constraints -----//
+import adze, { Constraints } from 'adze';
+
+// First we will create our app constraints by extending the Constraint interface
+interface MyAppConstraints extends Constraints {
+  allowedNamespaces: 'foo' | 'bar' | 'hello' | 'world';
+}
+
+// Now we apply the constraints to our app's logger factory
+const logger = adze<MyAppConstraints>().seal();
+
+// Now when we define namespaces for a log a type error will be thrown if the 
+// namespace provided isn't in the allowedNamespaces union type.
+logger().ns('foo', 'bar', 'baz').fail('This is not allowed.');
+//                        ^^^^^
+// Argument of type '"baz"' is not assignable to parameter of type '"foo" | "bar" | "hello" | "world"'.
 ```
 
 ### Output
