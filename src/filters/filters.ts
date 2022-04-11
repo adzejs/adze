@@ -41,7 +41,7 @@ export function filterLevel(collection: Collection = [], levels: LevelFilter): C
  */
 export function filterCollection(
   collection: Collection,
-  cb: (log: LogData) => boolean
+  cb: (log: LogData<any>) => boolean
 ): Collection {
   return collection.reduce((acc, log) => {
     const result = cb(log.data);
@@ -53,7 +53,7 @@ export function filterCollection(
  * If the provided log has been previously rendered, this function
  * re-renders it to the console.
  */
-export function rerender(log: BaseLog): void {
+export function rerender(log: BaseLog<any>): void {
   if (log.render) {
     render(log.render);
   }

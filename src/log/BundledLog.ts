@@ -1,9 +1,9 @@
 import { Env } from '../env';
 import { Printer } from '../printers';
-import { Bundle, Configuration } from '../_contracts';
+import { Bundle, Configuration, Constraints } from '../_contracts';
 import { BaseLog } from './BaseLog';
 
-export class BundledLog extends BaseLog {
+export class BundledLog<C extends Constraints> extends BaseLog<C> {
   private _bundle: Bundle;
 
   constructor(printer: typeof Printer, env: Env, bundle: Bundle, user_cfg?: Configuration) {

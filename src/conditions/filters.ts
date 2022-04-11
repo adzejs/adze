@@ -31,7 +31,7 @@ export function parseFilterLevels(cfg: Defaults): Defaults {
  * Validate that the current level set on the log is allowed based on
  * the filter rules.
  */
-export function levelAllowed(data: FinalLogData): boolean {
+export function levelAllowed(data: FinalLogData<any>): boolean {
   return filterAllowed(data.cfg, 'level', (filter, func) => {
     const source = data.cfg.filters?.level?.[filter] ?? ([] as number[]);
     return func<number>(source, data.level);
@@ -42,7 +42,7 @@ export function levelAllowed(data: FinalLogData): boolean {
  * Validate that the current label set on the log is allowed based on
  * the filter rules.
  */
-export function labelAllowed(data: FinalLogData): boolean {
+export function labelAllowed(data: FinalLogData<any>): boolean {
   return filterAllowed(data.cfg, 'label', (filter, func) => {
     if (filter === 'include' && data.label.name === null) {
       // Do not include logs that do not have a label
@@ -57,7 +57,7 @@ export function labelAllowed(data: FinalLogData): boolean {
  * Validate that at least one of the current namespaces set on the log
  * is allowed based on the filter rules.
  */
-export function namespaceAllowed(data: FinalLogData): boolean {
+export function namespaceAllowed(data: FinalLogData<any>): boolean {
   return filterAllowed(data.cfg, 'namespace', (filter, func) => {
     const filter_ns = data.cfg.filters?.namespace?.[filter] ?? ([] as string[]);
 
