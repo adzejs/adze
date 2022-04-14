@@ -496,7 +496,8 @@ adze().meta('message', info).log('This log contains an important message.');
 
 ## namespace / ns
 
-This modifier adds one or more namespaces to a log. These are mainly used as human readable group identifiers but are 
+This modifier adds one or more namespaces to a log. Multiple calls to the namespace modifier are additive by nature
+and will not overwrite previously applied namespaces. These are mainly used as human readable group identifiers but are
 also useful for filtering recalled logs and for identifying logs from a log listener. This modifier does not do any
 special grouping under the hood. The `ns()` method is just a shorter alias for `namespace()`.
 
@@ -505,6 +506,8 @@ As of version 1.7.0, Adze now supports passing a Constraints type to the log fac
 > Rest-of operator for namespace/ns available in Adze >= v1.5.0
 
 > Namespace constraint type available in Adze >= 1.7.0
+
+> Namespaces became additive by nature in Adze >= 1.8.0
 
 _This is not a standard API._
 
@@ -534,6 +537,8 @@ adze()
   .log('Multiple namespace entry simplified by the restof operator.');
 // ns() is a shorthand alias for namespace()
 adze().ns('tix-456').log('More info');
+// Multiple calls to namespace/ns are additive
+adze().ns('foo', 'bar').ns('baz').log('This log has all applied namespaces.');
 
 //----- Example with TS Constraints -----//
 import adze, { Constraints } from 'adze';

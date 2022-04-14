@@ -30,22 +30,7 @@ export default function runDemo(lib, el) {
   labelExcludeFilter(lib);
 }
 
-function screenshots({ adze, createShed }, el) {
-  const cfg = {
-    filters: {
-      namespace: {
-        include: ['foo'],
-      },
-    },
-  };
-
-  const log = adze(cfg).seal();
-
-  log().ns('foo').success('I should print.');
-  log().ns(['foo', 'bar']).success('I should print.');
-  log().ns('bar').fail('I should not print.');
-  log().fail('I should not print because I do not have a namespace.');
-}
+function screenshots({ adze, createShed }, el) { }
 
 function screenshotDemo({ adze }) {
   const log = adze();
