@@ -583,7 +583,8 @@ export class BaseLog<C extends Constraints> {
 
   /**
    * Adds a namespace to the log. Namespace's are primarily useful
-   * for grouping logs together.
+   * for grouping logs together. Multiple calls to namespace are
+   * additive in nature.
    *
    * This is a non-standard API.
    */
@@ -594,7 +595,8 @@ export class BaseLog<C extends Constraints> {
     ...rest: C['allowedNamespaces'][]
   ): this {
     return this.modifier((ctxt) => {
-      ctxt._namespaceVal = isString(ns) ? [ns, ...rest] : ns;
+      const namespace = isString(ns) ? [ns, ...rest] : ns;
+      ctxt._namespaceVal = [...(ctxt._namespaceVal ?? []), ...namespace];
     });
   }
 

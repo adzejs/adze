@@ -274,6 +274,7 @@ function bundleLogs({
   log().ns(['foo', 'SPACE']).info('A bundled log with multiple namespaces.');
   log().label('i-am-label').success('Successfully bundled this log!');
   log().log('Here is another log in the bundle.');
+  log().ns('foo', 'bar').ns('baz').log('Multiple calls to namespace are additive.');
 
   divider.info('---- Next is a recall of all logs in the bundle ----');
   log().bundle.forEach(rerender);

@@ -47,3 +47,16 @@ test('log with multiple namespaces using rest parameters prints correctly', (t) 
     t.fail();
   }
 });
+
+test('multiple calls to namespace are additive', (t) => {
+  const { render } = adze()
+    .ns('foo', 'bar')
+    .ns('baz')
+    .log('This log has multiple namespaces that are added together.');
+  if (render) {
+    const [_, args] = render;
+    t.is(args[2], '#foo #bar #baz ');
+  } else {
+    t.fail();
+  }
+});
