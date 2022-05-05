@@ -20,11 +20,6 @@ export class Label {
   private _count: number | null;
 
   /**
-   * Time ellapsed since execution.
-   */
-  private _timeNow: string | null;
-
-  /**
    * Beginning of a timer for this label.
    */
   private _timeStart: [number, number] | null = null;
@@ -39,22 +34,16 @@ export class Label {
     name: string,
     context: MetaData = {},
     count: number | null = null,
-    timeNow: string | null = null,
     timeEllapsed: string | null = null
   ) {
     this.name = name;
     this._context = context;
     this._count = count;
-    this._timeNow = timeNow;
     this._timeEllapsed = timeEllapsed;
   }
 
   public get count(): number | null {
     return this._count;
-  }
-
-  public get timeNow(): string | null {
-    return this._timeNow;
   }
 
   public get timeEllapsed(): string | null {
@@ -119,13 +108,6 @@ export class Label {
   }
 
   /**
-   * Sets the current execution time.
-   */
-  public captureTimeNow(): void {
-    this._timeNow = Label.formatTime(hrtime());
-  }
-
-  /**
    * Ends a previously started timer and records the
    * time ellapsed.
    */
@@ -135,13 +117,6 @@ export class Label {
     } else {
       console.warn('Adze: You cannot end a timer that has not been started.');
     }
-  }
-
-  /**
-   * Generates the current execution time.
-   */
-  public static createTimeNow(): string {
-    return Label.formatTime(hrtime());
   }
 
   /**
@@ -159,7 +134,6 @@ export class Label {
   public get data(): LabelData {
     return {
       name: this.name,
-      timeNow: this._timeNow,
       timeEllapsed: this._timeEllapsed,
       count: this._count,
     };

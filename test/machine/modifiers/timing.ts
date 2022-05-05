@@ -1,6 +1,5 @@
 import test from 'ava';
-import { format } from 'date-fns';
-import adze, { createShed, removeShed } from '../../../src';
+import adze, { createShed, JsonOutput, removeShed } from '../../../src';
 
 global.ADZE_ENV = 'dev';
 
@@ -14,7 +13,9 @@ test.afterEach(() => {
 
 test('timer starts and ends and prints correctly', (t) => {
   adze().label('test').time.log('Starting the timer.');
-  const { log, render } = adze().label('test').timeEnd.log('Stopping the timer.');
+  const { log, render } = adze({ machineReadable: true })
+    .label('test')
+    .timeEnd.log('Stopping the timer.');
 
   t.truthy(log);
   if (render) {
@@ -22,7 +23,7 @@ test('timer starts and ends and prints correctly', (t) => {
     t.is(method, 'log');
     t.is(args.length, 1);
 
-    const parsed = JSON.parse(args[0] as string);
+    const parsed: JsonOutput = JSON.parse(args[0] as string);
     t.is(parsed.method, 'log');
     t.is(parsed.level, 6);
     t.is(parsed.levelName, 'log');
@@ -36,7 +37,9 @@ test('timer starts and ends and prints correctly', (t) => {
 });
 
 test('capture time ellapsed since application load', (t) => {
-  const { log, render } = adze().label('test').timeNow.log('Time ellapsed from load.');
+  const { log, render } = adze({ machineReadable: true })
+    .label('test')
+    .timeNow.log('Time ellapsed from load.');
 
   t.truthy(log);
   if (render) {
@@ -44,12 +47,12 @@ test('capture time ellapsed since application load', (t) => {
     t.is(method, 'log');
     t.is(args.length, 1);
 
-    const parsed = JSON.parse(args[0] as string);
+    const parsed: JsonOutput = JSON.parse(args[0] as string);
     t.is(parsed.method, 'log');
     t.is(parsed.level, 6);
     t.is(parsed.levelName, 'log');
     t.is(parsed.label, 'test');
-    t.falsy(isNaN(parsed.timeFromLoad));
+    t.truthy(parsed.timeNow);
     t.is(parsed.args.length, 1);
     t.is(parsed.args[0], 'Time ellapsed from load.');
   } else {
@@ -58,7 +61,7 @@ test('capture time ellapsed since application load', (t) => {
 });
 
 test('renders iso8601 timestamp properly', (t) => {
-  const { log, render } = adze().timestamp.log('Timestamp test.');
+  const { log, render } = adze({ machineReadable: true }).timestamp.log('Timestamp test.');
   t.truthy(log);
 
   const [_, args] = render ?? [];
@@ -69,21 +72,16 @@ test('renders iso8601 timestamp properly', (t) => {
     t.is(method, 'log');
     t.is(args.length, 1);
 
-    // Get a date object to generate a timestamp with date-fns to check for accuracy
-    const compareDate = new Date(milli);
-    const ymd = format(compareDate, 'yyyy-MM-dd');
-    const hmsSx = format(compareDate, 'HH:mm:ss.SSSXXX');
-    const compareDateStr = `${ymd}T${hmsSx}  `;
-
-    const parsed = JSON.parse(args[0] as string);
+    const parsed: JsonOutput = JSON.parse(args[0] as string);
     t.is(parsed.method, 'log');
     t.is(parsed.level, 6);
     t.is(parsed.levelName, 'log');
-    t.regex(
-      parsed.timestamp,
-      /^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9]).[0-9]{3}([+-][0-9]{2}:[0-9]+)?(Z)?\s+$/g
-    );
-    t.is(parsed.timestamp, compareDateStr);
+    if (parsed.timestamp) {
+      t.truthy(parsed.timestamp.unixMilli);
+      t.truthy(parsed.timestamp.iso8601);
+      t.truthy(parsed.timestamp.utc);
+      t.truthy(parsed.timestamp.utcTimezoneOffset);
+    }
     t.is(parsed.args.length, 1);
     t.is(parsed.args[0], 'Timestamp test.');
   } else {

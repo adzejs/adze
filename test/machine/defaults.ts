@@ -5,7 +5,7 @@ global.ADZE_ENV = 'dev';
 
 // ------- Default Browser Logs -------- //
 test('renders a default alert log', (t) => {
-  const { log, render } = adze().alert('testing');
+  const { log, render } = adze({ machineReadable: true }).alert('testing');
   t.truthy(log);
 
   if (render) {
@@ -29,7 +29,7 @@ test('renders a default alert log', (t) => {
 });
 
 test('renders a default error log', (t) => {
-  const { log, render } = adze().error('testing');
+  const { log, render } = adze({ machineReadable: true }).error('testing');
   t.truthy(log);
 
   if (render) {
@@ -49,7 +49,7 @@ test('renders a default error log', (t) => {
 });
 
 test('renders a default warn log', (t) => {
-  const { log, render } = adze().warn('testing');
+  const { log, render } = adze({ machineReadable: true }).warn('testing');
   t.truthy(log);
 
   if (render) {
@@ -69,7 +69,7 @@ test('renders a default warn log', (t) => {
 });
 
 test('renders a default info log', (t) => {
-  const { log, render } = adze().info('testing');
+  const { log, render } = adze({ machineReadable: true }).info('testing');
   t.truthy(log);
 
   if (render) {
@@ -89,7 +89,7 @@ test('renders a default info log', (t) => {
 });
 
 test('renders a default fail log', (t) => {
-  const { log, render } = adze().fail('testing');
+  const { log, render } = adze({ machineReadable: true }).fail('testing');
   t.truthy(log);
 
   if (render) {
@@ -109,7 +109,7 @@ test('renders a default fail log', (t) => {
 });
 
 test('renders a default success log', (t) => {
-  const { log, render } = adze().success('testing');
+  const { log, render } = adze({ machineReadable: true }).success('testing');
   t.truthy(log);
 
   if (render) {
@@ -129,7 +129,7 @@ test('renders a default success log', (t) => {
 });
 
 test('renders a default log', (t) => {
-  const { log, render } = adze().log('testing');
+  const { log, render } = adze({ machineReadable: true }).log('testing');
   t.truthy(log);
 
   if (render) {
@@ -149,7 +149,7 @@ test('renders a default log', (t) => {
 });
 
 test('renders a default debug log', (t) => {
-  const { log, render } = adze().debug('testing');
+  const { log, render } = adze({ machineReadable: true }).debug('testing');
   t.truthy(log);
 
   if (render) {
@@ -169,7 +169,7 @@ test('renders a default debug log', (t) => {
 });
 
 test('renders a default verbose log', (t) => {
-  const { log, render } = adze().verbose('testing');
+  const { log, render } = adze({ machineReadable: true }).verbose('testing');
   t.truthy(log);
 
   if (render) {

@@ -27,7 +27,6 @@ export interface ShedUserConfig extends Partial<Omit<ShedConfig, 'globalCfg'>> {
 
 export interface LabelData {
   name: string | null;
-  timeNow: string | null;
   timeEllapsed: string | null;
   count: number | null;
 }

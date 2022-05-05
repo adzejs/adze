@@ -2,6 +2,7 @@ import { LogRender, FinalLogData } from '../_contracts';
 import { Env } from '../env';
 import { BrowserPrinter } from './BrowserPrinter';
 import { NodePrinter } from './NodePrinter';
+import { MachinePrinter } from './MachinePrinter';
 
 export type PrinterMethods =
   | 'printLog'
@@ -16,13 +17,25 @@ export type PrinterMethods =
 export class Printer {
   private env: Env = new Env();
 
-  private printer: BrowserPrinter | NodePrinter;
+  private printer: BrowserPrinter | NodePrinter | MachinePrinter;
 
   private data: FinalLogData<any>;
 
   constructor(data: FinalLogData<any>) {
     this.data = data;
-    this.printer = this.env.isBrowser ? new BrowserPrinter(data) : new NodePrinter(data);
+    this.printer = this.resolvePrinter();
+  }
+
+  /**
+   * Determine the Printer to use based upon configuration and environment.
+   */
+  private resolvePrinter(): BrowserPrinter | NodePrinter | MachinePrinter {
+    if (this.data.cfg.machineReadable) {
+      return new MachinePrinter(this.data);
+    } else if (this.env.isBrowser) {
+      return new BrowserPrinter(this.data);
+    }
+    return new NodePrinter(this.data);
   }
 
   get args(): unknown[] {
@@ -48,19 +61,19 @@ export class Printer {
   }
 
   public printGroupEnd(): LogRender | null {
-    return this.checkSilent(this.attachContext(['groupEnd', []]));
+    return this.checkSilent(this.attachContext(this.printer.printGroupEnd()));
   }
 
   public printTable(): LogRender | null {
-    return this.checkSilent(this.attachContext(['table', this.args]));
+    return this.checkSilent(this.attachContext(this.printer.printTable()));
   }
 
   public printDir(): LogRender | null {
-    return this.checkSilent(this.attachContext(['dir', this.args]));
+    return this.checkSilent(this.attachContext(this.printer.printDir()));
   }
 
   public printDirxml(): LogRender | null {
-    return this.checkSilent(this.attachContext(['dirxml', this.args]));
+    return this.checkSilent(this.attachContext(this.printer.printDirxml()));
   }
 
   // =======================
@@ -72,7 +85,7 @@ export class Printer {
    * dump modifier was used.
    */
   private attachContext(render: LogRender | null): LogRender | null {
-    if (render && this.data.dumpContext) {
+    if (render && this.data.dumpContext && !this.data.cfg.machineReadable) {
       return [render[0], [...render[1], this.data.context]];
     }
     return render;

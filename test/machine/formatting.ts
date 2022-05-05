@@ -4,7 +4,7 @@ import adze from '../../src';
 global.ADZE_ENV = 'dev';
 
 test('dir log terminates properly', (t) => {
-  const { log, render } = adze().dir.info({ a: 1234, b: 5678 });
+  const { log, render } = adze({ machineReadable: true }).dir.info({ a: 1234, b: 5678 });
 
   t.truthy(log);
   if (render) {
@@ -24,7 +24,9 @@ test('dir log terminates properly', (t) => {
 });
 
 test('dirxml log terminates properly', (t) => {
-  const { log, render } = adze().dirxml.info('<a href="http://www.andrewstacy.com/></a>');
+  const { log, render } = adze({ machineReadable: true }).dirxml.info(
+    '<a href="http://www.andrewstacy.com/></a>'
+  );
 
   t.truthy(log);
   if (render) {
@@ -44,7 +46,7 @@ test('dirxml log terminates properly', (t) => {
 });
 
 test('table log terminates properly.', (t) => {
-  const { log, render } = adze().table.info([
+  const { log, render } = adze({ machineReadable: true }).table.info([
     { firstName: 'Andrew', lastName: 'Stacy' },
     { firstName: 'Jim', lastName: 'Bob' },
   ]);

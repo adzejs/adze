@@ -16,18 +16,19 @@ export type ConsoleMethod =
   | 'dirxml';
 
 export interface Defaults {
-  logLevel: number;
-  useEmoji: boolean;
-  terminalColorFidelity: 0 | 1 | 2 | 3;
-  captureStacktrace: boolean;
-  unstyled: boolean;
   baseStyle: string;
-  logLevels: LogLevels;
+  captureStacktrace: boolean;
   customLevels: LogLevels;
   filters: AdzeFilters;
+  logLevel: number;
+  logLevels: LogLevels;
+  machineReadable: boolean;
   meta: {
     [key: string]: unknown;
   };
+  terminalColorFidelity: 0 | 1 | 2 | 3;
+  useEmoji: boolean;
+  unstyled: boolean;
 }
 
 export type LogLevels = {

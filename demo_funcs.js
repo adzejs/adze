@@ -28,31 +28,31 @@ export default function runDemo(lib, el) {
   namespaceExcludeFilter(lib);
   labelIncludeFilter(lib);
   labelExcludeFilter(lib);
+  machineReadableLogs(lib);
 }
 
 function screenshots({ adze, createShed }, el) { }
 
 function screenshotDemo({ adze }) {
-  const log = adze();
-  log.alert('Example alert log');
-  log.error('Example error log');
-  log.warn('Example warning log');
-  log.info('Example info log');
-  log.fail('Example fail log');
-  log.success('Example success log');
-  log.log('Example log');
-  log.debug('Example debug log');
-  log.verbose('Example verbose log');
-  const log2 = adze({ useEmoji: true });
-  log2.alert('Example alert log');
-  log2.error('Example error log');
-  log2.warn('Example warning log');
-  log2.info('Example info log');
-  log2.fail('Example fail log');
-  log2.success('Example success log');
-  log2.log('Example log');
-  log2.debug('Example debug log');
-  log2.verbose('Example verbose log');
+  adze().alert('Example alert log');
+  adze().error('Example error log');
+  adze().warn('Example warning log');
+  adze().info('Example info log');
+  adze().fail('Example fail log');
+  adze().success('Example success log');
+  adze().log('Example log');
+  adze().debug('Example debug log');
+  adze().verbose('Example verbose log');
+  const log2 = adze({ useEmoji: true }).seal();
+  log2().alert('Example alert log');
+  log2().error('Example error log');
+  log2().warn('Example warning log');
+  log2().info('Example info log');
+  log2().fail('Example fail log');
+  log2().success('Example success log');
+  log2().log('Example log');
+  log2().debug('Example debug log');
+  log2().verbose('Example verbose log');
   adze({
     useEmoji: true,
     customLevels: {
@@ -83,16 +83,16 @@ function defaultLevels({ adze }) {
 
 function defaultLevelsWithEmoji({ adze }) {
   console.log('\n----- Default Levels w/ Emoji -----\n');
-  const log = adze({ useEmoji: true });
-  log.alert('This is an alert!');
-  log.error('This is an error!');
-  log.warn('This is a warn!');
-  log.info('This is an info!');
-  log.fail('This is a failure!');
-  log.success('This is a success!');
-  log.log('This is a log!');
-  log.debug('This is a debug!');
-  log.verbose('This is a verbose!');
+  const log = adze({ useEmoji: true }).seal();
+  log().alert('This is an alert!');
+  log().error('This is an error!');
+  log().warn('This is a warn!');
+  log().info('This is an info!');
+  log().fail('This is a failure!');
+  log().success('This is a success!');
+  log().log('This is a log!');
+  log().debug('This is a debug!');
+  log().verbose('This is a verbose!');
 }
 
 function defaultLevelsWithGlobalOverride({ adze, createShed, removeShed }) {
@@ -452,4 +452,55 @@ function labelExcludeFilter({ adze }) {
   logger().label('foo').fail("I should not print.");
   logger().label('bar').success("I should print.");
   logger().success("I should print.");
+}
+
+function machineReadableLogs({ adze, createShed, removeShed }) {
+  removeShed();
+  createShed();
+  const cfg = { machineReadable: true, meta: { hello: 'world' } };
+  const log = adze(cfg).seal();
+  console.log('\n----- Machine Readable Logs Demo -----\n');
+
+  log().alert('Machine-readable alert');
+  log().error('Machine-readable error');
+  log().warn('Machine-readable warning');
+  log().info('Machine-readable info');
+  log().fail('Machine-readable fail');
+  log().success('Machine-readable success');
+  log().log('Machine-readable');
+  log().debug('Machine-readable debug');
+  log().verbose('Machine-readable verbose');
+
+  log().label('test').log('A log with a label.');
+  log().ns('foo', 'bar').log('A log with namespaces.');
+  log().timestamp.log('A log with a timestamp.');
+  log().label('timer').time.log('Starting a timer.');
+  log().label('timer').timeEnd.log('Ending a timer.');
+  log().label('test').timeNow.log('Time ellapsed since load.');
+  log().meta('foo', 'bar').meta('bar', 'baz').log('Adding foo bar meta data.');
+  log().label('counting').count.log('Counting this log.');
+  log().label('counting').count.log('Counting this log.');
+  log().label('counting').count.log('Counting this log.');
+
+  log().group.log('Opening a log group.');
+  log().log('testing');
+  log().groupEnd.log();
+
+  log().groupCollapsed.log('Opening a log group collapsed.');
+  log().log('testing');
+  log().groupEnd.log();
+
+  log().label('my-thread').thread('foo', 'bar');
+  log().label('my-thread').thread('bar', 'baz');
+  log().label('my-thread').dump.log('Dumping the MDC context.');
+
+  log().trace.log('This log has a stacktrace.');
+  log().dir.log('A dir log');
+  log().dirxml.log('A dirxml log');
+  log().table.log([
+    { firstName: 'Andrew', lastName: 'Stacy' },
+    { firstName: 'Jim', lastName: 'Bob' },
+  ]);
+
+  adze({ machineReadable: true, captureStacktrace: true }).log('Testing the global captureStacktrace configuration.');
 }

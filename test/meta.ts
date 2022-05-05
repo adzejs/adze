@@ -40,3 +40,14 @@ test('log saves meta data correctly with generic type', (t) => {
     test2: 5678,
   });
 });
+
+test('log contains global meta data and inline meta data', (t) => {
+  const with_meta = adze({ meta: { foo: 'bar' } }).seal();
+  const { log, render } = with_meta().meta('test2', 5678).log('Added meta twice.');
+
+  t.truthy(render);
+  t.deepEqual(log.data.meta, {
+    foo: 'bar',
+    test2: 5678,
+  });
+});

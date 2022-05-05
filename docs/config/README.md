@@ -20,6 +20,7 @@ interface Configuration {
   unstyled?: boolean;
   terminalColorFidelity?: 0 | 1 | 2 | 3;
   captureStacktrace?: boolean;
+  machineReadable?: boolean;
   baseStyle?: string;
   logLevels?: LogLevels;
   customLevels?: Partial<LogLevels>;
@@ -54,6 +55,7 @@ type ConsoleMethod =
 | unstyled              | false                                         | Disables all styling of logs. Useful for stdout use cases.                                                                 |
 | terminalColorFidelity | 1                                             | Control terminal color fidelity with [Chalk](https://github.com/chalk/chalk#chalklevel).                                   |
 | captureStacktrace     | false                                         | Logs will record their stacktrace when they are created. Disabled by default for performance.                              |
+| machineReadable       | false                                         | When enabled all logs will be generated as [machine readable JSON objects](../guide/machine-readable-logs.md).             |
 | baseStyle             | [Reference](#styling)                         | These styles will be applied to all default log levels.                                                                    |
 | logLevels             | [Reference](#log-levels-log-level-definition) | Configuration for default Adze log levels.                                                                                 |
 | customLevels          | [Reference](#log-levels-log-level-definition) | Configuration for custom Adze log levels.                                                                                  |

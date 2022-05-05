@@ -1,166 +1,212 @@
-import { FinalLogData, LogRender } from '../_contracts';
-import { applyChalkStyles, initialCaps } from '../util';
+import { stacktrace as getStacktrace } from '../util';
+import { ConsoleMethod, FinalLogData, LogRender, JsonOutput } from '../_contracts';
 
+/**
+ * This class is responsible for creating a Log Render that is
+ * machine readable (JSON).
+ */
 export class MachinePrinter {
+  /**
+   * Finalized log data object.
+   */
   private data: FinalLogData<any>;
 
   constructor(data: FinalLogData<any>) {
     this.data = data;
   }
 
-  // ------- PRINT METHODS -------- //
+  // -----------------------------
+  // Print Methods
+  // -----------------------------
 
   /**
-   * The primary method for printing logs to the node console.
+   * The primary method for printing JSON logs to the console.
    */
-  public printLog(): LogRender {
+  public printLog(_method?: ConsoleMethod): LogRender {
+    // Ignore the _method value because we only want to use error, warn, info, log, and debug.
     const method = this.data.definition.method;
-    const leader = this.fLeader();
-    const meta = this.fMeta();
 
-    const render_args =
-      meta === '' ? [leader, ...this.data.args] : [leader, meta, ...this.data.args];
+    // Create out minimum JSON object to be output.
+    let json: JsonOutput = {
+      method,
+      level: this.data.level,
+      levelName: this.data.definition.levelName ?? '',
+      args: this.data.args,
+      timestamp: this.data.timestamp,
+    };
 
-    return [method, render_args];
+    // Each applier conditionally adds a property to the JSON that will be output.
+    // Some of them rely on knowing what the original terminated method was.
+    const appliers = [
+      this.applyMeta,
+      this.applyStacktrace,
+      this.applyContext,
+      this.applyTimeNow,
+      this.applyTimeEllapsed,
+      this.applyCount,
+      this.applyNamespace,
+      this.applyLabel,
+      this.applyGroup,
+    ];
+
+    // Execute each property applier on the JSON object.
+    appliers.forEach((func) => {
+      const applier = func.bind(this);
+      json = applier(json, _method);
+    });
+
+    // Make sure to stringify the object!
+    return [method, [JSON.stringify(json)]];
   }
 
   /**
-   * The method for printing group logs to the node console.
+   * Passthrough method for setting the intended print method.
    */
-  public printGroup(): LogRender {
-    const render_args = this.setupPrintGroup();
-    return ['group', render_args];
+  public printGroup(): LogRender | null {
+    return this.printLog('group');
   }
 
   /**
-   * The method for printing collapsed group logs to the node console.
+   * Passthrough method for setting the intended print method.
    */
-  public printGroupCollapsed(): LogRender {
-    const render_args = this.setupPrintGroup();
-    return ['groupCollapsed', render_args];
+  public printGroupCollapsed(): LogRender | null {
+    return this.printLog('groupCollapsed');
   }
-
-  public printTrace(): LogRender {
-    const render = this.printLog();
-    const args = render?.[1] ?? [];
-    return ['trace', args];
-  }
-
-  public setupPrintGroup(): unknown[] {
-    const partial_args = [this.fLeader()];
-    return typeof this.data.args[0] === 'string'
-      ? [...partial_args, this.data.args[0]]
-      : partial_args;
-  }
-
-  // ------- PRINT FORMATTERS -------- //
 
   /**
-   * Formats the leader of the log string. This contains the emoji if enabled,
-   * the log level name, and the number of arguments being printed.
+   * Passthrough method for setting the intended print method.
    */
-  private fLeader(): string {
-    const emoji = this.use_emoji ? this.fEmoji() : '';
-    const padding = this.use_emoji ? 14 + emoji.length : 14;
+  public printTrace(): LogRender | null {
+    return this.printLog('trace');
+  }
 
-    // If the leader length is greater than the padding, add a space to the end for pretty formatting
-    const leaderRaw = `${emoji} ${this.fName()}(${this.data.args.length})`;
-    const leader = leaderRaw.length >= padding ? `${leaderRaw} ` : leaderRaw;
+  /**
+   * Passthrough method for setting the intended print method.
+   */
+  public printGroupEnd(): LogRender | null {
+    return this.printLog('groupEnd');
+  }
 
-    const paddedLeader = this.addPadding(leader, padding);
+  /**
+   * Passthrough method for setting the intended print method.
+   */
+  public printTable(): LogRender | null {
+    return this.printLog('table');
+  }
 
-    // If the log instance is configured as unstyled, prevent applying chalk styles.
-    if (this.data.cfg.unstyled) {
-      return paddedLeader;
+  /**
+   * Passthrough method for setting the intended print method.
+   */
+  public printDir(): LogRender | null {
+    return this.printLog('dir');
+  }
+
+  /**
+   * Passthrough method for setting the intended print method.
+   */
+  public printDirxml(): LogRender | null {
+    return this.printLog('dirxml');
+  }
+
+  // -----------------------------
+  // Apply JSON values to output
+  // -----------------------------
+
+  /**
+   * Applies the groupAction property to the output JSON based upon the intended console method
+   * for printing groups.
+   */
+  private applyGroup(json: JsonOutput, method?: ConsoleMethod): JsonOutput {
+    let groupAction: 'open' | 'close' | null = null;
+    switch (method) {
+      case 'group':
+        groupAction = 'open';
+        break;
+      case 'groupCollapsed':
+        groupAction = 'open';
+        break;
+      case 'groupEnd':
+        groupAction = 'close';
+        break;
+      case undefined:
+        groupAction = null;
+        break;
     }
-    //
-    return applyChalkStyles(
-      paddedLeader,
-      this.data.definition.terminal,
-      this.data.cfg.terminalColorFidelity
-    );
+    return groupAction ? { ...json, groupAction } : json;
   }
 
   /**
-   * Add spaces to the end of a log title to make them all align.
+   * Applies the label property to the output JSON based on the label currently set on the log.
    */
-  private addPadding(str: string, len: number): string {
-    const diff = len - str.length;
-    let padded = str;
-    for (let i = 0; i <= diff; i += 1) {
-      padded += ' ';
+  private applyLabel(json: JsonOutput): JsonOutput {
+    return this.data.label.name ? { ...json, label: this.data.label.name } : json;
+  }
+
+  /**
+   * Applies the namespace property to the output JSON based on the namespace
+   * currently set on the log.
+   */
+  private applyNamespace(json: JsonOutput): JsonOutput {
+    return this.data.namespace ? { ...json, namespace: this.data.namespace } : json;
+  }
+
+  /**
+   * Applies the count property to the output JSON based on the count currently
+   * set on the log label object.
+   */
+  private applyCount(json: JsonOutput): JsonOutput {
+    return this.data.label.count !== null ? { ...json, count: this.data.label.count } : json;
+  }
+
+  /**
+   * Applies the timeEllapsed property to the output JSON based on the timeEllapsed currently
+   * set on the log label object.
+   */
+  private applyTimeEllapsed(json: JsonOutput): JsonOutput {
+    return this.data.label.timeEllapsed
+      ? { ...json, timeEllapsed: this.data.label.timeEllapsed }
+      : json;
+  }
+
+  /**
+   * Applies the timeNow property to the output JSON based on the timeNow currently
+   * set on the log label object.
+   */
+  private applyTimeNow(json: JsonOutput): JsonOutput {
+    return this.data.timeNow ? { ...json, timeNow: this.data.timeNow } : json;
+  }
+
+  /**
+   * Applies the context property to the output JSON based on the context currently
+   * set on the log label object.
+   */
+  private applyContext(json: JsonOutput): JsonOutput {
+    return this.data.context && Object.keys(this.data.context).length > 0
+      ? { ...json, context: this.data.context }
+      : json;
+  }
+
+  /**
+   * Applies the stacktrace property to the output JSON based on the whether Adze has
+   * captureStacktrace enabled globally or the trace modifier has been called.
+   */
+  private applyStacktrace(json: JsonOutput, method?: ConsoleMethod): JsonOutput {
+    let stacktrace: string | null = null;
+    if (this.data.stacktrace) {
+      stacktrace = this.data.stacktrace;
+    } else if (method === 'trace') {
+      stacktrace = getStacktrace();
     }
-    return padded;
+    return stacktrace ? { ...json, stacktrace } : json;
   }
 
   /**
-   * Adds the emoji to the log leader if enabled.
+   * Applies the meta property to the output JSON based on the meta data set on the log as well
+   * as any meta data set globally in the configuration.
    */
-  private fEmoji(): string {
-    return ` ${this.data.definition.emoji ?? ''}`;
-  }
-
-  /**
-   * Adds the log level name to the leader in initial caps.
-   */
-  private fName(): string {
-    return initialCaps(this.data.definition.levelName ?? '');
-  }
-
-  /**
-   * Formats the meta section of the log string which includes the
-   * log namespace, the label, the timestamp from the timer, the count
-   * from the counter, or the test result from any assertions if any of
-   * these modifiers were applied to this log.
-   */
-  private fMeta(): string {
-    return `${
-      this.timestamp
-    }${this.fNamespace()}${this.fLabel()}${this.fTime()}${this.fCount()}${this.fAssert()}${this.fTest()}`;
-  }
-
-  /**
-   * Formats the time on the log string based on any time modifiers
-   * that have been applied to this log.
-   */
-  private fTime(): string {
-    const timeNow = this.data.label.timeNow ?? this.data.timeNow;
-    const timeEllapsed = this.data.label.timeEllapsed;
-    const labelTxt = `${timeNow ?? timeEllapsed ?? ''}`;
-
-    return labelTxt !== '' ? `(${this.use_emoji ? '⏱' : ''}${labelTxt}) ` : '';
-  }
-
-  /**
-   * Formats the count on the log string based on any counter modifiers
-   * that have been applied to this log.
-   */
-  private fCount(): string {
-    const count = this.data.label.count;
-    return count !== null ? `(Count: ${count})` : '';
-  }
-
-  /**
-   * Formats the label on the log string based on the label
-   * modifier applied to this log.
-   */
-  private fLabel(): string {
-    return this.data.label.name ? `[${this.data.label.name}] ` : '';
-  }
-
-  /**
-   * Adds indicator text to the log render when
-   * the assertion fails.
-   */
-  private fAssert(): string {
-    return this.data.assertion === false ? `${this.use_emoji ? '❌ ' : ''}Assertion failed:` : '';
-  }
-
-  /**
-   * Adds indicator text to the log render when
-   * the test expression passes.
-   */
-  public fTest(): string {
-    return this.data.expression === true ? `${this.use_emoji ? '✅ ' : ''}Expression Passed:` : '';
+  private applyMeta(json: JsonOutput): JsonOutput {
+    return this.data.meta && Object.keys(this.data.meta).length > 0
+      ? { ...json, meta: this.data.meta }
+      : json;
   }
 }

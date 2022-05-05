@@ -39,13 +39,47 @@ export class NodePrinter extends SharedPrinter {
     return ['groupCollapsed', render_args];
   }
 
+  /**
+   * The method for printing stack traces to the node console.
+   */
   public printTrace(): LogRender {
     const render = this.printLog();
     const args = render?.[1] ?? [];
     return ['trace', args];
   }
 
-  public setupPrintGroup(): unknown[] {
+  /**
+   * The method for ending a log group in the node console.
+   */
+  public printGroupEnd(): LogRender {
+    return ['groupEnd', []];
+  }
+
+  /**
+   * The method for printing a table to the node console.
+   */
+  public printTable(): LogRender {
+    return ['table', this.data.args];
+  }
+
+  /**
+   * The method for printing a dir style log to the node console.
+   */
+  public printDir(): LogRender {
+    return ['dir', this.data.args];
+  }
+
+  /**
+   * The method for printing a dirxml style log to the node console.
+   */
+  public printDirxml(): LogRender {
+    return ['dirxml', this.data.args];
+  }
+
+  /**
+   * This method formats a group style log based on the provided arguments.
+   */
+  private setupPrintGroup(): unknown[] {
     const partial_args = [this.fLeader()];
     return typeof this.data.args[0] === 'string'
       ? [...partial_args, this.data.args[0]]
@@ -123,7 +157,7 @@ export class NodePrinter extends SharedPrinter {
    * that have been applied to this log.
    */
   private fTime(): string {
-    const timeNow = this.data.label.timeNow ?? this.data.timeNow;
+    const timeNow = this.data.timeNow;
     const timeEllapsed = this.data.label.timeEllapsed;
     const labelTxt = `${timeNow ?? timeEllapsed ?? ''}`;
 
