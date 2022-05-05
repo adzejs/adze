@@ -761,8 +761,6 @@ adze({ useEmoji: true }).label('loop').timeEnd.log('Performance of our loop.');
 
 This modifier logs the time ellapsed since the page has loaded. This is useful for measuring page load performance rather than performance of a particular piece of code. This modifier is **not** dependent upon a [label](#label) or [Shed](./shed-concepts.md).
 
-If a [label](#label) and a [Shed](./shed-concepts.md) exist, this modifier will record it's timestamp to the label.
-
 _This is not a standard API._
 
 ### Interface

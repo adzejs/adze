@@ -20,6 +20,7 @@ import {
   shedExists,
   defaultsDeep,
   cloneDeep,
+  captureTimeNow,
 } from '../util';
 import { Label, addLabel, getLabel } from '../label';
 import { defaults } from '../_defaults';
@@ -163,6 +164,11 @@ export class BaseLog<C extends Constraints> {
 
     // Now we'll pre-parse our filter levels in the config for performance
     this.cfg = parseFilterLevels(with_overrides);
+
+    // Apply our global meta data to the log
+    if (this.cfg.meta) {
+      this.metaData = this.cfg.meta;
+    }
   }
 
   /**
@@ -668,11 +674,7 @@ export class BaseLog<C extends Constraints> {
    */
   public get timeNow(): this {
     return this.modifier((ctxt) => {
-      if (ctxt._labelVal) {
-        ctxt._labelVal.captureTimeNow();
-      } else {
-        ctxt.timeNowVal = Label.createTimeNow();
-      }
+      ctxt.timeNowVal = captureTimeNow();
     });
   }
 
@@ -874,7 +876,6 @@ export class BaseLog<C extends Constraints> {
       namespace: this._namespaceVal ? [...this._namespaceVal] : null,
       label: {
         name: this._labelVal?.name ?? null,
-        timeNow: this._labelVal?.timeNow ?? null,
         timeEllapsed: this._labelVal?.timeEllapsed ?? null,
         count: this._labelVal?.count ?? null,
       },
@@ -928,13 +929,7 @@ export class BaseLog<C extends Constraints> {
       if (stored_label) {
         return stored_label;
       }
-      return new Label(
-        data.label.name,
-        data.context,
-        data.label.count,
-        data.label.timeNow,
-        data.label.timeEllapsed
-      );
+      return new Label(data.label.name, data.context, data.label.count, data.label.timeEllapsed);
     }
     return null;
   }

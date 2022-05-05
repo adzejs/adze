@@ -56,7 +56,6 @@ A label data object is generated from a label instance. This object contains dat
 ```typescript
 interface LabelData {
   name: string | null;
-  timeNow: string | null;
   timeEllapsed: string | null;
   count: number | null;
 }

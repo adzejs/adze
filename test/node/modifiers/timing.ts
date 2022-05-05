@@ -39,6 +39,30 @@ test('timer starts and ends and prints correctly with emoji', (t) => {
   }
 });
 
+test('captures time since app load', (t) => {
+  const { render } = adze().timeNow.log('Time since app load.');
+  if (render) {
+    const [_, args] = render;
+    if (typeof args[1] === 'string') {
+      t.regex(args[1], /\(\d+s\s\d+\.\d+ms\)\s/g);
+    }
+  } else {
+    t.fail();
+  }
+});
+
+test('captures time since app load with emoji', (t) => {
+  const { render } = adze({ useEmoji: true }).timeNow.log('Time since app load.');
+  if (render) {
+    const [_, args] = render;
+    if (typeof args[1] === 'string') {
+      t.regex(args[1], /\(⏱\d+s\s\d+\.\d+ms\)\s/g);
+    }
+  } else {
+    t.fail();
+  }
+});
+
 test('renders iso8601 timestamp properly', (t) => {
   const { log, render } = adze().timestamp.log('Timestamp test.');
   const [_, args] = render ?? [];

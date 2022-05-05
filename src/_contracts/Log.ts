@@ -111,3 +111,24 @@ export interface TerminatedLog<C extends Constraints, I extends BaseLog<C>> {
 export interface Constraints {
   allowedNamespaces: string;
 }
+
+/**
+ * This interface describes the possible output when generating logs with
+ * machineReadable mode enabled.
+ */
+export interface JsonOutput {
+  method: ConsoleMethod;
+  level: number;
+  levelName: string;
+  args: any[];
+  timestamp: LogTimestamp;
+  groupAction?: 'open' | 'close';
+  label?: string;
+  namespace?: string[];
+  count?: number;
+  timeEllapsed?: string;
+  timeNow?: string;
+  context?: Record<string, unknown>;
+  stacktrace?: string;
+  meta?: Record<string, unknown>;
+}
