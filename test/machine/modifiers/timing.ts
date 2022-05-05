@@ -80,7 +80,7 @@ test('renders iso8601 timestamp properly', (t) => {
       t.truthy(parsed.timestamp.unixMilli);
       t.truthy(parsed.timestamp.iso8601);
       t.truthy(parsed.timestamp.utc);
-      t.truthy(parsed.timestamp.utcTimezoneOffset);
+      t.false(isNaN(parsed.timestamp.utcTimezoneOffset));
     }
     t.is(parsed.args.length, 1);
     t.is(parsed.args[0], 'Timestamp test.');
