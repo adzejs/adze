@@ -163,6 +163,7 @@ module.exports = {
             'modifiers',
             'default-terminators',
             'other-terminators',
+            'machine-readable-logs',
             'filtering-and-utility-functions',
             'getters-and-setters',
             'data',

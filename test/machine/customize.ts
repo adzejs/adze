@@ -7,6 +7,7 @@ test('renders a custom log', (t) => {
   const style =
     'padding-right: 26px; border-color: 1px solid red; color: white; border-color: blue;';
   const { log, render } = adze({
+    machineReadable: true,
     customLevels: {
       custom: {
         level: 1,
@@ -28,7 +29,7 @@ test('renders a custom log', (t) => {
     t.is(parsed.level, 1);
     t.is(parsed.levelName, 'custom');
     t.is(parsed.args.length, 1);
-    t.is(parsed.args[0], 'testing');
+    t.is(parsed.args[0], 'This is a custom log.');
   } else {
     t.fail();
   }

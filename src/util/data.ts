@@ -2,7 +2,7 @@ import { LogTimestamp } from '../_contracts';
 import { Env } from '../env';
 
 /**
- * Generate a unique ID for your log.
+ * Generate a timestamp object for your log.
  */
 export function timestamp(): LogTimestamp {
   const unixMilli = Date.now();

@@ -15,7 +15,7 @@ test.afterEach(() => {
 test('Dumps the MDC context', (t) => {
   adze().label('thread').thread('key1', 'value1');
   adze().label('thread').thread('key2', 'value2');
-  const { log, render } = adze().label('thread').dump.log('Threaded log.');
+  const { log, render } = adze({ machineReadable: true }).label('thread').dump.log('Threaded log.');
 
   t.truthy(log);
   if (render) {

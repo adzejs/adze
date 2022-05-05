@@ -1,5 +1,5 @@
 import test from 'ava';
-import adze, { createShed, removeShed } from '../../../src';
+import adze, { createShed, removeShed, JsonOutput } from '../../../src';
 
 global.ADZE_ENV = 'dev';
 
@@ -14,7 +14,7 @@ test.afterEach(() => {
 test('counts 10 logs', (t) => {
   let terminated;
   for (let i = 0; i < 10; i += 1) {
-    terminated = adze().label('test').count.log('Counting...');
+    terminated = adze({ machineReadable: true }).label('test').count.log('Counting...');
   }
   if (terminated) {
     const { log, render } = terminated;
@@ -25,7 +25,7 @@ test('counts 10 logs', (t) => {
       t.is(method, 'log');
       t.is(args.length, 1);
 
-      const parsed = JSON.parse(args[0] as string);
+      const parsed: JsonOutput = JSON.parse(args[0] as string);
       t.is(parsed.method, 'log');
       t.is(parsed.level, 6);
       t.is(parsed.levelName, 'log');
@@ -41,10 +41,10 @@ test('counts 10 logs', (t) => {
 
 test('counts 10 logs then resets to 0', (t) => {
   for (let i = 0; i < 10; i += 1) {
-    adze().label('test').count.log('Counting...');
+    adze({ machineReadable: true }).label('test').count.log('Counting...');
   }
 
-  const terminated = adze().label('test').countReset.log('Reset to 0.');
+  const terminated = adze({ machineReadable: true }).label('test').countReset.log('Reset to 0.');
 
   if (terminated) {
     const { log, render } = terminated;
@@ -55,7 +55,7 @@ test('counts 10 logs then resets to 0', (t) => {
       t.is(method, 'log');
       t.is(args.length, 1);
 
-      const parsed = JSON.parse(args[0] as string);
+      const parsed: JsonOutput = JSON.parse(args[0] as string);
       t.is(parsed.method, 'log');
       t.is(parsed.level, 6);
       t.is(parsed.levelName, 'log');
@@ -79,7 +79,7 @@ test('counts 10 logs then resets to 0 and counts 5 logs', (t) => {
   adze().label('test').countReset.log('Resetting the count.');
 
   for (let i = 0; i < 5; i += 1) {
-    terminated = adze().label('test').count.log('Counting...');
+    terminated = adze({ machineReadable: true }).label('test').count.log('Counting...');
   }
 
   if (terminated) {
@@ -91,7 +91,7 @@ test('counts 10 logs then resets to 0 and counts 5 logs', (t) => {
       t.is(method, 'log');
       t.is(args.length, 1);
 
-      const parsed = JSON.parse(args[0] as string);
+      const parsed: JsonOutput = JSON.parse(args[0] as string);
       t.is(parsed.method, 'log');
       t.is(parsed.level, 6);
       t.is(parsed.levelName, 'log');
@@ -110,7 +110,9 @@ test('counts 10 logs then clears the log count for the "test" label', (t) => {
     adze().label('test').count.log('Counting...');
   }
 
-  const terminated = adze().label('test').countClear.log('Clearing the count.');
+  const terminated = adze({ machineReadable: true })
+    .label('test')
+    .countClear.log('Clearing the count.');
 
   if (terminated) {
     const { log, render } = terminated;
@@ -121,12 +123,12 @@ test('counts 10 logs then clears the log count for the "test" label', (t) => {
       t.is(method, 'log');
       t.is(args.length, 1);
 
-      const parsed = JSON.parse(args[0] as string);
+      const parsed: JsonOutput = JSON.parse(args[0] as string);
       t.is(parsed.method, 'log');
       t.is(parsed.level, 6);
       t.is(parsed.levelName, 'log');
       t.is(parsed.label, 'test');
-      t.is(parsed.count, null);
+      t.is(parsed.count, undefined);
       t.is(parsed.args.length, 1);
       t.is(parsed.args[0], 'Clearing the count.');
     } else {

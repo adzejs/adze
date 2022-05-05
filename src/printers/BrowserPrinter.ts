@@ -62,6 +62,34 @@ export class BrowserPrinter extends SharedPrinter {
     return ['trace', args];
   }
 
+  /**
+   * The method for ending a log group in the node console.
+   */
+  public printGroupEnd(): LogRender {
+    return ['groupEnd', []];
+  }
+
+  /**
+   * The method for printing a table to the node console.
+   */
+  public printTable(): LogRender {
+    return ['table', this.data.args];
+  }
+
+  /**
+   * The method for printing a dir style log to the node console.
+   */
+  public printDir(): LogRender {
+    return ['dir', this.data.args];
+  }
+
+  /**
+   * The method for printing a dirxml style log to the node console.
+   */
+  public printDirxml(): LogRender {
+    return ['dirxml', this.data.args];
+  }
+
   // ------- PRINT FORMATTERS -------- //
 
   /**
@@ -105,7 +133,7 @@ export class BrowserPrinter extends SharedPrinter {
    * that have been applied to this log.
    */
   public fTime(): string {
-    const timeNow = this.data.label.timeNow ?? this.data.timeNow;
+    const timeNow = this.data.timeNow;
     const timeEllapsed = this.data.label?.timeEllapsed;
     const labelTxt = `${timeNow ?? timeEllapsed ?? ''}`;
 

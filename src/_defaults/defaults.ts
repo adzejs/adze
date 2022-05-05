@@ -10,6 +10,7 @@ export const defaults: Defaults = {
   baseStyle:
     'font-size: 10px; font-weight: bold; border-radius: 0 10px 10px 0; border-width: 1px; border-style: solid;',
   customLevels: {},
+  machineReadable: false,
   meta: {},
   logLevels: {
     alert: {

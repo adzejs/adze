@@ -5,6 +5,7 @@ global.ADZE_ENV = 'dev';
 
 test('captureStacktrace adds stacktrace to output for all logs', (t) => {
   const cfg: Configuration = {
+    machineReadable: true,
     captureStacktrace: true,
   };
 
@@ -30,6 +31,7 @@ test('captureStacktrace adds stacktrace to output for all logs', (t) => {
 
 test('meta adds metadata to output for all logs', (t) => {
   const cfg: Configuration = {
+    machineReadable: true,
     meta: {
       hello: 'world',
     },
