@@ -45,35 +45,35 @@ export class Printer {
   // ------- PRINT METHODS -------- //
 
   public printLog(): LogRender | null {
-    return this.checkSilent(this.attachContext(this.printer.printLog()));
+    return this.attachContext(this.printer.printLog());
   }
 
   public printGroup(): LogRender | null {
-    return this.checkSilent(this.attachContext(this.printer.printGroup()));
+    return this.attachContext(this.printer.printGroup());
   }
 
   public printGroupCollapsed(): LogRender | null {
-    return this.checkSilent(this.attachContext(this.printer.printGroupCollapsed()));
+    return this.attachContext(this.printer.printGroupCollapsed());
   }
 
   public printTrace(): LogRender | null {
-    return this.checkSilent(this.attachContext(this.printer.printTrace()));
+    return this.attachContext(this.printer.printTrace());
   }
 
   public printGroupEnd(): LogRender | null {
-    return this.checkSilent(this.attachContext(this.printer.printGroupEnd()));
+    return this.attachContext(this.printer.printGroupEnd());
   }
 
   public printTable(): LogRender | null {
-    return this.checkSilent(this.attachContext(this.printer.printTable()));
+    return this.attachContext(this.printer.printTable());
   }
 
   public printDir(): LogRender | null {
-    return this.checkSilent(this.attachContext(this.printer.printDir()));
+    return this.attachContext(this.printer.printDir());
   }
 
   public printDirxml(): LogRender | null {
-    return this.checkSilent(this.attachContext(this.printer.printDirxml()));
+    return this.attachContext(this.printer.printDirxml());
   }
 
   // =======================
@@ -87,16 +87,6 @@ export class Printer {
   private attachContext(render: LogRender | null): LogRender | null {
     if (render && this.data.dumpContext && !this.data.cfg.machineReadable) {
       return [render[0], [...render[1], this.data.context]];
-    }
-    return render;
-  }
-
-  /**
-   * If the log data is flagged as silent, return null instead of the log render.
-   */
-  private checkSilent(render: LogRender | null): LogRender | null {
-    if (this.data.isSilent) {
-      return null;
     }
     return render;
   }
