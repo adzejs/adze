@@ -8,7 +8,10 @@ import { getSearchParams } from '../util';
  */
 export function allowed(data: FinalLogData<any>): boolean {
   return (
-    levelActive(data.definition, data.cfg.logLevel) && notTestEnv() && passesFilters(data.cfg, data)
+    levelActive(data.definition, data.cfg.logLevel) &&
+    notTestEnv() &&
+    passesFilters(data.cfg, data) &&
+    notSilent(data)
   );
 }
 
@@ -40,4 +43,8 @@ export function notTestEnv(): boolean {
   const adze_env = Env.global()?.ADZE_ENV;
   const param = getSearchParams()?.get('ADZE_ENV');
   return (adze_env ?? param ?? '') !== 'test';
+}
+
+export function notSilent(data: FinalLogData<any>): boolean {
+  return data.isSilent === false;
 }
