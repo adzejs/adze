@@ -14,3 +14,14 @@ This library exposes some opinionated interfaces and a log listener factory for 
 | ----------- | ---------------------------------------------------------------------------------------------------------------- |
 | Source Code | [https://github.com/AJStacy/adze-security-validator](https://github.com/AJStacy/adze-security-validator)         |
 | npm         | [https://www.npmjs.com/package/@adze/security-validator](https://www.npmjs.com/package/@adze/security-validator) |
+
+## @adze/transport-cloudwatch-logs
+
+This project is a plugin for the Adze logging library to transport log data to AWS CloudWatch Logs.
+
+This library exposes a log listener factory for setting up log groups and streams in CloudWatch Logs. It can be configured to automatically create the group or stream if it does not already exist.
+
+|             | Location                                                                                                                       |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Source Code | [https://github.com/AJStacy/adze-transport-cloudwatch-logs](https://github.com/AJStacy/adze-transport-cloudwatch-logs)         |
+| npm         | [https://www.npmjs.com/package/@adze/transport-cloudwatch-logs](https://www.npmjs.com/package/@adze/transport-cloudwatch-logs) |
