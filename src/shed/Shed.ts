@@ -13,7 +13,7 @@ import {
   Configuration,
 } from '../_contracts';
 import { Tools } from './Tools';
-import { BaseLog } from '../log/BaseLog';
+import { Log } from '../log';
 import { Label } from '../label';
 import { shed_defaults } from '../_defaults';
 import { formatLevels, defaultsDeep } from '../util';
@@ -76,7 +76,7 @@ export class Shed {
   /**
    * Store a log in the Shed.
    */
-  public store(log: BaseLog<any>): void {
+  public store(log: Log<any>): void {
     if (this.cacheSize < this.cfg.cacheLimit) {
       this._cache = this._cache.concat([log]);
     }

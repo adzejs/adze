@@ -1,4 +1,4 @@
-import { BaseLog } from '../log';
+import { Log } from '../log';
 import { LogLevelDefinition, ConsoleMethod, Defaults, LabelData } from '.';
 
 /**
@@ -58,7 +58,7 @@ export type LogRender = [ConsoleMethod, Arguments];
 /**
  * Type alias for an array of Log instances.
  */
-export type Collection = BaseLog<Constraints>[];
+export type Collection = Log<Constraints>[];
 
 /**
  * Log data object generated from a Log instance. This is
@@ -78,7 +78,7 @@ export interface LogData<C extends Constraints> {
   label: LabelData;
   level: number | null;
   meta: MetaData;
-  modifierQueue: Array<(ctxt: BaseLog<C>) => void>;
+  modifierQueue: Array<(ctxt: Log<C>) => void>;
   namespace: string[] | null;
   stacktrace: string | null;
   timeNow: string | null;
@@ -102,7 +102,7 @@ export interface FinalLogData<C extends Constraints> extends LogData<C> {
  * gleaning the final render information and getting the Log instance for
  * unit testing purposes.
  */
-export interface TerminatedLog<C extends Constraints, I extends BaseLog<C>> {
+export interface TerminatedLog<C extends Constraints, I extends Log<C>> {
   log: I;
   render: LogRender | null;
   printed: boolean;

@@ -11,5 +11,5 @@ export {
   render,
   rerender,
 } from './filters';
-export { isFinalLogData, bundle, shedExists, createShed, removeShed } from './util';
+export { isFinalLogData, shedExists, createShed, removeShed } from './util';
 export * from './_contracts';

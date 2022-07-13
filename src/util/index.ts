@@ -1,4 +1,3 @@
-export * from './bundle';
 export * from './data';
 export * from './lodash';
 export * from './shed';

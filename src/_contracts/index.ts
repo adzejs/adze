@@ -1,4 +1,3 @@
-export * from './Bundle';
 export * from './Configuration';
 export * from './Filters';
 export * from './HrTime';

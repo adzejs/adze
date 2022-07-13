@@ -9,7 +9,7 @@ export default function runDemo(lib, el) {
   customLevelsWithEmoji(lib);
   thread(lib);
   logLevelOf2(lib);
-  bundleLogs(lib);
+  filterLogs(lib);
   sealLogModifiers(lib);
   withSilent(lib);
   withLabel(lib);
@@ -244,17 +244,18 @@ function logLevelOf2({ adze }) {
   );
 }
 
-function bundleLogs({
+function filterLogs({
   adze,
-  bundle,
   rerender,
   filterNamespace,
   filterLabel,
   filterLevel,
+  createShed,
+  removeShed,
 }) {
-  console.log('\n----- Bundle Logs & Recall All -----\n');
-  const log = bundle(adze({ useEmoji: true }));
-  const divider = adze({ useEmoji: true });
+  console.log('\n----- Get Collection of Logs and Filter -----\n\n');
+  const shed = createShed();
+  const log = adze({ useEmoji: true }).seal();
 
   log().ns('SPACE').error('This is an error!');
   log().ns(['foo', 'SPACE']).info('A bundled log with multiple namespaces.');
@@ -262,27 +263,30 @@ function bundleLogs({
   log().log('Here is another log in the bundle.');
   log().ns('foo', 'bar').ns('baz').log('Multiple calls to namespace are additive.');
 
-  divider.info('---- Next is a recall of all logs in the bundle ----');
-  log().bundle.forEach(rerender);
+  const collection = shed.getCollection('*');
 
-  divider.info(
+  console.log('---- Next is a recall of all logs in the bundle ----');
+  collection.forEach(rerender);
+
+  console.log(
     '---- Next is a recall of all logs with the label of i-am-label ----'
   );
-  filterLabel(log().bundle, 'i-am-label').forEach(rerender);
+  filterLabel(collection, 'i-am-label').forEach(rerender);
 
-  divider.info(
+  console.log(
     '---- Next is a recall of all logs with the namespace of SPACE ----'
   );
-  filterNamespace(log().bundle, 'SPACE').forEach(rerender);
+  filterNamespace(collection, 'SPACE').forEach(rerender);
 
-  divider.info(
+  console.log(
     '---- Next is a recall of all logs with a level in the range of 4 to 8 ----'
   );
-  filterLevel(log().bundle, 4, 8).forEach(rerender);
+  filterLevel(collection, [4, '-', 8]).forEach(rerender);
+  removeShed();
 }
 
 function sealLogModifiers({ adze }) {
-  console.log('\n----- Seals Log Modifiers for New Logs -----\n');
+  console.log('\n----- Seals Log Modifiers for New Logs -----\n\n');
   const sealed = adze({ useEmoji: true })
     .ns('sealed')
     .label('sealed-label')
@@ -293,7 +297,7 @@ function sealLogModifiers({ adze }) {
 }
 
 function withSilent({ adze, createShed, removeShed }) {
-  console.log('\n----- Silent Log -----\n');
+  console.log('\n----- Silent Log -----\n\n');
   const shed = createShed();
   shed.addListener([6], (data, render, printed) => {
     adze().test(data.isSilent === true).success('The log is silent!', data);
@@ -305,7 +309,7 @@ function withSilent({ adze, createShed, removeShed }) {
 }
 
 function withLabel({ adze }) {
-  console.log('\n----- Default Log w/ No Store -----\n');
+  console.log('\n----- Default Log w/ No Store -----\n\n');
   adze().label('test').log('Testing a label with no store.');
 }
 

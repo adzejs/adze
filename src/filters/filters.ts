@@ -1,5 +1,5 @@
 import { LogRender, Collection, LogData, LevelFilter } from '../_contracts';
-import { BaseLog } from '../log';
+import { Log } from '../log';
 import { formatLevels, isString } from '../util';
 
 /**
@@ -53,7 +53,7 @@ export function filterCollection(
  * If the provided log has been previously rendered, this function
  * re-renders it to the console.
  */
-export function rerender(log: BaseLog<any>): void {
+export function rerender(log: Log<any>): void {
   if (log.render) {
     render(log.render);
   }

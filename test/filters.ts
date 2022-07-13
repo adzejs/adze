@@ -1,17 +1,28 @@
 import test from 'ava';
-import adze, { bundle, filterNamespace, filterLabel, filterLevel, filterCollection } from '../src';
+import adze, {
+  filterNamespace,
+  filterLabel,
+  filterLevel,
+  filterCollection,
+  createShed,
+  removeShed,
+} from '../src';
 
 global.ADZE_ENV = 'dev';
 
-test('filters a log collection by namespace', (t) => {
-  const bundled = bundle(adze({ useEmoji: true }));
+test.afterEach(() => {
+  removeShed();
+});
 
-  bundled().ns('SPACE').error('This is an error!');
-  bundled().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
-  bundled().label('i-am-label').success('Successfully bundled this log!');
-  const { log } = bundled().log('Here is another log in the bundle.');
+test.serial('filters a log collection by namespace', (t) => {
+  const shed = createShed();
 
-  const collection = log.bundle;
+  adze().ns('SPACE').error('This is an error!');
+  adze().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
+  adze().label('i-am-label').success('Successfully bundled this log!');
+  adze().log('Here is another log in the bundle.');
+
+  const collection = shed.getCollection('*');
   t.is(collection.length, 4);
 
   const filtered = filterNamespace(collection, ['SPACE']);
@@ -19,15 +30,15 @@ test('filters a log collection by namespace', (t) => {
   t.is(filtered.length, 2);
 });
 
-test('filters a log collection by label', (t) => {
-  const bundled = bundle(adze({ useEmoji: true }));
+test.serial('filters a log collection by label', (t) => {
+  const shed = createShed();
 
-  bundled().ns('SPACE').error('This is an error!');
-  bundled().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
-  bundled().label('i-am-label').success('Successfully bundled this log!');
-  const { log } = bundled().log('Here is another log in the bundle.');
+  adze().ns('SPACE').error('This is an error!');
+  adze().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
+  adze().label('i-am-label').success('Successfully bundled this log!');
+  adze().log('Here is another log in the bundle.');
 
-  const collection = log.bundle;
+  const collection = shed.getCollection('*');
   t.is(collection.length, 4);
 
   const filtered = filterLabel(collection, 'i-am-label');
@@ -35,15 +46,15 @@ test('filters a log collection by label', (t) => {
   t.is(filtered.length, 1);
 });
 
-test('filters a log collection by levels', (t) => {
-  const bundled = bundle(adze({ useEmoji: true }));
+test.serial('filters a log collection by levels', (t) => {
+  const shed = createShed();
 
-  bundled().ns('SPACE').error('This is an error!');
-  bundled().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
-  bundled().label('i-am-label').success('Successfully bundled this log!');
-  const { log } = bundled().log('Here is another log in the bundle.');
+  adze().ns('SPACE').error('This is an error!');
+  adze().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
+  adze().label('i-am-label').success('Successfully bundled this log!');
+  adze().log('Here is another log in the bundle.');
 
-  const collection = log.bundle;
+  const collection = shed.getCollection('*');
   t.is(collection.length, 4);
 
   const filtered = filterLevel(collection, [3, '-', 5]);
@@ -51,15 +62,15 @@ test('filters a log collection by levels', (t) => {
   t.is(filtered.length, 2);
 });
 
-test('filterCollection filters collection by a log data value', (t) => {
-  const bundled = bundle(adze({ useEmoji: true }));
+test.serial('filterCollection filters collection by a log data value', (t) => {
+  const shed = createShed();
 
-  bundled().ns('SPACE').silent.error('This is an error!');
-  bundled().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
-  bundled().label('i-am-label').success('Successfully bundled this log!');
-  const { log } = bundled().log('Here is another log in the bundle.');
+  adze().ns('SPACE').silent.error('This is an error!');
+  adze().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
+  adze().label('i-am-label').success('Successfully bundled this log!');
+  adze().log('Here is another log in the bundle.');
 
-  const collection = log.bundle;
+  const collection = shed.getCollection('*');
   t.is(collection.length, 4);
 
   const filtered = filterCollection(collection, (log_data) => log_data.isSilent === false);
