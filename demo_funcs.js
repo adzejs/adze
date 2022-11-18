@@ -11,6 +11,7 @@ export default function runDemo(lib, el) {
   logLevelOf2(lib);
   bundleLogs(lib);
   sealLogModifiers(lib);
+  withSilent(lib);
   withLabel(lib);
   withNamespace(lib);
   withMultiNamespace(lib);
@@ -289,6 +290,18 @@ function sealLogModifiers({ adze }) {
 
   sealed().success('Successfully sealed this log!');
   sealed().log('Here is another sealed log.');
+}
+
+function withSilent({ adze, createShed, removeShed }) {
+  console.log('\n----- Silent Log -----\n');
+  const shed = createShed();
+  shed.addListener([6], (data, render, printed) => {
+    adze().test(data.isSilent === true).success('The log is silent!', data);
+    adze().test(render !== null).success('Render is not null!', render);
+    adze().test(printed === false).success('The log did not print!', printed);
+  });
+  adze().silent.log('Testing a silent log.');
+  removeShed();
 }
 
 function withLabel({ adze }) {

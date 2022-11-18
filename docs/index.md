@@ -37,7 +37,7 @@ Writing your logs should feel natural which is why Adze chose to implement a [ch
 API](/guide/adze-concepts.md) that feels very much like the standard console API (but better).
 
 ```typescript
-adze().namespace('Hello').count.log('World!');
+adze().label('Hello').count.log('World!');
 ```
 
 :::

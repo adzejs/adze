@@ -265,3 +265,15 @@ test('shed tools renderLabel renders appropriate logs with provided level and la
   t.is(renderedAll.length, 4);
   t.is(renderedWarn.length, 1);
 });
+
+test('log listeners should have printed set to false when a log is silent', (t) => {
+  const shed = createShed();
+
+  shed.addListener([0], (data, render, printed) => {
+    t.true(data.isSilent);
+    t.not(render, null);
+    t.false(printed);
+  });
+
+  adze().silent.alert('This log is silent.');
+});

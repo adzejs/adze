@@ -3,7 +3,7 @@
 ![Adze Logo](docs/assets/logo_small.png)
 
 [![build workflow](https://github.com/AJStacy/adze/actions/workflows/build.yml/badge.svg)](https://github.com/AJStacy/adze/actions/workflows/build.yml)
-![npm](https://img.shields.io/npm/v/adze) ![node-lts](https://img.shields.io/node/v-lts/adze) [![size](https://badgen.net/bundlephobia/minzip/adze)](https://bundlephobia.com/result?p=adze) [![dependency count](https://badgen.net/bundlephobia/dependency-count/adze)](https://bundlephobia.com/result?p=adze) [![apache 2.0](https://badgen.net/npm/license/adze)](/LICENSE.md)
+![npm](https://img.shields.io/npm/v/adze) [![Rate this package](https://badges.openbase.com/js/rating/adze.svg?token=2JRA+eWqLSPTPaqboGXMHy1EnX0DY98eE9VidXDvPLg=)](https://openbase.com/js/adze?utm_source=embedded&amp;utm_medium=badge&amp;utm_campaign=rate-badge) ![node-lts](https://img.shields.io/node/v-lts/adze) [![size](https://badgen.net/bundlephobia/minzip/adze)](https://bundlephobia.com/result?p=adze) [![dependency count](https://badgen.net/bundlephobia/dependency-count/adze)](https://bundlephobia.com/result?p=adze) [![apache 2.0](https://badgen.net/npm/license/adze)](/LICENSE.md)
 
 **Please visit our official docs at [adzejs.com](http://www.adzejs.com/).**
 
