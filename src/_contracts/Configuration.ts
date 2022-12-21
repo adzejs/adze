@@ -16,7 +16,8 @@ export type ConsoleMethod =
   | 'dirxml';
 
 export interface Defaults {
-  argCount: boolean;
+  renderLeader: boolean;
+  renderArgCount: boolean;
   baseStyle: string;
   captureStacktrace: boolean;
   customLevels: LogLevels;

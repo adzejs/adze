@@ -59,10 +59,7 @@ test('renders a custom log with emoji', (t) => {
   }
 });
 
-// =========================
-// UNSTYLED FOR STDOUT
-// =========================
-
+// Unstyled logs for stdout
 test('renders an unstyled log', (t) => {
   const unstyled = adze({ unstyled: true }).label('unstyled').log('This log should have no style.');
 
@@ -74,5 +71,31 @@ test('renders an unstyled log', (t) => {
     t.is(args[0], ' Log(1)        ');
     t.is(args[1], '[unstyled] ');
     t.is(args[2], 'This log should have no style.');
+  }
+});
+
+test('renders a log that does not render the number of args in the leader', (t) => {
+  const { log, render } = adze({ renderArgCount: false }).log('testing');
+  const terminal: ChalkStyle[] = ['bgGray', 'white'];
+  t.truthy(log);
+
+  if (render) {
+    const [method, args] = render;
+    t.is(method, 'log');
+    t.is(args[0], applyChalkStyles(' Log           ', terminal));
+    t.is(args[1], 'testing');
+  } else {
+    t.fail();
+  }
+});
+
+test('does not render leader when it is disabled in configuration', (t) => {
+  const { render } = adze({ renderLeader: false }).info('testing');
+  if (render) {
+    const [method, args] = render;
+    t.is(method, 'info');
+    t.is(args[0], 'testing');
+  } else {
+    t.fail();
   }
 });

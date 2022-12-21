@@ -19,7 +19,7 @@ export class BrowserPrinter extends SharedPrinter {
     const meta = this.fMeta();
 
     // Assemble the args
-    const renderArgsRaw = [leader, style, meta];
+    const renderArgsRaw = this.data.cfg.renderLeader ? [leader, style, meta] : [meta];
     const renderArgsFiltered = renderArgsRaw.filter((val) => val !== '');
     const renderArgs = [...renderArgsFiltered, ...this.data.args];
 
@@ -99,7 +99,7 @@ export class BrowserPrinter extends SharedPrinter {
   public fLeader(): string {
     const styleFlag = this.unstyled ? '' : '%c';
     const argCount = this.data.args.length;
-    const argCountEnabled = this.data.cfg.argCount;
+    const argCountEnabled = this.data.cfg.renderArgCount;
     return ` ${styleFlag}${this.fEmoji()} ${this.fName()}${argCountEnabled ? `(${argCount})` : ''}`;
   }
 

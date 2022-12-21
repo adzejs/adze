@@ -63,10 +63,6 @@ test('renders a custom log with emoji', (t) => {
   }
 });
 
-// =========================
-// ALTERED BASE STYLE
-// =========================
-
 test('renders a log with altered base style', (t) => {
   const baseStyle =
     'font-size: 12px; font-weight: normal; border-radius: 0 5px 5px 0; border-width: 2px; border-style: dashed;';
@@ -86,10 +82,7 @@ test('renders a log with altered base style', (t) => {
   }
 });
 
-// =========================
-// UNSTYLED FOR STDOUT
-// =========================
-
+// Unstyled for stdout
 test('renders an unstyled log', (t) => {
   const unstyled = adze({ unstyled: true }).label('unstyled').log('This log should have no style.');
 
@@ -104,12 +97,8 @@ test('renders an unstyled log', (t) => {
   }
 });
 
-// ================================
-// HAS ARGS COUNT DISABLED
-// ================================
-
 test('renders a log that does not render the number of args in the leader', (t) => {
-  const { log, render } = adze({ argCount: false }).log('testing');
+  const { log, render } = adze({ renderArgCount: false }).log('testing');
   t.truthy(log);
 
   if (render) {
@@ -117,6 +106,17 @@ test('renders a log that does not render the number of args in the leader', (t) 
     t.is(method, 'log');
     t.is(args[0], ' %c Log');
     t.is(args[2], 'testing');
+  } else {
+    t.fail();
+  }
+});
+
+test('does not render leader when it is disabled in configuration', (t) => {
+  const { render } = adze({ renderLeader: false }).info('testing');
+  if (render) {
+    const [method, args] = render;
+    t.is(method, 'info');
+    t.is(args[0], 'testing');
   } else {
     t.fail();
   }

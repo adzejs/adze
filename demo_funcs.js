@@ -30,6 +30,8 @@ export default function runDemo(lib, el) {
   labelIncludeFilter(lib);
   labelExcludeFilter(lib);
   machineReadableLogs(lib);
+  disableLeader(lib);
+  disableArgCount(lib);
 }
 
 function screenshots({ adze, createShed }, el) { }
@@ -520,4 +522,14 @@ function machineReadableLogs({ adze, createShed, removeShed }) {
   ]);
 
   adze({ machineReadable: true, captureStacktrace: true }).log('Testing the global captureStacktrace configuration.');
+}
+
+function disableLeader({ adze }) {
+  console.log('\n----- Disabled Rendering the Leader -----\n');
+  adze({ renderLeader: false }).log('I have no leader!');
+}
+
+function disableArgCount({ adze }) {
+  console.log('\n----- Disabled Rendering the Arg Count in the Leader -----\n');
+  adze({ renderArgCount: false }).log('I have no arg count!');
 }

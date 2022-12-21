@@ -15,7 +15,8 @@ _NOTE: [Chalk](https://github.com/chalk/chalk#chalklevel) is what Adze uses unde
 ```typescript
 // This is the top level Adze configuration
 interface Configuration {
-  argCount?: boolean;
+  renderLeader?: boolean;
+  renderArgCount?: boolean;
   logLevel?: number;
   useEmoji?: boolean;
   unstyled?: boolean;
@@ -51,7 +52,8 @@ type ConsoleMethod =
 
 | Property Name         | Default Value                                 | Description                                                                                                                |
 | --------------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| argCount              | true                                          | Shows the number of args in the leader on pretty printed logs.                                                             |
+| renderLeader          | true                                          | Render the leader for pretty printed logs which includes the log level name, the emoji, and the number of args in the log. |
+| renderArgCount        | true                                          | Renders the number of args in the leader on pretty printed logs.                                                           |
 | logLevel              | 8                                             | The highest log level that will be allowed to render.                                                                      |
 | useEmoji              | false                                         | Toggle emoji's on or off for log rendering.                                                                                |
 | unstyled              | false                                         | Disables all styling of logs. Useful for stdout use cases.                                                                 |

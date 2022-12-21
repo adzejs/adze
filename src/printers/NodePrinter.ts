@@ -17,8 +17,11 @@ export class NodePrinter extends SharedPrinter {
     const leader = this.fLeader();
     const meta = this.fMeta();
 
-    const render_args =
-      meta === '' ? [leader, ...this.data.args] : [leader, meta, ...this.data.args];
+    const empty: unknown[] = [];
+    const withLeader = empty.concat(this.data.cfg.renderLeader ? [leader] : []);
+    const render_args = withLeader.concat(
+      meta === '' ? [...this.data.args] : [meta, ...this.data.args]
+    );
 
     return [method, render_args];
   }
@@ -95,9 +98,10 @@ export class NodePrinter extends SharedPrinter {
   private fLeader(): string {
     const emoji = this.use_emoji ? this.fEmoji() : '';
     const padding = this.use_emoji ? 14 + emoji.length : 14;
+    const argCount = this.data.cfg.renderArgCount;
 
     // If the leader length is greater than the padding, add a space to the end for pretty formatting
-    const leaderRaw = `${emoji} ${this.fName()}(${this.data.args.length})`;
+    const leaderRaw = `${emoji} ${this.fName()}${argCount ? `(${this.data.args.length})` : ''}`;
     const leader = leaderRaw.length >= padding ? `${leaderRaw} ` : leaderRaw;
 
     const paddedLeader = this.addPadding(leader, padding);
