@@ -99,7 +99,8 @@ export class BrowserPrinter extends SharedPrinter {
   public fLeader(): string {
     const styleFlag = this.unstyled ? '' : '%c';
     const argCount = this.data.args.length;
-    return ` ${styleFlag}${this.fEmoji()} ${this.fName()}(${argCount})`;
+    const argCountEnabled = this.data.cfg.argCount;
+    return ` ${styleFlag}${this.fEmoji()} ${this.fName()}${argCountEnabled ? `(${argCount})` : ''}`;
   }
 
   /**

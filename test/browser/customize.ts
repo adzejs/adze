@@ -103,3 +103,21 @@ test('renders an unstyled log', (t) => {
     t.is(args[2], 'This log should have no style.');
   }
 });
+
+// ================================
+// HAS ARGS COUNT DISABLED
+// ================================
+
+test('renders a log that does not render the number of args in the leader', (t) => {
+  const { log, render } = adze({ argCount: false }).log('testing');
+  t.truthy(log);
+
+  if (render) {
+    const [method, args] = render;
+    t.is(method, 'log');
+    t.is(args[0], ' %c Log');
+    t.is(args[2], 'testing');
+  } else {
+    t.fail();
+  }
+});

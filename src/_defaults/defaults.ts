@@ -2,6 +2,7 @@ import { Env } from '../env';
 import { Defaults } from '../_contracts';
 
 export const defaults: Defaults = {
+  argCount: true,
   logLevel: 8,
   useEmoji: false,
   captureStacktrace: false,

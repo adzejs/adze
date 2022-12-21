@@ -15,6 +15,7 @@ _NOTE: [Chalk](https://github.com/chalk/chalk#chalklevel) is what Adze uses unde
 ```typescript
 // This is the top level Adze configuration
 interface Configuration {
+  argCount?: boolean;
   logLevel?: number;
   useEmoji?: boolean;
   unstyled?: boolean;
@@ -50,6 +51,7 @@ type ConsoleMethod =
 
 | Property Name         | Default Value                                 | Description                                                                                                                |
 | --------------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| argCount              | true                                          | Shows the number of args in the leader on pretty printed logs.                                                             |
 | logLevel              | 8                                             | The highest log level that will be allowed to render.                                                                      |
 | useEmoji              | false                                         | Toggle emoji's on or off for log rendering.                                                                                |
 | unstyled              | false                                         | Disables all styling of logs. Useful for stdout use cases.                                                                 |
@@ -162,15 +164,15 @@ _NOTE: The default styles use [template string interpolation](https://developer.
 
 | Level Name | emoji | Style                                                                                                                                            |
 | ---------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| alert      | 🚨    | `padding-right: 26px; background: linear-gradient(to right, #fc8585, #fc2323); color: #fff; border-color: #b70101;`                              |
-| error      | 🔥    | `padding-right: ${Env.isChrome() ? '29' : '26'}px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;` |
-| warn       | 🔔    | `background: linear-gradient(to right, #fff, #fff0a8); color: #715100; border-color: #e3d696; padding-right: ${Env.isChrome() ? '34' : '44'}px;` |
-| info       | 📬    | `padding-right: ${Env.isSafari() ? '49' : '44'}px; background: linear-gradient(to right, #fff, #b2d7ff); color: #465464; border-color: #96b5d7;` |
-| fail       | ❌    | `padding-right: ${Env.isChrome() ? '43' : '44'}px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;` |
-| success    | 🎉    | `padding-right: 26px; background: linear-gradient(to right, #fff, #ceedc9); color: #4e594d; border-color: #b7d1b3;`                              |
-| log        | 📌    | `padding-right: 50px; background: linear-gradient(to right, #fff, #d9dce0); color: #333435; border-color: #bfc1c5;`                              |
-| debug      | 🐞    | `padding-right: 38px; border-right: 1px solid #d9dce0; color: #465464; border-color: #999999;`                                                   |
-| verbose    | 💤    | `padding-right: 26px; border-color: 1px solid #d9dce0; color: #999999; border-color: #cbc9c9;`                                                   |
+| alert      | 🚨     | `padding-right: 26px; background: linear-gradient(to right, #fc8585, #fc2323); color: #fff; border-color: #b70101;`                              |
+| error      | 🔥     | `padding-right: ${Env.isChrome() ? '29' : '26'}px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;` |
+| warn       | 🔔     | `background: linear-gradient(to right, #fff, #fff0a8); color: #715100; border-color: #e3d696; padding-right: ${Env.isChrome() ? '34' : '44'}px;` |
+| info       | 📬     | `padding-right: ${Env.isSafari() ? '49' : '44'}px; background: linear-gradient(to right, #fff, #b2d7ff); color: #465464; border-color: #96b5d7;` |
+| fail       | ❌     | `padding-right: ${Env.isChrome() ? '43' : '44'}px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;` |
+| success    | 🎉     | `padding-right: 26px; background: linear-gradient(to right, #fff, #ceedc9); color: #4e594d; border-color: #b7d1b3;`                              |
+| log        | 📌     | `padding-right: 50px; background: linear-gradient(to right, #fff, #d9dce0); color: #333435; border-color: #bfc1c5;`                              |
+| debug      | 🐞     | `padding-right: 38px; border-right: 1px solid #d9dce0; color: #465464; border-color: #999999;`                                                   |
+| verbose    | 💤     | `padding-right: 26px; border-color: 1px solid #d9dce0; color: #999999; border-color: #cbc9c9;`                                                   |
 
 #### Output
 
@@ -186,15 +188,15 @@ _NOTE: [Chalk](https://github.com/chalk/chalk#chalklevel) is what Adze uses unde
 
 | Level Name | emoji | Style                        |
 | ---------- | ----- | ---------------------------- |
-| alert      | 🚨    | `['white', 'bold', 'bgRed']` |
-| error      | 🔥    | `['bgRed', 'white']`         |
-| warn       | 🔔    | `['bgYellow', 'gray']`       |
-| info       | 📬    | `['bgBlue', 'white']`        |
-| fail       | ❌    | `['bgRed', 'white']`         |
-| success    | 🎉    | `['bgGreen', 'gray']`        |
-| log        | 📌    | `['bgGray', 'white']`        |
-| debug      | 🐞    | `['bgBlack', 'white']`       |
-| verbose    | 💤    | `['italic', 'white']`        |
+| alert      | 🚨     | `['white', 'bold', 'bgRed']` |
+| error      | 🔥     | `['bgRed', 'white']`         |
+| warn       | 🔔     | `['bgYellow', 'gray']`       |
+| info       | 📬     | `['bgBlue', 'white']`        |
+| fail       | ❌     | `['bgRed', 'white']`         |
+| success    | 🎉     | `['bgGreen', 'gray']`        |
+| log        | 📌     | `['bgGray', 'white']`        |
+| debug      | 🐞     | `['bgBlack', 'white']`       |
+| verbose    | 💤     | `['italic', 'white']`        |
 
 #### Available Chalk Styles
 
