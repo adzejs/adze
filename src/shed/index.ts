@@ -1,1 +1,1 @@
-export * from './Shed';
+export * from './shed';

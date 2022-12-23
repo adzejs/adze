@@ -1,2 +1,2 @@
-export * from './labelFuncs';
+export * from './label-funcs';
 export * from './Label';

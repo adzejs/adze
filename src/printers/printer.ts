@@ -1,8 +1,8 @@
 import { LogRender, FinalLogData } from '../_contracts';
 import { Env } from '../env';
-import { BrowserPrinter } from './BrowserPrinter';
-import { NodePrinter } from './NodePrinter';
-import { MachinePrinter } from './MachinePrinter';
+import { BrowserPrinter } from './browser-printer';
+import { NodePrinter } from './node-printer';
+import { MachinePrinter } from './machine-printer';
 
 export type PrinterMethods =
   | 'printLog'

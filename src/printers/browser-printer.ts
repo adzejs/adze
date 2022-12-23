@@ -1,8 +1,8 @@
-import { SharedPrinter } from './SharedPrinter';
+import { SharedPrinter } from './shared-printer';
 import { LogRender, FinalLogData } from '../_contracts';
-import { applyChalkStyles, initialCaps } from '../util';
+import { initialCaps } from '../util';
 
-export class NodePrinter extends SharedPrinter {
+export class BrowserPrinter extends SharedPrinter {
   constructor(data: FinalLogData<any>) {
     super(data);
   }
@@ -10,42 +10,53 @@ export class NodePrinter extends SharedPrinter {
   // ------- PRINT METHODS -------- //
 
   /**
-   * The primary method for printing logs to the node console.
+   * The primary method for rendering logs.
    */
   public printLog(): LogRender {
     const method = this.data.definition.method;
     const leader = this.fLeader();
+    const style = this.unstyled ? '' : this.data.cfg.baseStyle + this.data.definition.style;
     const meta = this.fMeta();
 
-    const empty: unknown[] = [];
-    const withLeader = empty.concat(this.data.cfg.renderLeader ? [leader] : []);
-    const render_args = withLeader.concat(
-      meta === '' ? [...this.data.args] : [meta, ...this.data.args]
-    );
+    // Assemble the args
+    const renderArgsRaw = this.data.cfg.renderLeader ? [leader, style, meta] : [meta];
+    const renderArgsFiltered = renderArgsRaw.filter((val) => val !== '');
+    const renderArgs = [...renderArgsFiltered, ...this.data.args];
 
-    return [method, render_args];
+    return [method, renderArgs];
   }
 
   /**
-   * The method for printing group logs to the node console.
+   * The method for rendering group logs.
    */
   public printGroup(): LogRender {
-    const render_args = this.setupPrintGroup();
+    const partialArgs = [this.fLeader(), this.data.cfg.baseStyle + this.data.definition.style];
+    const render_args =
+      typeof this.data.args[0] === 'string' ? [...partialArgs, this.data.args[0]] : partialArgs;
+
     return ['group', render_args];
   }
 
   /**
-   * The method for printing collapsed group logs to the node console.
+   * The method for rendering collapsed group logs.
    */
   public printGroupCollapsed(): LogRender {
-    const render_args = this.setupPrintGroup();
+    const partial_args = [this.fLeader(), this.data.cfg.baseStyle + this.data.definition.style];
+    const render_args =
+      typeof this.data.args[0] === 'string' ? [...partial_args, this.data.args[0]] : partial_args;
+
     return ['groupCollapsed', render_args];
   }
 
   /**
-   * The method for printing stack traces to the node console.
+   * Renders the stacktrace.
    */
   public printTrace(): LogRender {
+    // NOTE: Firefox does not support styling on console.trace()
+    if (this.env.isFirefox) {
+      return ['trace', this.data.args];
+    }
+    // All other browsers support console styling on console.trace()
     const render = this.printLog();
     const args = render?.[1] ?? [];
     return ['trace', args];
@@ -79,68 +90,30 @@ export class NodePrinter extends SharedPrinter {
     return ['dirxml', this.data.args];
   }
 
-  /**
-   * This method formats a group style log based on the provided arguments.
-   */
-  private setupPrintGroup(): unknown[] {
-    const partial_args = [this.fLeader()];
-    return typeof this.data.args[0] === 'string'
-      ? [...partial_args, this.data.args[0]]
-      : partial_args;
-  }
-
   // ------- PRINT FORMATTERS -------- //
 
   /**
    * Formats the leader of the log string. This contains the emoji if enabled,
    * the log level name, and the number of arguments being printed.
    */
-  private fLeader(): string {
-    const emoji = this.use_emoji ? this.fEmoji() : '';
-    const padding = this.use_emoji ? 14 + emoji.length : 14;
-    const argCount = this.data.cfg.renderArgCount;
-
-    // If the leader length is greater than the padding, add a space to the end for pretty formatting
-    const leaderRaw = `${emoji} ${this.fName()}${argCount ? `(${this.data.args.length})` : ''}`;
-    const leader = leaderRaw.length >= padding ? `${leaderRaw} ` : leaderRaw;
-
-    const paddedLeader = this.addPadding(leader, padding);
-
-    // If the log instance is configured as unstyled, prevent applying chalk styles.
-    if (this.data.cfg.unstyled) {
-      return paddedLeader;
-    }
-    //
-    return applyChalkStyles(
-      paddedLeader,
-      this.data.definition.terminal,
-      this.data.cfg.terminalColorFidelity
-    );
-  }
-
-  /**
-   * Add spaces to the end of a log title to make them all align.
-   */
-  private addPadding(str: string, len: number): string {
-    const diff = len - str.length;
-    let padded = str;
-    for (let i = 0; i <= diff; i += 1) {
-      padded += ' ';
-    }
-    return padded;
+  public fLeader(): string {
+    const styleFlag = this.unstyled ? '' : '%c';
+    const argCount = this.data.args.length;
+    const argCountEnabled = this.data.cfg.renderArgCount;
+    return ` ${styleFlag}${this.fEmoji()} ${this.fName()}${argCountEnabled ? `(${argCount})` : ''}`;
   }
 
   /**
    * Adds the emoji to the log leader if enabled.
    */
-  private fEmoji(): string {
-    return ` ${this.data.definition.emoji ?? ''}`;
+  public fEmoji(): string {
+    return this.use_emoji ? ` ${this.data.definition.emoji}` : '';
   }
 
   /**
    * Adds the log level name to the leader in initial caps.
    */
-  private fName(): string {
+  public fName(): string {
     return initialCaps(this.data.definition.levelName ?? '');
   }
 
@@ -150,7 +123,7 @@ export class NodePrinter extends SharedPrinter {
    * from the counter, or the test result from any assertions if any of
    * these modifiers were applied to this log.
    */
-  private fMeta(): string {
+  public fMeta(): string {
     return `${
       this.timestamp
     }${this.fNamespace()}${this.fLabel()}${this.fTime()}${this.fCount()}${this.fAssert()}${this.fTest()}`;
@@ -160,19 +133,19 @@ export class NodePrinter extends SharedPrinter {
    * Formats the time on the log string based on any time modifiers
    * that have been applied to this log.
    */
-  private fTime(): string {
+  public fTime(): string {
     const timeNow = this.data.timeNow;
-    const timeEllapsed = this.data.label.timeEllapsed;
+    const timeEllapsed = this.data.label?.timeEllapsed;
     const labelTxt = `${timeNow ?? timeEllapsed ?? ''}`;
 
-    return labelTxt !== '' ? `(${this.use_emoji ? '⏱' : ''}${labelTxt}) ` : '';
+    return labelTxt !== '' ? ` (${this.use_emoji ? '⏱' : ''}${labelTxt}) ` : '';
   }
 
   /**
    * Formats the count on the log string based on any counter modifiers
    * that have been applied to this log.
    */
-  private fCount(): string {
+  public fCount(): string {
     const count = this.data.label.count;
     return count !== null ? `(Count: ${count})` : '';
   }
@@ -181,7 +154,7 @@ export class NodePrinter extends SharedPrinter {
    * Formats the label on the log string based on the label
    * modifier applied to this log.
    */
-  private fLabel(): string {
+  public fLabel(): string {
     return this.data.label.name ? `[${this.data.label.name}] ` : '';
   }
 
@@ -189,7 +162,7 @@ export class NodePrinter extends SharedPrinter {
    * Adds indicator text to the log render when
    * the assertion fails.
    */
-  private fAssert(): string {
+  public fAssert(): string {
     return this.data.assertion === false ? `${this.use_emoji ? '❌ ' : ''}Assertion failed:` : '';
   }
 
