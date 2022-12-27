@@ -15,8 +15,8 @@ import {
 import { Tools } from './Tools';
 import { Log } from '../log';
 import { Label } from '../label';
-import { shed_defaults } from '../_defaults';
-import { formatLevels, defaultsDeep } from '../util';
+import { applyShedDefaults } from '../_defaults';
+import { formatLevels } from '../util';
 import { Env } from '../env';
 
 /**
@@ -50,7 +50,7 @@ export class Shed {
   /**
    * Counter for generating ID's for listeners.
    */
-  private id_counter = -1;
+  private idCounter = -1;
 
   /**
    * Cache of log listeners. These are fire when specified log levels
@@ -143,8 +143,8 @@ export class Shed {
   private formatConfig(cfg: ShedUserConfig | undefined): ShedConfig {
     const globalCfg = cfg?.globalCfg ?? null;
 
-    const cfg_global_defaults = { ...cfg, globalCfg };
-    return defaultsDeep(cfg_global_defaults, shed_defaults) as ShedConfig;
+    const cfgGlobalDefaults = { ...cfg, globalCfg };
+    return applyShedDefaults(cfgGlobalDefaults);
   }
 
   /**
@@ -233,6 +233,6 @@ export class Shed {
    * Increment the ID counter and return the new value.
    */
   private assignId(): number {
-    return (this.id_counter += 1);
+    return (this.idCounter += 1);
   }
 }

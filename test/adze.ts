@@ -1,9 +1,10 @@
 import test from 'ava';
 import { passesFilters } from '../src/conditions';
-import adze, { defaults, isFinalLogData } from '../src';
+import adze, { applyConfigDefaults, isFinalLogData } from '../src';
 import { Defaults, LogLevelDefinition } from '../src/_contracts';
 
 global.ADZE_ENV = 'dev';
+const defaults = applyConfigDefaults();
 
 test('create a new logger with defaults', (t) => {
   const log = adze();

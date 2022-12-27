@@ -1,8 +1,9 @@
 import test from 'ava';
-import adze, { ChalkStyle, defaults } from '../../src';
+import adze, { applyConfigDefaults, ChalkStyle } from '../../src';
 import { applyChalkStyles } from '../../src/util';
 
 global.ADZE_ENV = 'dev';
+const defaults = applyConfigDefaults();
 
 // ------- Default Node Logs -------- //
 

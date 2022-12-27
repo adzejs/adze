@@ -1,8 +1,9 @@
 import test from 'ava';
-import adze, { defaults } from '../../../src';
+import adze, { applyConfigDefaults } from '../../../src';
 import { applyChalkStyles } from '../../../src/util';
 
 global.ADZE_ENV = 'dev';
+const defaults = applyConfigDefaults();
 
 test('log renders when assertion is false (fails)', (t) => {
   const x = 2;

@@ -2,7 +2,7 @@ import { adze } from './adze';
 export { adze };
 export default adze;
 export { Label } from './label';
-export { defaults } from './_defaults';
+export { applyConfigDefaults, applyShedDefaults } from './_defaults';
 export {
   filterLabel,
   filterLevel,

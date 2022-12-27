@@ -1,18 +1,15 @@
+/* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-namespace */
 import { Shed } from '../shed/Shed';
 
 declare global {
+  var $shed: Shed;
+  var ADZE_ENV: 'test' | 'dev';
+  var ADZE_ENV_CONTEXT: 'global' | 'window';
   interface Window {
     $shed?: Shed;
     ADZE_ENV?: 'test' | 'dev';
     ADZE_ENV_CONTEXT?: 'global' | 'window';
-  }
-  namespace NodeJS {
-    export interface Global {
-      $shed?: Shed;
-      ADZE_ENV?: 'test' | 'dev';
-      ADZE_ENV_CONTEXT?: 'global' | 'window';
-    }
   }
 }
 
@@ -20,7 +17,7 @@ declare global {
  * Class with various properties describing the current environment.
  */
 export class Env {
-  public readonly global: Window | NodeJS.Global;
+  public readonly global: Window | typeof globalThis;
 
   public readonly isBrowser: boolean = Env.isBrowser();
 
@@ -64,7 +61,7 @@ export class Env {
   /**
    * Static method that returns the environment's global context.
    */
-  public static global(): Window | NodeJS.Global {
+  public static global(): Window | typeof globalThis {
     return Env.isBrowser() ? window : global;
   }
 
@@ -78,7 +75,7 @@ export class Env {
   /**
    * TypeGuard to determine if the env value is the Window object.
    */
-  public static envIsWindow = (env: Window | NodeJS.Global): env is Window => {
+  public static envIsWindow = (env: Window | typeof globalThis): env is Window => {
     return Env.isBrowser();
   };
 

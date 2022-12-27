@@ -18,12 +18,10 @@ import {
   toConsole,
   isFinalLogData,
   shedExists,
-  defaultsDeep,
-  cloneDeep,
   captureTimeNow,
 } from '../util';
 import { Label, addLabel, getLabel } from '../label';
-import { defaults } from '../_defaults';
+import { applyConfigDefaults } from '../_defaults';
 import { Env } from '../env';
 import { Printer } from '../printers';
 import { allowed, parseFilterLevels } from '../conditions';
@@ -150,17 +148,17 @@ export class Log<C extends Constraints> {
    */
   private showTimestamp = false;
 
-  constructor(printer: typeof Printer, env: Env, user_cfg?: Configuration) {
+  constructor(printer: typeof Printer, env: Env, userCfg?: Configuration) {
     this.Printer = printer;
     this.env = env;
 
     // First merge our user config with our defaults
-    const cfg = user_cfg ? (defaultsDeep(user_cfg, defaults) as Defaults) : defaults;
+    const cfg = applyConfigDefaults(userCfg);
 
     // Now check if global overrides exist and apply them over top of our configuration
     const shed = env.global.$shed;
     const with_overrides =
-      shedExists(shed) && shed.hasOverrides ? (defaultsDeep(shed.overrides, cfg) as Defaults) : cfg;
+      shedExists(shed) && shed.hasOverrides ? applyConfigDefaults(shed.overrides) : cfg;
 
     // Now we'll pre-parse our filter levels in the config for performance
     this.cfg = parseFilterLevels(with_overrides);
@@ -882,7 +880,7 @@ export class Log<C extends Constraints> {
    */
   public get data(): LogData<C> | FinalLogData<C> {
     const values: LogData<C> = {
-      cfg: cloneDeep(this.cfg),
+      cfg: structuredClone(this.cfg),
       level: this._level,
       definition: this.definition ? { ...this.definition } : null,
       args: this.args ? [...this.args] : null,
@@ -912,7 +910,7 @@ export class Log<C extends Constraints> {
    * Hydrate this log's properties from a log data object.
    */
   public hydrate(data: LogData<C> | FinalLogData<C>): this {
-    this.cfg = cloneDeep(data.cfg);
+    this.cfg = structuredClone(data.cfg);
     this._level = data.level;
     this.definition = data.definition ? { ...data.definition } : null;
     this.args = data.args ? [...data.args] : null;
