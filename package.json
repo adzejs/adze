@@ -73,10 +73,8 @@
   "dependencies": {
     "@types/lodash.clonedeep": "^4.5.6",
     "@types/lodash.defaultsdeep": "^4.6.6",
-    "@types/node": "^12.7.5",
-    "chalk": "^4.1.0",
-    "lodash.clonedeep": "^4.5.0",
-    "lodash.defaultsdeep": "^4.6.1"
+    "@types/node": "^18.11.18",
+    "chalk": "^4.1.0"
   },
   "config": {
     "commitizen": {
