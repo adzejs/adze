@@ -12,7 +12,6 @@ import {
   TerminatedLog,
 } from '../_contracts';
 import {
-  isString,
   stacktrace,
   timestamp,
   toConsole,
@@ -607,15 +606,9 @@ export class Log<C extends Constraints> {
    *
    * This is a non-standard API.
    */
-  public namespace(ns: C['allowedNamespaces'][]): this;
-  public namespace(...rest: C['allowedNamespaces'][]): this;
-  public namespace(
-    ns: C['allowedNamespaces'] | C['allowedNamespaces'][],
-    ...rest: C['allowedNamespaces'][]
-  ): this {
+  public namespace(...namespaces: C['allowedNamespaces'][]): this {
     return this.modifier((ctxt) => {
-      const namespace = isString(ns) ? [ns, ...rest] : ns;
-      ctxt._namespaceVal = [...(ctxt._namespaceVal ?? []), ...namespace];
+      ctxt._namespaceVal = [...(ctxt._namespaceVal ?? []), ...namespaces];
     });
   }
 
@@ -624,13 +617,8 @@ export class Log<C extends Constraints> {
    *
    * This is a non-standard API.
    */
-  public ns(ns: C['allowedNamespaces'][]): this;
-  public ns(...rest: C['allowedNamespaces'][]): this;
-  public ns(
-    ns: C['allowedNamespaces'] | C['allowedNamespaces'][],
-    ...rest: C['allowedNamespaces'][]
-  ): this {
-    return this.namespace(ns as string, ...rest);
+  public ns(...namespaces: C['allowedNamespaces'][]): this {
+    return this.namespace(...namespaces);
   }
 
   /**

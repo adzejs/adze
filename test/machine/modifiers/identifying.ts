@@ -56,35 +56,6 @@ test('log with single namespace prints correctly', (t) => {
 
 test('log with multiple namespaces prints correctly', (t) => {
   const { log, render } = adze({ machineReadable: true })
-    .ns(['test', 'test2'])
-    .log('This log has multiple namespaces.');
-
-  t.truthy(log);
-  if (render) {
-    const [method, args] = render;
-    t.is(method, 'log');
-    t.is(args.length, 1);
-
-    const parsed: JsonOutput = JSON.parse(args[0] as string);
-    t.is(parsed.method, 'log');
-    t.is(parsed.level, 6);
-    t.is(parsed.levelName, 'log');
-    if (parsed.namespace) {
-      t.is(parsed.namespace.length, 2);
-      t.is(parsed.namespace[0], 'test');
-      t.is(parsed.namespace[1], 'test2');
-    } else {
-      t.fail();
-    }
-    t.is(parsed.args.length, 1);
-    t.is(parsed.args[0], 'This log has multiple namespaces.');
-  } else {
-    t.fail();
-  }
-});
-
-test('log with multiple namespaces using rest parameters prints correctly', (t) => {
-  const { log, render } = adze({ machineReadable: true })
     .ns('test', 'test2')
     .log('This log has multiple namespaces.');
 
