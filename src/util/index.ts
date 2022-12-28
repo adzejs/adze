@@ -1,5 +1,5 @@
 export * from './data';
-export * from './shed';
+export * from './global-store';
 export * from './time';
 export * from './type-guards';
 export * from './util';

@@ -1,1 +1,1 @@
-export * from './shed';
+export * from './global-store';

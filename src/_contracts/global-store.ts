@@ -16,17 +16,17 @@ export type ListenerCallback = (
   printed: boolean
 ) => void;
 
-export interface ShedConfig {
+export interface GlobalStoreConfig {
   cacheLimit: number;
   globalCfg: Defaults | null;
 }
 
-export interface ShedUserConfig extends Partial<Omit<ShedConfig, 'globalCfg'>> {
+export interface GlobalStoreUserConfig extends Partial<Omit<GlobalStoreConfig, 'globalCfg'>> {
   globalCfg?: Configuration | null;
 }
 
 export interface LabelData {
   name: string | null;
-  timeEllapsed: string | null;
+  timeElapsed: string | null;
   count: number | null;
 }

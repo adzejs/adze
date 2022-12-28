@@ -16,7 +16,7 @@ import {
   timestamp,
   toConsole,
   isFinalLogData,
-  shedExists,
+  globalStoreExists,
   captureTimeNow,
 } from '../util';
 import { Label, addLabel, getLabel } from '../label';
@@ -83,7 +83,7 @@ export class Log<C extends Constraints> {
   private _labelVal: Label | null = null;
 
   /**
-   * The time ellapsed when this log was terminated.
+   * The time elapsed when this log was terminated.
    */
   private timeNowVal: string | null = null;
 
@@ -155,9 +155,11 @@ export class Log<C extends Constraints> {
     const cfg = applyConfigDefaults(userCfg);
 
     // Now check if global overrides exist and apply them over top of our configuration
-    const shed = env.global.$shed;
+    const globalStore = env.global.$globalStore;
     const with_overrides =
-      shedExists(shed) && shed.hasOverrides ? applyConfigDefaults(shed.overrides) : cfg;
+      globalStoreExists(globalStore) && globalStore.hasOverrides
+        ? applyConfigDefaults(globalStore.overrides)
+        : cfg;
 
     // Now we'll pre-parse our filter levels in the config for performance
     this.cfg = parseFilterLevels(with_overrides);
@@ -345,18 +347,18 @@ export class Log<C extends Constraints> {
    * a thread for adding context from different scopes before finally terminating the log.
    *
    * In order to create a thread, this log must specify a label that will be used to link the
-   * context and your environment must have a **shed** created.
+   * context and your environment must have a **GlobalStore** created.
    *
    * **Example:**
    * ```typescript
-   * import { adze, createShed } from 'adze';
+   * import { adze, createGlobalStore } from 'adze';
    *
-   * const shed = createShed();
+   * const globalStore = createGlobalStore();
    *
-   * // Creating a shed listener is a great way to get meta data from your
+   * // Creating a GlobalStore listener is a great way to get meta data from your
    * // threaded logs to write to disk or pass to another plugin, library,
    * // or service.
-   * shed.addListener([1,2,3,4,5,6,7,8], (log) => {
+   * globalStore.addListener([1,2,3,4,5,6,7,8], (log) => {
    *   // Do something with `log.context.added` or `log.context.subtracted`.
    * });
    *
@@ -840,22 +842,22 @@ export class Log<C extends Constraints> {
   // ===================================
 
   /**
-   * Stores this log in the Shed if the Shed exists.
+   * Stores this log in the GlobalStore if the GlobalStore exists.
    */
   private store(): void {
-    const shed = this.env.global.$shed;
-    if (shedExists(shed)) {
-      shed.store(this);
+    const globalStore = this.env.global.$globalStore;
+    if (globalStoreExists(globalStore)) {
+      globalStore.store(this);
     }
   }
 
   /**
-   * Fires listeners for this log instance if a Shed exists.
+   * Fires listeners for this log instance if a GlobalStore exists.
    */
   private fireListeners(data: FinalLogData<C>, render: LogRender | null, printed: boolean): void {
-    const shed = this.env.global.$shed;
-    if (shedExists(shed)) {
-      shed.fireListeners(data, render, printed);
+    const globalStore = this.env.global.$globalStore;
+    if (globalStoreExists(globalStore)) {
+      globalStore.fireListeners(data, render, printed);
     }
   }
 
@@ -877,7 +879,7 @@ export class Log<C extends Constraints> {
       namespace: this._namespaceVal ? [...this._namespaceVal] : null,
       label: {
         name: this._labelVal?.name ?? null,
-        timeEllapsed: this._labelVal?.timeEllapsed ?? null,
+        timeElapsed: this._labelVal?.timeElapsed ?? null,
         count: this._labelVal?.count ?? null,
       },
       assertion: this.assertion,
@@ -930,7 +932,7 @@ export class Log<C extends Constraints> {
       if (stored_label) {
         return stored_label;
       }
-      return new Label(data.label.name, data.context, data.label.count, data.label.timeEllapsed);
+      return new Label(data.label.name, data.context, data.label.count, data.label.timeElapsed);
     }
     return null;
   }

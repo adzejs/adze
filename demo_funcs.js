@@ -34,7 +34,7 @@ export default function runDemo(lib, el) {
   disableArgCount(lib);
 }
 
-function screenshots({ adze, createShed }, el) { }
+function screenshots({ adze, createGlobalStore }, el) { }
 
 function screenshotDemo({ adze }) {
   adze().alert('Example alert log');
@@ -98,9 +98,9 @@ function defaultLevelsWithEmoji({ adze }) {
   log().verbose('This is a verbose!');
 }
 
-function defaultLevelsWithGlobalOverride({ adze, createShed, removeShed }) {
+function defaultLevelsWithGlobalOverride({ adze, createGlobalStore, removeGlobalStore }) {
   console.log('\n----- Default Verbose Level w/ Global Overrides -----\n');
-  createShed({
+  createGlobalStore({
     global_cfg: {
       useEmoji: true,
       logLevels: {
@@ -112,8 +112,8 @@ function defaultLevelsWithGlobalOverride({ adze, createShed, removeShed }) {
       },
     },
   });
-  adze().verbose('This is a verbose with styling overrides from the shed.');
-  removeShed();
+  adze().verbose('This is a verbose with styling overrides from the GlobalStore.');
+  removeGlobalStore();
 }
 
 function customLevels({ adze }) {
@@ -171,14 +171,14 @@ function customLevelsWithEmoji({ adze }) {
   log.custom('important', 'This is an important log!');
 }
 
-function thread({ adze, createShed, removeShed, render }) {
+function thread({ adze, createGlobalStore, removeGlobalStore, render }) {
   console.log('\n----- Thread (MDC) -----\n');
-  const shed = createShed();
+  const globalStore = createGlobalStore();
 
-  // Creating a shed listener is a great way to get meta data from your
+  // Creating a GlobalStore listener is a great way to get meta data from your
   // threaded logs to write to disk or pass to another plugin, library,
   // or service.
-  shed.addListener([1, 2, 3, 4, 5, 6, 7, 8], (data, render_val) => {
+  globalStore.addListener([1, 2, 3, 4, 5, 6, 7, 8], (data, render_val) => {
     console.log('(MDC) Log Context from Listener', data.context, render_val);
     render(render_val);
   });
@@ -200,7 +200,7 @@ function thread({ adze, createShed, removeShed, render }) {
 
   adze().label('foo').dump.info('Results from our thread');
   adze().label('foo').close();
-  removeShed();
+  removeGlobalStore();
   adze().label('foo').dump.info('(MDC) Context after closing the thread');
 }
 
@@ -252,11 +252,11 @@ function filterLogs({
   filterNamespace,
   filterLabel,
   filterLevel,
-  createShed,
-  removeShed,
+  createGlobalStore,
+  removeGlobalStore,
 }) {
   console.log('\n----- Get Collection of Logs and Filter -----\n\n');
-  const shed = createShed();
+  const globalStore = createGlobalStore();
   const log = adze({ useEmoji: true }).seal();
 
   log().ns('SPACE').error('This is an error!');
@@ -265,7 +265,7 @@ function filterLogs({
   log().log('Here is another log in the bundle.');
   log().ns('foo', 'bar').ns('baz').log('Multiple calls to namespace are additive.');
 
-  const collection = shed.getCollection('*');
+  const collection = globalStore.getCollection('*');
 
   console.log('---- Next is a recall of all logs in the bundle ----');
   collection.forEach(rerender);
@@ -284,7 +284,7 @@ function filterLogs({
     '---- Next is a recall of all logs with a level in the range of 4 to 8 ----'
   );
   filterLevel(collection, [4, '-', 8]).forEach(rerender);
-  removeShed();
+  removeGlobalStore();
 }
 
 function sealLogModifiers({ adze }) {
@@ -298,16 +298,16 @@ function sealLogModifiers({ adze }) {
   sealed().log('Here is another sealed log.');
 }
 
-function withSilent({ adze, createShed, removeShed }) {
+function withSilent({ adze, createGlobalStore, removeGlobalStore }) {
   console.log('\n----- Silent Log -----\n\n');
-  const shed = createShed();
-  shed.addListener([6], (data, render, printed) => {
+  const globalStore = createGlobalStore();
+  globalStore.addListener([6], (data, render, printed) => {
     adze().test(data.isSilent === true).success('The log is silent!', data);
     adze().test(render !== null).success('Render is not null!', render);
     adze().test(printed === false).success('The log did not print!', printed);
   });
   adze().silent.log('Testing a silent log.');
-  removeShed();
+  removeGlobalStore();
 }
 
 function withLabel({ adze }) {
@@ -473,9 +473,9 @@ function labelExcludeFilter({ adze }) {
   logger().success("I should print.");
 }
 
-function machineReadableLogs({ adze, createShed, removeShed }) {
-  removeShed();
-  createShed();
+function machineReadableLogs({ adze, createGlobalStore, removeGlobalStore }) {
+  removeGlobalStore();
+  createGlobalStore();
   const cfg = { machineReadable: true, meta: { hello: 'world' } };
   const log = adze(cfg).seal();
   console.log('\n----- Machine Readable Logs Demo -----\n');
@@ -495,7 +495,7 @@ function machineReadableLogs({ adze, createShed, removeShed }) {
   log().timestamp.log('A log with a timestamp.');
   log().label('timer').time.log('Starting a timer.');
   log().label('timer').timeEnd.log('Ending a timer.');
-  log().label('test').timeNow.log('Time ellapsed since load.');
+  log().label('test').timeNow.log('Time elapsed since load.');
   log().meta('foo', 'bar').meta('bar', 'baz').log('Adding foo bar meta data.');
   log().label('counting').count.log('Counting this log.');
   log().label('counting').count.log('Counting this log.');

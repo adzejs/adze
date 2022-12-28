@@ -1,14 +1,14 @@
 import test from 'ava';
-import adze, { createShed, removeShed, JsonOutput } from '../../../src';
+import adze, { createGlobalStore, removeGlobalStore, JsonOutput } from '../../../src';
 
 global.ADZE_ENV = 'dev';
 
 test.beforeEach(() => {
-  createShed();
+  createGlobalStore();
 });
 
 test.afterEach(() => {
-  removeShed();
+  removeGlobalStore();
 });
 
 test('counts 10 logs', (t) => {

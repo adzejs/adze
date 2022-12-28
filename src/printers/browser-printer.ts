@@ -135,8 +135,8 @@ export class BrowserPrinter extends SharedPrinter {
    */
   public fTime(): string {
     const timeNow = this.data.timeNow;
-    const timeEllapsed = this.data.label?.timeEllapsed;
-    const labelTxt = `${timeNow ?? timeEllapsed ?? ''}`;
+    const timeElapsed = this.data.label?.timeElapsed;
+    const labelTxt = `${timeNow ?? timeElapsed ?? ''}`;
 
     return labelTxt !== '' ? ` (${this.use_emoji ? '⏱' : ''}${labelTxt}) ` : '';
   }

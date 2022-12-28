@@ -1,14 +1,14 @@
 import test from 'ava';
-import adze, { createShed, removeShed } from '../src';
+import adze, { createGlobalStore, removeGlobalStore } from '../src';
 
 global.ADZE_ENV = 'dev';
 
 test.beforeEach(() => {
-  createShed();
+  createGlobalStore();
 });
 
 test.afterEach(() => {
-  removeShed();
+  removeGlobalStore();
 });
 
 test('Maps context across multiple calls', (t) => {

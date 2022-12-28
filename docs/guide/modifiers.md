@@ -1,7 +1,7 @@
 # Modifiers
 
 Once you have an Adze log instance you can now start applying modifiers. Modifiers are methods that alter the log in some way and then return
-the log instance so that you may chain more modifiers or terminate the instance. Keep in mind, some modifiers have a dependency on the presence of a [label](#label) and labels rely on Shed.
+the log instance so that you may chain more modifiers or terminate the instance. Keep in mind, some modifiers have a dependency on the presence of a [label](#label) and labels rely on GlobalStore.
 
 ## assert
 
@@ -9,15 +9,15 @@ This modifier accepts an assertion boolean expression and will only print if the
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/assert)
 
-### Interface
+### assert Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public assert(assertion: boolean): this;
 }
 ```
 
-### Example
+### assert Example
 
 ```javascript
 import { adze } from 'adze';
@@ -41,7 +41,7 @@ adze({ useEmoji: true })
   .log('X does not equal Y');
 ```
 
-### Output
+### assert Output
 
 ![assert modifier example output](./examples/assert-example.png)
 
@@ -53,28 +53,28 @@ The count modifier tells the log to increment a counter associated to the log's 
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/count)
 
-### Interface
+### count Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get count(): this;
 }
 ```
 
-### Example
+### count Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-// A shed is required for labels and modifiers that depend on them
-createShed();
+// A GlobalStore is required for labels and modifiers that depend on them
+createGlobalStore();
 
 for (let i = 0; i < 5; i += 1) {
   adze().label('my-counter').count.log('Counting iterations.');
 }
 ```
 
-### Output
+### count Output
 
 ![Count modifier output](./examples/count-example.png)
 
@@ -85,25 +85,25 @@ for (let i = 0; i < 5; i += 1) {
 The countClear modifier completely clears the count from a [label](#label). Rather than setting the count to 0 it instead becomes null.
 
 _NOTE:_
-This method is deliberately a modifier rather than a terminator because it forces you to write a log that gives you insight into when a counter was cleared. It also makes the countClear log recallable from a [bundle](#bundle) or the [Shed](/guide/shed) in the order it was created.
+This method is deliberately a modifier rather than a terminator because it forces you to write a log that gives you insight into when a counter was cleared. It also makes the countClear log recallable from the [GlobalStore](/guide/globalstore) in the order it was created.
 
 _This is not a standard API._
 
-### Interface
+### countClear Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get countClear(): this;
 }
 ```
 
-### Example
+### countClear Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-// A shed is required for labels and modifiers that depend on them
-createShed();
+// A GlobalStore is required for labels and modifiers that depend on them
+createGlobalStore();
 
 for (let i = 0; i < 4; i += 1) {
   adze().label('my-counter').count.log('Counting iterations.');
@@ -114,7 +114,7 @@ adze().label('my-counter').countClear.log('Clearing the counter.');
 adze().label('my-counter').log('A log with the my-counter label but no count.');
 ```
 
-### Output
+### countClear Output
 
 ![count clear modifier example output](./examples/countClear-example.png)
 
@@ -123,25 +123,25 @@ adze().label('my-counter').log('A log with the my-counter label but no count.');
 The countReset modifier resets the counter associated to the log's [label](#label) to 0.
 
 _NOTE:_
-This method is deliberately a modifier rather than a terminator because it forces you to write a log that gives you insight into when a counter was reset. It also makes the countReset log recallable from a [bundle](#bundle) or the [Shed](/guide/shed) in the order it was created.
+This method is deliberately a modifier rather than a terminator because it forces you to write a log that gives you insight into when a counter was reset. It also makes the countReset log recallable from a [GlobalStore](/guide/globalstore) in the order it was created.
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/countReset)
 
-### Interface
+### countReset Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get countReset(): this;
 }
 ```
 
-### Example
+### countReset Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-// A shed is required for labels and modifiers that depend on them
-createShed();
+// A GlobalStore is required for labels and modifiers that depend on them
+createGlobalStore();
 
 for (let i = 0; i < 4; i += 1) {
   adze().label('my-counter').count.log('Counting iterations.');
@@ -154,7 +154,7 @@ for (let i = 0; i < 4; i += 1) {
 }
 ```
 
-### Output
+### countReset Output
 
 ![count reset modifier example output](./examples/countReset-example.png)
 
@@ -168,15 +168,15 @@ _NOTE:_ Logs that use `dir` as a modifier should only be given a single argument
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
 
-### Interface
+### dir Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get dir(): this;
 }
 ```
 
-### Example
+### dir Example
 
 ```javascript
 import { adze } from 'adze';
@@ -184,7 +184,7 @@ import { adze } from 'adze';
 adze().dir.log({ foo: 'bar' });
 ```
 
-### Output
+### dir Output
 
 ![dir modifier output](./examples/dir-example.png)
 
@@ -198,15 +198,15 @@ _NOTE:_ Logs that use `dirxml` as a modifier should only be given a single argum
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml)
 
-### Interface
+### dirxml Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get dirxml(): this;
 }
 ```
 
-### Example
+### dirxml Example
 
 ```javascript
 import { adze } from 'adze';
@@ -222,7 +222,7 @@ newDiv.appendChild(newContent);
 adze().dirxml.log(newDiv);
 ```
 
-### Output
+### dirxml Output
 
 ![dirxml modifier output](./examples/dirxml-example.png)
 
@@ -234,29 +234,29 @@ This modifier instructs the [labeled](#label) log to print the context values fr
 
 Refer to the [Mapped Diagnostic Context (MDC)](mapped-diagnostic-context.md) page for more information about the purpose of MDC.
 
-This modifier is dependent upon having a [label](#label) and a [Shed](./shed-concepts.md).
+This modifier is dependent upon having a [label](#label) and a [GlobalStore](./globalstore-concepts.md).
 
 _This is not a standard API._
 
-### Interface
+### dump Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get dump(): this;
 }
 ```
 
-### Example
+### dump Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-const shed = createShed();
+const globalStore = createGlobalStore();
 
-// Creating a shed listener is a great way to get meta data from your
+// Creating a GlobalStore listener is a great way to get meta data from your
 // threaded logs to write to disk or pass to another plugin, library,
 // or service.
-shed.addListener([1, 2, 3, 4, 5, 6, 7, 8], (log) => {
+globalStore.addListener([1, 2, 3, 4, 5, 6, 7, 8], (log) => {
   // Do something with `log.context.added` or `log.context.subtracted`.
 });
 
@@ -278,7 +278,7 @@ subtract(4, 3);
 adze().label('foo').dump.info('Results from our thread');
 ```
 
-### Output
+### dump Output
 
 ![dump modifier example output](./examples/dump-example.png)
 
@@ -290,15 +290,15 @@ The group modifier starts an uncollapsed group of logs. This means that all subs
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/group)
 
-### Interface
+### group Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get group(): this;
 }
 ```
 
-### Example
+### group Example
 
 ```javascript
 import { adze } from 'adze';
@@ -313,7 +313,7 @@ adze().info(`Browser: ${browser}`);
 adze().groupEnd.info();
 ```
 
-### Output
+### group Output
 
 ![group modifier example output](./examples/group-example.png)
 
@@ -327,15 +327,15 @@ _Note:_ This will not be collapsed in a terminal environment since there is no w
 
 [**MDN Docs**](1)
 
-### Interface
+### groupCollapsed Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get groupCollapsed(): this;
 }
 ```
 
-### Example
+### groupCollapsed Example
 
 ```javascript
 import { adze } from 'adze';
@@ -350,7 +350,7 @@ adze().info(`Browser: ${browser}`);
 adze().groupEnd.info();
 ```
 
-### Output
+### groupCollapsed Output
 
 ![groupCollapsed modifier example output](./examples/groupCollapsed-example.png)
 
@@ -362,15 +362,15 @@ The groupEnd modifier ends a log group. Any logs following a groupEnd will no lo
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupEnd)
 
-### Interface
+### groupEnd Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get groupEnd(): this;
 }
 ```
 
-### Example
+### groupEnd Example
 
 ```javascript
 import { adze } from 'adze';
@@ -387,7 +387,7 @@ adze().groupEnd.info(); // <-- Ends the group
 adze().info('Some other information...');
 ```
 
-### Output
+### groupEnd Output
 
 ![groupEnd modifier example output](./examples/groupEnd-example.png)
 
@@ -395,9 +395,9 @@ adze().info('Some other information...');
 
 ## label
 
-Applies an identifying label to a log. If a [Shed](../shed-concepts.md) is present, all logs that share the same label will be linked together behind the scenes. This enables global tracking for modifiers that require a label as a prerequisite.
+Applies an identifying label to a log. If a [GlobalStore](../globalstore-concepts.md) is present, all logs that share the same label will be linked together behind the scenes. This enables global tracking for modifiers that require a label as a prerequisite.
 
-These are the modifiers that require a label and a [Shed](../shed-concepts.md) to be useful:
+These are the modifiers that require a label and a [GlobalStore](../globalstore-concepts.md) to be useful:
 
 - [count](#count)
 - [countReset](#countreset)
@@ -408,27 +408,27 @@ These are the modifiers that require a label and a [Shed](../shed-concepts.md) t
 
 _This is not a standard API._
 
-### Interface
+### label Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public label(name: string): this;
 }
 ```
 
-### Example
+### label Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-createShed();
+createGlobalStore();
 
 // Labels can be applied in any order in a modifier chain
 adze().count.label('foo').log('Bar');
 adze().label('foo').count.log('Foo');
 ```
 
-### Output
+### label Output
 
 ![label modifier example output](./examples/label-example.png)
 
@@ -440,28 +440,28 @@ The meta modifier allows you to attach meta data to your log instance. You can t
 
 _This is not a standard API._
 
-### Interface
+### meta Interface
 
 > The interface of `meta<KV extends [string, any]>(...[key, val]: KV): this;` is available for Adze versions >= 1.2.0
 
 ```typescript
-class BaseLog {
+class Log {
   // Types are Overloaded
   public meta<T>(key: string, val: T): this;
   public meta<KV extends [string, any]>(...[key, val]: KV): this;
 }
 ```
 
-### Example
+### meta Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-// Let's optionally create a shed to show the use of meta data on listeners
-const shed = createShed();
+// Let's optionally create a GlobalStore to show the use of meta data on listeners
+const globalStore = createGlobalStore();
 
 // We'll listen only to logs of level 6 which is "log"
-shed.addListener([6], (data) => {
+globalStore.addListener([6], (data) => {
   adze().info("My log's meta data!", data.meta);
 });
 
@@ -472,13 +472,13 @@ adze().meta('message', info).log('This log contains an important message.');
 ```
 
 ```typescript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-// Let's optionally create a shed to show the use of meta data on listeners
-const shed = createShed();
+// Let's optionally create a GlobalStore to show the use of meta data on listeners
+const globalStore = createGlobalStore();
 
 // We'll listen only to logs of level 6 which is "log"
-shed.addListener([6], (data) => {
+globalStore.addListener([6], (data) => {
   adze().info("My log's meta data!", data.meta);
 });
 
@@ -488,7 +488,7 @@ const info = 'Hello World!';
 adze().meta('message', info).log('This log contains an important message.');
 ```
 
-### Output
+### meta Output
 
 ![meta modifier output with listener output](./examples/meta-example.png)
 
@@ -501,20 +501,14 @@ and will not overwrite previously applied namespaces. These are mainly used as h
 also useful for filtering recalled logs and for identifying logs from a log listener. This modifier does not do any
 special grouping under the hood. The `ns()` method is just a shorter alias for `namespace()`.
 
-As of version 1.7.0, Adze now supports passing a Constraints type to the log factory that will allow you to centrally specify what namespaces are allowed to be used. This is beneficial because it will force users to add any new namespace that they might want to add to the central `allowedNamespaces` type property. This will make it easier to filter namespaces throughout your application because you will only have a single place to look to understand what namespaces are being used.
-
-> Rest-of operator for namespace/ns available in Adze >= v1.5.0
-
-> Namespace constraint type available in Adze >= 1.7.0
-
-> Namespaces became additive by nature in Adze >= 1.8.0
+Adze also supports passing a Constraints type to the log factory that will allow you to centrally specify what namespaces are allowed to be used. This is beneficial because it will force users to add any new namespace that they might want to add to the central `allowedNamespaces` type property. This will make it easier to filter namespaces throughout your application because you will only have a single place to look to understand what namespaces are being used.
 
 _This is not a standard API._
 
-### Interface
+### namespace / ns Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public namespace(ns: string | string[]): this;
   public ns(ns: string | string[]): this;
   // Or alternatively with the restof operator (versions >= 1.5.0)
@@ -523,22 +517,19 @@ class BaseLog {
 }
 ```
 
-### Example
+### namespace / ns Example
 
 ```javascript
 import { adze } from 'adze';
 
 adze().namespace('tix-123').log('Important info for a feature.');
 adze()
-  .namespace(['tix-123', 'tix-456'])
-  .log('Important info for multiple features.');
-adze()
   .namespace('tix-123', 'tix-456', 'tix-789')
   .log('Multiple namespace entry simplified by the restof operator.');
 // ns() is a shorthand alias for namespace()
 adze().ns('tix-456').log('More info');
 // Multiple calls to namespace/ns are additive
-adze().ns('foo', 'bar').ns('baz').log('This log has all applied namespaces.');
+adze().ns('foo').ns('bar', 'baz').log('This log has all applied namespaces.');
 
 //----- Example with TS Constraints -----//
 import adze, { Constraints } from 'adze';
@@ -558,7 +549,7 @@ logger().ns('foo', 'bar', 'baz').fail('This is not allowed.');
 // Argument of type '"baz"' is not assignable to parameter of type '"foo" | "bar" | "hello" | "world"'.
 ```
 
-### Output
+### namespace / ns Output
 
 ![namespace modifier example output](./examples/namespace-example.png)
 
@@ -570,15 +561,15 @@ The silent modifier allows a log to be terminated and cached but prevents it fro
 
 _This is not a standard API._
 
-### Interface
+### silent Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get silent(): this;
 }
 ```
 
-### Example
+### silent Example
 
 ```javascript
 import { adze } from 'adze';
@@ -588,7 +579,7 @@ adze().silent.log('Crickets...');
 adze().log('I guess nobody is home :(');
 ```
 
-### Output
+### silent Output
 
 ![example of silent log output](./examples/silent-example.png)
 
@@ -600,15 +591,15 @@ The table modifier transforms the output of the log by directing it to use the `
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/table)
 
-### Interface
+### table Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get table(): this;
 }
 ```
 
-### Example
+### table Example
 
 ```javascript
 import { adze } from 'adze';
@@ -621,7 +612,7 @@ const tabular_data = [
 adze().table.log(tabular_data);
 ```
 
-### Output
+### table Output
 
 ![table modifier output](./examples/table-example.png)
 
@@ -633,15 +624,15 @@ This modifier accepts a boolean expression and will only print if the boolean ex
 
 _This is not a standard API._
 
-### Interface
+### test Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public test(expression: boolean): this;
 }
 ```
 
-### Example
+### test Example
 
 ```javascript
 import { adze } from 'adze';
@@ -665,7 +656,7 @@ adze({ useEmoji: true })
   .log('Y equals 3');
 ```
 
-### Output
+### test Output
 
 ![test modifier example output](./examples/test-example.png)
 
@@ -675,24 +666,24 @@ adze({ useEmoji: true })
 
 This modifier starts a timer associated to the log's [label](#label). This is useful for taking performance measurements. A log with a time modifier must be followed by a log with a [timeEnd](#timeend) modifier in order to get the final measurement.
 
-This modifier is dependent upon having a [label](#label) and a [Shed](./shed-concepts.md).
+This modifier is dependent upon having a [label](#label) and a [GlobalStore](./globalstore-concepts.md).
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/time)
 
-### Interface
+### time Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get time(): this;
 }
 ```
 
-### Example
+### time Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-createShed();
+createGlobalStore();
 
 // Let's create a timer for performance
 adze().label('loop').time.log('Starting a timer.');
@@ -708,7 +699,7 @@ adze().label('loop').timeEnd.log('Performance of our loop.');
 adze({ useEmoji: true }).label('loop').timeEnd.log('Performance of our loop.');
 ```
 
-### Output
+### time Output
 
 ![time modifier example output](./examples/time-example.png)
 
@@ -718,24 +709,24 @@ adze({ useEmoji: true }).label('loop').timeEnd.log('Performance of our loop.');
 
 This modifier ends a timer associated to the log's [label](#label). This is useful for taking performance measurements. A log with a timeEnd modifier must be preceded by a log with a [time](#time) modifier in order to get the final measurement.
 
-This modifier is dependent upon having a [label](#label) and a [Shed](./shed-concepts.md).
+This modifier is dependent upon having a [label](#label) and a [GlobalStore](./globalstore-concepts.md).
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/timeEnd)
 
-### Interface
+### timeEnd Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get time(): this;
 }
 ```
 
-### Example
+### timeEnd Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-createShed();
+createGlobalStore();
 
 // Let's create a timer for performance
 adze().label('loop').time.log('Starting a timer.');
@@ -751,7 +742,7 @@ adze().label('loop').timeEnd.log('Performance of our loop.');
 adze({ useEmoji: true }).label('loop').timeEnd.log('Performance of our loop.');
 ```
 
-### Output
+### timeEnd Output
 
 ![time end modifier example output](./examples/time-example.png)
 
@@ -759,19 +750,19 @@ adze({ useEmoji: true }).label('loop').timeEnd.log('Performance of our loop.');
 
 ## timeNow
 
-This modifier logs the time ellapsed since the page has loaded. This is useful for measuring page load performance rather than performance of a particular piece of code. This modifier is **not** dependent upon a [label](#label) or [Shed](./shed-concepts.md).
+This modifier logs the time elapsed since the page has loaded. This is useful for measuring page load performance rather than performance of a particular piece of code. This modifier is **not** dependent upon a [label](#label) or [GlobalStore](./globalstore-concepts.md).
 
 _This is not a standard API._
 
-### Interface
+### timeNow Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get timeNow(): this;
 }
 ```
 
-### Example
+### timeNow Example
 
 ```javascript
 import { adze } from 'adze';
@@ -781,15 +772,15 @@ for (let i = 0; i < 10000; i += 1) {
 }
 
 // Let's create a timer for performance
-adze().timeNow.log('Recording the time ellapsed since page load.');
+adze().timeNow.log('Recording the time elapsed since page load.');
 
 // Let's see what it looks like with emoji's enabled.
 adze({ useEmoji: true }).timeNow.log(
-  'Recording the time ellapsed since page load.'
+  'Recording the time elapsed since page load.'
 );
 ```
 
-### Output
+### timeNow Output
 
 ![time now modifier example output](./examples/timeNow-example.png)
 
@@ -801,17 +792,15 @@ This modifier instructs the log to render an [ISO 8601](https://en.wikipedia.org
 
 _This is not a standard API._
 
-> Version >= 1.1
-
-### Interface
+### timestamp Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get timestamp(): this;
 }
 ```
 
-### Example
+### timestamp Example
 
 ```javascript
 import { adze } from 'adze';
@@ -819,7 +808,7 @@ import { adze } from 'adze';
 adze().label('timestamped').timestamp.log('This log has a timestamp.');
 ```
 
-### Output
+### timestamp Output
 
 ![timestamp modifier example output](./examples/timestamp-example.png)
 
@@ -833,15 +822,15 @@ _NOTE:_ The styling for logs using this modifier varies by browser. Chrome will 
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/trace)
 
-### Interface
+### trace Interface
 
 ```typescript
-class BaseLog {
+class Log {
   public get trace(): this;
 }
 ```
 
-### Example
+### trace Example
 
 ```javascript
 import { adze } from 'adze';
@@ -849,7 +838,7 @@ import { adze } from 'adze';
 adze().trace.log('Trying to find an issue...');
 ```
 
-### Output
+### trace Output
 
 ![trace modifier example output](./examples/trace-example.png)
 

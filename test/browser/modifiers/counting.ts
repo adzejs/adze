@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const browserEnv = require('browser-env');
 import test from 'ava';
-import adze, { createShed, removeShed } from '../../../src';
+import adze, { createGlobalStore, removeGlobalStore } from '../../../src';
 
 // Simulate the browser environment for testing
 browserEnv();
@@ -9,11 +9,11 @@ browserEnv();
 window.ADZE_ENV = 'dev';
 
 test.beforeEach(() => {
-  createShed();
+  createGlobalStore();
 });
 
 test.afterEach(() => {
-  removeShed();
+  removeGlobalStore();
 });
 
 test('counts 10 logs', (t) => {

@@ -37,7 +37,7 @@ Writing your logs should feel natural which is why Adze chose to implement a [ch
 API](/guide/adze-concepts.md) that feels very much like the standard console API (but better).
 
 ```typescript
-adze().namespace('Hello').count.log('World!');
+adze().label('Hello').count.log('World!');
 ```
 
 :::
@@ -64,13 +64,12 @@ Run code containing your adze logs seamlessly [in both the browser and node](/gu
 There is no extra configuration required.
 :::
 
-::: slot shed
+::: slot globalStore
 
 ## Global Store and Overrides
 
-Adze comes with a component called [Shed](/guide/shed-concepts.md) which provides a global store for your logs. With the global
-store you can recall logs from an in-memory cache and override log configurations; effectively
-enabling micro-service and micro-frontend architectures.
+Adze comes with a component called [GlobalStore](/guide/globalstore-concepts.md) which provides a global store for your logs. With the global store you can recall logs from an in-memory cache and override log configurations; effectively
+enabling [micro-service and micro-frontend architectures](/guide/micro-frontends).
 :::
 
 ::: slot footer

@@ -9,9 +9,9 @@ Use this getter to retrieve the log instance's Mapped Diagnostic Context (MDC) v
 ### Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-createShed();
+createGlobalStore();
 
 // Let's generate a log
 adze().label('context').thread('foo', 'bar');

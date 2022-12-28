@@ -13,8 +13,8 @@ export class SharedPrinter {
 
   get use_emoji(): boolean {
     return (
-      (this.env.global.$shed?.overrides?.useEmoji === true &&
-        !this.env.global.$shed?.overrides?.unstyled === false) ||
+      (this.env.global.$globalStore?.overrides?.useEmoji === true &&
+        !this.env.global.$globalStore?.overrides?.unstyled === false) ||
       (this.data.cfg.useEmoji === true && this.data.cfg.unstyled === false)
     );
   }

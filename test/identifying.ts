@@ -1,18 +1,18 @@
 import test from 'ava';
-import adze, { createShed, removeShed } from '../src';
+import adze, { createGlobalStore, removeGlobalStore } from '../src';
 
 global.ADZE_ENV = 'dev';
 
 test.beforeEach(() => {
-  createShed();
+  createGlobalStore();
 });
 
 test.afterEach(() => {
-  removeShed();
+  removeGlobalStore();
 });
 
 test('label can be applied in any order as a modifier', (t) => {
-  createShed();
+  createGlobalStore();
   const { log, render } = adze()
     .count.label('test')
     .log('Label modifier added after count modifier.');

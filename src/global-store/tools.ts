@@ -7,7 +7,7 @@ import {
   filterLevel,
   filterNamespace,
 } from '../filters';
-import { Shed } from '.';
+import { GlobalStore } from '.';
 import { Env } from '../env';
 
 /**
@@ -16,9 +16,9 @@ import { Env } from '../env';
  */
 export class Tools {
   /**
-   * Reference to the Shed instance.
+   * Reference to the GlobalStore instance.
    */
-  private shed: Shed;
+  private globalStore: GlobalStore;
 
   /**
    * Instance of the Env class.
@@ -55,16 +55,16 @@ export class Tools {
    */
   public filterNamespace = filterNamespace;
 
-  constructor(env: Env, shed: Shed) {
-    this.shed = shed;
+  constructor(env: Env, globalStore: GlobalStore) {
+    this.globalStore = globalStore;
     this.env = env;
   }
 
   /**
-   * Shortcut method for rendering a level filtered collection from the Shed cache.
+   * Shortcut method for rendering a level filtered collection from the GlobalStore cache.
    */
   public renderCache(filter: LevelFilter): Collection {
-    const filtered = this.shed.getCollection(filter);
+    const filtered = this.globalStore.getCollection(filter);
     if (this.env.global.ADZE_ENV !== 'dev') {
       filtered.forEach(rerender);
     }
@@ -72,10 +72,10 @@ export class Tools {
   }
 
   /**
-   * Shortcut method for rendering a level and namespace filtered collection from the Shed cache.
+   * Shortcut method for rendering a level and namespace filtered collection from the GlobalStore cache.
    */
   public renderNamespace(filter: LevelFilter, ...ns: string[]): Collection {
-    const filtered = this.filterNamespace(this.shed.getCollection(filter), ns);
+    const filtered = this.filterNamespace(this.globalStore.getCollection(filter), ns);
     if (this.env.global.ADZE_ENV !== 'dev') {
       filtered.forEach(rerender);
     }
@@ -83,10 +83,10 @@ export class Tools {
   }
 
   /**
-   * Shortcut method for rendering a level and label filtered collection from the Shed cache.
+   * Shortcut method for rendering a level and label filtered collection from the GlobalStore cache.
    */
   public renderLabel(filter: LevelFilter, label: string): Collection {
-    const filtered = this.filterLabel(this.shed.getCollection(filter), label);
+    const filtered = this.filterLabel(this.globalStore.getCollection(filter), label);
     if (this.env.global.ADZE_ENV !== 'dev') {
       filtered.forEach(rerender);
     }
