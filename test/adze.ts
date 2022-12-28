@@ -188,7 +188,7 @@ test('global filter excludes logs based on namespace', (t) => {
   const { printed: i_printed } = log().ns('testWOW').info('This is an info!');
   const { printed: f_printed } = log().fail('This is a failure!');
   const { printed: s_printed } = log().success('This is a success!');
-  const { printed: l_printed } = log().ns(['testWOW', 'test2']).log('This is a log!');
+  const { printed: l_printed } = log().ns('testWOW', 'test2').log('This is a log!');
   const { printed: d_printed } = log().ns('test2').debug('This is a debug!');
   const { printed: v_printed } = log().verbose('This is a verbose!');
 
@@ -220,7 +220,7 @@ test('global filter includes logs based on namespace', (t) => {
   const { printed: i_printed } = log().ns('test').info('This is an info!');
   const { printed: f_printed } = log().fail('This is a failure!');
   const { printed: s_printed } = log().success('This is a success!');
-  const { printed: l_printed } = log().ns(['test', 'test2']).log('This is a log!');
+  const { printed: l_printed } = log().ns('test', 'test2').log('This is a log!');
   const { printed: d_printed } = log().ns('test2').debug('This is a debug!');
   const { printed: v_printed } = log().verbose('This is a verbose!');
 

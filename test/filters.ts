@@ -18,7 +18,7 @@ test.serial('filters a log collection by namespace', (t) => {
   const shed = createShed();
 
   adze().ns('SPACE').error('This is an error!');
-  adze().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
+  adze().ns('foo', 'SPACE').info('A bundled log with namespaces.');
   adze().label('i-am-label').success('Successfully bundled this log!');
   adze().log('Here is another log in the bundle.');
 
@@ -34,7 +34,7 @@ test.serial('filters a log collection by label', (t) => {
   const shed = createShed();
 
   adze().ns('SPACE').error('This is an error!');
-  adze().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
+  adze().ns('foo', 'SPACE').info('A bundled log with namespaces.');
   adze().label('i-am-label').success('Successfully bundled this log!');
   adze().log('Here is another log in the bundle.');
 
@@ -50,7 +50,7 @@ test.serial('filters a log collection by levels', (t) => {
   const shed = createShed();
 
   adze().ns('SPACE').error('This is an error!');
-  adze().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
+  adze().ns('foo', 'SPACE').info('A bundled log with namespaces.');
   adze().label('i-am-label').success('Successfully bundled this log!');
   adze().log('Here is another log in the bundle.');
 
@@ -66,7 +66,7 @@ test.serial('filterCollection filters collection by a log data value', (t) => {
   const shed = createShed();
 
   adze().ns('SPACE').silent.error('This is an error!');
-  adze().ns(['foo', 'SPACE']).info('A bundled log with namespaces.');
+  adze().ns('foo', 'SPACE').info('A bundled log with namespaces.');
   adze().label('i-am-label').success('Successfully bundled this log!');
   adze().log('Here is another log in the bundle.');
 

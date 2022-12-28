@@ -24,19 +24,7 @@ test('log with single namespace prints correctly', (t) => {
 });
 
 test('log with multiple namespaces prints correctly', (t) => {
-  const { render } = adze().ns(['test', 'test2']).log('This log has two namespaces.');
-  if (render) {
-    const [_, args] = render;
-    t.is(args[1], '#test #test2 ');
-  } else {
-    t.fail();
-  }
-});
-
-test('log with multiple namespaces using rest parameters prints correctly', (t) => {
-  const { render } = adze()
-    .ns('test', 'test2')
-    .log('This log has multiple namespaces using restof operator.');
+  const { render } = adze().ns('test', 'test2').log('This log has two namespaces.');
   if (render) {
     const [_, args] = render;
     t.is(args[1], '#test #test2 ');
