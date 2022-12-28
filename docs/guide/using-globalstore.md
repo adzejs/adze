@@ -1,42 +1,42 @@
-# Using Shed
+# Using GlobalStore
 
-Let's take a deeper dive into each of Shed's public methods.
+Let's take a deeper dive into each of GlobalStore's public methods.
 
 ## addLabel
 
-Adds a [label](modifiers.md#label) instance to the Shed.
+Adds a [label](modifiers.md#label) instance to the GlobalStore.
 
-### Interface
+### addLabel Interface
 
 ```typescript
-class Shed {
+class GlobalStore {
   public addLabel(label: Label): void;
 }
 ```
 
-### Example
+### addLabel Example
 
 ```javascript
-import { adze, createShed, Label } from 'adze';
+import { adze, createGlobalStore, Label } from 'adze';
 
-// Create a Shed instance
-const shed = createShed();
+// Create a GlobalStore instance
+const globalStore = createGlobalStore();
 
 // Let's create a Label instance
 const label = new Label('foo');
 
-// Now we can add the label named 'foo' to the Shed
-shed.addLabel(label);
+// Now we can add the label named 'foo' to the GlobalStore
+globalStore.addLabel(label);
 ```
 
 ## addListener
 
-Adds a log listener to Shed that invokes the provided callback function if a log passes the provided [level filter](data.md#level-filter).
+Adds a log listener to GlobalStore that invokes the provided callback function if a log passes the provided [level filter](data.md#level-filter).
 
-### Interface
+### addListener Interface
 
 ```typescript
-class Shed {
+class GlobalStore {
   public addListener(
     levels: LevelFilter,
     cb: ListenerCallback
@@ -44,15 +44,15 @@ class Shed {
 }
 ```
 
-### Example
+### addListener Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-const shed = createShed();
+const globalStore = createGlobalStore();
 
 // We'll listen to all levels
-shed.addListener('*', (data, render) => {
+globalStore.addListener('*', (data, render) => {
   // Do stuff with the log data.
   if (render) {
     // Do something with the log if it was rendered
@@ -64,29 +64,29 @@ shed.addListener('*', (data, render) => {
 
 Getter and setter for manually overriding the configured or default log cache limit.
 
-### Interface
+### cacheLimit Interface
 
 ```typescript
-class Shed {
+class GlobalStore {
   public set cacheLimit(limit: number);
   public get cacheLimit(): number;
 }
 ```
 
-### Example
+### cacheLimit Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-const shed = createShed({
+const globalStore = createGlobalStore({
   cacheLimit: 300,
 });
 
 // Override the cache limit
-shed.cacheLimit = 500;
+globalStore.cacheLimit = 500;
 
 // Let's get the cache limit
-const cacheLimit = shed.cacheLimit;
+const cacheLimit = globalStore.cacheLimit;
 // cacheLimit => 500
 ```
 
@@ -94,56 +94,56 @@ const cacheLimit = shed.cacheLimit;
 
 Getter that returns the number of logs currently cached.
 
-### Interface
+### cacheSize Interface
 
 ```typescript
-class Shed {
+class GlobalStore {
   public get cacheSize(): number;
 }
 ```
 
-### Example
+### cacheSize Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-const shed = createShed();
+const globalStore = createGlobalStore();
 
 adze().log('First log');
 adze().log('Second log');
 adze().log('Third log');
 
 // Let's get the cache size
-const size = shed.cacheSize;
+const size = globalStore.cacheSize;
 // size => 3
 ```
 
 ## config
 
-Sets the value of the Shed configuration.
+Sets the value of the GlobalStore configuration.
 
-### Interface
+### config Interface
 
 ```typescript
-class Shed {
-  public set config(cfg: ShedUserConfig | undefined);
+class GlobalStore {
+  public set config(cfg: GlobalStoreUserConfig | undefined);
 }
 ```
 
-### Example
+### config Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-// Creating a Shed instance with no config overrides
-const shed = createShed({
+// Creating a GlobalStore instance with no config overrides
+const globalStore = createGlobalStore({
   globalCfg: {
     logLevel: 0,
   },
 });
 
 // Now we'll override the configuration
-shed.config = {
+globalStore.config = {
   globalCfg: {
     logLevel: 3,
   },
@@ -156,31 +156,31 @@ Fires any listeners that are watching the log level defined with the provided [f
 
 _NOTE:_ It is not necessary to call this method manually to fire listeners. When a log is terminated it will fire it automatically. However, if you are recalling a log and want to fire the listener for it again, you'll need to use the pattern in the example below.
 
-### Interface
+### fireListeners Interface
 
 ```typescript
 // Versions < 1.3.0
-class Shed {
+class GlobalStore {
   public fireListeners(log: FinalLogData, render: LogRender | null): void;
 }
 
 // Versions >= 1.3.0
-class Shed {
+class GlobalStore {
   public fireListeners(log: FinalLogData, render: LogRender | null, printed: boolean): void;
 }
 ```
 
-### Example
+### fireListeners Example
 
 For information about the type guard in this example, refer to [isFinalLogData](filtering-and-utility-functions.md#isfinallogdata).
 
 ```javascript
-import { adze, createShed, isFinalLogData } from 'adze';
+import { adze, createGlobalStore, isFinalLogData } from 'adze';
 
-const shed = createShed();
+const globalStore = createGlobalStore();
 
 // Let's create a listener and store it's location in a variable
-shed.addListener('*', (data, render) => {
+globalStore.addListener('*', (data, render) => {
   // Do stuff with the log data.
 });
 
@@ -189,7 +189,7 @@ const data = log.data;
 
 // Listeners only accept finalized log data so we must use a type guard to verify it
 if (isFinalLogData(data)) {
-  shed.fireListeners(data, render, printed);
+  globalStore.fireListeners(data, render, printed);
 }
 ```
 
@@ -200,7 +200,7 @@ Recalls all of the cached logs based on the provided [level filter](data.md#leve
 ### Interface
 
 ```typescript
-class Shed {
+class GlobalStore {
   public getCollection(levels: LevelFilter): Collection;
 }
 ```
@@ -208,16 +208,16 @@ class Shed {
 ### Example
 
 ```javascript
-import { adze, createShed, rerender } from 'adze';
+import { adze, createGlobalStore, rerender } from 'adze';
 
-const shed = createShed();
+const globalStore = createGlobalStore();
 
 adze().log('First log');
 adze().log('Second log');
 adze().log('Third log');
 
 // Let's get the a collection of all cached logs
-const collection = shed.getCollection('*');
+const collection = globalStore.getCollection('*');
 
 // Now we can re-render them all
 collection.forEach(rerender);
@@ -225,81 +225,81 @@ collection.forEach(rerender);
 
 ## getLabel
 
-Get a [label](modifiers.md#label) instance from the Shed by name.
+Get a [label](modifiers.md#label) instance from the GlobalStore by name.
 
-### Interface
+### getLabel Interface
 
 ```typescript
-class Shed {
+class GlobalStore {
   public getLabel(name: string): Label | undefined;
 }
 ```
 
-### Example
+### getLabel Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-// Create a Shed instance
-const shed = createShed();
+// Create a GlobalStore instance
+const globalStore = createGlobalStore();
 
 // Create a log with a label
 adze().label('foo').log('Hello World!');
 
 // Now we can get the label instance named 'foo'
-const label = shed.getLabel('foo');
+const label = globalStore.getLabel('foo');
 ```
 
 ## hasLabel
 
-Returns a boolean value indicating the existence of a label in the Shed.
+Returns a boolean value indicating the existence of a label in the GlobalStore.
 
-### Interface
+### hasLabel Interface
 
 ```typescript
-class Shed {
+class GlobalStore {
   public hasLabel(name: string): boolean;
 }
 ```
 
-### Example
+### hasLabel Example
 
 ```javascript
-import { adze, createShed, Label } from 'adze';
+import { adze, createGlobalStore, Label } from 'adze';
 
-// Create a Shed instance
-const shed = createShed();
+// Create a GlobalStore instance
+const globalStore = createGlobalStore();
 
 // Create a log with a label
 adze().label('foo').log('Hello World!');
 
-// Now we can add the label named 'foo' to the Shed
-const labelExists = shed.hasLabel('foo');
+// Now we can add the label named 'foo' to the GlobalStore
+const labelExists = globalStore.hasLabel('foo');
 // labelExists => true
 ```
 
 ## hasOverrides
 
-Indicates whether this Shed instance has global Adze configuration overrides set.
+Indicates whether this GlobalStore instance has global Adze configuration overrides set.
 
-### Interface
+### hasOverrides Interface
 
 ```typescript
-class Shed {
+class GlobalStore {
   public get hasOverrides(): boolean;
 }
 ```
 
-### Example
+### hasOverrides Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-// Creating a Shed instance with no config overrides
-const shed = createShed();
+// Creating a GlobalStore instance with no config overrides
+const globalStore = createGlobalStore();
 
-// Let's check if the Shed has global overrides configured
-const has_overrides = shed.hasOverrides;
+// Let's check if the GlobalStore has global overrides configured
+const has_overrides = globalStore.hasOverrides;
 // has_overrides => false
 ```
 
@@ -307,96 +307,94 @@ const has_overrides = shed.hasOverrides;
 
 Returns the current value of the global [Adze configuration](/config/#adze-configuration) overrides.
 
-### Interface
+### overrides Interface
 
 ```typescript
-class Shed {
+class GlobalStore {
   public get overrides(): Configuration | null;
 }
 ```
 
-### Example
+### overrides Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-// Creating a Shed instance with no config overrides
-const shed = createShed({
+// Creating a GlobalStore instance with no config overrides
+const globalStore = createGlobalStore({
   globalCfg: {
     logLevel: 0,
   },
 });
 
 // Let's get our global configuration overrides
-const overrides = shed.overrides;
+const overrides = globalStore.overrides;
 ```
 
 ## removeListener
 
-Adds a log listener to Shed that invokes the provided callback function if a log passes the provided [level filter](data.md#level-filter).
+Adds a log listener to GlobalStore that invokes the provided callback function if a log passes the provided [level filter](data.md#level-filter).
 
-### Interface
+### removeListener Interface
 
 ```typescript
-class Shed {
+class GlobalStore {
   public removeListener(locations: ListenerLocations): void;
 }
 ```
 
-### Example
+### removeListener Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-const shed = createShed();
+const globalStore = createGlobalStore();
 
 // Let's create a listener and store it's location in a variable
-const loc = shed.addListener('*', (data, render) => {
+const loc = globalStore.addListener('*', (data, render) => {
   // Do stuff with the log data.
 });
 
 // We can now tear down the listener at a later time
-shed.removeListener(loc);
+globalStore.removeListener(loc);
 ```
 
 ## store
 
-Stores a log in the Shed.
+Stores a log in the GlobalStore.
 
-_NOTE:_ This is not required to be done manually. If a Shed exists logs will automatically be stored in it until the cache limit has been reached.
+_NOTE:_ This is not required to be done manually. If a GlobalStore exists logs will automatically be stored in it until the cache limit has been reached.
 
-### Interface
+### store Interface
 
 ```typescript
-class Shed {
+class GlobalStore {
   public store(log: BaseLog): void;
 }
 ```
 
-### Example
+### store Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-const shed = createShed();
+const globalStore = createGlobalStore();
 
 // Generate a log and get the instance
 const { log } = adze().info('Some important info.');
 
 // Store the log
-shed.store(log);
+globalStore.store(log);
 ```
 
-## $shed.tools
+## $globalStore.tools
 
-Manual debugging tools primarily for use in the web browser. To use the tools, access them via `window.$shed.tools` or simply `$shed.tools` in your browser console. Any of the methods listed in the interface below will be made available to you. For all methods other than `renderCache`, `renderNamespace`, and `renderLabel` please refer to the documentation for [Filtering & Utility Functions](filtering-and-utility-functions.md).
+Manual debugging tools primarily for use in the web browser. To use the tools, access them via `window.$globalStore.tools` or simply `$globalStore.tools` in your browser console. Any of the methods listed in the interface below will be made available to you. For all methods other than `renderCache`, `renderNamespace`, and `renderLabel` please refer to the documentation for [Filtering & Utility Functions](filtering-and-utility-functions.md).
 
-> Supported in versions >= 1.4.0
-
-### Interface
+### $globalStore.tools Interface
 
 ```typescript
-class Shed {
+class GlobalStore {
   public tools: Tools;
 }
 
@@ -433,22 +431,22 @@ class Tools {
   public filterNamespace = filterNamespace;
 
   /**
-   * Shortcut method for rendering a level-filtered collection from the Shed cache.
+   * Shortcut method for rendering a level-filtered collection from the GlobalStore cache.
    */
   public renderCache(filter: LevelFilter): Collection;
 
   /**
-   * Shortcut method for rendering a level and namespace filtered collection from the Shed cache.
+   * Shortcut method for rendering a level and namespace filtered collection from the GlobalStore cache.
    */
   public renderNamespace(filter: LevelFilter, ...ns: string[]): Collection;
 
   /**
-   * Shortcut method for rendering a level and label filtered collection from the Shed cache.
+   * Shortcut method for rendering a level and label filtered collection from the GlobalStore cache.
    */
   public renderLabel(filter: LevelFilter, label: string): Collection;
 }
 ```
 
-### Example
+### $globalStore.tools Example
 
-![Shed tools example](./examples/shed-tools-example.png)
+![GlobalStore tools example](./examples/globalstore-tools-example.png)

@@ -1,14 +1,14 @@
 import test from 'ava';
-import adze, { createShed, JsonOutput, removeShed } from '../../../src';
+import adze, { createGlobalStore, JsonOutput, removeGlobalStore } from '../../../src';
 
 global.ADZE_ENV = 'dev';
 
 test.beforeEach(() => {
-  createShed();
+  createGlobalStore();
 });
 
 test.afterEach(() => {
-  removeShed();
+  removeGlobalStore();
 });
 
 test('timer starts and ends and prints correctly', (t) => {
@@ -28,7 +28,7 @@ test('timer starts and ends and prints correctly', (t) => {
     t.is(parsed.level, 6);
     t.is(parsed.levelName, 'log');
     t.is(parsed.label, 'test');
-    t.regex(`${parsed.timeEllapsed}`, /\d+s\s\d+\.\d/g);
+    t.regex(`${parsed.timeElapsed}`, /\d+s\s\d+\.\d/g);
     t.is(parsed.args.length, 1);
     t.is(parsed.args[0], 'Stopping the timer.');
   } else {
@@ -36,10 +36,10 @@ test('timer starts and ends and prints correctly', (t) => {
   }
 });
 
-test('capture time ellapsed since application load', (t) => {
+test('capture time elapsed since application load', (t) => {
   const { log, render } = adze({ machineReadable: true })
     .label('test')
-    .timeNow.log('Time ellapsed from load.');
+    .timeNow.log('Time elapsed from load.');
 
   t.truthy(log);
   if (render) {
@@ -54,7 +54,7 @@ test('capture time ellapsed since application load', (t) => {
     t.is(parsed.label, 'test');
     t.truthy(parsed.timeNow);
     t.is(parsed.args.length, 1);
-    t.is(parsed.args[0], 'Time ellapsed from load.');
+    t.is(parsed.args[0], 'Time elapsed from load.');
   } else {
     t.fail();
   }

@@ -126,7 +126,7 @@ export interface JsonOutput {
   label?: string;
   namespace?: string[];
   count?: number;
-  timeEllapsed?: string;
+  timeElapsed?: string;
   timeNow?: string;
   context?: Record<string, unknown>;
   stacktrace?: string;

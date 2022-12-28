@@ -1,15 +1,8 @@
 <template>
-  <main
-    :aria-labelledby="data.heroText !== null ? 'main-title' : null"
-    class="theme-container"
-  >
+  <main :aria-labelledby="data.heroText !== null ? 'main-title' : null" class="theme-container">
     <div class="home-container">
       <header class="hero">
-        <img
-          v-if="data.heroImage"
-          :src="$withBase(data.heroImage)"
-          :alt="data.heroAlt || 'hero'"
-        />
+        <img v-if="data.heroImage" :src="$withBase(data.heroImage)" :alt="data.heroAlt || 'hero'" />
 
         <h1 v-if="data.heroText !== null" id="main-title">
           {{ data.heroText || $title || 'Hello' }}
@@ -52,11 +45,7 @@
       </header>
 
       <div v-if="data.features && data.features.length" class="features">
-        <div
-          v-for="(feature, index) in data.features"
-          :key="index"
-          class="feature"
-        >
+        <div v-for="(feature, index) in data.features" :key="index" class="feature">
           <h2>{{ feature.title }}</h2>
           <img :src="feature.image" :id="feature.imageId" />
           <p>{{ feature.details }}</p>
@@ -95,10 +84,7 @@
       <div class="content-container">
         <section class="content-block no-border centered">
           <div class="image">
-            <img
-              :src="$withBase('/lumber-scene-1.svg')"
-              style="width: 100%; max-height: 300px"
-            />
+            <img :src="$withBase('/lumber-scene-1.svg')" style="width: 100%; max-height: 300px" />
           </div>
           <div class="content">
             <Content slot-key="everything-configurable" />
@@ -112,10 +98,7 @@
       <!-- Chainable API -->
       <section class="content-block no-border">
         <div class="image">
-          <img
-            :src="$withBase('/truck-loaded.svg')"
-            style="max-height: 200px"
-          />
+          <img :src="$withBase('/truck-loaded.svg')" style="max-height: 200px" />
         </div>
         <div class="content">
           <Content slot-key="typescript-support" />
@@ -123,7 +106,7 @@
       </section>
     </div>
 
-    <!-- Shed -->
+    <!-- GlobalStore -->
     <div class="content-container">
       <!-- Chainable API -->
       <section class="content-block left">
@@ -131,7 +114,7 @@
           <img :src="$withBase('/woodmill.svg')" style="max-height: 172px" />
         </div>
         <div class="content">
-          <Content slot-key="shed" />
+          <Content slot-key="globalStore" />
         </div>
       </section>
     </div>
@@ -141,10 +124,7 @@
       <div class="content-container">
         <section class="content-block no-border">
           <div class="image">
-            <img
-              :src="$withBase('/shaped-wood.svg')"
-              style="max-height: 150px"
-            />
+            <img :src="$withBase('/shaped-wood.svg')" style="max-height: 150px" />
           </div>
           <div class="content">
             <Content slot-key="learn-more" />

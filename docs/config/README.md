@@ -4,7 +4,7 @@ sidebar: auto
 
 # Config
 
-Adze is a completely configurable library by design that comes with sensible defaults. There are two primary configurations to understand; the Adze configuration and the Shed configuration. In this section we'll take a look at each configuration and explain each property in detail.
+Adze is a completely configurable library by design that comes with sensible defaults. There are two primary configurations to understand; the Adze configuration and the GlobalStore configuration. In this section we'll take a look at each configuration and explain each property in detail.
 
 _NOTE: [Chalk](https://github.com/chalk/chalk#chalklevel) is what Adze uses under the hood for terminal coloring. Because terminals differ in their color fidelity, Chalk exposes a setting allowing you to specify your fidelity. Adze is basic with its colors so the low level of 1 is sufficient, however, you can change it to your liking with the `terminalColorFidelity` option described below. Please refer to the [Chalk](https://github.com/chalk/chalk#chalklevel) docs for information about what the fidelity levels mean._
 
@@ -66,15 +66,15 @@ type ConsoleMethod =
 | meta                  | `{}`                                          | Key/value pairs of data to be applied to all logs by default.                                                              |
 | filters               | [Reference](#filters)                         | Filters determine whether logs are allowed to print to the console/terminal based on their log level, label, or namespace. |
 
-## Shed Configuration
+## GlobalStore Configuration
 
-When you create a Shed you can provide it with configuration to control it's caching, [filtering](#filters), and [configuration](#adze-configuration) overrides.
+When you create a GlobalStore you can provide it with configuration to control it's caching, [filtering](#filters), and [configuration](#adze-configuration) overrides.
 
 ### Interface
 
 ```typescript
 // This is the top level Adze log configuration
-interface ShedConfig {
+interface GlobalStoreConfig {
   cacheLimit: number;
   globalCfg: Configuration | null;
 }
@@ -82,10 +82,10 @@ interface ShedConfig {
 
 ### Descriptions
 
-| Property Name | Default Value                    | Description                                                                           |
-| ------------- | -------------------------------- | ------------------------------------------------------------------------------------- |
-| cacheLimit    | 300                              | The maximum number of logs that Shed will cache. This exists to prevent memory leaks. |
-| globalCfg     | [Reference](#adze-configuration) | Adze configuration that will override all other Adze log configurations.              |
+| Property Name | Default Value                    | Description                                                                                  |
+| ------------- | -------------------------------- | -------------------------------------------------------------------------------------------- |
+| cacheLimit    | 300                              | The maximum number of logs that GlobalStore will cache. This exists to prevent memory leaks. |
+| globalCfg     | [Reference](#adze-configuration) | Adze configuration that will override all other Adze log configurations.                     |
 
 ## Log Levels / Log Level Definition
 

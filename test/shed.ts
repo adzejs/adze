@@ -1,32 +1,37 @@
 import anyTest, { TestInterface } from 'ava';
-import { Shed } from '../src/shed/Shed';
-import adze, { createShed, removeShed, shedExists, isFinalLogData } from '../src';
+import { GlobalStore } from '../src/global-store/global-store';
+import adze, {
+  createGlobalStore,
+  removeGlobalStore,
+  globalStoreExists,
+  isFinalLogData,
+} from '../src';
 import { Label } from '../src/label';
 
 global.ADZE_ENV = 'dev';
 
 // Setup our test hook context
-const test = anyTest as TestInterface<{ shed: Shed }>;
+const test = anyTest as TestInterface<{ globalStore: GlobalStore }>;
 
 test.afterEach(() => {
-  removeShed();
+  removeGlobalStore();
 });
 
-test('createShed adds a shed instance to the global context', (t) => {
-  createShed();
-  t.truthy(global.$shed);
+test('createGlobalStore adds a GlobalStore instance to the global context', (t) => {
+  createGlobalStore();
+  t.truthy(global.$globalStore);
 });
 
-test('removeShed removes the shed instance from the global context', (t) => {
-  createShed();
-  t.truthy(global.$shed);
-  removeShed();
-  t.falsy(global.$shed);
+test('removeGlobalStore removes the GlobalStore instance from the global context', (t) => {
+  createGlobalStore();
+  t.truthy(global.$globalStore);
+  removeGlobalStore();
+  t.falsy(global.$globalStore);
 });
 
-test('shedExists correctly indicates that a shed instance exists in the global context', (t) => {
+test('globalStoreExists correctly indicates that a GlobalStore instance exists in the global context', (t) => {
   const store = undefined;
-  if (shedExists(store)) {
+  if (globalStoreExists(store)) {
     t.fail();
   } else {
     t.pass();
@@ -34,14 +39,14 @@ test('shedExists correctly indicates that a shed instance exists in the global c
 });
 
 test('stores a log instance', (t) => {
-  // We have a log instance before a shed existed
+  // We have a log instance before a GlobalStore existed
   const { log } = adze({ useEmoji: true }).ns('Foo').info('This is an info log.');
-  // Create a shed
-  const shed = createShed();
-  // Let's add our orphaned log instance to the shed
-  shed.store(log);
-  // Now let's get our collection of logs from the shed. We'll select all.
-  const collection = shed.getCollection('*');
+  // Create a GlobalStore
+  const globalStore = createGlobalStore();
+  // Let's add our orphaned log instance to the GlobalStore
+  globalStore.store(log);
+  // Now let's get our collection of logs from the GlobalStore. We'll select all.
+  const collection = globalStore.getCollection('*');
 
   t.truthy(collection.length === 1);
 
@@ -51,25 +56,25 @@ test('stores a log instance', (t) => {
 });
 
 test('store accepts cache limit override with setter', (t) => {
-  const shed = createShed();
-  shed.cacheLimit = 500;
-  t.is(shed.cacheLimit, 500);
+  const globalStore = createGlobalStore();
+  globalStore.cacheLimit = 500;
+  t.is(globalStore.cacheLimit, 500);
 });
 
 test('store returns the cache limit from getter', (t) => {
-  const shed = createShed();
-  t.is(shed.cacheLimit, 300);
+  const globalStore = createGlobalStore();
+  t.is(globalStore.cacheLimit, 300);
 });
 
 test('store accepts global config overrides with setter', (t) => {
-  const shed = createShed();
-  shed.config = { cacheLimit: 50 };
+  const globalStore = createGlobalStore();
+  globalStore.config = { cacheLimit: 50 };
 
-  t.is(shed.cacheLimit, 50);
+  t.is(globalStore.cacheLimit, 50);
 });
 
 test('store returns global config overrides from getter', (t) => {
-  const shed = createShed({
+  const globalStore = createGlobalStore({
     globalCfg: {
       logLevels: {
         log: {
@@ -78,12 +83,12 @@ test('store returns global config overrides from getter', (t) => {
       },
     },
   });
-  const cfg = shed.overrides;
+  const cfg = globalStore.overrides;
   t.is(cfg?.logLevels?.log?.level, 100);
 });
 
 test('store hasOverrides correctly indicates that global config override has been set', (t) => {
-  const shed = createShed({
+  const globalStore = createGlobalStore({
     globalCfg: {
       logLevels: {
         log: {
@@ -92,28 +97,28 @@ test('store hasOverrides correctly indicates that global config override has bee
       },
     },
   });
-  t.truthy(shed.hasOverrides);
+  t.truthy(globalStore.hasOverrides);
 });
 
 test('stores and returns a label instance', (t) => {
-  const shed = createShed();
-  shed.addLabel(new Label('test'));
-  const label = shed.getLabel('test');
+  const globalStore = createGlobalStore();
+  globalStore.addLabel(new Label('test'));
+  const label = globalStore.getLabel('test');
 
   t.is(label?.name, 'test');
 });
 
 test('hasLabel indicates existence of label in the cache', (t) => {
-  const shed = createShed();
-  shed.addLabel(new Label('test'));
+  const globalStore = createGlobalStore();
+  globalStore.addLabel(new Label('test'));
 
-  t.truthy(shed.hasLabel('test'));
+  t.truthy(globalStore.hasLabel('test'));
 });
 
 test('adds a log listener targeting specific log levels', (t) => {
   t.plan(2);
-  const shed = createShed();
-  shed.addListener([1, 6], (data) => {
+  const globalStore = createGlobalStore();
+  globalStore.addListener([1, 6], (data) => {
     if (data.level) {
       t.truthy([1, 6].includes(data.level));
     } else {
@@ -128,8 +133,8 @@ test('adds a log listener targeting specific log levels', (t) => {
 
 test('adds a log listener targeting all log levels', (t) => {
   t.plan(3);
-  const shed = createShed();
-  shed.addListener('*', (data) => {
+  const globalStore = createGlobalStore();
+  globalStore.addListener('*', (data) => {
     if (data.level) {
       t.truthy([1, 6, 8].includes(data.level));
     } else {
@@ -144,8 +149,8 @@ test('adds a log listener targeting all log levels', (t) => {
 
 test('adds a log listener targeting a range of log levels', (t) => {
   t.plan(2);
-  const shed = createShed();
-  shed.addListener([1, '-', 6], (data) => {
+  const globalStore = createGlobalStore();
+  globalStore.addListener([1, '-', 6], (data) => {
     if (data.level) {
       t.truthy([1, 6].includes(data.level));
     } else {
@@ -160,8 +165,8 @@ test('adds a log listener targeting a range of log levels', (t) => {
 
 test('removes a log listener', (t) => {
   t.plan(3);
-  const shed = createShed();
-  const location = shed.addListener([1, '-', 3], (data) => {
+  const globalStore = createGlobalStore();
+  const location = globalStore.addListener([1, '-', 3], (data) => {
     if (data.level) {
       t.truthy([1, 2, 3].includes(data.level));
     } else {
@@ -173,7 +178,7 @@ test('removes a log listener', (t) => {
   adze().warn('This is a log.');
   adze().info('This is a verbose.');
 
-  shed.removeListener(location);
+  globalStore.removeListener(location);
 
   adze().error('This is an error.');
   adze().warn('This is a log.');
@@ -183,32 +188,32 @@ test('removes a log listener', (t) => {
 test('fires the log listeners', (t) => {
   const { log, render, printed } = adze().info('A basic log.');
 
-  const shed = createShed();
-  shed.addListener([3], () => {
+  const globalStore = createGlobalStore();
+  globalStore.addListener([3], () => {
     t.pass();
   });
 
   const data = log.data;
   if (isFinalLogData(data)) {
-    shed.fireListeners(data, render, printed);
+    globalStore.fireListeners(data, render, printed);
   } else {
     t.fail();
   }
 });
 
 test('configured cache limit works properly', (t) => {
-  const shed = createShed({ cacheLimit: 2 });
+  const globalStore = createGlobalStore({ cacheLimit: 2 });
 
   adze().log('Log 1');
   adze().log('Log 2');
   adze().log('Log 3');
 
-  const collection = shed.getCollection('*');
+  const collection = globalStore.getCollection('*');
   t.is(collection.length, 2);
 });
 
-test('shed tools renderCache renders appropriate log levels from the shed cache', (t) => {
-  const shed = createShed();
+test('GlobalStore tools renderCache renders appropriate log levels from the GlobalStore cache', (t) => {
+  const globalStore = createGlobalStore();
 
   adze().alert('This is an alert!');
   adze().error('This is an error!');
@@ -220,13 +225,13 @@ test('shed tools renderCache renders appropriate log levels from the shed cache'
   adze().debug('This is a debug!');
   adze().verbose('This is a verbose!');
 
-  const rendered = shed.tools.renderCache([0, '-', 3]);
+  const rendered = globalStore.tools.renderCache([0, '-', 3]);
 
   t.is(rendered.length, 4);
 });
 
-test('shed tools renderNamespace renders appropriate logs with provided level and namespace filter from the shed cache', (t) => {
-  const shed = createShed();
+test('GlobalStore tools renderNamespace renders appropriate logs with provided level and namespace filter from the GlobalStore cache', (t) => {
+  const globalStore = createGlobalStore();
 
   adze().ns('foo', 'bar').alert('This is an alert!');
   adze().ns('bar').error('This is an error!');
@@ -238,16 +243,16 @@ test('shed tools renderNamespace renders appropriate logs with provided level an
   adze().ns('foo').debug('This is a debug!');
   adze().ns('foo', 'hello', 'world').verbose('This is a verbose!');
 
-  const renderedAll = shed.tools.renderNamespace('*', 'bar', 'baz');
+  const renderedAll = globalStore.tools.renderNamespace('*', 'bar', 'baz');
 
-  const renderedAlert = shed.tools.renderNamespace([0], 'bar', 'baz');
+  const renderedAlert = globalStore.tools.renderNamespace([0], 'bar', 'baz');
 
   t.is(renderedAll.length, 4);
   t.is(renderedAlert.length, 1);
 });
 
-test('shed tools renderLabel renders appropriate logs with provided level and label filter from the shed cache', (t) => {
-  const shed = createShed();
+test('GlobalStore tools renderLabel renders appropriate logs with provided level and label filter from the GlobalStore cache', (t) => {
+  const globalStore = createGlobalStore();
 
   adze().label('foo').alert('This is an alert!');
   adze().error('This is an error!');
@@ -259,17 +264,17 @@ test('shed tools renderLabel renders appropriate logs with provided level and la
   adze().label('world').debug('This is a debug!');
   adze().label('foo').verbose('This is a verbose!');
 
-  const renderedAll = shed.tools.renderLabel('*', 'foo');
-  const renderedWarn = shed.tools.renderLabel([2], 'foo');
+  const renderedAll = globalStore.tools.renderLabel('*', 'foo');
+  const renderedWarn = globalStore.tools.renderLabel([2], 'foo');
 
   t.is(renderedAll.length, 4);
   t.is(renderedWarn.length, 1);
 });
 
 test('log listeners should have printed set to false when a log is silent', (t) => {
-  const shed = createShed();
+  const globalStore = createGlobalStore();
 
-  shed.addListener([0], (data, render, printed) => {
+  globalStore.addListener([0], (data, render, printed) => {
     t.true(data.isSilent);
     t.not(render, null);
     t.false(printed);

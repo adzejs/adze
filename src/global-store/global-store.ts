@@ -1,6 +1,6 @@
 import {
-  ShedConfig,
-  ShedUserConfig,
+  GlobalStoreConfig,
+  GlobalStoreUserConfig,
   Collection,
   LevelFilter,
   ListenerLocations,
@@ -15,19 +15,19 @@ import {
 import { Tools } from './Tools';
 import { Log } from '../log';
 import { Label } from '../label';
-import { applyShedDefaults } from '../_defaults';
+import { applyGlobalStoreDefaults } from '../_defaults';
 import { formatLevels } from '../util';
 import { Env } from '../env';
 
 /**
  * A global store for caching, listening, and recalling Adze logs.
  */
-export class Shed {
+export class GlobalStore {
   /**
-   * The configuration for Shed. Shed is constructed with a set of
-   * defaults that can overriden by the configuration supplied by the user.
+   * The configuration for GlobalStore. GlobalStore is constructed with a set of
+   * defaults that can overridden by the configuration supplied by the user.
    */
-  private cfg: ShedConfig;
+  private cfg: GlobalStoreConfig;
 
   /**
    * Instance of the Env class.
@@ -63,7 +63,7 @@ export class Shed {
    */
   public tools: Tools;
 
-  constructor(env: Env, config?: ShedUserConfig) {
+  constructor(env: Env, config?: GlobalStoreUserConfig) {
     this.cfg = this.formatConfig(config);
     this.env = env;
     this.tools = new Tools(this.env, this);
@@ -74,7 +74,7 @@ export class Shed {
   \*************************************/
 
   /**
-   * Store a log in the Shed.
+   * Store a log in the GlobalStore.
    */
   public store(log: Log<any>): void {
     if (this.cacheSize < this.cfg.cacheLimit) {
@@ -83,21 +83,21 @@ export class Shed {
   }
 
   /**
-   * Sets the limit for the maximum number of logs that Shed will cache.
+   * Sets the limit for the maximum number of logs that GlobalStore will cache.
    */
   public set cacheLimit(limit: number) {
     this.cfg.cacheLimit = limit;
   }
 
   /**
-   * Gets the limit for the maximum number of logs that Shed will cache.
+   * Gets the limit for the maximum number of logs that GlobalStore will cache.
    */
   public get cacheLimit(): number {
     return this.cfg.cacheLimit;
   }
 
   /**
-   * Returns the current number of logs cached in the Shed.
+   * Returns the current number of logs cached in the GlobalStore.
    */
   public get cacheSize(): number {
     return this._cache.length;
@@ -115,7 +115,7 @@ export class Shed {
   }
 
   /**
-   * Indicates whether this Shed instance has global Adze config overrides set.
+   * Indicates whether this GlobalStore instance has global Adze config overrides set.
    */
   public get hasOverrides(): boolean {
     return this.cfg.globalCfg !== null;
@@ -129,33 +129,33 @@ export class Shed {
   }
 
   /**
-   * Sets the value of the Shed configuration.
+   * Sets the value of the GlobalStore configuration.
    */
-  public set config(cfg: ShedUserConfig | undefined) {
+  public set config(cfg: GlobalStoreUserConfig | undefined) {
     this.cfg = this.formatConfig(cfg);
   }
 
   /**
-   * Takes a Shed and formats it to merge shed defaults and
+   * Takes a GlobalStore and formats it to merge GlobalStore defaults and
    * global config overrides with defaults. It also pre-parses any level
    * filters for performance reasons.
    */
-  private formatConfig(cfg: ShedUserConfig | undefined): ShedConfig {
+  private formatConfig(cfg: GlobalStoreUserConfig | undefined): GlobalStoreConfig {
     const globalCfg = cfg?.globalCfg ?? null;
 
     const cfgGlobalDefaults = { ...cfg, globalCfg };
-    return applyShedDefaults(cfgGlobalDefaults);
+    return applyGlobalStoreDefaults(cfgGlobalDefaults);
   }
 
   /**
-   * Get a label instance from the Shed by name.
+   * Get a label instance from the GlobalStore by name.
    */
   public getLabel(name: string): Label | undefined {
     return this.labels.get(name);
   }
 
   /**
-   * Adds a label to the Shed to be tracked globally.
+   * Adds a label to the GlobalStore to be tracked globally.
    */
   public addLabel(label: Label): void {
     if (!this.hasLabel(label.name)) {
@@ -164,7 +164,7 @@ export class Shed {
   }
 
   /**
-   * Validates whether a label with the given name exists in the Shed label cache.
+   * Validates whether a label with the given name exists in the GlobalStore label cache.
    */
   public hasLabel(name: string): boolean {
     return this.labels.has(name);

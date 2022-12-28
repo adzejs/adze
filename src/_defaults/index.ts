@@ -1,2 +1,2 @@
 export * from './defaults';
-export * from './shed-defaults';
+export * from './global-store-defaults';

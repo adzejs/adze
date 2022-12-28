@@ -1,7 +1,7 @@
 import { applyConfigDefaults } from '.';
-import { ShedUserConfig, ShedConfig } from '../_contracts';
+import { GlobalStoreUserConfig, GlobalStoreConfig } from '../_contracts';
 
-export function applyShedDefaults(userCfg?: ShedUserConfig): ShedConfig {
+export function applyGlobalStoreDefaults(userCfg?: GlobalStoreUserConfig): GlobalStoreConfig {
   return {
     cacheLimit: userCfg?.cacheLimit ?? 300,
     globalCfg: userCfg?.globalCfg ? applyConfigDefaults(userCfg.globalCfg) : null,

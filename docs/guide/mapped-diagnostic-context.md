@@ -6,16 +6,16 @@ _"The basic idea of Mapped Diagnostic Context is to provide a way to enrich log 
 
 > Quote from [https://www.baeldung.com/mdc-in-log4j-2-logback](https://www.baeldung.com/mdc-in-log4j-2-logback)
 
-Adze provides a way to use an MDC pattern through the combination of a few of it's API's such as [Shed](shed-concepts.md), [label](modifiers.md#label), and [thread](other-terminators.md#thread). We can also print our context using [dump](modifiers.md#dump) or clear our context using [close](modifiers.md#close).
+Adze provides a way to use an MDC pattern through the combination of a few of it's API's such as [GlobalStore](globalstore-concepts.md), [label](modifiers.md#label), and [thread](other-terminators.md#thread). We can also print our context using [dump](modifiers.md#dump) or clear our context using [close](modifiers.md#close).
 
 ## Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-const shed = createShed();
+const globalStore = createGlobalStore();
 
-shed.addListener('*', (data, render) => {
+globalStore.addListener('*', (data, render) => {
   // We can capture our MDC thread data from the log data object.
   const context = data.context;
 });

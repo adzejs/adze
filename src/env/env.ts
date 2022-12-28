@@ -1,13 +1,13 @@
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-namespace */
-import { Shed } from '../shed/Shed';
+import { GlobalStore } from '../global-store/global-store';
 
 declare global {
-  var $shed: Shed;
+  var $globalStore: GlobalStore;
   var ADZE_ENV: 'test' | 'dev';
   var ADZE_ENV_CONTEXT: 'global' | 'window';
   interface Window {
-    $shed?: Shed;
+    $globalStore?: GlobalStore;
     ADZE_ENV?: 'test' | 'dev';
     ADZE_ENV_CONTEXT?: 'global' | 'window';
   }

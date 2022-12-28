@@ -8,7 +8,7 @@ This terminator simply exists as an alias for `console.clear()`.
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/clear)
 
-### Interface
+### clear / clr Interface
 
 ```typescript
 class BaseLog {
@@ -17,7 +17,7 @@ class BaseLog {
 }
 ```
 
-### Example
+### clear / clr Example
 
 ```javascript
 import { adze } from 'adze';
@@ -37,7 +37,7 @@ Closes a [thread](#thread) assigned to the log by clearing the context values.
 
 _This is not a standard API._
 
-### Interface
+### close Interface
 
 ```typescript
 class BaseLog {
@@ -45,12 +45,12 @@ class BaseLog {
 }
 ```
 
-### Example
+### close Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-const shed = createShed();
+createGlobalStore();
 
 function add(a, b) {
   const answer = a + b;
@@ -74,7 +74,7 @@ adze().label('foo').close();
 adze().label('foo').dump.info('Results from our thread after closing');
 ```
 
-### Output
+### close Output
 
 ![close example output](./examples/close-example.png)
 
@@ -88,7 +88,7 @@ Terminates the log at the provided custom log level. Custom log levels are defin
 
 _This is not a standard API._
 
-### Interface
+### custom Interface
 
 ```typescript
 class BaseLog {
@@ -96,7 +96,7 @@ class BaseLog {
 }
 ```
 
-### Example
+### custom Example
 
 ```javascript
 import { adze } from 'adze';
@@ -121,7 +121,7 @@ const cfg = {
 adze(cfg).custom('leetLevel', 'This log is leet.');
 ```
 
-### Output
+### custom Output
 
 ![custom example output](./examples/custom-example.png)
 
@@ -131,11 +131,11 @@ adze(cfg).custom('leetLevel', 'This log is leet.');
 
 Following the MDC (Mapped Diagnostic Context) pattern, this method enables you to create a thread for adding context from different scopes before finally terminating the log.
 
-In order to create a thread, this log must specify a [label](modifiers.md#label) that will be used to link the context and your environment must have a [Shed](shed-concepts.md) created.
+In order to create a thread, this log must specify a [label](modifiers.md#label) that will be used to link the context and your environment must have a [GlobalStore](globalStore-concepts.md) created.
 
 _This is not a standard API._
 
-### Interface
+### thread Interface
 
 ```typescript
 class BaseLog {
@@ -143,17 +143,17 @@ class BaseLog {
 }
 ```
 
-### Example
+### thread Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-const shed = createShed();
+const globalStore = createGlobalStore();
 
-// Creating a shed listener is a great way to get meta data from your
+// Creating a GlobalStore listener is a great way to get meta data from your
 // threaded logs to write to disk or pass to another plugin, library,
 // or service.
-shed.addListener([1, 2, 3, 4, 5, 6, 7, 8], (log) => {
+globalStore.addListener([1, 2, 3, 4, 5, 6, 7, 8], (log) => {
   // Do something with `log.context.added` or `log.context.subtracted`.
 });
 
@@ -175,7 +175,7 @@ subtract(4, 3);
 adze().label('foo').dump.info('Results from our thread');
 ```
 
-### Output
+### thread Output
 
 ![thread example output](./examples/thread-example.png)
 

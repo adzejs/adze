@@ -1,5 +1,5 @@
 import test from 'ava';
-import adze, { createShed, removeShed } from '../src';
+import adze, { createGlobalStore, removeGlobalStore } from '../src';
 
 // Our global context is the window not global
 global.ADZE_ENV = 'dev';
@@ -37,7 +37,7 @@ test('sealing a log preserves configuration but creates new log instances', (t) 
 });
 
 test('sealed log gets label instance from store', (t) => {
-  createShed();
+  createGlobalStore();
   const sealed = adze().label('test').count.seal();
   const { log, render } = sealed().log('Counting.');
   const { log: log2, render: render2 } = sealed().info('Sealed log.');
@@ -62,9 +62,9 @@ test('sealed log gets label instance from store', (t) => {
     t.is(args2[1], '[test] (Count: 2)');
     t.is(args2[2], 'Sealed log.');
 
-    removeShed();
+    removeGlobalStore();
   } else {
-    removeShed();
+    removeGlobalStore();
     t.fail();
   }
 });

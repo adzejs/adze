@@ -6,7 +6,7 @@ The second goal of the Adze project is to give you a natural log writing experie
 
 Lastly, most other libraries **do too much**. Adze seeks to separate concerns when it comes to generating logs and transporting them to another source. Other libraries tend to try to solve both problems, but over time what ends up occurring is that the library author isn't able to predict all of the different ways someone might want to transport their log data. This ends up creating a lot of bloat in the library. You end up with support for transports you may never use. The library's configuration also ends up becoming a mess to support all of these different transports.
 
-Adze rejects the idea of coupling the log inputs with transport outputs which is why the core library only offers [listeners](shed-concepts.md#listeners) as a way of collecting log data. With access to the listeners the end user can harvest the desired data and do with it as they please. However, we also understand it's nice to have an out-of-the-box solution for transports. Over time we hope to provide some secondary packages that can be installed along side of Adze to provide some simple transport options.
+Adze rejects the idea of coupling the log inputs with transport outputs which is why the core library only offers [listeners](globalstore-concepts.md#listeners) as a way of collecting log data. With access to the listeners the end user can harvest the desired data and do with it as they please. However, we also understand it's nice to have an out-of-the-box solution for transports. Over time we hope to provide some secondary packages that can be installed along side of Adze to provide some simple transport options.
 
 ## Lifecycle
 
@@ -65,15 +65,15 @@ Most of the time when you are using a logging library you will want to configure
 
 ```javascript
 // ----- setup.js ----- //
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-/* We'll create a Shed to enable labels and counting
+/* We'll create a GlobalStore to enable labels and counting
    for our example. */
-const shed = createShed();
+const globalStore = createGlobalStore();
 
 /* Let's create a log listener to transport our log data
    to a destination. We'll listen to all log levels. */
-shed.addListener('*', (data, render, printed) => {
+globalStore.addListener('*', (data, render, printed) => {
   // If a log did not print then we will ignore transporting it.
   if (printed) {
     // Do transport logic here.
@@ -129,17 +129,17 @@ One of the primary features of Adze is to allow you to filter your logs while de
 
 ### Example
 
-In our app's boot file (named `main.ts` for our example) we'll create a [Shed](shed-concepts.md) for [listening](shed-concepts.md#listeners) to our logs and we'll configure our adze factory with some [filters](/config/#filters) that we'll [seal](modifiers.md#seal) into a new factory named `log`.
+In our app's boot file (named `main.ts` for our example) we'll create a [GlobalStore](globalstore-concepts.md) for [listening](globalstore-concepts.md#listeners) to our logs and we'll configure our adze factory with some [filters](/config/#filters) that we'll [seal](modifiers.md#seal) into a new factory named `log`.
 
 ```javascript
 // Main.ts
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-// Generate our shed for listening to our logs
-const shed = createShed();
+// Generate our GlobalStore for listening to our logs
+const globalStore = createGlobalStore();
 
-// Let's use the shed instance reference to add a log listener.
-shed.addListener('*', (data, render, printed) => {
+// Let's use the globalStore instance reference to add a log listener.
+globalStore.addListener('*', (data, render, printed) => {
   // printed will be false if the log was never written to the console.
   if (printed) {
     // do something with data

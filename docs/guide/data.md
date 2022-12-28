@@ -21,7 +21,7 @@ type Collection = BaseLog[];
 ### Bundle Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
 // Let's create a log bundle
 const bundled = bundle(adze({ useEmoji: true }));
@@ -35,16 +35,16 @@ const { log } = bundled().label('collect').log('Another log in the bundle.');
 const collection = log.bundle;
 ```
 
-### Shed Example
+### GlobalStore Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-// We'll create a Shed to capture our logs
-const shed = createShed();
+// We'll create a GlobalStore to capture our logs
+const globalStore = createGlobalStore();
 
-// Let's get our collection from the Shed
-const collection = shed.getCollection();
+// Let's get our collection from the GlobalStore
+const collection = globalStore.getCollection();
 ```
 
 ## Label Data Object
@@ -56,14 +56,14 @@ A label data object is generated from a label instance. This object contains dat
 ```typescript
 interface LabelData {
   name: string | null;
-  timeEllapsed: string | null;
+  timeElapsed: string | null;
   count: number | null;
 }
 ```
 
 ## Level Filter
 
-A level filter type is a value that represents one or more log levels. Level Filters are used with any method that allows you to specify a target log level like [addListener](using-shed.md#addlistener), [filterLevel](filtering-and-utility-functions.md#filterlevel), or within the [filter configurations on Adze logs](/config/#filters).
+A level filter type is a value that represents one or more log levels. Level Filters are used with any method that allows you to specify a target log level like [addListener](using-globalstore.md#addlistener), [filterLevel](filtering-and-utility-functions.md#filterlevel), or within the [filter configurations on Adze logs](/config/#filters).
 
 | Value              | Description                                               |
 | ------------------ | --------------------------------------------------------- |
@@ -74,23 +74,23 @@ A level filter type is a value that represents one or more log levels. Level Fil
 ### Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
-// For our example, we'll create a Shed and add some listeners
-const shed = createShed();
+// For our example, we'll create a GlobalStore and add some listeners
+const globalStore = createGlobalStore();
 
 // Our first listener will target all logs of any level
-shed.addListener('*', (data, render, printed) => {
+globalStore.addListener('*', (data, render, printed) => {
   // do stuff...
 });
 
 // Our next listener will target logs with a level within our range
-shed.addListener([2, '-', 5], (data, render, printed) => {
+globalStore.addListener([2, '-', 5], (data, render, printed) => {
   // do stuff...
 });
 
 // Our last listener will target logs of specific levels
-shed.addListener([2, 3, 6, 8], (data, render, printed) => {
+globalStore.addListener([2, 3, 6, 8], (data, render, printed) => {
   // do stuff...
 });
 ```
@@ -103,7 +103,7 @@ shed.addListener([2, 3, 6, 8], (data, render, printed) => {
 
 ## Log Data
 
-The log data object contains all of the important meta data from a log's instance. The log data object is used throughout the Adze API. For example, when a [log listener](using-shed.md#addlistener) on a [Shed](shed-concepts.md) is fired, the callback function will be invoked with two parameters; the **log data object** and a [log render](adze-concepts.md#logrender).
+The log data object contains all of the important meta data from a log's instance. The log data object is used throughout the Adze API. For example, when a [log listener](using-globalstore.md#addlistener) on a [GlobalStore](globalstore-concepts.md) is fired, the callback function will be invoked with two parameters; the **log data object** and a [log render](adze-concepts.md#logrender).
 
 A log data object can be manually retrieved from a log instance using the [data getter](getters-and-setters.md#data).
 
@@ -241,7 +241,7 @@ interface LogTimestamp {
 ### Example
 
 ```javascript
-import { adze, createShed } from 'adze';
+import { adze, createGlobalStore } from 'adze';
 
 // Let's generate a log and get its instance
 const { log } = adze().info('This is an info log');

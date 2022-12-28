@@ -2,7 +2,7 @@
 const browserEnv = require('browser-env');
 import test from 'ava';
 import { format } from 'date-fns';
-import adze, { createShed, removeShed } from '../../../src';
+import adze, { createGlobalStore, removeGlobalStore } from '../../../src';
 
 // Simulate the browser environment for testing
 browserEnv();
@@ -10,11 +10,11 @@ browserEnv();
 window.ADZE_ENV = 'dev';
 
 test.beforeEach(() => {
-  createShed();
+  createGlobalStore();
 });
 
 test.afterEach(() => {
-  removeShed();
+  removeGlobalStore();
 });
 
 test('timer starts and ends and prints correctly', (t) => {

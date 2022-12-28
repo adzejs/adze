@@ -42,7 +42,7 @@ export class MachinePrinter {
       this.applyStacktrace,
       this.applyContext,
       this.applyTimeNow,
-      this.applyTimeEllapsed,
+      this.applyTimeElapsed,
       this.applyCount,
       this.applyNamespace,
       this.applyLabel,
@@ -159,12 +159,12 @@ export class MachinePrinter {
   }
 
   /**
-   * Applies the timeEllapsed property to the output JSON based on the timeEllapsed currently
+   * Applies the timeElapsed property to the output JSON based on the timeElapsed currently
    * set on the log label object.
    */
-  private applyTimeEllapsed(json: JsonOutput): JsonOutput {
-    return this.data.label.timeEllapsed
-      ? { ...json, timeEllapsed: this.data.label.timeEllapsed }
+  private applyTimeElapsed(json: JsonOutput): JsonOutput {
+    return this.data.label.timeElapsed
+      ? { ...json, timeElapsed: this.data.label.timeElapsed }
       : json;
   }
 
