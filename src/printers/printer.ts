@@ -1,8 +1,8 @@
 import { LogRender, FinalLogData } from '../_contracts';
-import { Env } from '../env';
 import { BrowserPrinter } from './browser-printer';
 import { NodePrinter } from './node-printer';
 import { MachinePrinter } from './machine-printer';
+import { isBrowser } from '../util/env';
 
 export type PrinterMethods =
   | 'printLog'
@@ -15,8 +15,6 @@ export type PrinterMethods =
   | 'printDirxml';
 
 export class Printer {
-  private env: Env = new Env();
-
   private printer: BrowserPrinter | NodePrinter | MachinePrinter;
 
   private data: FinalLogData<any>;
@@ -32,7 +30,7 @@ export class Printer {
   private resolvePrinter(): BrowserPrinter | NodePrinter | MachinePrinter {
     if (this.data.cfg.machineReadable) {
       return new MachinePrinter(this.data);
-    } else if (this.env.isBrowser) {
+    } else if (isBrowser()) {
       return new BrowserPrinter(this.data);
     }
     return new NodePrinter(this.data);

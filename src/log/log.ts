@@ -21,20 +21,15 @@ import {
 } from '../util';
 import { Label, addLabel, getLabel } from '../label';
 import { applyConfigDefaults } from '../_defaults';
-import { Env } from '../env';
 import { Printer } from '../printers';
 import { allowed, parseFilterLevels } from '../conditions';
+import { globalContext } from '../util/env';
 
 export class Log<C extends Constraints> {
   /**
    * The Printer class constructor.
    */
   protected Printer: typeof Printer;
-
-  /**
-   * Instance of the Env class.
-   */
-  protected env: Env = new Env();
 
   /**
    * The Adze log configuration merged with defaults.
@@ -147,15 +142,14 @@ export class Log<C extends Constraints> {
    */
   private showTimestamp = false;
 
-  constructor(printer: typeof Printer, env: Env, userCfg?: Configuration) {
-    this.Printer = printer;
-    this.env = env;
+  constructor(userCfg?: Configuration) {
+    this.Printer = Printer;
 
     // First merge our user config with our defaults
     const cfg = applyConfigDefaults(userCfg);
 
     // Now check if global overrides exist and apply them over top of our configuration
-    const globalStore = env.global.$globalStore;
+    const globalStore = globalContext().$globalStore;
     const with_overrides =
       globalStoreExists(globalStore) && globalStore.hasOverrides
         ? applyConfigDefaults(globalStore.overrides)
@@ -437,7 +431,7 @@ export class Log<C extends Constraints> {
    * ```
    */
   public seal(): () => Log<C> {
-    return () => new Log<C>(this.Printer, this.env).hydrate(this.data);
+    return () => new Log<C>().hydrate(this.data);
   }
 
   // =============================
@@ -845,7 +839,7 @@ export class Log<C extends Constraints> {
    * Stores this log in the GlobalStore if the GlobalStore exists.
    */
   private store(): void {
-    const globalStore = this.env.global.$globalStore;
+    const globalStore = globalContext().$globalStore;
     if (globalStoreExists(globalStore)) {
       globalStore.store(this);
     }
@@ -855,7 +849,7 @@ export class Log<C extends Constraints> {
    * Fires listeners for this log instance if a GlobalStore exists.
    */
   private fireListeners(data: FinalLogData<C>, render: LogRender | null, printed: boolean): void {
-    const globalStore = this.env.global.$globalStore;
+    const globalStore = globalContext().$globalStore;
     if (globalStoreExists(globalStore)) {
       globalStore.fireListeners(data, render, printed);
     }

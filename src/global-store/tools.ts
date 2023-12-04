@@ -8,8 +8,7 @@ import {
   filterNamespace,
 } from '../filters';
 import { GlobalStore } from '.';
-import { Env } from '../env';
-
+import { globalContext } from '../util/env';
 /**
  * This class wraps utility functions for use in the global context. These will mostly be
  * useful for manual browser debugging purposes.
@@ -19,11 +18,6 @@ export class Tools {
    * Reference to the GlobalStore instance.
    */
   private globalStore: GlobalStore;
-
-  /**
-   * Instance of the Env class.
-   */
-  private env: Env;
 
   /**
    * Pass-through alias for the render function.
@@ -55,9 +49,8 @@ export class Tools {
    */
   public filterNamespace = filterNamespace;
 
-  constructor(env: Env, globalStore: GlobalStore) {
+  constructor(globalStore: GlobalStore) {
     this.globalStore = globalStore;
-    this.env = env;
   }
 
   /**
@@ -65,7 +58,7 @@ export class Tools {
    */
   public renderCache(filter: LevelFilter): Collection {
     const filtered = this.globalStore.getCollection(filter);
-    if (this.env.global.ADZE_ENV !== 'dev') {
+    if (globalContext().ADZE_ENV !== 'dev') {
       filtered.forEach(rerender);
     }
     return filtered;
@@ -76,7 +69,7 @@ export class Tools {
    */
   public renderNamespace(filter: LevelFilter, ...ns: string[]): Collection {
     const filtered = this.filterNamespace(this.globalStore.getCollection(filter), ns);
-    if (this.env.global.ADZE_ENV !== 'dev') {
+    if (globalContext().ADZE_ENV !== 'dev') {
       filtered.forEach(rerender);
     }
     return filtered;
@@ -87,7 +80,7 @@ export class Tools {
    */
   public renderLabel(filter: LevelFilter, label: string): Collection {
     const filtered = this.filterLabel(this.globalStore.getCollection(filter), label);
-    if (this.env.global.ADZE_ENV !== 'dev') {
+    if (globalContext().ADZE_ENV !== 'dev') {
       filtered.forEach(rerender);
     }
     return filtered;

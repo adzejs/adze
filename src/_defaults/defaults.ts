@@ -1,5 +1,5 @@
-import { Env } from '../env';
 import { Configuration, Defaults } from '../_contracts';
+import { isChrome, isSafari } from '../util/env';
 
 export function applyConfigDefaults(userCfg?: Configuration | null): Defaults {
   const defaultFilters = {
@@ -26,7 +26,7 @@ export function applyConfigDefaults(userCfg?: Configuration | null): Defaults {
         style:
           userCfg?.logLevels?.alert?.style ??
           `padding-right: ${
-            Env.isChrome() ? '29' : '26'
+            isChrome() ? '29' : '26'
           }px; background: linear-gradient(to right, #fc8585, #fc2323); color: #fff; border-color: #b70101;`,
         terminal: userCfg?.logLevels?.alert?.terminal ?? ['white', 'bold', 'bgRed'],
         method: userCfg?.logLevels?.alert?.method ?? 'error',
@@ -37,7 +37,7 @@ export function applyConfigDefaults(userCfg?: Configuration | null): Defaults {
         style:
           userCfg?.logLevels?.error?.style ??
           `padding-right: ${
-            Env.isChrome() ? '29' : '26'
+            isChrome() ? '29' : '26'
           }px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;`,
         terminal: userCfg?.logLevels?.error?.terminal ?? ['bgRed', 'white'],
         method: userCfg?.logLevels?.error?.method ?? 'error',
@@ -48,7 +48,7 @@ export function applyConfigDefaults(userCfg?: Configuration | null): Defaults {
         style:
           userCfg?.logLevels?.warn?.style ??
           `background: linear-gradient(to right, #fff, #fff0a8); color: #715100; border-color: #e3d696; padding-right: ${
-            Env.isChrome() ? '34' : '44'
+            isChrome() ? '34' : '44'
           }px;`,
         terminal: userCfg?.logLevels?.warn?.terminal ?? ['bgYellow', 'gray'],
         method: userCfg?.logLevels?.warn?.method ?? 'warn',
@@ -59,7 +59,7 @@ export function applyConfigDefaults(userCfg?: Configuration | null): Defaults {
         style:
           userCfg?.logLevels?.info?.style ??
           `padding-right: ${
-            Env.isSafari() ? '49' : '44'
+            isSafari() ? '49' : '44'
           }px; background: linear-gradient(to right, #fff, #b2d7ff); color: #465464; border-color: #96b5d7;`,
         terminal: userCfg?.logLevels?.info?.terminal ?? ['bgBlue', 'white'],
         method: userCfg?.logLevels?.info?.method ?? 'info',
@@ -70,7 +70,7 @@ export function applyConfigDefaults(userCfg?: Configuration | null): Defaults {
         style:
           userCfg?.logLevels?.fail?.style ??
           `padding-right: ${
-            Env.isChrome() ? '43' : '44'
+            isChrome() ? '43' : '44'
           }px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;`,
         terminal: userCfg?.logLevels?.fail?.terminal ?? ['bgRed', 'white'],
         method: userCfg?.logLevels?.fail?.method ?? 'info',

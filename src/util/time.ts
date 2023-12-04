@@ -1,5 +1,5 @@
 import type { HrTime, LogTimestamp } from '../_contracts';
-import { Env } from '../env';
+import { envIsWindow, globalContext } from './env';
 
 /**
  * Takes an HrTime tuple and converts it into a human-readable formatted
@@ -78,9 +78,8 @@ export function formatTimezoneOffset(raw: number): string {
  * Returns an hrtime object with different implementations based on the current environment.
  */
 export function hrtime(prev?: [number, number]): [number, number] {
-  const env = new Env();
-  const ctxt = env.global;
-  if (Env.envIsWindow(ctxt)) {
+  const ctxt = globalContext();
+  if (envIsWindow(ctxt)) {
     return hrtimeBrowser(ctxt, prev);
   } else {
     return process?.hrtime(prev);

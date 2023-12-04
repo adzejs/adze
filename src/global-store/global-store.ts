@@ -12,12 +12,11 @@ import {
   LogRender,
   Configuration,
 } from '../_contracts';
-import { Tools } from './Tools';
+import { Tools } from './tools';
 import { Log } from '../log';
 import { Label } from '../label';
 import { applyGlobalStoreDefaults } from '../_defaults';
 import { formatLevels } from '../util';
-import { Env } from '../env';
 
 /**
  * A global store for caching, listening, and recalling Adze logs.
@@ -28,11 +27,6 @@ export class GlobalStore {
    * defaults that can overridden by the configuration supplied by the user.
    */
   private cfg: GlobalStoreConfig;
-
-  /**
-   * Instance of the Env class.
-   */
-  private env: Env;
 
   /**
    * In-memory cache of finalized logs (terminated and have meta data applied to them). This
@@ -63,10 +57,9 @@ export class GlobalStore {
    */
   public tools: Tools;
 
-  constructor(env: Env, config?: GlobalStoreUserConfig) {
+  constructor(config?: GlobalStoreUserConfig) {
     this.cfg = this.formatConfig(config);
-    this.env = env;
-    this.tools = new Tools(this.env, this);
+    this.tools = new Tools(this);
   }
 
   /*************************************\

@@ -1,7 +1,7 @@
 import * as _chalk from 'chalk';
 import { Defaults, LogLevels, LevelFilter, LogRender, ChalkStyle, Range } from '../_contracts';
 import { isNumber, isArray, isDefined } from './type-guards';
-import { Env } from '../env';
+import { globalContext } from './env';
 
 /**
  * Capitalizes the first character of the provided string.
@@ -75,7 +75,7 @@ export function createArrayOfNumbers(start: number, end: number): number[] {
  * will be returned for unit testing purposes.
  */
 export function toConsole(render: LogRender | null): void {
-  if (render && Env.global().ADZE_ENV !== 'dev') {
+  if (render && globalContext().ADZE_ENV !== 'dev') {
     const [method, args] = render;
     console[method](...args);
   }

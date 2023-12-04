@@ -1,7 +1,7 @@
 import { Defaults, FinalLogData, LogLevelDefinition } from '../_contracts';
 import { levelAllowed, labelAllowed, namespaceAllowed } from '.';
-import { Env } from '../env';
 import { getSearchParams } from '../util';
+import { globalContext } from '../util/env';
 
 /**
  * Determine the fate of whether this log will terminate.
@@ -40,7 +40,7 @@ export function passesFilters(cfg: Defaults, data: FinalLogData<any>): boolean {
  */
 export function notTestEnv(): boolean {
   // Allow for URL Param of ADZE_ENV when in the browser.
-  const adze_env = Env.global()?.ADZE_ENV;
+  const adze_env = globalContext()?.ADZE_ENV;
   const param = getSearchParams()?.get('ADZE_ENV');
   return (adze_env ?? param ?? '') !== 'test';
 }

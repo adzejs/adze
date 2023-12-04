@@ -1,19 +1,5 @@
 import { Configuration, Constraints } from './_contracts';
 import { Log } from './log';
-import { Printer } from './printers';
-import { Env } from './env';
-
-/*
- * Planned features:
- *
- * - Select log levels optionally by name in listener creation.
- * - Analytics and Reporting support.
- * - Remote server for receiving and analyzing logs.
- * - Add easy functions for transporting logging data to various sources.
- *     - Write to a file.
- *     - Write to local storage.
- *     - Push to an API endpoint.
- */
 
 /**
  * The entry point for creating Adze logs. This factory function can be used directly or configuration
@@ -33,5 +19,5 @@ import { Env } from './env';
  * + (8) verbose
  */
 export function adze<C extends Constraints>(user_cfg: Configuration = {}): Log<C> {
-  return new Log<C>(Printer, new Env(), user_cfg);
+  return new Log<C>(user_cfg);
 }

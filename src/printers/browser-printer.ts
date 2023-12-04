@@ -1,6 +1,7 @@
 import { SharedPrinter } from './shared-printer';
 import { LogRender, FinalLogData } from '../_contracts';
 import { initialCaps } from '../util';
+import { isFirefox } from '../util/env';
 
 export class BrowserPrinter extends SharedPrinter {
   constructor(data: FinalLogData<any>) {
@@ -53,7 +54,7 @@ export class BrowserPrinter extends SharedPrinter {
    */
   public printTrace(): LogRender {
     // NOTE: Firefox does not support styling on console.trace()
-    if (this.env.isFirefox) {
+    if (isFirefox()) {
       return ['trace', this.data.args];
     }
     // All other browsers support console styling on console.trace()
