@@ -1,9 +1,4 @@
-import {
-  Constraints,
-  LogData,
-  FinalLogData,
-  TerminatedLog,
-} from './_contracts';
+import { Constraints, LogData, FinalLogData, TerminatedLog } from './_contracts';
 import { Log } from './log';
 
 export class AdzeStatic<C extends Constraints> {

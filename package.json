@@ -48,6 +48,7 @@
   "devDependencies": {
     "@ava/typescript": "^1.1.1",
     "@types/jsdom": "^16.2.3",
+    "@types/node": "^17.0.29",
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
     "ava": "^3.15.0",
@@ -71,9 +72,6 @@
     "window": "^4.2.6"
   },
   "dependencies": {
-    "@types/lodash.clonedeep": "^4.5.6",
-    "@types/lodash.defaultsdeep": "^4.6.6",
-    "@types/node": "^18.11.18",
     "chalk": "^4.1.0"
   },
   "config": {
