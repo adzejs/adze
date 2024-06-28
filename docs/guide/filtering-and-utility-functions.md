@@ -9,10 +9,7 @@ This function provides a generic way of filtering [collections](advanced.md#coll
 ### filterCollection Interface
 
 ```typescript
-function filterCollection(
-  collection: Collection,
-  cb: (log: LogData) => boolean
-): Collection;
+function filterCollection(collection: Collection, cb: (log: LogData) => boolean): Collection;
 ```
 
 ### filterCollection with GlobalStore Example
@@ -95,10 +92,7 @@ Filters a [collection](advanced.md#collections) of logs by the given [level filt
 ### filterLevel Interface
 
 ```typescript
-function filterLevel(
-  collection: Collection = [],
-  levels: LevelFilter
-): Collection;
+function filterLevel(collection: Collection = [], levels: LevelFilter): Collection;
 ```
 
 ### filterLevel with GlobalStore Example
@@ -219,9 +213,7 @@ import { adze, render } from 'adze';
 
 /* Let's get our log render tuple and rename it as to
    not conflict with our function name */
-const { render: logRender } = adze().success(
-  'Something executed successfully!'
-);
+const { render: logRender } = adze().success('Something executed successfully!');
 
 // Now we'll render our log render tuple
 render(logRender);
@@ -249,9 +241,7 @@ function rerender(log: Log): void;
 import { adze, rerender } from 'adze';
 
 const { log } = adze().fail('Something failed to execute!');
-const { log: silentLog } = adze().silent.alert(
-  'Alerting that something went horribly wrong!'
-);
+const { log: silentLog } = adze().silent.alert('Alerting that something went horribly wrong!');
 
 // Let's rerender our fail log
 rerender(log);

@@ -1,85 +1,65 @@
 {
   "name": "adze",
-  "version": "0.0.0-development",
-  "description": "A library for shaping your logs.",
-  "main": "./dist/index.js",
-  "sideEffects": false,
+  "description": "A modern, isomorphic, and extendable logging library for JavaScript and TypeScript.",
+  "version": "2.0.0",
+  "main": "dist/index.js",
+  "type": "module",
   "engines": {
-    "node": ">=18"
+    "node": ">=18.18.0"
   },
-  "files": [
-    "dist/**/*"
-  ],
+  "directories": {
+    "doc": "docs"
+  },
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "tsc --project tsconfig.prod.json",
-    "postbuild": "npm run bundle",
+    "build": "tsc --project tsconfig.prod.json && tsc-alias",
     "clean": "rm -rf ./dist",
-    "bundle": "parcel build ./src/index.ts --global AdzeLib --out-file adze.min.js --no-source-maps",
-    "bundle:watch": "parcel watch ./src/index.ts --global AdzeLib --out-file adze.min.js --no-source-maps",
-    "commit": "cz",
-    "prepare": "husky install",
-    "prepack": "npm run build",
     "predemo:browser": "npm run build",
     "demo:browser": "http-server -o -p 8082",
     "demo:node": "ts-node ./demo.ts",
-    "docs:dev": "export NODE_OPTIONS=--openssl-legacy-provider && vuepress dev docs",
-    "docs:build": "export NODE_OPTIONS=--openssl-legacy-provider && vuepress build docs",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "test": "ava",
-    "watch": "tsc --watch",
-    "semantic-release": "semantic-release"
+    "lint": "prettier ./src --check && eslint .",
+    "lint:fix": "prettier ./src --write && eslint . --fix",
+    "test": "vitest",
+    "prepare": "husky"
   },
-  "homepage": "http://adzejs.com/",
   "repository": {
     "type": "git",
-    "url": "https:git@github.com:AJStacy/Adze.git"
+    "url": "git+https://github.com/AJStacy/adze.git"
   },
   "keywords": [
-    "log",
-    "logging",
+    "typescript",
     "logger",
-    "typescript"
+    "javascript",
+    "isomorphic",
+    "node",
+    "browser"
   ],
-  "types": "./dist/index.d.ts",
-  "author": "Andrew Stacy",
+  "author": "Andrew Stacy <ajstacy@gmail.com>",
   "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/AJStacy/adze/issues"
+  },
+  "homepage": "https://github.com/AJStacy/adze#readme",
   "devDependencies": {
-    "@ava/typescript": "^1.1.1",
-    "@types/jsdom": "^16.2.3",
-    "@types/node": "^17.0.29",
-    "@typescript-eslint/eslint-plugin": "^4.14.0",
-    "@typescript-eslint/parser": "^4.14.0",
-    "ava": "^3.15.0",
-    "browser-env": "^3.3.0",
-    "commitizen": "^4.2.3",
-    "cz-conventional-changelog": "^3.2.0",
-    "date-fns": "^2.23.0",
-    "eslint": "^7.18.0",
-    "eslint-config-prettier": "^7.2.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "http-server": "^0.11.1",
-    "husky": "^6.0.0",
-    "jsdom": "^16.3.0",
-    "lint-staged": "^10.5.4",
-    "parcel-bundler": "^1.12.5",
-    "prettier": "2.2.1",
-    "semantic-release": "^17.4.2",
+    "@eslint/js": "^9.5.0",
+    "@types/eslint__js": "^8.42.3",
+    "@types/eslint-config-prettier": "^6.11.3",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "http-server": "^14.1.1",
+    "husky": "^9.0.11",
+    "jsdom": "^24.1.0",
+    "lint-staged": "^15.2.7",
+    "prettier": "3.3.2",
     "ts-node": "^10.9.2",
-    "typescript": "^4.9.5",
-    "vuepress": "^1.8.2",
-    "window": "^4.2.6"
-  },
-  "dependencies": {
-    "chalk": "^4.1.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
+    "tsc-alias": "^1.8.10",
+    "typescript": "^5.5.2",
+    "typescript-eslint": "^7.14.1"
   },
   "lint-staged": {
-    "*.ts": "eslint --cache --cache-location .eslint_cache --fix"
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "dependencies": {
+    "date-fns": "^3.6.0"
   }
 }

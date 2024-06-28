@@ -542,7 +542,7 @@ interface MyAppConstraints extends Constraints {
 // Now we apply the constraints to our app's logger factory
 const logger = adze<MyAppConstraints>().seal();
 
-// Now when we define namespaces for a log a type error will be thrown if the 
+// Now when we define namespaces for a log a type error will be thrown if the
 // namespace provided isn't in the allowedNamespaces union type.
 logger().ns('foo', 'bar', 'baz').fail('This is not allowed.');
 //                        ^^^^^
@@ -775,9 +775,7 @@ for (let i = 0; i < 10000; i += 1) {
 adze().timeNow.log('Recording the time elapsed since page load.');
 
 // Let's see what it looks like with emoji's enabled.
-adze({ useEmoji: true }).timeNow.log(
-  'Recording the time elapsed since page load.'
-);
+adze({ useEmoji: true }).timeNow.log('Recording the time elapsed since page load.');
 ```
 
 ### timeNow Output

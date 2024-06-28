@@ -22,7 +22,7 @@ import adze from 'adze';
 // When process.env.production is set to "true", we will
 // set the machineReadable property to true.
 const cfg = {
-  machineReadable: process.env.environment === 'production'
+  machineReadable: process.env.environment === 'production',
 };
 
 // We'll seal our configuration into a new log factory named logger

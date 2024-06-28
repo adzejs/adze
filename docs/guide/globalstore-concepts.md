@@ -75,16 +75,13 @@ This is a feature that differentiates Adze from other JS logging libraries. Othe
 
 ```typescript
 class GlobalStore {
-  public addListener(
-    levels: LevelFilter,
-    cb: ListenerCallback
-  ): ListenerLocations;
+  public addListener(levels: LevelFilter, cb: ListenerCallback): ListenerLocations;
 }
 
 type ListenerCallback = (
   LogData: LogData | FinalLogData,
   render: LogRender | null,
-  printed: boolean,
+  printed: boolean
 ) => void;
 ```
 
@@ -98,7 +95,8 @@ const globalStore = createGlobalStore();
 // Let's only listen to levels 1, 2 and 3
 globalStore.addListener([1, 2, 3], ({ definition, timestamp, args }, render, printed) => {
   // We only want write logs if they printed to the console
-  if (printed) { // If version is < 1.3.0 use `if (render)`
+  if (printed) {
+    // If version is < 1.3.0 use `if (render)`
     // Let's write our log as a JSON object
     const log = {
       level: definition.level,

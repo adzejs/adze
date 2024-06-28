@@ -39,11 +39,14 @@ const globalStore = createGlobalStore();
 
 // Now, to use the add-on, I'll wrap my log listener callback function with
 // the MyAddon wrapper. We'll target all logs to use this add-on.
-globalStore.addListener('*', MyAddon((data, render) => {
-  // Do normal log listener stuff here...
-}));
+globalStore.addListener(
+  '*',
+  MyAddon((data, render) => {
+    // Do normal log listener stuff here...
+  })
+);
 
-// Or alternatively, since we specified an empty anonymous function 
+// Or alternatively, since we specified an empty anonymous function
 // as the default parameter of our add-on, we can call it empty.
 globalStore.addListener('*', MyAddon());
 

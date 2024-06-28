@@ -1,12 +1,22 @@
 {
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.rulers": [
+    {
+      "color": "#7878784f",
+      "column": 100
+    }
   ],
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
+    "source.fixAll.eslint": "explicit"
   },
+  "eslint.format.enable": true,
+  "eslint.lintTask.enable": true,
+  "eslint.validate": ["javascript", "typescript"],
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
+  }
 }

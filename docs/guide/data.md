@@ -176,10 +176,7 @@ interface FinalLogData extends LogData {
 import { adze } from 'adze';
 
 // Let's create a log instance with some various properties
-const { log } = adze()
-  .ns('foo')
-  .label('bar')
-  .timeNow.info('Some important information.');
+const { log } = adze().ns('foo').label('bar').timeNow.info('Some important information.');
 
 // Let's get the log data by using the data getter on the instance
 const data = log.data;

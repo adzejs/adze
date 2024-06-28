@@ -94,7 +94,7 @@ _NOTE: The verbiage for this has been changed to **Ignore List** in the console 
 To **blackbox** the adze library you will need to supply the following regular expression:
 
 ```typescript
-/\b(?:util|BaseLog)\b\.js/g
+/\b(?:util|BaseLog)\b\.js/g;
 ```
 
 For non-chromium based browsers, right now there is no easy way to work around this issue. We suggest using the standard console API for debugging purposes where line numbers are important and reserving Adze logs for long-lived logs that will be used in production environments.

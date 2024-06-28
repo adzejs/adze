@@ -37,10 +37,7 @@ Adds a log listener to GlobalStore that invokes the provided callback function i
 
 ```typescript
 class GlobalStore {
-  public addListener(
-    levels: LevelFilter,
-    cb: ListenerCallback
-  ): ListenerLocations;
+  public addListener(levels: LevelFilter, cb: ListenerCallback): ListenerLocations;
 }
 ```
 
@@ -399,7 +396,6 @@ class GlobalStore {
 }
 
 class Tools {
-
   /**
    * Pass-through alias for the render function.
    */

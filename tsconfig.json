@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "moduleResolution": "node",
-    "module": "commonjs",
+    "module": "ESNext",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
@@ -11,5 +11,10 @@
     "lib": ["DOM", "ES2015"],
     "declaration": true,
     "preserveConstEnums": true
+  },
+  "include": ["src/**/*"],
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "verbose": false
   }
 }
