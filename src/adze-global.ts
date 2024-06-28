@@ -1,4 +1,5 @@
-import { Configuration, Label, LabelMap } from './_types';
+import { Configuration, Label, LabelMap, UserConfiguration } from './_types';
+import { defaultConfiguration } from './constants';
 
 export default class AdzeGlobal {
   /**
@@ -11,8 +12,8 @@ export default class AdzeGlobal {
    */
   private labels: LabelMap = new Map();
 
-  constructor(configuration: Configuration) {
-    this.config = configuration;
+  constructor(configuration: UserConfiguration) {
+    this.config = { ...defaultConfiguration, ...configuration };
   }
 
   /**

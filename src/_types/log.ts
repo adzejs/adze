@@ -1,4 +1,5 @@
 import { commonMethods, formats, levels, methods, specialMethods, terminators } from '../constants';
+import { Label } from './label';
 
 /**
  * All valid terminator names.
@@ -26,11 +27,6 @@ export type SpecialMethod = (typeof specialMethods)[number];
 export type Level = (typeof levels)[number];
 
 /**
- * All valid log formats. These determine the style that is emitted.
- */
-export type Format = (typeof formats)[number];
-
-/**
  * An unknown object type.
  */
 export type IObject = Record<string, unknown>;
@@ -52,23 +48,24 @@ export interface PartialLogData {
   level: Level;
   terminator: Terminator;
   method: Method;
-  format: Format;
   meta: Record<string, unknown>;
   modifiers: Modifier[];
   namespace: string[];
-  silent: boolean;
   timestamp: string;
-  /* optional */
   hostname?: string;
+  label?: Label;
   name?: string;
-  label?: unknown; // Create label object later
   stacktrace?: string;
-  style?: string;
-  terminalStyle?: string[];
-  emoji?: string;
-  assertion?: boolean;
-  test?: boolean;
-  dump?: boolean;
+  timeNow?: string;
+  style: {
+    style?: string;
+    terminalStyle?: string[];
+    emoji?: string;
+  };
+  tests: {
+    assertion?: boolean;
+    if?: boolean;
+  };
 }
 
 /**

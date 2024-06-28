@@ -11,5 +11,5 @@ export interface Label {
   count?: number;
   context?: Record<string, unknown>;
   timeStart?: [number, number];
-  timeEllapsed?: string;
+  timeElapsed?: string;
 }

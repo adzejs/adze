@@ -1,7 +1,3 @@
-import { Configuration, LogData } from '../_types';
-
-export function setup(configuration: Configuration) {}
-
 /**
  * Capitalizes the first character of the provided string.
  */

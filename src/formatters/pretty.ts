@@ -1,19 +1,19 @@
 import Formatter from './formatter';
-import { formatNamespace, initialCaps } from '../functions';
-import { PartialLogData } from '../_types';
+import { formatCount, formatLabel, formatNamespace, initialCaps } from '../functions';
+import { Configuration, PartialLogData } from '../_types';
 
 export default class PrettyFormatter extends Formatter {
-  private useEmoji: boolean = false;
-
-  constructor(data: PartialLogData, useEmoji: boolean) {
-    super(data);
-    this.useEmoji = useEmoji;
+  constructor(cfg: Configuration, data: PartialLogData) {
+    super(cfg, data);
   }
 
   protected formatBrowser(args: unknown[]): unknown[] {
     const leader = this.formatLeader();
     const meta = this.formatMeta();
-    return [leader, 'font-size: 14px;', this.data.style ?? '', meta, ...args];
+    if (this.cfg.withEmoji) {
+      return [leader, 'font-size: 12px;', this.data.style.style ?? '', meta, ...args];
+    }
+    return [leader, this.data.style.style ?? '', meta, ...args];
   }
 
   /**
@@ -28,26 +28,28 @@ export default class PrettyFormatter extends Formatter {
    */
   private formatLeader(): string {
     const name = ' ' + initialCaps(this.data.level);
-    return `%c${this.formatEmoji()}%c${name}`;
+    if (this.cfg.withEmoji) {
+      return `%c${this.formatEmoji()}%c${name}`;
+    }
+    return `%c${name}`;
   }
 
   /**
    * Formats the emoji if it is enabled.
    */
   private formatEmoji(): string {
-    return this.data.emoji ? `${this.data.emoji} ` : '';
-    // return this.useEmoji && this.data.emoji ? `${this.data.emoji}` : '';
+    return this.data.style.emoji ? `${this.data.style.emoji} ` : '';
   }
 
   /**
    * Returns a formatted log meta data string. This is not data defined by the meta modifier.
    */
   private formatMeta(): string {
-    const ts = this.data.timestamp;
+    const ts = this.data.timestamp + ' ';
     const ns = formatNamespace(this.data.namespace);
-    const lbl = '';
+    const lbl = formatLabel(this.data.label);
     const time = '';
-    const cnt = '';
+    const cnt = formatCount(this.data.label?.count);
     const asrt = '';
     const tst = '';
     return ts + ns + lbl + time + cnt + asrt + tst;
