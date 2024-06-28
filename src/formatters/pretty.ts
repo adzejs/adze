@@ -1,5 +1,5 @@
 import Formatter from './formatter';
-import { formatCount, formatLabel, formatNamespace, initialCaps } from '../functions';
+import { formatCount, formatLabel, formatNamespace, formatTime, initialCaps } from '../functions';
 import { Configuration, PartialLogData } from '../_types';
 
 export default class PrettyFormatter extends Formatter {
@@ -48,10 +48,17 @@ export default class PrettyFormatter extends Formatter {
     const ts = this.data.timestamp + ' ';
     const ns = formatNamespace(this.data.namespace);
     const lbl = formatLabel(this.data.label);
-    const time = '';
+    const time = this.formatTime();
     const cnt = formatCount(this.data.label?.count);
     const asrt = '';
     const tst = '';
     return ts + ns + lbl + time + cnt + asrt + tst;
+  }
+
+  private formatTime(): string {
+    if (this.data.timeNow) {
+      return `(⏱: ${this.data.timeNow})`;
+    }
+    return this.data.label?.timeElapsed ? `(⏱: ${this.data.label?.timeElapsed})` : '';
   }
 }

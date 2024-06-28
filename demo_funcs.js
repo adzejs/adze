@@ -6,6 +6,7 @@ export default function runDemo(adzelib) {
   withNamespace(adze);
   withLabel(adze, adzelib);
   counting(adze, adzelib);
+  time(adze, adzelib);
 }
 
 function defaultLevels(adze) {
@@ -58,5 +59,15 @@ function counting(adze, { setup, teardown }) {
   for (let i = 0; i < 10; i++) {
     adze.label('foo').count.log('This is a labeled log');
   }
-  // teardown();
+  teardown();
+}
+
+function time(adze, { setup, teardown }) {
+  setup();
+  adze.timeNow.log('This is a time log');
+  adze.label('timer').time.log('Starting a timer');
+  setTimeout(() => {
+    adze.label('timer').timeEnd.log('Ending a timer');
+    teardown();
+  }, 1000);
 }
