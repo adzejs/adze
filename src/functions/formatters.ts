@@ -17,3 +17,18 @@ export function formatLabel(lbl?: Label): string {
 export function formatCount(count?: number): string {
   return count ? `(Count: ${count}) ` : '';
 }
+
+/**
+ *
+ */
+export function formatAssert(expression?: boolean, withEmoji?: boolean): string {
+  return expression !== undefined && expression === false
+    ? `${withEmoji ? '❌ ' : ''}Assertion failed:`
+    : '';
+}
+
+export function formatIf(expression?: boolean, withEmoji?: boolean): string {
+  return expression !== undefined && expression === true
+    ? `${withEmoji ? '✅ ' : ''}Expression Passed:`
+    : '';
+}

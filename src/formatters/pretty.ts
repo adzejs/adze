@@ -1,5 +1,13 @@
 import Formatter from './formatter';
-import { formatCount, formatLabel, formatNamespace, formatTime, initialCaps } from '../functions';
+import {
+  formatAssert,
+  formatCount,
+  formatIf,
+  formatLabel,
+  formatNamespace,
+  formatTime,
+  initialCaps,
+} from '../functions';
 import { Configuration, PartialLogData } from '../_types';
 
 export default class PrettyFormatter extends Formatter {
@@ -50,9 +58,10 @@ export default class PrettyFormatter extends Formatter {
     const lbl = formatLabel(this.data.label);
     const time = this.formatTime();
     const cnt = formatCount(this.data.label?.count);
-    const asrt = '';
-    const tst = '';
-    return ts + ns + lbl + time + cnt + asrt + tst;
+    const asrt = formatAssert(this.data.tests.assertion, this.cfg.withEmoji);
+    const _if = formatIf(this.data.tests.if, this.cfg.withEmoji);
+    const tst = asrt !== '' ? asrt : _if !== '' ? _if : '';
+    return ts + ns + lbl + time + cnt + tst;
   }
 
   private formatTime(): string {

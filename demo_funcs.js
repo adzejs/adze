@@ -7,6 +7,7 @@ export default function runDemo(adzelib) {
   withLabel(adze, adzelib);
   counting(adze, adzelib);
   time(adze, adzelib);
+  tests(adze, adzelib);
 }
 
 function defaultLevels(adze) {
@@ -70,4 +71,13 @@ function time(adze, { setup, teardown }) {
     adze.label('timer').timeEnd.log('Ending a timer');
     teardown();
   }, 1000);
+}
+
+function tests(adze) {
+  adze.assert(2 === 4).log('This is a failed assertion!');
+  adze.withEmoji.assert(2 === 4).log('This is a failed assertion with emoji!');
+  adze.assert(4 === 4).log('This passed so it should not show!');
+  adze.if(2 === 2).log('This condition passed!');
+  adze.withEmoji.if(2 === 2).log('This condition passed with emoji!');
+  adze.if(2 === 4).log('This condition failed so it should not show!');
 }

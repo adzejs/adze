@@ -168,14 +168,20 @@ export default class Log {
   // Modifiers
   ////////////////////////////////////////////////////////
 
+  /**
+   * Generates a log message if the provided expression is falsey.
+   */
   public assert(expression: boolean): Log {
     this.modifierQueue.push((data) => {
-      data.tests.assertion = !expression;
+      data.tests.assertion = expression;
       return data;
     });
     return this;
   }
 
+  /**
+   * Generates a log message if the provided expression is falsey.
+   */
   public static assert(expression: boolean): Log {
     return new Log().assert(expression);
   }
@@ -342,6 +348,9 @@ export default class Log {
     return new Log().groupEnd;
   }
 
+  /**
+   * Generates a log message if the provided expression is truthy.
+   */
   public if(expression: boolean): Log {
     this.modifierQueue.push((data) => {
       data.tests.if = expression;
@@ -351,6 +360,24 @@ export default class Log {
   }
 
   public static if(expression: boolean): Log {
+    return new Log().if(expression);
+  }
+
+  /**
+   * DEPRECATED: Use the equivalent `if` method instead.
+   *
+   * @deprecated
+   */
+  public test(expression: boolean): Log {
+    return this.if(expression);
+  }
+
+  /**
+   * DEPRECATED: Use the equivalent `if` method instead.
+   *
+   * @deprecated
+   */
+  public static test(expression: boolean): Log {
     return new Log().if(expression);
   }
 
@@ -544,6 +571,10 @@ export default class Log {
     this._data = data;
 
     // Convert this to a print function
+    if (data.message.length === 0) {
+      // Don't print if the message is empty.
+      return;
+    }
     if (isCommonMethod(data.method)) {
       console[data.method](...data.message);
     } else {

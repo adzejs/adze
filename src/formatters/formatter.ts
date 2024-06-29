@@ -21,8 +21,10 @@ export default abstract class Formatter {
    * Entry point to printing logs.
    */
   public print(args: unknown[]): unknown[] {
-    if (this.cfg.silent) return [''];
-    if (args.length === 0) return [''];
+    if (this.cfg.silent) return [];
+    if (this.data.tests.assertion === true) return [];
+    if (this.data.tests.if === false) return [];
+    if (args.length === 0) return [];
     if (isBrowser()) return this.formatBrowser(args);
     return this.formatNode(args);
   }
