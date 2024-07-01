@@ -37,28 +37,46 @@ export const levels = [
 ] as const;
 
 /**
- * Methods that accept at least one argument as the first argument.
+ * Console methods that have alternative behaviors and take arguments and can be printed with a styled leader.
  */
-export const commonMethods = ['error', 'warn', 'info', 'log', 'debug'] as const;
+export const specialMethodsWithArgsAndLeader = ['group', 'groupCollapsed'] as const;
 
 /**
- * Console methods that have alternative behaviors.
+ * Console methods that have alternative behaviors and take arguments.
  */
-export const specialMethods = [
+export const specialMethodsWithArgs = [
   'dir',
   'dirxml',
   'table',
-  'trace',
-  'clear',
-  'group',
-  'groupCollapsed',
-  'groupEnd',
+  ...specialMethodsWithArgsAndLeader,
 ] as const;
+
+/**
+ * Methods that accept at least one argument as the first argument.
+ */
+export const methodsWithArgs = [
+  'error',
+  'warn',
+  'info',
+  'log',
+  'debug',
+  ...specialMethodsWithArgs,
+] as const;
+
+/**
+ * Console methods that have alternative behaviors and do not take arguments.
+ */
+export const specialMethodsWithoutArgs = ['clear', 'groupEnd'] as const;
+
+/**
+ * All uncommon standard methods.
+ */
+export const specialMethods = [...specialMethodsWithArgs, ...specialMethodsWithoutArgs] as const;
 
 /**
  * All valid native browser methods utilized by Adze.
  */
-export const methods = [...commonMethods, ...specialMethods] as const;
+export const methods = [...methodsWithArgs, ...specialMethodsWithoutArgs] as const;
 
 /**
  * All valid log formats. These determine the style that is emitted.
@@ -72,7 +90,7 @@ export const defaultConfiguration: Configuration = {
   format: 'pretty',
   meta: {},
   middleware: [],
-  showTimestamp: true,
+  showTimestamp: false,
   silent: false,
   withEmoji: false,
 };

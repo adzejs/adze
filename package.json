@@ -20,7 +20,8 @@
     "lint": "prettier ./src --check && eslint .",
     "lint:fix": "prettier ./src --write && eslint . --fix",
     "test": "vitest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "size": "size-limit"
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,7 @@
   "homepage": "https://github.com/AJStacy/adze#readme",
   "devDependencies": {
     "@eslint/js": "^9.5.0",
+    "@size-limit/preset-small-lib": "^11.1.4",
     "@types/eslint__js": "^8.42.3",
     "@types/eslint-config-prettier": "^6.11.3",
     "eslint": "^8.57.0",
@@ -51,6 +53,7 @@
     "jsdom": "^24.1.0",
     "lint-staged": "^15.2.7",
     "prettier": "3.3.2",
+    "size-limit": "^11.1.4",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.10",
     "typescript": "^5.5.2",
@@ -61,5 +64,10 @@
   },
   "dependencies": {
     "date-fns": "^3.6.0"
-  }
+  },
+  "size-limit": [
+    {
+      "path": "dist/index.js"
+    }
+  ]
 }

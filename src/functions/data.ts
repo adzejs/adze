@@ -3,8 +3,8 @@ import { envIsWindow, globalContext } from './global';
 /**
  * Generates a stacktrace and returns it.
  */
-export function stacktrace(): string | null {
-  return Error().stack ?? null;
+export function stacktrace(): string | undefined {
+  return Error().stack?.replace(/^Error\n/, '\n');
 }
 
 /**

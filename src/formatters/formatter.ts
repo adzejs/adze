@@ -1,5 +1,10 @@
-import { Configuration, PartialLogData } from '../_types';
-import { isBrowser } from '../functions';
+import { Configuration, LevelConfig, ModifierData } from '../_types';
+import {
+  isBrowser,
+  isMethodWithArgs,
+  isSpecialMethod,
+  isSpecialMethodWithLeader,
+} from '../functions';
 
 export default abstract class Formatter {
   /**
@@ -8,34 +13,43 @@ export default abstract class Formatter {
   protected cfg: Configuration;
 
   /**
-   * The log data object.
+   * The log level configuration.
    */
-  protected data: PartialLogData;
+  protected level: LevelConfig;
 
-  constructor(cfg: Configuration, data: PartialLogData) {
+  constructor(cfg: Configuration, level: LevelConfig) {
     this.cfg = cfg;
-    this.data = data;
+    this.level = level;
   }
 
   /**
    * Entry point to printing logs.
    */
-  public print(args: unknown[]): unknown[] {
+  public print(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
     if (this.cfg.silent) return [];
-    if (this.data.tests.assertion === true) return [];
-    if (this.data.tests.if === false) return [];
-    if (args.length === 0) return [];
-    if (isBrowser()) return this.formatBrowser(args);
-    return this.formatNode(args);
+    if (mods.assertion === true) return [];
+    if (mods.if === false) return [];
+    if (mods.method && !isSpecialMethodWithLeader(mods.method)) {
+      if (isSpecialMethod(mods.method) && isMethodWithArgs(mods.method)) return args;
+    }
+    const message = isBrowser()
+      ? this.formatBrowser(mods, timestamp, args)
+      : this.formatNode(mods, timestamp, args);
+    if (mods.stacktrace) message.push(mods.stacktrace);
+    return message;
   }
 
   /**
    * Return a string format for your logs in the browser.
    */
-  protected abstract formatBrowser(args: unknown[]): unknown[];
+  protected abstract formatBrowser(
+    data: ModifierData,
+    timestamp: string,
+    args: unknown[]
+  ): unknown[];
 
   /**
    * Return a string format for your logs in Node.js.
    */
-  protected abstract formatNode(args: unknown[]): unknown[];
+  protected abstract formatNode(data: ModifierData, timestamp: string, args: unknown[]): unknown[];
 }

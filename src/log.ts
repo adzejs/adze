@@ -1,10 +1,12 @@
 import {
   Configuration,
   Format,
+  FormatterConstructor,
   LevelConfig,
   LogData,
   Modifier,
-  PartialLogData,
+  ModifierData,
+  Terminator,
   UserConfiguration,
 } from './_types';
 import {
@@ -13,7 +15,8 @@ import {
   getGlobalStore,
   globalContext,
   hrtime,
-  isCommonMethod,
+  isMethodWithArgs,
+  stacktrace,
 } from './functions';
 import { formatISO } from 'date-fns/formatISO';
 import {
@@ -28,7 +31,6 @@ import {
   getVerboseConfig,
   defaultConfiguration,
 } from './constants';
-import Formatter from './formatters/formatter';
 import PrettyFormatter from './formatters/pretty';
 
 export default class Log {
@@ -45,7 +47,7 @@ export default class Log {
   /**
    * Incomplete log data.
    */
-  private partialData: PartialLogData | undefined;
+  private modifierData: ModifierData;
 
   /**
    * The log data object.
@@ -57,9 +59,9 @@ export default class Log {
    */
   private modifierQueue: Modifier[] = [];
 
-  constructor(cfg: Partial<Configuration> = {}, partialData?: PartialLogData) {
+  constructor(cfg: Partial<Configuration> = {}, modifierData?: ModifierData) {
     this.globalContext = globalContext();
-    this.partialData = partialData;
+    this.modifierData = modifierData ?? {};
     this._cfg = this.mergeConfiguration(cfg);
   }
 
@@ -82,7 +84,7 @@ export default class Log {
   /**
    * Terminates the log at the *alert* level.
    *
-   * **Default Level = 0**
+   * **Default Level = "alert" or 0**
    *
    * This level is useful for calling alert to
    * important information and lives at the lowest level.
@@ -93,13 +95,13 @@ export default class Log {
    * This is a non-standard API.
    */
   public alert(...args: unknown[]): void {
-    this.terminate(args, getAlertConfig());
+    this.terminate('alert', getAlertConfig(), args);
   }
 
   /**
    * Terminates the log at the *alert* level.
    *
-   * **Default Level = 0**
+   * **Default Level = "alert" or 0**
    *
    * This level is useful for calling alert to
    * important information and lives at the lowest level.
@@ -116,7 +118,7 @@ export default class Log {
   /**
    * Terminates the log at the *error* level.
    *
-   * **Default Level = 1**
+   * **Default Level = "error" or 1**
    *
    * Use this for logging fatal errors or errors that
    * impact functionality of your application.
@@ -124,13 +126,13 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/error)
    */
   public error(...args: unknown[]): void {
-    this.terminate(args, getErrorConfig());
+    this.terminate('error', getErrorConfig(), args);
   }
 
   /**
    * Terminates the log at the *error* level.
    *
-   * **Default Level = 1**
+   * **Default Level = "error" or 1**
    *
    * Use this for logging fatal errors or errors that
    * impact functionality of your application.
@@ -144,7 +146,7 @@ export default class Log {
   /**
    * Terminates the log at the *warning* level.
    *
-   * **Default Level = 2**
+   * **Default Level = "warn" or 2**
    *
    * Use this for logging issues that may impact
    * app performance in a less impactful way than
@@ -153,13 +155,13 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/warn)
    */
   public warn(...args: unknown[]): void {
-    this.terminate(args, getWarnConfig());
+    this.terminate('warn', getWarnConfig(), args);
   }
 
   /**
    * Terminates the log at the *warning* level.
    *
-   * **Default Level = 2**
+   * **Default Level = "warn" or 2**
    *
    * Use this for logging issues that may impact
    * app performance in a less impactful way than
@@ -174,7 +176,7 @@ export default class Log {
   /**
    * Terminates the log at the *info* level.
    *
-   * **Default Level = 3**
+   * **Default Level = "info" or 3**
    *
    * Use this for logging general insights into your
    * application. This level does not indicate any
@@ -183,13 +185,13 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/info)
    */
   public info(...args: unknown[]): void {
-    this.terminate(args, getInfoConfig());
+    this.terminate('info', getInfoConfig(), args);
   }
 
   /**
    * Terminates the log at the *info* level.
    *
-   * **Default Level = 3**
+   * **Default Level = "info" or 3**
    *
    * Use this for logging general insights into your
    * application. This level does not indicate any
@@ -204,7 +206,7 @@ export default class Log {
   /**
    * Terminates the log at the *fail* level.
    *
-   * **Default Level = 4**
+   * **Default Level = "fail" or 4**
    *
    * Use this for logging network communication errors
    * that do not break your application.
@@ -212,13 +214,13 @@ export default class Log {
    * This is a non-standard API.
    */
   public fail(...args: unknown[]): void {
-    this.terminate(args, getFailConfig());
+    this.terminate('fail', getFailConfig(), args);
   }
 
   /**
    * Terminates the log at the *fail* level.
    *
-   * **Default Level = 4**
+   * **Default Level = "fail" or 4**
    *
    * Use this for logging network communication errors
    * that do not break your application.
@@ -232,20 +234,20 @@ export default class Log {
   /**
    * Terminates the log at the *success* level.
    *
-   * **Default Level = 5**
+   * **Default Level = "success" or 5**
    *
    * Use this for logging successful network communication.
    *
    * This is a non-standard API.
    */
   public success(...args: unknown[]): void {
-    this.terminate(args, getSuccessConfig());
+    this.terminate('success', getSuccessConfig(), args);
   }
 
   /**
    * Terminates the log at the *success* level.
    *
-   * **Default Level = 5**
+   * **Default Level = "success" or 5**
    *
    * Use this for logging successful network communication.
    *
@@ -258,7 +260,7 @@ export default class Log {
   /**
    * Terminates the log at the *log* level.
    *
-   * **Default Level = 6**
+   * **Default Level = "log" or 6**
    *
    * Use this for general logging that doesn't apply
    * to any of the lower levels.
@@ -266,13 +268,13 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
   public log(...args: unknown[]): void {
-    this.terminate(args, getLogConfig());
+    this.terminate('log', getLogConfig(), args);
   }
 
   /**
    * Terminates the log at the *log* level.
    *
-   * **Default Level = 6**
+   * **Default Level = "log" or 6**
    *
    * Use this for general logging that doesn't apply
    * to any of the lower levels.
@@ -286,7 +288,7 @@ export default class Log {
   /**
    * Terminates the log at the *log* level.
    *
-   * **Default Level = 6**
+   * **Default Level = "debug" or 7**
    *
    * Use this for general logging that doesn't apply
    * to any of the lower levels.
@@ -294,13 +296,13 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
   public debug(...args: unknown[]): void {
-    this.terminate(args, getDebugConfig());
+    this.terminate('debug', getDebugConfig(), args);
   }
 
   /**
    * Terminates the log at the *log* level.
    *
-   * **Default Level = 6**
+   * **Default Level = "debug" or 7**
    *
    * Use this for general logging that doesn't apply
    * to any of the lower levels.
@@ -314,7 +316,7 @@ export default class Log {
   /**
    * Terminates the log at the *verbose* level.
    *
-   * **Default Level = 8**
+   * **Default Level = "verbose" or 8**
    *
    * Use this for logging extremely detailed debugging
    * information. Use this level when the values you are
@@ -324,13 +326,13 @@ export default class Log {
    * This is a non-standard API.
    */
   public verbose(...args: unknown[]): void {
-    this.terminate(args, getVerboseConfig());
+    this.terminate('verbose', getVerboseConfig(), args);
   }
 
   /**
    * Terminates the log at the *verbose* level.
    *
-   * **Default Level = 8**
+   * **Default Level = "verbose" or 8**
    *
    * Use this for logging extremely detailed debugging
    * information. Use this level when the values you are
@@ -355,12 +357,9 @@ export default class Log {
    * ```
    */
   public seal(cfg?: UserConfiguration): Log {
-    const data = structuredClone(this._data);
-    if (data) {
-      data.modifiers = this.modifierQueue;
-    }
+    this.runModifierQueue();
     this._cfg = this.mergeConfiguration({ ...this._cfg, ...cfg });
-    return new Log(structuredClone(this._cfg), data);
+    return new Log(structuredClone(this._cfg), structuredClone(this.modifierData));
   }
 
   /**
@@ -387,7 +386,7 @@ export default class Log {
    */
   public assert(expression: boolean): Log {
     this.modifierQueue.push((data) => {
-      data.tests.assertion = expression;
+      data.assertion = expression;
       return data;
     });
     return this;
@@ -755,7 +754,7 @@ export default class Log {
    */
   public if(expression: boolean): Log {
     this.modifierQueue.push((data) => {
-      data.tests.if = expression;
+      data.if = expression;
       return data;
     });
     return this;
@@ -853,7 +852,8 @@ export default class Log {
    */
   public namespace(...namespace: string[]): Log {
     this.modifierQueue.push((data) => {
-      data.namespace = namespace;
+      let arr = data.namespace ?? [];
+      data.namespace = arr.length > 0 ? [...arr, ...namespace] : namespace;
       return data;
     });
     return this;
@@ -1040,20 +1040,22 @@ export default class Log {
   }
 
   /**
-   * Prints a stacktrace along with the log.
+   * Prints a stacktrace along with the log. This does not use the standard "trace" method but
+   * derives the stacktrace from the current call stack and appends it to your log.
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/trace)
    */
   public get trace(): Log {
     this.modifierQueue.push((data) => {
-      data.method = 'trace';
+      data.stacktrace = stacktrace();
       return data;
     });
     return this;
   }
 
   /**
-   * Prints a stacktrace along with the log.
+   * Prints a stacktrace along with the log. This does not use the standard "trace" method but
+   * derives the stacktrace from the current call stack and appends it to your log.
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/trace)
    */
@@ -1083,46 +1085,35 @@ export default class Log {
   // Private Methods
   ////////////////////////////////////////////////////////
 
-  private terminate(args: unknown[], cfg: LevelConfig): void {
-    // Initialize our data object. Use partial data provided by the constructor if available.
-    let partialData: PartialLogData = {
-      args: args,
-      level: cfg.level,
-      method: cfg.method,
-      meta: {},
-      modifiers: this.modifierQueue,
-      namespace: [],
-      terminator: 'alert',
-      timestamp: formatISO(new Date()),
-      style: {
-        style: cfg.style,
-        terminalStyle: cfg.terminalStyle,
-        emoji: cfg.emoji,
-      },
-      tests: {},
-      ...this.partialData,
-    };
+  private terminate(terminator: Terminator, level: LevelConfig, args: unknown[]): void {
+    // Generate the timestamp
+    const timestamp = formatISO(new Date());
+
+    // Get the log formatter
+    const formatter = this.selectFormatter(this._cfg.format);
 
     // Run the modifier queue to modify the data object.
-    this.modifierQueue.forEach((modifier) => {
-      partialData = modifier(partialData);
-    });
+    this.runModifierQueue();
 
     // call beforeTerminated hook
-    const formatter = this.selectFormatter(partialData, this._cfg.format);
+
+    // Create our final log data object
     const data: LogData = {
-      ...partialData,
-      message: formatter.print(args),
+      ...level,
+      ...this.modifierData,
+      terminator,
+      args,
+      timestamp,
+      message: new formatter(this._cfg, level).print(this.modifierData, timestamp, args),
     };
+
     // save the data to this instance
     this._data = data;
 
-    // Convert this to a print function
-    if (data.message.length === 0) {
-      // Don't print if the message is empty.
-      return;
-    }
-    if (isCommonMethod(data.method)) {
+    // Don't print if the message is empty.
+    if (data.message.length === 0) return;
+
+    if (isMethodWithArgs(data.method)) {
       console[data.method](...data.message);
     } else {
       console[data.method]();
@@ -1133,18 +1124,21 @@ export default class Log {
     // call terminated hook
   }
 
-  private selectFormatter(data: PartialLogData, format: Format): Formatter {
+  /**
+   * Returns a formatter constructor based on the provided format.
+   */
+  private selectFormatter(format: Format): FormatterConstructor {
     switch (format) {
       case 'pretty':
-        return new PrettyFormatter(this._cfg, data);
+        return PrettyFormatter;
       case 'prettyEmoji':
-        return new PrettyFormatter(this._cfg, data);
+        return PrettyFormatter;
       case 'json':
-        return new PrettyFormatter(this._cfg, data);
+        return PrettyFormatter;
       case 'common':
-        return new PrettyFormatter(this._cfg, data);
+        return PrettyFormatter;
       default:
-        return new PrettyFormatter(this._cfg, data);
+        return PrettyFormatter;
     }
   }
 
@@ -1157,5 +1151,14 @@ export default class Log {
       ...cfg,
       ...this.globalContext?.$adzeGlobal?.configuration,
     };
+  }
+
+  /**
+   * Runs the modifier queue against this instance.
+   */
+  private runModifierQueue(): void {
+    this.modifierQueue.forEach((modifier) => {
+      this.modifierData = modifier(this.modifierData);
+    });
   }
 }

@@ -1,5 +1,10 @@
-import { CommonMethod, Method } from '../_types';
-import { commonMethods } from '../constants';
+import { Method, MethodWithArgs, MethodWithoutArgs, SpecialMethod } from '../_types';
+import {
+  methodsWithArgs,
+  specialMethods,
+  specialMethodsWithArgsAndLeader,
+  specialMethodsWithoutArgs,
+} from '../constants';
 
 /**
  * Type guard to validate that the value is a string.
@@ -22,6 +27,27 @@ export function hasOwnProperties<
 /**
  * Type guard to determine if a console method is a common method.
  */
-export function isCommonMethod(value: Method): value is CommonMethod {
-  return commonMethods.includes(value as any);
+export function isMethodWithArgs(value: Method): value is MethodWithArgs {
+  return methodsWithArgs.includes(value as any);
+}
+
+/**
+ * Type guard to determine if a console method is a common method.
+ */
+export function isMethodWithoutArgs(value: Method): value is MethodWithoutArgs {
+  return specialMethodsWithoutArgs.includes(value as any);
+}
+
+/**
+ * Type guard to determine if a console method is a special method.
+ */
+export function isSpecialMethod(value: Method): value is SpecialMethod {
+  return specialMethods.includes(value as any);
+}
+
+/**
+ * Type guard to determine if a console method is a special method with a leader.
+ */
+export function isSpecialMethodWithLeader(value: Method): value is SpecialMethod {
+  return specialMethodsWithArgsAndLeader.includes(value as any);
 }

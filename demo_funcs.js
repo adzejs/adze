@@ -1,6 +1,5 @@
 // Run our demo modules
 export default function runDemo(adzelib) {
-  console.log('ADZELIB', adzelib);
   const adze = adzelib.default;
   defaultLevels(adze);
   withNamespace(adze);
@@ -8,6 +7,13 @@ export default function runDemo(adzelib) {
   counting(adze, adzelib);
   time(adze, adzelib);
   tests(adze, adzelib);
+  dir(adze);
+  table(adze);
+  group(adze);
+  groupCollapsed(adze);
+  trace(adze);
+  timestamp(adze);
+  silent(adze);
 }
 
 function defaultLevels(adze) {
@@ -46,7 +52,8 @@ function defaultLevels(adze) {
 }
 
 function withNamespace(adze) {
-  adze.ns('foo', 'bar').log('This is a namespaced log');
+  const logger = adze.ns('foo', 'bar').seal();
+  logger.ns('baz').log('This is a namespaced log');
 }
 
 function withLabel(adze, { setup, teardown }) {
@@ -85,4 +92,43 @@ function tests(adze) {
   adze.if(2 === 2).log('This condition passed!');
   adze.withEmoji.if(2 === 2).log('This condition passed with emoji!');
   adze.if(2 === 4).log('This condition failed so it should not show!');
+}
+
+function dir(adze) {
+  adze.log({ foo: 'bar' });
+  adze.dir.log({ foo: 'bar' });
+  adze.log(document.body);
+  adze.dirxml.log(document.body);
+}
+
+function table(adze) {
+  const tabular_data = [
+    { firstName: 'Andrew', lastName: 'Stacy' },
+    { firstName: 'Jim', lastName: 'Bob' },
+  ];
+  adze.table.log(tabular_data);
+}
+
+function group(adze) {
+  adze.group.log('This is a group.');
+  adze.log('This is a child of a group log.');
+  adze.groupEnd.log();
+}
+
+function groupCollapsed(adze) {
+  adze.groupCollapsed.log('This is a collapsed group.');
+  adze.log('This is a child of a collapsed group.');
+  adze.groupEnd.log();
+}
+
+function trace(adze) {
+  adze.trace.log('Tracing...');
+}
+
+function timestamp(adze) {
+  adze.timestamp.log('This is a log with the timestamp printed.');
+}
+
+function silent(adze) {
+  adze.silent.log('You should not see me.');
 }

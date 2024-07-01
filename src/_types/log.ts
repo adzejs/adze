@@ -1,4 +1,14 @@
-import { commonMethods, formats, levels, methods, specialMethods, terminators } from '../constants';
+import {
+  methodsWithArgs,
+  levels,
+  methods,
+  specialMethods,
+  specialMethodsWithoutArgs,
+  terminators,
+  specialMethodsWithArgsAndLeader,
+} from '../constants';
+import Formatter from '../formatters/formatter';
+import { Configuration } from './configuration';
 import { Label } from './label';
 
 /**
@@ -14,12 +24,22 @@ export type Method = (typeof methods)[number];
 /**
  * Valid console methods that accept at least one argument as the first argument.
  */
-export type CommonMethod = (typeof commonMethods)[number];
+export type MethodWithArgs = (typeof methodsWithArgs)[number];
 
 /**
  * Console methods that have alternative behaviors.
  */
+export type MethodWithoutArgs = (typeof specialMethodsWithoutArgs)[number];
+
+/**
+ * All valid console methods with alternative behaviors.
+ */
 export type SpecialMethod = (typeof specialMethods)[number];
+
+/**
+ * All avalid console methods with alternative behaviors that can be printed with a leader.
+ */
+export type SpecialMethodWithLeader = (typeof specialMethodsWithArgsAndLeader)[number];
 
 /**
  * All valid default log levels.
@@ -32,55 +52,30 @@ export type Level = (typeof levels)[number];
 export type IObject = Record<string, unknown>;
 
 /**
- * The data structure that represents a log message as its being assembled.
- *
- * Phase 1.
+ * Type for the constructor of a Formatter class.
  */
-export type IncompleteLogData = Partial<PartialLogData>;
+export interface FormatterConstructor {
+  new (cfg: Configuration, level: LevelConfig): Formatter;
+}
 
-/**
- * The data structure that represents a log message after it has been assembled but prior to being emitted.
- *
- * Phase 2.
- */
-export interface PartialLogData {
-  args: unknown[];
-  level: Level;
-  terminator: Terminator;
-  method: Method;
-  meta: Record<string, unknown>;
-  modifiers: Modifier[];
-  namespace: string[];
-  timestamp: string;
+export interface ModifierData {
+  meta?: Record<string, unknown>;
+  method?: Method;
+  namespace?: string[];
+  timestamp?: string;
   hostname?: string;
   label?: Label;
   name?: string;
   stacktrace?: string;
   timeNow?: string;
-  style: {
-    style?: string;
-    terminalStyle?: string[];
-    emoji?: string;
-  };
-  tests: {
-    assertion?: boolean;
-    if?: boolean;
-  };
-}
-
-/**
- * The data structure representing a complete log.
- *
- * Phase 3.
- */
-export interface LogData extends PartialLogData {
-  message: unknown[];
+  assertion?: boolean;
+  if?: boolean;
 }
 
 /**
  * A modifier function.
  */
-export type Modifier = (data: PartialLogData) => PartialLogData;
+export type Modifier = (data: ModifierData) => ModifierData;
 
 /**
  * Configuration object for a specific log level.
@@ -92,3 +87,14 @@ export interface LevelConfig {
   method: Method;
   emoji: string;
 }
+
+/**
+ * The data structure that represents a complete log message.
+ */
+export type LogData = ModifierData &
+  LevelConfig & {
+    args: unknown[];
+    terminator: Terminator;
+    message: unknown[];
+    timestamp: string;
+  };
