@@ -65,9 +65,10 @@ export default class PrettyFormatter extends Formatter {
   }
 
   private formatTime(): string {
+    const timeLeader = `${this.cfg.withEmoji ? '⏱ ' : 'Time elapsed: '}`;
     if (this.data.timeNow) {
-      return `(⏱: ${this.data.timeNow})`;
+      return `(${timeLeader}${this.data.timeNow})`;
     }
-    return this.data.label?.timeElapsed ? `(⏱: ${this.data.label?.timeElapsed})` : '';
+    return this.data.label?.timeElapsed ? `(${timeLeader}${this.data.label?.timeElapsed})` : '';
   }
 }

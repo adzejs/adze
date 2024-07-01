@@ -66,9 +66,14 @@ function counting(adze, { setup, teardown }) {
 function time(adze, { setup, teardown }) {
   setup();
   adze.timeNow.log('This is a time log');
+  adze.withEmoji.timeNow.log('This is a time log with emoji');
   adze.label('timer').time.log('Starting a timer');
   setTimeout(() => {
     adze.label('timer').timeEnd.log('Ending a timer');
+  }, 1000);
+  adze.withEmoji.label('timer2').time.log('Starting a timer');
+  setTimeout(() => {
+    adze.withEmoji.label('timer2').timeEnd.log('Ending a timer with emoji');
     teardown();
   }, 1000);
 }
