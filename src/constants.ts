@@ -93,6 +93,17 @@ export const defaultConfiguration: Configuration = {
   showTimestamp: false,
   silent: false,
   withEmoji: false,
+  levels: {
+    alert: getAlertConfig(),
+    error: getErrorConfig(),
+    warn: getWarnConfig(),
+    info: getInfoConfig(),
+    fail: getFailConfig(),
+    success: getSuccessConfig(),
+    log: getLogConfig(),
+    debug: getDebugConfig(),
+    verbose: getVerboseConfig(),
+  },
 };
 
 /**
@@ -100,7 +111,8 @@ export const defaultConfiguration: Configuration = {
  */
 export function getAlertConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
   return {
-    level: 'alert',
+    levelName: 'alert',
+    level: 0,
     style: `padding-right: ${
       isChrome() ? '32' : '26'
     }px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #fc8585, #fc2323); color: #fff; border-color: #b70101;`,
@@ -116,7 +128,8 @@ export function getAlertConfig(overrides: Partial<LevelConfig> = {}): LevelConfi
  */
 export function getErrorConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
   return {
-    level: 'error',
+    levelName: 'error',
+    level: 1,
     style: `padding-right: ${
       isChrome() ? '32' : '26'
     }px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;`,
@@ -132,7 +145,8 @@ export function getErrorConfig(overrides: Partial<LevelConfig> = {}): LevelConfi
  */
 export function getWarnConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
   return {
-    level: 'warn',
+    levelName: 'warn',
+    level: 2,
     style: `font-size: 12px; border-radius: 4px;  background: linear-gradient(to right, #fff, #fff0a8); color: #715100; border-color: #e3d696; padding-right: ${
       isChrome() ? '38' : '44'
     }px;`,
@@ -148,7 +162,8 @@ export function getWarnConfig(overrides: Partial<LevelConfig> = {}): LevelConfig
  */
 export function getInfoConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
   return {
-    level: 'info',
+    levelName: 'info',
+    level: 3,
     style: `padding-right: ${
       isSafari() ? '49' : '52'
     }px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #d8ebff, #b2d7ff); color: #465464; border-color: #96b5d7;`,
@@ -164,7 +179,8 @@ export function getInfoConfig(overrides: Partial<LevelConfig> = {}): LevelConfig
  */
 export function getFailConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
   return {
-    level: 'fail',
+    levelName: 'fail',
+    level: 4,
     style: `padding-right: ${
       isChrome() ? '52' : '44'
     }px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #ffe8e8, #ffd1d1); color: #a4000f; border-color: #e3bbbb;`,
@@ -180,7 +196,8 @@ export function getFailConfig(overrides: Partial<LevelConfig> = {}): LevelConfig
  */
 export function getSuccessConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
   return {
-    level: 'success',
+    levelName: 'success',
+    level: 5,
     style:
       'font-size: 12px; border-radius: 4px; padding-right: 30px; background: linear-gradient(to right, #e6f6e4, #ceedc9); color: #4e594d; border-color: #b7d1b3;',
     terminalStyle: ['gray', 'bgGreen'],
@@ -195,7 +212,8 @@ export function getSuccessConfig(overrides: Partial<LevelConfig> = {}): LevelCon
  */
 export function getLogConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
   return {
-    level: 'log',
+    levelName: 'log',
+    level: 6,
     style: `font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;`,
     terminalStyle: ['white', 'bgGray'],
     method: 'log',
@@ -209,7 +227,8 @@ export function getLogConfig(overrides: Partial<LevelConfig> = {}): LevelConfig 
  */
 export function getDebugConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
   return {
-    level: 'debug',
+    levelName: 'debug',
+    level: 7,
     style:
       'font-size: 12px; padding-right: 44px; border-right: 1px solid #d9dce0; color: #465464; border-color: #999999;',
     terminalStyle: ['white', 'bgBlack'],
@@ -224,7 +243,8 @@ export function getDebugConfig(overrides: Partial<LevelConfig> = {}): LevelConfi
  */
 export function getVerboseConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
   return {
-    level: 'verbose',
+    levelName: 'verbose',
+    level: 8,
     style: 'font-size: 12px; padding-right: 31px; color: #999999;',
     terminalStyle: ['white', 'italic'],
     method: 'debug',

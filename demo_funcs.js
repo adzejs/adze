@@ -1,9 +1,36 @@
+import adze from './dist/index.js';
+
+class logger extends adze {
+  constructor(cfg = {}, modifierData) {
+    super(cfg, modifierData);
+    this.customLevel('leetLevel', {
+      levelName: 'leetLevel',
+      level: 1337,
+      method: 'log',
+      style:
+        'font-size: 12px; border-radius: 4px; padding-right: 10px; background: linear-gradient(to right, #ffcafc, #ff02f2); color: #fff; border-color: #e3bbbb;',
+      terminalStyle: ['white', 'bgBlue'],
+      emoji: '👾',
+    });
+  }
+
+  leetLevel(...args) {
+    this.terminate('leetLevel', args);
+  }
+
+  static leetLevel(...args) {
+    return new this().leetLevel(...args);
+  }
+}
+
 // Run our demo modules
 export default function runDemo(adzelib) {
   const adze = adzelib.default;
   defaultLevels(adze);
-  withNamespace(adze);
-  withLabel(adze, adzelib);
+  configuration(adze);
+  custom(adze);
+  namespace(adze);
+  label(adze, adzelib);
   counting(adze, adzelib);
   time(adze, adzelib);
   tests(adze, adzelib);
@@ -51,12 +78,21 @@ function defaultLevels(adze) {
   // }).custom("customError", "This is a custom error log");
 }
 
-function withNamespace(adze) {
+function configuration(adze) {
+  const logger = adze.cfg({ withEmoji: true }).seal();
+  logger.alert('Example alert log with emoji from configuration!');
+}
+
+function custom() {
+  logger.cfg({ withEmoji: true, activeLevel: 1338 }).leetLevel('This is a custom log!');
+}
+
+function namespace(adze) {
   const logger = adze.ns('foo', 'bar').seal();
   logger.ns('baz').log('This is a namespaced log');
 }
 
-function withLabel(adze, { setup, teardown }) {
+function label(adze, { setup, teardown }) {
   setup();
   adze.label('foo').log('This is a labeled log');
   teardown();

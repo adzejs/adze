@@ -6,7 +6,6 @@ import {
   LogData,
   Modifier,
   ModifierData,
-  Terminator,
   UserConfiguration,
 } from './_types';
 import {
@@ -16,28 +15,17 @@ import {
   globalContext,
   hrtime,
   isMethodWithArgs,
+  mergeConfiguration,
   stacktrace,
 } from './functions';
 import { formatISO } from 'date-fns/formatISO';
-import {
-  getAlertConfig,
-  getErrorConfig,
-  getWarnConfig,
-  getInfoConfig,
-  getFailConfig,
-  getSuccessConfig,
-  getLogConfig,
-  getDebugConfig,
-  getVerboseConfig,
-  defaultConfiguration,
-} from './constants';
 import PrettyFormatter from './formatters/pretty';
 
 export default class Log {
   /**
    * The global context object.
    */
-  private globalContext: Window | typeof globalThis;
+  protected globalContext: Window | typeof globalThis;
 
   /**
    * The configuration for the adze log.
@@ -47,22 +35,22 @@ export default class Log {
   /**
    * Incomplete log data.
    */
-  private modifierData: ModifierData;
+  protected modifierData: ModifierData;
 
   /**
    * The log data object.
    */
-  private _data?: LogData;
+  protected _data?: LogData;
 
   /**
    * Queue up modifiers to ensure they are in the correct order when executed.
    */
-  private modifierQueue: Modifier[] = [];
+  protected modifierQueue: Modifier[] = [];
 
-  constructor(cfg: Partial<Configuration> = {}, modifierData?: ModifierData) {
+  constructor(cfg: UserConfiguration = {}, modifierData?: ModifierData) {
     this.globalContext = globalContext();
     this.modifierData = modifierData ?? {};
-    this._cfg = this.mergeConfiguration(cfg);
+    this._cfg = mergeConfiguration({}, cfg, this.globalContext?.$adzeGlobal?.configuration);
   }
 
   ////////////////////////////////////////////////////////
@@ -95,7 +83,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public alert(...args: unknown[]): void {
-    this.terminate('alert', getAlertConfig(), args);
+    this.terminate('alert', args);
   }
 
   /**
@@ -112,7 +100,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public static alert(...args: unknown[]): void {
-    return new Log().alert(...args);
+    return new this().alert(...args);
   }
 
   /**
@@ -126,7 +114,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/error)
    */
   public error(...args: unknown[]): void {
-    this.terminate('error', getErrorConfig(), args);
+    this.terminate('error', args);
   }
 
   /**
@@ -140,7 +128,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/error)
    */
   public static error(...args: unknown[]): void {
-    return new Log().error(...args);
+    return new this().error(...args);
   }
 
   /**
@@ -155,7 +143,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/warn)
    */
   public warn(...args: unknown[]): void {
-    this.terminate('warn', getWarnConfig(), args);
+    this.terminate('warn', args);
   }
 
   /**
@@ -170,7 +158,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/warn)
    */
   public static warn(...args: unknown[]): void {
-    return new Log().warn(...args);
+    return new this().warn(...args);
   }
 
   /**
@@ -185,7 +173,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/info)
    */
   public info(...args: unknown[]): void {
-    this.terminate('info', getInfoConfig(), args);
+    this.terminate('info', args);
   }
 
   /**
@@ -200,7 +188,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/info)
    */
   public static info(...args: unknown[]): void {
-    return new Log().info(...args);
+    return new this().info(...args);
   }
 
   /**
@@ -214,7 +202,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public fail(...args: unknown[]): void {
-    this.terminate('fail', getFailConfig(), args);
+    this.terminate('fail', args);
   }
 
   /**
@@ -228,7 +216,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public static fail(...args: unknown[]): void {
-    return new Log().fail(...args);
+    return new this().fail(...args);
   }
 
   /**
@@ -241,7 +229,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public success(...args: unknown[]): void {
-    this.terminate('success', getSuccessConfig(), args);
+    this.terminate('success', args);
   }
 
   /**
@@ -254,7 +242,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public static success(...args: unknown[]): void {
-    return new Log().success(...args);
+    return new this().success(...args);
   }
 
   /**
@@ -268,7 +256,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
   public log(...args: unknown[]): void {
-    this.terminate('log', getLogConfig(), args);
+    this.terminate('log', args);
   }
 
   /**
@@ -282,7 +270,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
   public static log(...args: unknown[]): void {
-    return new Log().log(...args);
+    return new this().log(...args);
   }
 
   /**
@@ -296,7 +284,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
   public debug(...args: unknown[]): void {
-    this.terminate('debug', getDebugConfig(), args);
+    this.terminate('debug', args);
   }
 
   /**
@@ -310,7 +298,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
   public static debug(...args: unknown[]): void {
-    return new Log().debug(...args);
+    return new this().debug(...args);
   }
 
   /**
@@ -326,7 +314,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public verbose(...args: unknown[]): void {
-    this.terminate('verbose', getVerboseConfig(), args);
+    this.terminate('verbose', args);
   }
 
   /**
@@ -342,7 +330,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public static verbose(...args: unknown[]): void {
-    return new Log().verbose(...args);
+    return new this().verbose(...args);
   }
 
   /**
@@ -358,7 +346,7 @@ export default class Log {
    */
   public seal(cfg?: UserConfiguration): Log {
     this.runModifierQueue();
-    this._cfg = this.mergeConfiguration({ ...this._cfg, ...cfg });
+    this.mergeConfiguration({ ...this._cfg, ...cfg });
     return new Log(structuredClone(this._cfg), structuredClone(this.modifierData));
   }
 
@@ -374,7 +362,7 @@ export default class Log {
    * ```
    */
   public static seal(cfg?: UserConfiguration): Log {
-    return new Log().seal(cfg);
+    return new this().seal(cfg);
   }
 
   ////////////////////////////////////////////////////////
@@ -396,7 +384,7 @@ export default class Log {
    * Generates a log message if the provided expression is falsey.
    */
   public static assert(expression: boolean): Log {
-    return new Log().assert(expression);
+    return new this().assert(expression);
   }
 
   /**
@@ -405,7 +393,7 @@ export default class Log {
    */
   public configure(cfg: UserConfiguration): Log {
     this.modifierQueue.unshift((data) => {
-      this._cfg = this.mergeConfiguration(cfg);
+      this.mergeConfiguration(cfg);
       return data;
     });
     return this;
@@ -416,7 +404,7 @@ export default class Log {
    * rather than calling each modifier individually.
    */
   public static configure(cfg: UserConfiguration): Log {
-    return new Log().configure(cfg);
+    return new this().configure(cfg);
   }
 
   /**
@@ -436,7 +424,7 @@ export default class Log {
    * rather than calling each modifier individually.
    */
   public static cfg(cfg: UserConfiguration): Log {
-    return new Log().configure(cfg);
+    return new this().configure(cfg);
   }
 
   /**
@@ -460,7 +448,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/count)
    */
   public static get count(): Log {
-    return new Log().count;
+    return new this().count;
   }
 
   /**
@@ -484,7 +472,7 @@ export default class Log {
    * This is a non-standard method.
    */
   public static get countClear(): Log {
-    return new Log().countClear;
+    return new this().countClear;
   }
 
   /**
@@ -508,7 +496,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/countReset)
    */
   public static get countReset(): Log {
-    return new Log().countReset;
+    return new this().countReset;
   }
 
   /**
@@ -532,7 +520,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
    */
   public static get dir(): Log {
-    return new Log().dir;
+    return new this().dir;
   }
 
   /**
@@ -556,7 +544,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml)
    */
   public static get dirxml(): Log {
-    return new Log().dirxml;
+    return new this().dirxml;
   }
 
   /**
@@ -580,7 +568,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public static get dump(): Log {
-    return new Log().dump;
+    return new this().dump;
   }
 
   /**
@@ -602,7 +590,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public static format(format: Format): Log {
-    return new Log().format(format);
+    return new this().format(format);
   }
 
   /**
@@ -624,7 +612,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public static get pretty(): Log {
-    return new Log().pretty;
+    return new this().pretty;
   }
 
   /**
@@ -650,7 +638,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public static get common(): Log {
-    return new Log().common;
+    return new this().common;
   }
 
   /**
@@ -678,7 +666,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public static get json(): Log {
-    return new Log().json;
+    return new this().json;
   }
 
   /**
@@ -700,7 +688,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/group)
    */
   public static get group(): Log {
-    return new Log().group;
+    return new this().group;
   }
 
   /**
@@ -722,7 +710,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupCollapsed)
    */
   public static get groupCollapsed(): Log {
-    return new Log().groupCollapsed;
+    return new this().groupCollapsed;
   }
 
   /**
@@ -744,7 +732,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupEnd)
    */
   public static get groupEnd(): Log {
-    return new Log().groupEnd;
+    return new this().groupEnd;
   }
 
   /**
@@ -766,7 +754,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public static if(expression: boolean): Log {
-    return new Log().if(expression);
+    return new this().if(expression);
   }
 
   /**
@@ -784,7 +772,7 @@ export default class Log {
    * @deprecated
    */
   public static test(expression: boolean): Log {
-    return new Log().if(expression);
+    return new this().if(expression);
   }
 
   /**
@@ -816,7 +804,7 @@ export default class Log {
    * a label to methods that require a global identifier for tracking purposes.
    */
   public static label(name: string): Log {
-    return new Log().label(name);
+    return new this().label(name);
   }
 
   /**
@@ -840,7 +828,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public static meta(meta: Record<string, unknown>): Log {
-    return new Log().meta(meta);
+    return new this().meta(meta);
   }
 
   /**
@@ -867,7 +855,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public static namespace(...namespace: string[]): Log {
-    return new Log().namespace(...namespace);
+    return new this().namespace(...namespace);
   }
 
   /**
@@ -893,7 +881,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public static ns(...namespace: string[]): Log {
-    return new Log().namespace(...namespace);
+    return new this().namespace(...namespace);
   }
 
   /**
@@ -913,7 +901,7 @@ export default class Log {
    * listeners.
    */
   public static get silent(): Log {
-    return new Log().silent;
+    return new this().silent;
   }
 
   /**
@@ -935,7 +923,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/table)
    */
   public static get table(): Log {
-    return new Log().table;
+    return new this().table;
   }
 
   /**
@@ -962,7 +950,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/time).
    */
   public static get time(): Log {
-    return new Log().time;
+    return new this().time;
   }
 
   /**
@@ -992,7 +980,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/timeEnd).
    */
   public static get timeEnd(): Log {
-    return new Log().timeEnd;
+    return new this().timeEnd;
   }
 
   /**
@@ -1014,7 +1002,7 @@ export default class Log {
    * This is a non-standard method.
    */
   public static get timeNow(): Log {
-    return new Log().timeNow;
+    return new this().timeNow;
   }
 
   /**
@@ -1036,7 +1024,7 @@ export default class Log {
    * This is a non-standard API.
    */
   public static get timestamp(): Log {
-    return new Log().timestamp;
+    return new this().timestamp;
   }
 
   /**
@@ -1060,7 +1048,7 @@ export default class Log {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/trace)
    */
   public static get trace(): Log {
-    return new Log().trace;
+    return new this().trace;
   }
 
   /**
@@ -1078,14 +1066,16 @@ export default class Log {
    * Allows emoji's to be printed in pretty logs.
    */
   public static get withEmoji(): Log {
-    return new Log().withEmoji;
+    return new this().withEmoji;
   }
 
   ////////////////////////////////////////////////////////
   // Private Methods
   ////////////////////////////////////////////////////////
 
-  private terminate(terminator: Terminator, level: LevelConfig, args: unknown[]): void {
+  protected terminate(terminator: string, args: unknown[]): void {
+    // Get the level configuration based on the level name.
+    const level = this.getLevelConfig(terminator);
     // Generate the timestamp
     const timestamp = formatISO(new Date());
 
@@ -1127,7 +1117,7 @@ export default class Log {
   /**
    * Returns a formatter constructor based on the provided format.
    */
-  private selectFormatter(format: Format): FormatterConstructor {
+  protected selectFormatter(format: Format): FormatterConstructor {
     switch (format) {
       case 'pretty':
         return PrettyFormatter;
@@ -1145,12 +1135,26 @@ export default class Log {
   /**
    * Merge the user configuration with the default configuration and the global configuration.
    */
-  private mergeConfiguration(cfg?: UserConfiguration): Configuration {
-    return {
-      ...defaultConfiguration,
-      ...cfg,
-      ...this.globalContext?.$adzeGlobal?.configuration,
-    };
+  protected mergeConfiguration(cfg?: UserConfiguration): void {
+    this._cfg = mergeConfiguration(this._cfg, cfg, this.globalContext?.$adzeGlobal?.configuration);
+  }
+
+  /**
+   * Returns the level configuration object based on the provided level name.
+   */
+  protected getLevelConfig(levelName: string): LevelConfig {
+    return this._cfg.levels[levelName];
+  }
+
+  /**
+   * Adds a custom level to the log instance configuration.
+   */
+  protected customLevel(name: string, cfg: LevelConfig): void {
+    this.mergeConfiguration({
+      levels: {
+        [name]: cfg,
+      },
+    });
   }
 
   /**

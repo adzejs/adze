@@ -1,5 +1,5 @@
 import { formats } from '../constants';
-import { Level } from './log';
+import { Level, LevelConfig } from './log';
 
 /**
  * All valid log formats. These determine the style that is emitted.
@@ -13,7 +13,7 @@ export interface Configuration {
   /**
    * The level of logs to render.
    */
-  activeLevel: Level;
+  activeLevel: Level | number;
   /**
    * Should logs be cached for recall?
    */
@@ -51,6 +51,10 @@ export interface Configuration {
    * Render emoji's in the log output.
    */
   withEmoji: boolean;
+  /**
+   * Configuration of all log levels.
+   */
+  levels: Record<string, LevelConfig>;
 }
 
 /**

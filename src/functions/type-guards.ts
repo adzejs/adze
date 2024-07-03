@@ -25,6 +25,14 @@ export function hasOwnProperties<
 }
 
 /**
+ * Type Guard to validate that the value is a number.
+ */
+export function isNumber(value: unknown): value is number {
+  // Number(null) returns 0 😭
+  return value !== null && !isNaN(Number(value));
+}
+
+/**
  * Type guard to determine if a console method is a common method.
  */
 export function isMethodWithArgs(value: Method): value is MethodWithArgs {

@@ -1,7 +1,9 @@
-import { Configuration, LevelConfig, ModifierData } from '../_types';
+import { Configuration, Level, LevelConfig, ModifierData } from '../_types';
 import {
+  getActiveLevel,
   isBrowser,
   isMethodWithArgs,
+  isNumber,
   isSpecialMethod,
   isSpecialMethodWithLeader,
 } from '../functions';
@@ -26,6 +28,8 @@ export default abstract class Formatter {
    * Entry point to printing logs.
    */
   public print(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
+    // Do not print the log if its log level is higher than the active level.
+    if (getActiveLevel(this.cfg) < this.level.level) return [];
     if (this.cfg.silent) return [];
     if (mods.assertion === true) return [];
     if (mods.if === false) return [];

@@ -37,7 +37,7 @@ export default class PrettyFormatter extends Formatter {
    * Returns a formatted leader string.
    */
   private formatLeader(): string {
-    const name = ' ' + initialCaps(this.level.level);
+    const name = ' ' + initialCaps(this.level.levelName);
     if (this.cfg.withEmoji) {
       return `%c${this.formatEmoji()}%c${name}`;
     }

@@ -1,3 +1,4 @@
+import adze from '..';
 import {
   methodsWithArgs,
   levels,
@@ -8,7 +9,7 @@ import {
   specialMethodsWithArgsAndLeader,
 } from '../constants';
 import Formatter from '../formatters/formatter';
-import { Configuration } from './configuration';
+import { Configuration, UserConfiguration } from './configuration';
 import { Label } from './label';
 
 /**
@@ -58,6 +59,13 @@ export interface FormatterConstructor {
   new (cfg: Configuration, level: LevelConfig): Formatter;
 }
 
+/**
+ * Type for the constructor of an adze class.
+ */
+export interface AdzeConstructor {
+  new (cfg: UserConfiguration, modifierData?: ModifierData): adze;
+}
+
 export interface ModifierData {
   meta?: Record<string, unknown>;
   method?: Method;
@@ -81,7 +89,8 @@ export type Modifier = (data: ModifierData) => ModifierData;
  * Configuration object for a specific log level.
  */
 export interface LevelConfig {
-  level: Level;
+  levelName: string;
+  level: number;
   style: string;
   terminalStyle: string[];
   method: Method;
@@ -94,7 +103,7 @@ export interface LevelConfig {
 export type LogData = ModifierData &
   LevelConfig & {
     args: unknown[];
-    terminator: Terminator;
+    terminator: string;
     message: unknown[];
     timestamp: string;
   };

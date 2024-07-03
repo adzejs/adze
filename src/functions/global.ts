@@ -25,6 +25,9 @@ export function setup(cfg: UserConfiguration): void {
   ctxt.$adzeGlobal = new AdzeGlobal(cfg);
 }
 
+/**
+ * Removes the global log store from the environment.
+ */
 export function teardown(): void {
   if (isSetup(globalContext())) {
     delete globalContext().$adzeGlobal;
