@@ -26,13 +26,16 @@ class logger extends adze {
 // Run our demo modules
 export default function runDemo(adzelib) {
   const adze = adzelib.default;
-  defaultLevels(adze);
+  defaultLevels(adze, adzelib);
   configuration(adze);
   custom(adze);
   namespace(adze);
   label(adze, adzelib);
+  filterLevelRange(adze, adzelib);
+  filterLevels(adze, adzelib);
+  filterNamespaces(adze, adzelib);
+  filterLabels(adze, adzelib);
   counting(adze, adzelib);
-  time(adze, adzelib);
   tests(adze, adzelib);
   dir(adze);
   table(adze);
@@ -41,9 +44,13 @@ export default function runDemo(adzelib) {
   trace(adze);
   timestamp(adze);
   silent(adze);
+  time(adze, adzelib);
 }
 
-function defaultLevels(adze) {
+function defaultLevels(adze, { setup, teardown }) {
+  setup({
+    activeLevel: 'verbose',
+  });
   adze.alert('Example alert log');
   adze.error('Example error log');
   adze.warn('Example warning log');
@@ -53,7 +60,7 @@ function defaultLevels(adze) {
   adze.log('Example log');
   adze.debug('Example debug log');
   adze.verbose('Example verbose log');
-  const log2 = adze.seal({ withEmoji: true });
+  const log2 = adze.withEmoji.seal();
   log2.alert('Example alert log');
   log2.error('Example error log');
   log2.warn('Example warning log');
@@ -63,19 +70,7 @@ function defaultLevels(adze) {
   log2.log('Example log');
   log2.debug('Example debug log');
   log2.verbose('Example verbose log');
-  // adze({
-  //   useEmoji: true,
-  //   customLevels: {
-  //     customError: {
-  //       level: 1,
-  //       method: "error",
-  //       style:
-  //         "font-size: 10px; font-weight: bold; border-radius: 0 10px 10px 0; border-width: 1px; border-style: solid; padding-right: 10px; background: linear-gradient(to right, #ffcafc, #ff02f2); color: #fff; border-color: #e3bbbb;",
-  //       terminal: ["bgRed", "white"],
-  //       emoji: "😭",
-  //     },
-  //   },
-  // }).custom("customError", "This is a custom error log");
+  teardown();
 }
 
 function configuration(adze) {
@@ -98,27 +93,144 @@ function label(adze, { setup, teardown }) {
   teardown();
 }
 
+function filterLevelRange(adze, { setup, teardown }) {
+  setup({
+    activeLevel: 'verbose',
+    filters: {
+      levels: [4, '-', 8],
+    },
+  });
+  adze.alert('This should show.');
+  adze.error('This should show.');
+  adze.warn('This should show.');
+  adze.info('This should show.');
+  adze.fail('This should not show.');
+  adze.success('This should not show.');
+  adze.log('This should not show.');
+  adze.debug('This should not show.');
+  adze.verbose('This should not show.');
+  teardown();
+  setup({
+    activeLevel: 'verbose',
+    filters: {
+      levels: ['fail', '-', 'verbose'],
+    },
+  });
+  adze.alert('This should show.');
+  adze.error('This should show.');
+  adze.warn('This should show.');
+  adze.info('This should show.');
+  adze.fail('This should not show.');
+  adze.success('This should not show.');
+  adze.log('This should not show.');
+  adze.debug('This should not show.');
+  adze.verbose('This should not show.');
+  teardown();
+}
+
+function filterLevels(adze, { setup, teardown }) {
+  setup({
+    activeLevel: 'verbose',
+    filters: {
+      levels: [0, 2, 4, 6, 8],
+    },
+  });
+  adze.alert('This should not show.');
+  adze.error('This should show.');
+  adze.warn('This should not show.');
+  adze.info('This should show.');
+  adze.fail('This should not show.');
+  adze.success('This should show.');
+  adze.log('This should not show.');
+  adze.debug('This should show.');
+  adze.verbose('This should not show.');
+  teardown();
+}
+
+function filterNamespaces(adze, { setup, teardown }) {
+  setup({
+    activeLevel: 'verbose',
+    filters: {
+      namespaces: {
+        include: ['foo', 'bar'],
+      },
+    },
+  });
+  adze.ns('hello').alert('This should not show.');
+  adze.ns('world').error('This should not show.');
+  adze.ns('foo', 'bar').warn('This should show.');
+  adze.ns('baz', 'bar').info('This should show.');
+  adze.ns('baz', 'foo').fail('This should show.');
+  adze.success('This should not show.');
+  adze.log('This should not show.');
+  adze.debug('This should not show.');
+  adze.verbose('This should not show.');
+  teardown();
+  setup({
+    activeLevel: 'verbose',
+    filters: {
+      namespaces: {
+        exclude: ['foo', 'bar'],
+      },
+    },
+  });
+  adze.ns('hello').alert('This should show.');
+  adze.ns('world').error('This should show.');
+  adze.ns('foo', 'bar').warn('This should not show.');
+  adze.ns('baz', 'bar').info('This should not show.');
+  adze.ns('baz', 'foo').fail('This should not show.');
+  adze.success('This should not show.');
+  adze.log('This should not show.');
+  adze.debug('This should not show.');
+  adze.verbose('This should not show.');
+  teardown();
+}
+
+function filterLabels(adze, { setup, teardown }) {
+  setup({
+    activeLevel: 'verbose',
+    filters: {
+      labels: {
+        include: ['foo', 'bar'],
+      },
+    },
+  });
+  adze.label('hello').alert('This should not show.');
+  adze.label('world').error('This should not show.');
+  adze.label('foo').warn('This should show.');
+  adze.label('bar').info('This should show.');
+  adze.label('baz').fail('This should not show.');
+  adze.success('This should not show.');
+  adze.log('This should not show.');
+  adze.debug('This should not show.');
+  adze.verbose('This should not show.');
+  teardown();
+  setup({
+    activeLevel: 'verbose',
+    filters: {
+      labels: {
+        exclude: ['foo', 'bar'],
+      },
+    },
+  });
+  adze.label('hello').alert('This should show.');
+  adze.label('world').error('This should show.');
+  adze.label('foo').warn('This should not show.');
+  adze.label('bar').info('This should not show.');
+  adze.label('baz').fail('This should show.');
+  adze.success('This should not show.');
+  adze.log('This should not show.');
+  adze.debug('This should not show.');
+  adze.verbose('This should not show.');
+  teardown();
+}
+
 function counting(adze, { setup, teardown }) {
   setup();
   for (let i = 0; i < 10; i++) {
     adze.label('foo').count.log('This is a labeled log');
   }
   teardown();
-}
-
-function time(adze, { setup, teardown }) {
-  setup();
-  adze.timeNow.log('This is a time log');
-  adze.withEmoji.timeNow.log('This is a time log with emoji');
-  adze.label('timer').time.log('Starting a timer');
-  setTimeout(() => {
-    adze.label('timer').timeEnd.log('Ending a timer');
-  }, 1000);
-  adze.withEmoji.label('timer2').time.log('Starting a timer');
-  setTimeout(() => {
-    adze.withEmoji.label('timer2').timeEnd.log('Ending a timer with emoji');
-    teardown();
-  }, 1000);
 }
 
 function tests(adze) {
@@ -167,4 +279,19 @@ function timestamp(adze) {
 
 function silent(adze) {
   adze.silent.log('You should not see me.');
+}
+
+function time(adze, { setup, teardown }) {
+  setup();
+  adze.timeNow.log('This is a time log');
+  adze.withEmoji.timeNow.log('This is a time log with emoji');
+  adze.label('timer').time.log('Starting a timer');
+  setTimeout(() => {
+    adze.label('timer').timeEnd.log('Ending a timer');
+  }, 1000);
+  adze.withEmoji.label('timer2').time.log('Starting a timer');
+  setTimeout(() => {
+    adze.withEmoji.label('timer2').timeEnd.log('Ending a timer with emoji');
+    teardown();
+  }, 1000);
 }

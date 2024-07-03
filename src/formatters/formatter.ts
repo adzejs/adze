@@ -1,12 +1,17 @@
-import { Configuration, Level, LevelConfig, ModifierData } from '../_types';
+import { Configuration, LevelConfig, ModifierData } from '../_types';
 import {
   getActiveLevel,
   isBrowser,
   isMethodWithArgs,
-  isNumber,
   isSpecialMethod,
   isSpecialMethodWithLeader,
 } from '../functions';
+import {
+  failsLevelFilter,
+  normalizeLevelFilter,
+  isNotIncluded,
+  isExcluded,
+} from '../functions/filters';
 
 export default abstract class Formatter {
   /**
@@ -29,13 +34,15 @@ export default abstract class Formatter {
    */
   public print(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
     // Do not print the log if its log level is higher than the active level.
-    if (getActiveLevel(this.cfg) < this.level.level) return [];
+    if (this.level.level > getActiveLevel(this.cfg)) return [];
+    if (this.failsFilters(mods)) return [];
     if (this.cfg.silent) return [];
     if (mods.assertion === true) return [];
     if (mods.if === false) return [];
     if (mods.method && !isSpecialMethodWithLeader(mods.method)) {
       if (isSpecialMethod(mods.method) && isMethodWithArgs(mods.method)) return args;
     }
+    // Select the appropriate formatter method on the environment.
     const message = isBrowser()
       ? this.formatBrowser(mods, timestamp, args)
       : this.formatNode(mods, timestamp, args);
@@ -56,4 +63,26 @@ export default abstract class Formatter {
    * Return a string format for your logs in Node.js.
    */
   protected abstract formatNode(data: ModifierData, timestamp: string, args: unknown[]): unknown[];
+
+  /**
+   * Checks if the log fails to pass any filters.
+   */
+  private failsFilters(mods: ModifierData): boolean {
+    // Is this log level filtered out?
+    const normalizedLevelFilter = normalizeLevelFilter(this.cfg, this.cfg.filters.levels);
+    if (failsLevelFilter(normalizedLevelFilter, this.level.level)) return true;
+    // ---- Handle Namespaces ----
+    // Is the log namespace included in the filter?
+    if (isNotIncluded(this.cfg.filters.namespaces.include, mods.namespace ?? [])) return true;
+    // Is the log namespace excluded in the filter?
+    if (isExcluded(this.cfg.filters.namespaces.exclude, mods.namespace ?? [])) return true;
+    // ---- Handle Labels ----
+    const label = mods.label?.name ? [mods.label.name] : [];
+    // Is the log label included in the filter?
+    if (isNotIncluded(this.cfg.filters.labels.include, label)) return true;
+    // Is the log label excluded in the filter?
+    if (isExcluded(this.cfg.filters.labels.exclude, label)) return true;
+    // If it passes all of the filters
+    return false;
+  }
 }

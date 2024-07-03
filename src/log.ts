@@ -1084,6 +1084,7 @@ export default class Log {
 
     // Run the modifier queue to modify the data object.
     this.runModifierQueue();
+    // console.log('CFG AFTER MODIFIER QUEUE', this._cfg);
 
     // call beforeTerminated hook
 

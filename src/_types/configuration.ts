@@ -55,6 +55,44 @@ export interface Configuration {
    * Configuration of all log levels.
    */
   levels: Record<string, LevelConfig>;
+  /**
+   * Filter logs based on the provided criteria.
+   */
+  filters: Filters;
+}
+
+/**
+ * Configuration for filtering logs.
+ */
+export interface Filters {
+  levels: LevelFilter;
+  /**
+   * Filter by log namespaces.
+   */
+  namespaces: FilterValues;
+  /**
+   * Filter by log labels.
+   */
+  labels: FilterValues;
+}
+
+/**
+ * The log levels to filter.
+ */
+export type LevelFilter = '*' | string[] | number[] | [number, '-', number] | [string, '-', string];
+
+/**
+ * The values to include or exclude logs from printing.
+ */
+export interface FilterValues {
+  /**
+   * Values to only include in printing. This has a higher priority than `exclude`.
+   */
+  include: string[];
+  /**
+   * Values to exclude from printing.
+   */
+  exclude: string[];
 }
 
 /**

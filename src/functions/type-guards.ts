@@ -1,4 +1,4 @@
-import { Method, MethodWithArgs, MethodWithoutArgs, SpecialMethod } from '../_types';
+import { LevelFilter, Method, MethodWithArgs, MethodWithoutArgs, SpecialMethod } from '../_types';
 import {
   methodsWithArgs,
   specialMethods,
@@ -58,4 +58,20 @@ export function isSpecialMethod(value: Method): value is SpecialMethod {
  */
 export function isSpecialMethodWithLeader(value: Method): value is SpecialMethod {
   return specialMethodsWithArgsAndLeader.includes(value as any);
+}
+
+/**
+ * Type guard to determine if the value is an array of strings.
+ */
+export function isStringArray(value: unknown[]): value is string[] {
+  return value.every((v) => isString(v));
+}
+
+/**
+ * Type guard to determine if the value is a range tuple.
+ */
+export function isRange(
+  value: LevelFilter
+): value is [string, '-', string] | [number, '-', number] {
+  return Array.isArray(value) && value.length === 3 && value[1] === '-';
 }

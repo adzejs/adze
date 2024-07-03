@@ -1,11 +1,10 @@
-import { Configuration, Label, LabelMap, UserConfiguration } from './_types';
-import { defaultConfiguration } from './constants';
+import { Label, LabelMap, UserConfiguration } from './_types';
 
 export default class AdzeGlobal {
   /**
    * Global Adze configuration overrides.
    */
-  private config: Configuration;
+  private config: UserConfiguration;
 
   /**
    * All log labels.
@@ -13,13 +12,13 @@ export default class AdzeGlobal {
   private labels: LabelMap = new Map();
 
   constructor(configuration: UserConfiguration) {
-    this.config = { ...defaultConfiguration, ...configuration };
+    this.config = configuration;
   }
 
   /**
    * Get the global Adze configuration.
    */
-  public get configuration(): Configuration {
+  public get configuration(): UserConfiguration {
     return this.config;
   }
 

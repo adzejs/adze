@@ -1,4 +1,4 @@
-import { Configuration, Format, LevelConfig } from './_types';
+import { Configuration, LevelConfig } from './_types';
 import { isChrome, isSafari } from './functions';
 
 /**
@@ -103,6 +103,17 @@ export const defaultConfiguration: Configuration = {
     log: getLogConfig(),
     debug: getDebugConfig(),
     verbose: getVerboseConfig(),
+  },
+  filters: {
+    levels: [],
+    namespaces: {
+      include: [],
+      exclude: [],
+    },
+    labels: {
+      include: [],
+      exclude: [],
+    },
   },
 };
 
