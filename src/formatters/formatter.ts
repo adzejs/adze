@@ -64,25 +64,53 @@ export default abstract class Formatter {
    */
   protected abstract formatNode(data: ModifierData, timestamp: string, args: unknown[]): unknown[];
 
-  /**
-   * Checks if the log fails to pass any filters.
-   */
   private failsFilters(mods: ModifierData): boolean {
-    // Is this log level filtered out?
+    if (this.failsLevelFilter()) return true;
+    if (this.failsNamespacesFilter(mods)) return true;
+    if (this.failsLabelsFilter(mods)) return true;
+    return false;
+  }
+
+  /**
+   * Validate that if a level filter is set the log passes the filter.
+   */
+  private failsLevelFilter(): boolean {
+    if (this.cfg.filters?.levels === undefined) return false;
     const normalizedLevelFilter = normalizeLevelFilter(this.cfg, this.cfg.filters.levels);
     if (failsLevelFilter(normalizedLevelFilter, this.level.level)) return true;
-    // ---- Handle Namespaces ----
-    // Is the log namespace included in the filter?
-    if (isNotIncluded(this.cfg.filters.namespaces.include, mods.namespace ?? [])) return true;
-    // Is the log namespace excluded in the filter?
-    if (isExcluded(this.cfg.filters.namespaces.exclude, mods.namespace ?? [])) return true;
-    // ---- Handle Labels ----
-    const label = mods.label?.name ? [mods.label.name] : [];
-    // Is the log label included in the filter?
-    if (isNotIncluded(this.cfg.filters.labels.include, label)) return true;
-    // Is the log label excluded in the filter?
-    if (isExcluded(this.cfg.filters.labels.exclude, label)) return true;
-    // If it passes all of the filters
+    return false;
+  }
+
+  /**
+   * Validate that if a namespaces filter is set the log passes the filter.
+   */
+  private failsNamespacesFilter(mods: ModifierData): boolean {
+    if (this.cfg.filters?.namespaces === undefined) return false;
+    if (this.cfg.filters.namespaces.values.length > 0 && mods.namespace === undefined) return true;
+    if (this.cfg.filters?.namespaces.type === 'include') {
+      const namespaces = mods.namespace ?? [];
+      return isNotIncluded(this.cfg.filters?.namespaces.values, namespaces);
+    }
+    if (this.cfg.filters?.namespaces.type === 'exclude') {
+      const namespaces = mods.namespace ?? [];
+      return isExcluded(this.cfg.filters?.namespaces.values, namespaces);
+    }
+    return false;
+  }
+
+  /**
+   * Validate that if a labels filter is set the log passes the filter.
+   */
+  private failsLabelsFilter(mods: ModifierData): boolean {
+    if (this.cfg.filters?.labels === undefined) return false;
+    if (this.cfg.filters.labels.values?.length > 0 && mods.label === undefined) return true;
+    const label = mods.label ? [mods.label.name] : [];
+    if (this.cfg.filters?.labels.type === 'include') {
+      return isNotIncluded(this.cfg.filters?.labels.values, label);
+    }
+    if (this.cfg.filters?.labels.type === 'exclude') {
+      return isExcluded(this.cfg.filters?.labels.values, label);
+    }
     return false;
   }
 }

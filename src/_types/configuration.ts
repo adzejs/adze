@@ -58,22 +58,22 @@ export interface Configuration {
   /**
    * Filter logs based on the provided criteria.
    */
-  filters: Filters;
+  filters?: Filters;
 }
 
 /**
  * Configuration for filtering logs.
  */
 export interface Filters {
-  levels: LevelFilter;
+  levels?: LevelFilter;
   /**
    * Filter by log namespaces.
    */
-  namespaces: FilterValues;
+  namespaces?: FilterConfig;
   /**
    * Filter by log labels.
    */
-  labels: FilterValues;
+  labels?: FilterConfig;
 }
 
 /**
@@ -84,15 +84,15 @@ export type LevelFilter = '*' | string[] | number[] | [number, '-', number] | [s
 /**
  * The values to include or exclude logs from printing.
  */
-export interface FilterValues {
+export interface FilterConfig {
   /**
-   * Values to only include in printing. This has a higher priority than `exclude`.
+   * The type of filter to apply.
    */
-  include: string[];
+  type: 'include' | 'exclude';
   /**
-   * Values to exclude from printing.
+   * Values to include or exclude from printing.
    */
-  exclude: string[];
+  values: string[];
 }
 
 /**

@@ -35,6 +35,7 @@ export default function runDemo(adzelib) {
   filterLevels(adze, adzelib);
   filterNamespaces(adze, adzelib);
   filterLabels(adze, adzelib);
+  filterBoth(adze, adzelib);
   counting(adze, adzelib);
   tests(adze, adzelib);
   dir(adze);
@@ -152,7 +153,8 @@ function filterNamespaces(adze, { setup, teardown }) {
     activeLevel: 'verbose',
     filters: {
       namespaces: {
-        include: ['foo', 'bar'],
+        type: 'include',
+        values: ['foo', 'bar'],
       },
     },
   });
@@ -170,7 +172,8 @@ function filterNamespaces(adze, { setup, teardown }) {
     activeLevel: 'verbose',
     filters: {
       namespaces: {
-        exclude: ['foo', 'bar'],
+        type: 'exclude',
+        values: ['foo', 'bar'],
       },
     },
   });
@@ -191,7 +194,8 @@ function filterLabels(adze, { setup, teardown }) {
     activeLevel: 'verbose',
     filters: {
       labels: {
-        include: ['foo', 'bar'],
+        type: 'include',
+        values: ['foo', 'bar'],
       },
     },
   });
@@ -209,13 +213,63 @@ function filterLabels(adze, { setup, teardown }) {
     activeLevel: 'verbose',
     filters: {
       labels: {
-        exclude: ['foo', 'bar'],
+        type: 'exclude',
+        values: ['foo', 'bar'],
       },
     },
   });
   adze.label('hello').alert('This should show.');
   adze.label('world').error('This should show.');
   adze.label('foo').warn('This should not show.');
+  adze.label('bar').info('This should not show.');
+  adze.label('baz').fail('This should show.');
+  adze.success('This should not show.');
+  adze.log('This should not show.');
+  adze.debug('This should not show.');
+  adze.verbose('This should not show.');
+  teardown();
+}
+
+function filterBoth(adze, { setup, teardown }) {
+  setup({
+    activeLevel: 'verbose',
+    filters: {
+      labels: {
+        type: 'include',
+        values: ['foo', 'bar'],
+      },
+      namespaces: {
+        type: 'include',
+        values: ['hello'],
+      },
+    },
+  });
+  adze.label('hello').alert('This should not show.');
+  adze.label('world').error('This should not show.');
+  adze.label('foo').warn('This should show.');
+  adze.label('bar').ns('hello').info('This should show.');
+  adze.ns('hello').label('foo').fail('This should show.');
+  adze.ns('hello').success('This should not show.');
+  adze.log('This should not show.');
+  adze.debug('This should not show.');
+  adze.verbose('This should not show.');
+  teardown();
+  setup({
+    activeLevel: 'verbose',
+    filters: {
+      labels: {
+        type: 'exclude',
+        values: ['foo', 'bar'],
+      },
+      namespaces: {
+        type: 'exclude',
+        values: ['hello'],
+      },
+    },
+  });
+  adze.ns('hello').label('foo').alert('This should not show.');
+  adze.ns('world').label('foo').error('This should not show.');
+  adze.label('baz').ns('derp').warn('This should show.');
   adze.label('bar').info('This should not show.');
   adze.label('baz').fail('This should show.');
   adze.success('This should not show.');

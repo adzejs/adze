@@ -63,7 +63,8 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
-    "date-fns": "^3.6.0"
+    "date-fns": "^3.6.0",
+    "mergician": "^2.0.2"
   },
   "size-limit": [
     {

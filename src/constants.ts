@@ -104,17 +104,6 @@ export const defaultConfiguration: Configuration = {
     debug: getDebugConfig(),
     verbose: getVerboseConfig(),
   },
-  filters: {
-    levels: [],
-    namespaces: {
-      include: [],
-      exclude: [],
-    },
-    labels: {
-      include: [],
-      exclude: [],
-    },
-  },
 };
 
 /**
