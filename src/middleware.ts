@@ -1,25 +1,40 @@
 import { ModifierData } from '.';
 import Log from './log';
 
-export abstract class Middleware {
-  // - constructed
-  // - before modifier registered
-  // - after modifier registered
-  // - before modifier applied
-  // - after modifier applied
-  // - before format applied
-  // - after format applied
-  // - before terminated
-  // - before print
-  // - after print
-  // - after terminated
-  public abstract constructed(log: Log): void;
-  public abstract beforeModifierApplied(log: Log, data: ModifierData): void;
-  public abstract afterModifierApplied(log: Log, data: ModifierData): void;
-  public abstract beforeFormatApplied(log: Log, message: unknown[]): void;
-  public abstract afterFormatApplied(log: Log, message: unknown[]): void;
-  public abstract beforePrint(log: Log): void;
-  public abstract afterPrint(log: Log): void;
-  public abstract beforeTerminated(log: Log): void;
-  public abstract afterTerminated(log: Log): void;
+/**
+ * Middleware interface that defines the hooks that can be implemented by middleware.
+ */
+export interface Middleware {
+  /**
+   * Hook that is called during construction of a log instance.
+   */
+  constructed?: (log: Log) => void;
+  /**
+   * Hook that is called just before a log is terminated.
+   */
+  beforeTerminated?: (log: Log, terminator: string, args: unknown[]) => void;
+  /**
+   * Hook that is called just before a modifier is applied to a log instance.
+   */
+  beforeModifierApplied?: (log: Log, data: ModifierData) => void;
+  /**
+   * Hook that is called just after a modifier is applied to a log instance.
+   */
+  afterModifierApplied?: (log: Log, data: ModifierData) => void;
+  /**
+   * Hook that is called just before a formatter is applied to a log instance to format a message.
+   */
+  beforeFormatApplied?: (log: Log, message: unknown[]) => void;
+  /**
+   * Hook that is called just after a formatter is applied to a log instance to format a message.
+   */
+  afterFormatApplied?: (log: Log, message: unknown[]) => void;
+  /**
+   * Hook that is called just before a log instance message is printed to the browser or console.
+   */
+  beforePrint?: (log: Log) => void;
+  /**
+   * Hook that is called just when a log instance has completed termination.
+   */
+  afterTerminated?: (log: Log) => void;
 }

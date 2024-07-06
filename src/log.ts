@@ -20,6 +20,7 @@ import {
 } from './functions';
 import { formatISO } from 'date-fns/formatISO';
 import PrettyFormatter from './formatters/pretty';
+import { Middleware } from './middleware';
 
 export default class Log {
   /**
@@ -51,7 +52,7 @@ export default class Log {
     this.globalContext = globalContext();
     this._modifierData = modifierData ?? {};
     this._cfg = mergeConfiguration({}, cfg, this.globalContext?.$adzeGlobal?.configuration);
-    this._cfg.middleware?.forEach((middleware) => middleware.constructed(this));
+    this.doHook((m) => (m.constructed ? m.constructed(this) : null));
   }
 
   ////////////////////////////////////////////////////////
@@ -1079,6 +1080,9 @@ export default class Log {
   ////////////////////////////////////////////////////////
 
   protected terminate(terminator: string, args: unknown[]): void {
+    // Run the beforeTerminated middleware hooks
+    this.doHook((m) => (m.beforeTerminated ? m.beforeTerminated(this, terminator, args) : null));
+
     // Get the level configuration based on the level name.
     const level = this.getLevelConfig(terminator);
     // Generate the timestamp
@@ -1095,7 +1099,7 @@ export default class Log {
 
     // Create our final log data object
     const message = new formatter(this._cfg, level).print(this.modifierData, timestamp, args);
-    this._cfg.middleware?.forEach((middleware) => middleware.beforeFormatApplied(this, message));
+    this.doHook((m) => (m.beforeFormatApplied ? m.beforeFormatApplied(this, message) : null));
     const data: LogData = {
       ...level,
       ...this.modifierData,
@@ -1104,10 +1108,12 @@ export default class Log {
       timestamp,
       message,
     };
-    this._cfg.middleware?.forEach((middleware) => middleware.afterFormatApplied(this, message));
+    this.doHook((m) => (m.afterFormatApplied ? m.afterFormatApplied(this, message) : null));
 
     // save the data to this instance
     this._data = data;
+
+    this.doHook((m) => (m.beforePrint ? m.beforePrint(this) : null));
 
     // Don't print if the message is empty.
     if (data.message.length === 0) return;
@@ -1118,9 +1124,7 @@ export default class Log {
       console[data.method]();
     }
 
-    // console.debug('CFG', this._cfg);
-    // console.debug('DATA', data);
-    // call terminated hook
+    this.doHook((m) => (m.afterTerminated ? m.afterTerminated(this) : null));
   }
 
   /**
@@ -1172,9 +1176,16 @@ export default class Log {
   private runModifierQueue(): void {
     this.modifierQueue.forEach((modifier) => {
       const result = modifier(this.modifierData);
-      this._cfg.middleware?.forEach((middleware) => middleware.beforeModifierApplied(this, result));
+      this.doHook((m) => (m.beforeModifierApplied ? m.beforeModifierApplied(this, result) : null));
       this._modifierData = result;
-      this._cfg.middleware?.forEach((middleware) => middleware.afterModifierApplied(this, result));
+      this.doHook((m) => (m.afterModifierApplied ? m.afterModifierApplied(this, result) : null));
     });
+  }
+
+  /**
+   * Execute a middleware hook.
+   */
+  private doHook(cb: (middleware: Middleware) => void): void {
+    this._cfg.middleware?.forEach((middleware) => cb(middleware));
   }
 }
