@@ -35,7 +35,7 @@ export default class Log {
   /**
    * Incomplete log data.
    */
-  protected modifierData: ModifierData;
+  protected _modifierData: ModifierData;
 
   /**
    * The log data object.
@@ -49,8 +49,9 @@ export default class Log {
 
   constructor(cfg: UserConfiguration = {}, modifierData?: ModifierData) {
     this.globalContext = globalContext();
-    this.modifierData = modifierData ?? {};
+    this._modifierData = modifierData ?? {};
     this._cfg = mergeConfiguration({}, cfg, this.globalContext?.$adzeGlobal?.configuration);
+    this._cfg.middleware?.forEach((middleware) => middleware.constructed(this));
   }
 
   ////////////////////////////////////////////////////////
@@ -59,6 +60,10 @@ export default class Log {
 
   public get data(): LogData | undefined {
     return this.data;
+  }
+
+  public get modifierData(): ModifierData {
+    return this.modifierData;
   }
 
   public get configuration(): Configuration {
@@ -1089,14 +1094,17 @@ export default class Log {
     // call beforeTerminated hook
 
     // Create our final log data object
+    const message = new formatter(this._cfg, level).print(this.modifierData, timestamp, args);
+    this._cfg.middleware?.forEach((middleware) => middleware.beforeFormatApplied(this, message));
     const data: LogData = {
       ...level,
       ...this.modifierData,
       terminator,
       args,
       timestamp,
-      message: new formatter(this._cfg, level).print(this.modifierData, timestamp, args),
+      message,
     };
+    this._cfg.middleware?.forEach((middleware) => middleware.afterFormatApplied(this, message));
 
     // save the data to this instance
     this._data = data;
@@ -1163,7 +1171,10 @@ export default class Log {
    */
   private runModifierQueue(): void {
     this.modifierQueue.forEach((modifier) => {
-      this.modifierData = modifier(this.modifierData);
+      const result = modifier(this.modifierData);
+      this._cfg.middleware?.forEach((middleware) => middleware.beforeModifierApplied(this, result));
+      this._modifierData = result;
+      this._cfg.middleware?.forEach((middleware) => middleware.afterModifierApplied(this, result));
     });
   }
 }

@@ -1,4 +1,5 @@
 import { formats } from '../constants';
+import { Middleware } from '../middleware';
 import { Level, LevelConfig } from './log';
 
 /**
@@ -33,7 +34,7 @@ export interface Configuration {
   /**
    * Applies middleware to execute along with the log.
    */
-  middleware: unknown[];
+  middleware?: Middleware[];
   /**
    * Allow processing of logs but do not generate them automatically.
    *
