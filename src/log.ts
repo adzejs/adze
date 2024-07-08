@@ -1085,17 +1085,17 @@ export default class Log<N extends string = string> {
 
     // Get the level configuration based on the level name.
     const level = this.getLevelConfig(terminator);
-    // Generate the timestamp
-    const timestamp = formatISO(new Date());
+    // Generate the timestamp. Use the user configured formatter if it is set.
+    // console.log('CFG', this._cfg);
+    const timestamp = this._cfg?.timestampFormatter
+      ? this._cfg?.timestampFormatter(new Date())
+      : formatISO(new Date());
 
     // Get the log formatter
     const formatter = this.selectFormatter(this._cfg.format);
 
     // Run the modifier queue to modify the data object.
     this.runModifierQueue();
-    // console.log('CFG AFTER MODIFIER QUEUE', this._cfg);
-
-    // call beforeTerminated hook
 
     // Create our final log data object
     const message = new formatter(this._cfg, level).print(this.modifierData, timestamp, args);

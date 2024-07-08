@@ -60,6 +60,10 @@ export interface Configuration {
    * Filter logs based on the provided criteria.
    */
   filters?: Filters;
+  /**
+   * A callback that allows the user to return a custom timestamp format for each log.
+   */
+  timestampFormatter?: (date: Date) => string;
 }
 
 /**

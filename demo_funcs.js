@@ -43,7 +43,7 @@ export default function runDemo(adzelib) {
   group(adze);
   groupCollapsed(adze);
   trace(adze);
-  timestamp(adze);
+  timestamp(adze, adzelib);
   silent(adze);
   time(adze, adzelib);
 }
@@ -327,8 +327,16 @@ function trace(adze) {
   adze.trace.log('Tracing...');
 }
 
-function timestamp(adze) {
+function timestamp(adze, { setup, teardown }) {
   adze.timestamp.log('This is a log with the timestamp printed.');
+  setup({
+    activeLevel: 'verbose',
+    timestampFormatter: () => {
+      return 'doobadoo';
+    },
+  });
+  adze.timestamp.log('This is a log with a custom timestamp.');
+  teardown();
 }
 
 function silent(adze) {
