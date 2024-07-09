@@ -11,7 +11,7 @@ export default class AdzeGlobal {
    */
   private labels: LabelMap = new Map();
 
-  constructor(configuration: UserConfiguration) {
+  constructor(configuration: UserConfiguration = {}) {
     this.config = configuration;
   }
 

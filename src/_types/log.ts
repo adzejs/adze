@@ -1,4 +1,4 @@
-import adze from '..';
+import adze, { ChalkStyle } from '..';
 import {
   methodsWithArgs,
   levels,
@@ -92,7 +92,7 @@ export interface LevelConfig {
   levelName: string;
   level: number;
   style: string;
-  terminalStyle: string[];
+  terminalStyle: ChalkStyle[];
   method: Method;
   emoji: string;
 }

@@ -1,7 +1,7 @@
-import adze from './dist/index.js';
+import adze, { setup, teardown, ModifierData, UserConfiguration } from '.';
 
 class logger extends adze {
-  constructor(cfg = {}, modifierData) {
+  constructor(cfg: UserConfiguration = {}, modifierData?: ModifierData) {
     super(cfg, modifierData);
     this.customLevel('leetLevel', {
       levelName: 'leetLevel',
@@ -14,41 +14,40 @@ class logger extends adze {
     });
   }
 
-  leetLevel(...args) {
+  public leetLevel(...args: unknown[]): void {
     this.terminate('leetLevel', args);
   }
 
-  static leetLevel(...args) {
-    return new this().leetLevel(...args);
+  public static leetLevel(...args: unknown[]): void {
+    new logger().leetLevel(...args);
   }
 }
 
 // Run our demo modules
-export default function runDemo(adzelib) {
-  const adze = adzelib.default;
-  defaultLevels(adze, adzelib);
-  configuration(adze);
-  custom(adze);
-  namespace(adze);
-  label(adze, adzelib);
-  filterLevelRange(adze, adzelib);
-  filterLevels(adze, adzelib);
-  filterNamespaces(adze, adzelib);
-  filterLabels(adze, adzelib);
-  filterBoth(adze, adzelib);
-  counting(adze, adzelib);
-  tests(adze, adzelib);
-  dir(adze);
-  table(adze);
-  group(adze);
-  groupCollapsed(adze);
-  trace(adze);
-  timestamp(adze);
-  silent(adze);
-  time(adze, adzelib);
+function runDemo() {
+  defaultLevels();
+  configuration();
+  custom();
+  namespace();
+  label();
+  filterLevelRange();
+  filterLevels();
+  filterNamespaces();
+  filterLabels();
+  filterBoth();
+  counting();
+  tests();
+  dir();
+  table();
+  group();
+  groupCollapsed();
+  trace();
+  timestamp();
+  silent();
+  time();
 }
 
-function defaultLevels(adze, { setup, teardown }) {
+function defaultLevels() {
   setup({
     activeLevel: 'verbose',
   });
@@ -74,7 +73,7 @@ function defaultLevels(adze, { setup, teardown }) {
   teardown();
 }
 
-function configuration(adze) {
+function configuration() {
   const logger = adze.cfg({ withEmoji: true }).seal();
   logger.alert('Example alert log with emoji from configuration!');
 }
@@ -83,18 +82,18 @@ function custom() {
   logger.cfg({ withEmoji: true, activeLevel: 1338 }).leetLevel('This is a custom log!');
 }
 
-function namespace(adze) {
+function namespace() {
   const logger = adze.ns('foo', 'bar').seal();
   logger.ns('baz').log('This is a namespaced log');
 }
 
-function label(adze, { setup, teardown }) {
+function label() {
   setup();
   adze.label('foo').log('This is a labeled log');
   teardown();
 }
 
-function filterLevelRange(adze, { setup, teardown }) {
+function filterLevelRange() {
   setup({
     activeLevel: 'verbose',
     filters: {
@@ -129,7 +128,7 @@ function filterLevelRange(adze, { setup, teardown }) {
   teardown();
 }
 
-function filterLevels(adze, { setup, teardown }) {
+function filterLevels() {
   setup({
     activeLevel: 'verbose',
     filters: {
@@ -148,7 +147,7 @@ function filterLevels(adze, { setup, teardown }) {
   teardown();
 }
 
-function filterNamespaces(adze, { setup, teardown }) {
+function filterNamespaces() {
   setup({
     activeLevel: 'verbose',
     filters: {
@@ -189,7 +188,7 @@ function filterNamespaces(adze, { setup, teardown }) {
   teardown();
 }
 
-function filterLabels(adze, { setup, teardown }) {
+function filterLabels() {
   setup({
     activeLevel: 'verbose',
     filters: {
@@ -230,7 +229,7 @@ function filterLabels(adze, { setup, teardown }) {
   teardown();
 }
 
-function filterBoth(adze, { setup, teardown }) {
+function filterBoth() {
   setup({
     activeLevel: 'verbose',
     filters: {
@@ -279,7 +278,7 @@ function filterBoth(adze, { setup, teardown }) {
   teardown();
 }
 
-function counting(adze, { setup, teardown }) {
+function counting() {
   setup();
   for (let i = 0; i < 10; i++) {
     adze.label('foo').count.log('This is a labeled log');
@@ -287,23 +286,24 @@ function counting(adze, { setup, teardown }) {
   teardown();
 }
 
-function tests(adze) {
+function tests() {
+  // @ts-expect-error Intentional error to test the assertion
   adze.assert(2 === 4).log('This is a failed assertion!');
+  // @ts-expect-error Intentional error to test the assertion
   adze.withEmoji.assert(2 === 4).log('This is a failed assertion with emoji!');
   adze.assert(4 === 4).log('This passed so it should not show!');
   adze.if(2 === 2).log('This condition passed!');
   adze.withEmoji.if(2 === 2).log('This condition passed with emoji!');
+  // @ts-expect-error Intentional error to test the assertion
   adze.if(2 === 4).log('This condition failed so it should not show!');
 }
 
-function dir(adze) {
+function dir() {
   adze.log({ foo: 'bar' });
   adze.dir.log({ foo: 'bar' });
-  adze.log(document.body);
-  adze.dirxml.log(document.body);
 }
 
-function table(adze) {
+function table() {
   const tabular_data = [
     { firstName: 'Andrew', lastName: 'Stacy' },
     { firstName: 'Jim', lastName: 'Bob' },
@@ -311,31 +311,39 @@ function table(adze) {
   adze.table.log(tabular_data);
 }
 
-function group(adze) {
+function group() {
   adze.group.log('This is a group.');
   adze.log('This is a child of a group log.');
   adze.groupEnd.log();
 }
 
-function groupCollapsed(adze) {
+function groupCollapsed() {
   adze.groupCollapsed.log('This is a collapsed group.');
   adze.log('This is a child of a collapsed group.');
   adze.groupEnd.log();
 }
 
-function trace(adze) {
+function trace() {
   adze.trace.log('Tracing...');
 }
 
-function timestamp(adze) {
+function timestamp() {
   adze.timestamp.log('This is a log with the timestamp printed.');
+  setup({
+    activeLevel: 'verbose',
+    timestampFormatter: () => {
+      return 'doobadoo';
+    },
+  });
+  adze.timestamp.log('This is a log with a custom timestamp.');
+  teardown();
 }
 
-function silent(adze) {
+function silent() {
   adze.silent.log('You should not see me.');
 }
 
-function time(adze, { setup, teardown }) {
+function time() {
   setup();
   adze.timeNow.log('This is a time log');
   adze.withEmoji.timeNow.log('This is a time log with emoji');
@@ -349,3 +357,5 @@ function time(adze, { setup, teardown }) {
     teardown();
   }, 1000);
 }
+
+runDemo();

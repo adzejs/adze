@@ -75,3 +75,16 @@ export function isRange(
 ): value is [string, '-', string] | [number, '-', number] {
   return Array.isArray(value) && value.length === 3 && value[1] === '-';
 }
+
+/**
+ * Validate that a log namespace is allowed.
+ */
+export function isNamespaceAllowed<N extends string[] = string[]>(
+  allowed: string[],
+  ns: string
+): ns is N[number] {
+  if (Array.isArray(allowed)) {
+    return allowed.includes(ns);
+  }
+  return false;
+}

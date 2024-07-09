@@ -1,3 +1,4 @@
+import { formatISO } from 'date-fns';
 import { Configuration, LevelConfig, ModifierData } from '../_types';
 import {
   getActiveLevel,
@@ -13,6 +14,9 @@ import {
   isExcluded,
 } from '../functions/filters';
 
+/**
+ * The base class for all adze log formatters.
+ */
 export default abstract class Formatter {
   /**
    * The configuration for the adze log.
@@ -24,9 +28,22 @@ export default abstract class Formatter {
    */
   protected level: LevelConfig;
 
+  /**
+   * The default timestamp formatter. Override this to customize for your own formatter.
+   */
+  protected timestampFormatFunction: (date: Date) => string = (date: Date) => formatISO(date);
+
   constructor(cfg: Configuration, level: LevelConfig) {
     this.cfg = cfg;
     this.level = level;
+  }
+
+  /**
+   * Returns the timestamp formatter override function or the timestamp formatter function from
+   * this formatter instance.
+   */
+  public get timestampFormatter(): (date: Date) => string {
+    return this.cfg?.timestampFormatter ? this.cfg?.timestampFormatter : this.timestampFormatter;
   }
 
   /**

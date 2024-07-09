@@ -37,16 +37,15 @@
     <script type="importmap">
       {
         "imports": {
+          "./src": "./dist/index.js",
+          "chalk": "./dist/functions/chalk-dummy.js",
           "date-fns/formatISO": "/node_modules/date-fns/formatISO.mjs",
           "mergician": "/node_modules/mergician/dist/mergician.esm.js"
         }
       }
     </script>
     <script type="module">
-      import * as adzelib from './dist/index.js';
-      import runDemo from './demo_funcs.js';
-
-      runDemo(adzelib);
+      import './dist/demo_funcs.js';
 
       const sentences = [
         'I just wanted to tell you I could see the love you have for your child by the way you look at her.',

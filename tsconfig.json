@@ -12,7 +12,7 @@
     "declaration": true,
     "preserveConstEnums": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/demo_funcs.ts"],
   "tsc-alias": {
     "resolveFullPaths": true,
     "verbose": false

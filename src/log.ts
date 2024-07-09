@@ -19,10 +19,10 @@ import {
   stacktrace,
 } from './functions';
 import { formatISO } from 'date-fns/formatISO';
-import PrettyFormatter from './formatters/pretty';
+import PrettyFormatter from './formatters/pretty/pretty';
 import { Middleware } from './middleware';
 
-export default class Log {
+export default class Log<N extends string = string> {
   /**
    * The global context object.
    */
@@ -64,7 +64,7 @@ export default class Log {
   }
 
   public get modifierData(): ModifierData {
-    return this.modifierData;
+    return this._modifierData;
   }
 
   public get configuration(): Configuration {
@@ -350,10 +350,10 @@ export default class Log {
    * sealed.log('Another log.'); // -> prints "#sealed [sealed-label] Another log."
    * ```
    */
-  public seal(cfg?: UserConfiguration): Log {
+  public seal<N extends string = string>(cfg?: UserConfiguration): Log<N> {
     this.runModifierQueue();
     this.mergeConfiguration({ ...this._cfg, ...cfg });
-    return new Log(structuredClone(this._cfg), structuredClone(this.modifierData));
+    return new Log(structuredClone(this._cfg), structuredClone(this._modifierData));
   }
 
   /**
@@ -367,7 +367,7 @@ export default class Log {
    * sealed.log('Another log.'); // -> prints "#sealed [sealed-label] Another log."
    * ```
    */
-  public static seal(cfg?: UserConfiguration): Log {
+  public static seal<N extends string = string>(cfg?: UserConfiguration): Log<N> {
     return new this().seal(cfg);
   }
 
@@ -378,7 +378,7 @@ export default class Log {
   /**
    * Generates a log message if the provided expression is falsey.
    */
-  public assert(expression: boolean): Log {
+  public assert(expression: boolean): this {
     this.modifierQueue.push((data) => {
       data.assertion = expression;
       return data;
@@ -397,7 +397,7 @@ export default class Log {
    * Configures the log instance. This is useful for applying many configuration values at once
    * rather than calling each modifier individually.
    */
-  public configure(cfg: UserConfiguration): Log {
+  public configure(cfg: UserConfiguration): this {
     this.modifierQueue.unshift((data) => {
       this.mergeConfiguration(cfg);
       return data;
@@ -409,8 +409,8 @@ export default class Log {
    * Configures the log instance. This is useful for applying many configuration values at once
    * rather than calling each modifier individually.
    */
-  public static configure(cfg: UserConfiguration): Log {
-    return new this().configure(cfg);
+  public static configure<T extends typeof Log>(cfg: UserConfiguration): InstanceType<T> {
+    return new Log().configure(cfg) as InstanceType<T>;
   }
 
   /**
@@ -419,8 +419,8 @@ export default class Log {
    * Configures the log instance. This is useful for applying many configuration values at once
    * rather than calling each modifier individually.
    */
-  public cfg(cfg: UserConfiguration): Log {
-    return this.configure(cfg);
+  public cfg<T extends typeof Log>(cfg: UserConfiguration): InstanceType<T> {
+    return this.configure(cfg) as InstanceType<T>;
   }
 
   /**
@@ -429,7 +429,10 @@ export default class Log {
    * Configures the log instance. This is useful for applying many configuration values at once
    * rather than calling each modifier individually.
    */
-  public static cfg(cfg: UserConfiguration): Log {
+  public static cfg<T extends Log>(
+    this: new (cfg?: UserConfiguration, modifierData?: ModifierData) => T,
+    cfg: UserConfiguration
+  ): T {
     return new this().configure(cfg);
   }
 
@@ -438,7 +441,7 @@ export default class Log {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/count)
    */
-  public get count(): Log {
+  public get count(): this {
     this.modifierQueue.push((data) => {
       if (data.label) {
         data.label.count = data.label.count !== undefined ? data.label.count + 1 : 1;
@@ -462,7 +465,7 @@ export default class Log {
    *
    * This is a non-standard method.
    */
-  public get countClear(): Log {
+  public get countClear(): this {
     this.modifierQueue.push((data) => {
       if (data.label) {
         delete data.label.count;
@@ -486,7 +489,7 @@ export default class Log {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/countReset)
    */
-  public get countReset(): Log {
+  public get countReset(): this {
     this.modifierQueue.push((data) => {
       if (data.label) {
         data.label.count = 0;
@@ -511,7 +514,7 @@ export default class Log {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
    */
-  public get dir(): Log {
+  public get dir(): this {
     this.modifierQueue.push((data) => {
       data.method = 'dir';
       return data;
@@ -535,7 +538,7 @@ export default class Log {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml)
    */
-  public get dirxml(): Log {
+  public get dirxml(): this {
     this.modifierQueue.push((data) => {
       data.method = 'dirxml';
       return data;
@@ -559,7 +562,7 @@ export default class Log {
    *
    * This is a non-standard API.
    */
-  public get dump(): Log {
+  public get dump(): this {
     this.modifierQueue.push((data) => {
       this._cfg.dump = true;
       return data;
@@ -582,7 +585,7 @@ export default class Log {
    *
    * This is a non-standard API.
    */
-  public format(format: Format): Log {
+  public format(format: Format): this {
     this.modifierQueue.push((data) => {
       this._cfg.format = format;
       return data;
@@ -600,87 +603,11 @@ export default class Log {
   }
 
   /**
-   * Instructs the logger to print with the pretty human-readable format.
-   *
-   * This is a non-standard API.
-   */
-  public get pretty(): Log {
-    this.modifierQueue.push((data) => {
-      this._cfg.format = 'pretty';
-      return data;
-    });
-    return this;
-  }
-
-  /**
-   * Instructs the logger to print with a pretty human-readable format.
-   *
-   * This is a non-standard API.
-   */
-  public static get pretty(): Log {
-    return new this().pretty;
-  }
-
-  /**
-   * Instructs the logger to print in the Common Log format.
-   *
-   * [https://en.wikipedia.org/wiki/Common_Log_Format](https://en.wikipedia.org/wiki/Common_Log_Format)
-   *
-   * This is a non-standard API.
-   */
-  public get common(): Log {
-    this.modifierQueue.push((data) => {
-      this._cfg.format = 'common';
-      return data;
-    });
-    return this;
-  }
-
-  /**
-   * Instructs the logger to print in the Common Log format.
-   *
-   * [https://en.wikipedia.org/wiki/Common_Log_Format](https://en.wikipedia.org/wiki/Common_Log_Format)
-   *
-   * This is a non-standard API.
-   */
-  public static get common(): Log {
-    return new this().common;
-  }
-
-  /**
-   * Instructs the logger to format logs as JSON messages. This format follows the Bunyan library's
-   * logging conventions.
-   *
-   * [https://github.com/trentm/node-bunyan?tab=readme-ov-file#log-record-fields](https://github.com/trentm/node-bunyan?tab=readme-ov-file#log-record-fields)
-   *
-   * This is a non-standard API.
-   */
-  public get json(): Log {
-    this.modifierQueue.push((data) => {
-      this._cfg.format = 'json';
-      return data;
-    });
-    return this;
-  }
-
-  /**
-   * Instructs the logger to format logs as JSON messages. This format follows the Bunyan library's
-   * logging conventions.
-   *
-   * [https://github.com/trentm/node-bunyan?tab=readme-ov-file#log-record-fields](https://github.com/trentm/node-bunyan?tab=readme-ov-file#log-record-fields)
-   *
-   * This is a non-standard API.
-   */
-  public static get json(): Log {
-    return new this().json;
-  }
-
-  /**
    * Starts a log group.
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/group)
    */
-  public get group(): Log {
+  public get group(): this {
     this.modifierQueue.push((data) => {
       data.method = 'group';
       return data;
@@ -702,7 +629,7 @@ export default class Log {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupCollapsed)
    */
-  public get groupCollapsed(): Log {
+  public get groupCollapsed(): this {
     this.modifierQueue.push((data) => {
       data.method = 'groupCollapsed';
       return data;
@@ -724,7 +651,7 @@ export default class Log {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupEnd)
    */
-  public get groupEnd(): Log {
+  public get groupEnd(): this {
     this.modifierQueue.push((data) => {
       data.method = 'groupEnd';
       return data;
@@ -746,7 +673,7 @@ export default class Log {
    *
    * This is a non-standard API.
    */
-  public if(expression: boolean): Log {
+  public if(expression: boolean): this {
     this.modifierQueue.push((data) => {
       data.if = expression;
       return data;
@@ -768,7 +695,7 @@ export default class Log {
    *
    * @deprecated
    */
-  public test(expression: boolean): Log {
+  public test(expression: boolean): this {
     return this.if(expression);
   }
 
@@ -788,7 +715,7 @@ export default class Log {
    * This is a non-standard API, but it replaces the need to provide
    * a label to methods that require a global identifier for tracking purposes.
    */
-  public label(name: string): Log {
+  public label(name: string): this {
     // prepend the modifier queue
     this.modifierQueue.unshift((data) => {
       const globalStore = getGlobalStore(this.globalContext);
@@ -819,7 +746,7 @@ export default class Log {
    *
    * This is a non-standard API.
    */
-  public meta(meta: Record<string, unknown>): Log {
+  public meta<T extends Record<string, unknown> = Record<string, unknown>>(meta: T): this {
     this.modifierQueue.push((data) => {
       data.meta = meta;
       return data;
@@ -833,8 +760,8 @@ export default class Log {
    *
    * This is a non-standard API.
    */
-  public static meta(meta: Record<string, unknown>): Log {
-    return new this().meta(meta);
+  public static meta<T extends Record<string, unknown> = Record<string, unknown>>(meta: T): Log {
+    return new this().meta<T>(meta);
   }
 
   /**
@@ -844,7 +771,7 @@ export default class Log {
    *
    * This is a non-standard API.
    */
-  public namespace(...namespace: string[]): Log {
+  public namespace(...namespace: string[]): this {
     this.modifierQueue.push((data) => {
       let arr = data.namespace ?? [];
       data.namespace = arr.length > 0 ? [...arr, ...namespace] : namespace;
@@ -873,7 +800,7 @@ export default class Log {
    *
    * This is a non-standard API.
    */
-  public ns(...namespace: string[]): Log {
+  public ns(...namespace: N[]): this {
     return this.namespace(...namespace);
   }
 
@@ -894,7 +821,7 @@ export default class Log {
    * This modifier prevents the log from printing. It can still be picked up by middleware or
    * listeners.
    */
-  public get silent(): Log {
+  public get silent(): this {
     this.modifierQueue.push((data) => {
       this._cfg.silent = true;
       return data;
@@ -915,7 +842,7 @@ export default class Log {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/table)
    */
-  public get table(): Log {
+  public get table(): this {
     this.modifierQueue.push((data) => {
       data.method = 'table';
       return data;
@@ -938,7 +865,7 @@ export default class Log {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/time).
    */
-  public get time(): Log {
+  public get time(): this {
     this.modifierQueue.push((data) => {
       const timeStart = hrtime();
       if (data.label) {
@@ -967,7 +894,7 @@ export default class Log {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/timeEnd).
    */
-  public get timeEnd(): Log {
+  public get timeEnd(): this {
     this.modifierQueue.push((data) => {
       if (data.label && data.label?.timeStart) {
         data.label.timeElapsed = formatTime(hrtime(data.label.timeStart));
@@ -994,7 +921,7 @@ export default class Log {
    *
    * This is a non-standard method.
    */
-  public get timeNow(): Log {
+  public get timeNow(): this {
     this.modifierQueue.push((data) => {
       data.timeNow = captureTimeNow();
       return data;
@@ -1016,7 +943,7 @@ export default class Log {
    *
    * This is a non-standard API.
    */
-  public get timestamp(): Log {
+  public get timestamp(): this {
     this.modifierQueue.push((data) => {
       this._cfg.showTimestamp = true;
       return data;
@@ -1039,7 +966,7 @@ export default class Log {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/trace)
    */
-  public get trace(): Log {
+  public get trace(): this {
     this.modifierQueue.push((data) => {
       data.stacktrace = stacktrace();
       return data;
@@ -1060,7 +987,7 @@ export default class Log {
   /**
    * Allows emoji's to be printed in pretty logs.
    */
-  public get withEmoji(): Log {
+  public get withEmoji(): this {
     this.modifierQueue.push((data) => {
       this._cfg.withEmoji = true;
       return data;
@@ -1071,7 +998,7 @@ export default class Log {
   /**
    * Allows emoji's to be printed in pretty logs.
    */
-  public static get withEmoji(): Log {
+  public static get withEmoji() {
     return new this().withEmoji;
   }
 
@@ -1085,24 +1012,23 @@ export default class Log {
 
     // Get the level configuration based on the level name.
     const level = this.getLevelConfig(terminator);
-    // Generate the timestamp
-    const timestamp = formatISO(new Date());
 
     // Get the log formatter
-    const formatter = this.selectFormatter(this._cfg.format);
+    const formatterConstructor = this.selectFormatter(this._cfg.format);
+    // Instantiate the formatter.
+    const formatter = new formatterConstructor(this._cfg, level);
+    // Generate the timestamp. Use the user configured formatter if it is set.
+    const timestamp = formatter.timestampFormatter(new Date());
 
     // Run the modifier queue to modify the data object.
     this.runModifierQueue();
-    // console.log('CFG AFTER MODIFIER QUEUE', this._cfg);
-
-    // call beforeTerminated hook
 
     // Create our final log data object
-    const message = new formatter(this._cfg, level).print(this.modifierData, timestamp, args);
+    const message = formatter.print(this.modifierData, timestamp, args);
     this.doHook((m) => (m.beforeFormatApplied ? m.beforeFormatApplied(this, message) : null));
     const data: LogData = {
       ...level,
-      ...this.modifierData,
+      ...this._modifierData,
       terminator,
       args,
       timestamp,
@@ -1130,19 +1056,9 @@ export default class Log {
   /**
    * Returns a formatter constructor based on the provided format.
    */
-  protected selectFormatter(format: Format): FormatterConstructor {
-    switch (format) {
-      case 'pretty':
-        return PrettyFormatter;
-      case 'prettyEmoji':
-        return PrettyFormatter;
-      case 'json':
-        return PrettyFormatter;
-      case 'common':
-        return PrettyFormatter;
-      default:
-        return PrettyFormatter;
-    }
+  // TODO: Use the formatter from the global configuration if it is set.
+  protected selectFormatter(format: string): FormatterConstructor {
+    return this.cfg?.formatters[format];
   }
 
   /**

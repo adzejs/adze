@@ -1,14 +1,19 @@
-import Formatter from './formatter';
+import Formatter from '../formatter';
 import {
+  addPadding,
+  applyChalkStyles,
   formatAssert,
   formatCount,
   formatIf,
   formatLabel,
   formatNamespace,
   initialCaps,
-} from '../functions';
-import { Configuration, LevelConfig, ModifierData } from '../_types';
+} from '../../functions';
+import { Configuration, LevelConfig, ModifierData } from '../../_types';
 
+/**
+ * Formats log messages in a pretty, human-readable manner.
+ */
 export default class PrettyFormatter extends Formatter {
   constructor(cfg: Configuration, level: LevelConfig) {
     super(cfg, level);
@@ -30,25 +35,36 @@ export default class PrettyFormatter extends Formatter {
    * Format the log message for Node.js.
    */
   protected formatNode(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
-    return [''];
+    const leaderRaw = addPadding(this.formatLeader(false), this.cfg.withEmoji, this.level.emoji);
+    const leader = leaderRaw.length >= 14 ? `${leaderRaw} ` : leaderRaw;
+    const meta = this.formatMeta(mods, timestamp);
+
+    const styledLeader = applyChalkStyles(
+      leader,
+      this.level.terminalStyle,
+      this.cfg.terminalFidelity
+    );
+    return [styledLeader, meta, ...(args ?? [])];
   }
 
   /**
    * Returns a formatted leader string.
    */
-  private formatLeader(): string {
+  private formatLeader(isBrowser = true): string {
+    const tag = isBrowser ? '%c' : '';
     const name = ' ' + initialCaps(this.level.levelName);
     if (this.cfg.withEmoji) {
-      return `%c${this.formatEmoji()}%c${name}`;
+      return `${tag}${this.formatEmoji(isBrowser)}${tag}${name}`;
     }
-    return `%c${name}`;
+    return `${tag}${name}`;
   }
 
   /**
    * Formats the emoji if it is enabled.
    */
-  private formatEmoji(): string {
-    return this.level.emoji ? `${this.level.emoji} ` : '';
+  private formatEmoji(isBrowser: boolean): string {
+    const space = isBrowser ? ' ' : '';
+    return this.level.emoji ? `${this.level.emoji}${space}` : '';
   }
 
   /**

@@ -1,4 +1,6 @@
 import { Configuration, LevelConfig } from './_types';
+import CommonFormatter from './formatters/common';
+import PrettyFormatter from './formatters/pretty';
 import { isChrome, isSafari } from './functions';
 
 /**
@@ -103,6 +105,13 @@ export const defaultConfiguration: Configuration = {
     log: getLogConfig(),
     debug: getDebugConfig(),
     verbose: getVerboseConfig(),
+  },
+  terminalFidelity: 1,
+  formatters: {
+    default: PrettyFormatter,
+    pretty: PrettyFormatter,
+    common: CommonFormatter,
+    json: PrettyFormatter,
   },
 };
 
