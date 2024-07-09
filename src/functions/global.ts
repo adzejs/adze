@@ -16,7 +16,7 @@ declare global {
  * Initialize the global log store for Adze. This is used for creating global configuration
  * overrides, storing labels, and optionally caching logs.
  */
-export function setup(cfg: UserConfiguration): void {
+export function setup(cfg?: UserConfiguration): void {
   const ctxt = globalContext();
   if (isSetup(ctxt)) {
     console.error('Adze has already been setup. Please only call setup once.');

@@ -1,6 +1,7 @@
 import { formats } from '../constants';
+import Formatter from '../formatters/formatter';
 import { Middleware } from '../middleware';
-import { Level, LevelConfig } from './log';
+import { FormatterConstructor, Level, LevelConfig } from './log';
 
 /**
  * All valid log formats. These determine the style that is emitted.
@@ -64,6 +65,14 @@ export interface Configuration {
    * A callback that allows the user to return a custom timestamp format for each log.
    */
   timestampFormatter?: (date: Date) => string;
+  /**
+   * The color fidelity to use when rendering logs.
+   */
+  terminalFidelity: 0 | 1 | 2 | 3;
+  /**
+   * Map of formatters that can be used to render logs.
+   */
+  formatters: Record<string, FormatterConstructor>;
 }
 
 /**

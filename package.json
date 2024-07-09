@@ -13,10 +13,12 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "tsc --project tsconfig.prod.json && tsc-alias",
+    "build:demo": "tsc --project tsconfig.json && tsc-alias",
     "clean": "rm -rf ./dist",
-    "predemo:browser": "npm run build",
+    "predemo:browser": "npm run build:demo",
     "demo:browser": "http-server -o -p 8082",
-    "demo:node": "ts-node ./demo.ts",
+    "predemo:node": "npm run build:demo",
+    "demo:node": "ts-node --project tsconfig.json --experimental-specifier-resolution=node --esm src/demo_funcs.ts",
     "lint": "prettier ./src --check && eslint .",
     "lint:fix": "prettier ./src --write && eslint . --fix",
     "test": "vitest",
@@ -63,6 +65,7 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "chalk": "^5.3.0",
     "date-fns": "^3.6.0",
     "mergician": "^2.0.2"
   },
