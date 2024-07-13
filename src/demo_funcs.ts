@@ -33,27 +33,27 @@ class logger extends adze {
 
 // Run our demo modules
 function runDemo() {
-  // defaultLevels();
-  // configuration();
-  // custom();
-  // namespace();
-  // label();
-  // filterLevelRange();
-  // filterLevels();
-  // filterNamespaces();
-  // filterLabels();
-  // filterBoth();
-  // counting();
-  // tests();
-  // dir();
-  // table();
-  // group();
-  // groupCollapsed();
-  // trace();
-  // timestamp();
-  // silent();
+  defaultLevels();
+  configuration();
+  custom();
+  namespace();
+  label();
+  filterLevelRange();
+  filterLevels();
+  filterNamespaces();
+  filterLabels();
+  filterBoth();
+  counting();
+  tests();
+  dir();
+  table();
+  group();
+  groupCollapsed();
+  trace();
+  timestamp();
+  silent();
   common();
-  // time();
+  time();
 }
 
 function defaultLevels() {
