@@ -86,6 +86,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * This is a non-standard API.
    */
+  public alert(...args: []): void;
   public alert(...args: [Msg, ...unknown[]]): void;
   public alert(...args: unknown[]): void {
     this.terminate('alert', args);
@@ -118,7 +119,9 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/error)
    */
-  public error(...args: [Msg, ...unknown[]]): void {
+  public error(...args: []): void;
+  public error(...args: [Msg, ...unknown[]]): void;
+  public error(...args: unknown[]): void {
     this.terminate('error', args);
   }
 
@@ -147,7 +150,9 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/warn)
    */
-  public warn(...args: [Msg, ...unknown[]]): void {
+  public warn(...args: []): void;
+  public warn(...args: [Msg, ...unknown[]]): void;
+  public warn(...args: unknown[]): void {
     this.terminate('warn', args);
   }
 
@@ -177,7 +182,9 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/info)
    */
-  public info(...args: [Msg, ...unknown[]]): void {
+  public info(...args: []): void;
+  public info(...args: [Msg, ...unknown[]]): void;
+  public info(...args: unknown[]): void {
     this.terminate('info', args);
   }
 
@@ -206,7 +213,9 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * This is a non-standard API.
    */
-  public fail(...args: [Msg, ...unknown[]]): void {
+  public fail(...args: []): void;
+  public fail(...args: [Msg, ...unknown[]]): void;
+  public fail(...args: unknown[]): void {
     this.terminate('fail', args);
   }
 
@@ -233,7 +242,9 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * This is a non-standard API.
    */
-  public success(...args: [Msg, ...unknown[]]): void {
+  public success(...args: []): void;
+  public success(...args: [Msg, ...unknown[]]): void;
+  public success(...args: unknown[]): void {
     this.terminate('success', args);
   }
 
@@ -246,7 +257,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * This is a non-standard API.
    */
-  public static success<M extends string>(...args: [M, ...unknown[]]): void {
+  public static success<M>(...args: [M, ...unknown[]]): void {
     return new this().success(...args);
   }
 
@@ -261,7 +272,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
   public log(...args: []): void;
-  public log(args_0: Msg, ...args: unknown[]): void;
+  public log(...args: [Msg, ...unknown[]]): void;
   public log(...args: unknown[]): void {
     this.terminate('log', args);
   }
@@ -290,7 +301,9 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
-  public debug(...args: [Msg, ...unknown[]]): void {
+  public debug(...args: []): void;
+  public debug(...args: [Msg, ...unknown[]]): void;
+  public debug(...args: unknown[]): void {
     this.terminate('debug', args);
   }
 
@@ -320,7 +333,9 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * This is a non-standard API.
    */
-  public verbose(...args: [Msg, ...unknown[]]): void {
+  public verbose(...args: []): void;
+  public verbose(...args: [Msg, ...unknown[]]): void;
+  public verbose(...args: unknown[]): void {
     this.terminate('verbose', args);
   }
 

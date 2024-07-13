@@ -376,7 +376,7 @@ function common() {
       user: 'astacy',
     })
     .seal<string, CommonLogFormatMessage>();
-  logger.alert('"GET /index.html HTTP/1.0" 200 2326');
+  logger.alert('"GET /index.html HTTP/1.0" 200 2326', {}, 1, '');
   logger.error('"GET /index.html HTTP/1.0" 200 2326');
   logger.warn('"GET /index.html HTTP/1.0" 200 2326');
   logger.info('"GET /index.html HTTP/1.0" 200 2326');
