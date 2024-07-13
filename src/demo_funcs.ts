@@ -7,6 +7,7 @@ import adze, {
   CommonLogFormatMeta,
   CommonLogFormatMessage,
 } from '.';
+import { StandardLogFormatMeta } from './formatters/standard/types';
 
 class logger extends adze {
   constructor(cfg: UserConfiguration = {}, modifierData?: ModifierData) {
@@ -33,27 +34,28 @@ class logger extends adze {
 
 // Run our demo modules
 function runDemo() {
-  defaultLevels();
-  configuration();
-  custom();
-  namespace();
-  label();
-  filterLevelRange();
-  filterLevels();
-  filterNamespaces();
-  filterLabels();
-  filterBoth();
-  counting();
-  tests();
-  dir();
-  table();
-  group();
-  groupCollapsed();
-  trace();
-  timestamp();
-  silent();
+  // defaultLevels();
+  // configuration();
+  // custom();
+  // namespace();
+  // label();
+  // filterLevelRange();
+  // filterLevels();
+  // filterNamespaces();
+  // filterLabels();
+  // filterBoth();
+  // counting();
+  // tests();
+  // dir();
+  // table();
+  // group();
+  // groupCollapsed();
+  // trace();
+  // timestamp();
+  // silent();
   common();
-  time();
+  standard();
+  // time();
 }
 
 function defaultLevels() {
@@ -369,7 +371,7 @@ function time() {
 
 function common() {
   const logger = adze
-    .cfg({ format: 'common' })
+    .cfg({ activeLevel: 'verbose', format: 'common' })
     .meta<CommonLogFormatMeta>({
       host: '192.168.1.5',
       ident: 'user-identifier',
@@ -385,6 +387,26 @@ function common() {
   logger.log('"GET /index.html HTTP/1.0" 200 2326');
   logger.debug('"GET /index.html HTTP/1.0" 200 2326');
   logger.verbose('"GET /index.html HTTP/1.0" 200 2326');
+}
+
+function standard() {
+  const logger = adze
+    .cfg({ activeLevel: 'verbose', format: 'standard' })
+    .meta<StandardLogFormatMeta>({
+      hostname: '192.168.1.5',
+      appname: 'myapp',
+      port: 80,
+    })
+    .seal();
+  logger.alert('This is an alert log');
+  logger.error('This is an error log');
+  logger.warn('This is a warning log');
+  logger.info('This is an info log');
+  logger.fail('This is a fail log');
+  logger.success('This is a success log');
+  logger.log('This is a log');
+  logger.debug('This is a debug log');
+  logger.verbose('This is a verbose log');
 }
 
 runDemo();

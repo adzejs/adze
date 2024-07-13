@@ -1,6 +1,7 @@
 import { Configuration, LevelConfig } from './_types';
 import CommonFormatter from './formatters/common';
 import PrettyFormatter from './formatters/pretty';
+import StandardFormatter from './formatters/standard/standard';
 import { isChrome, isSafari } from './functions';
 
 /**
@@ -83,7 +84,7 @@ export const methods = [...methodsWithArgs, ...specialMethodsWithoutArgs] as con
 /**
  * All valid log formats. These determine the style that is emitted.
  */
-export const formats = ['pretty', 'prettyEmoji', 'json', 'common', 'default'] as const;
+export const formats = ['pretty', 'prettyEmoji', 'json', 'standard', 'common', 'default'] as const;
 
 export const defaultConfiguration: Configuration = {
   activeLevel: 'log',
@@ -110,6 +111,7 @@ export const defaultConfiguration: Configuration = {
   formatters: {
     default: PrettyFormatter,
     pretty: PrettyFormatter,
+    standard: StandardFormatter,
     common: CommonFormatter,
     json: PrettyFormatter,
   },
