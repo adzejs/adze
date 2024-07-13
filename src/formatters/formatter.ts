@@ -1,4 +1,4 @@
-import { formatISO } from 'date-fns';
+import { formatISO } from 'date-fns/formatISO';
 import { Configuration, LevelConfig, ModifierData } from '../_types';
 import {
   getActiveLevel,
@@ -43,7 +43,9 @@ export default abstract class Formatter {
    * this formatter instance.
    */
   public get timestampFormatter(): (date: Date) => string {
-    return this.cfg?.timestampFormatter ? this.cfg?.timestampFormatter : this.timestampFormatter;
+    return this.cfg?.timestampFormatter
+      ? this.cfg?.timestampFormatter
+      : this.timestampFormatFunction;
   }
 
   /**

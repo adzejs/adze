@@ -1,4 +1,12 @@
-import adze, { setup, teardown, ModifierData, UserConfiguration } from '.';
+import js from '@eslint/js';
+import adze, {
+  setup,
+  teardown,
+  ModifierData,
+  UserConfiguration,
+  CommonLogFormatMeta,
+  CommonLogFormatMessage,
+} from '.';
 
 class logger extends adze {
   constructor(cfg: UserConfiguration = {}, modifierData?: ModifierData) {
@@ -25,26 +33,27 @@ class logger extends adze {
 
 // Run our demo modules
 function runDemo() {
-  defaultLevels();
-  configuration();
-  custom();
-  namespace();
-  label();
-  filterLevelRange();
-  filterLevels();
-  filterNamespaces();
-  filterLabels();
-  filterBoth();
-  counting();
-  tests();
-  dir();
-  table();
-  group();
-  groupCollapsed();
-  trace();
-  timestamp();
-  silent();
-  time();
+  // defaultLevels();
+  // configuration();
+  // custom();
+  // namespace();
+  // label();
+  // filterLevelRange();
+  // filterLevels();
+  // filterNamespaces();
+  // filterLabels();
+  // filterBoth();
+  // counting();
+  // tests();
+  // dir();
+  // table();
+  // group();
+  // groupCollapsed();
+  // trace();
+  // timestamp();
+  // silent();
+  common();
+  // time();
 }
 
 function defaultLevels() {
@@ -356,6 +365,26 @@ function time() {
     adze.withEmoji.label('timer2').timeEnd.log('Ending a timer with emoji');
     teardown();
   }, 1000);
+}
+
+function common() {
+  const logger = adze
+    .cfg({ format: 'common' })
+    .meta<CommonLogFormatMeta>({
+      host: '192.168.1.5',
+      ident: 'user-identifier',
+      user: 'astacy',
+    })
+    .seal<string, CommonLogFormatMessage>();
+  logger.alert('"GET /index.html HTTP/1.0" 200 2326');
+  logger.error('"GET /index.html HTTP/1.0" 200 2326');
+  logger.warn('"GET /index.html HTTP/1.0" 200 2326');
+  logger.info('"GET /index.html HTTP/1.0" 200 2326');
+  logger.fail('"GET /index.html HTTP/1.0" 200 2326');
+  logger.success('"GET /index.html HTTP/1.0" 200 2326');
+  logger.log('"GET /index.html HTTP/1.0" 200 2326');
+  logger.debug('"GET /index.html HTTP/1.0" 200 2326');
+  logger.verbose('"GET /index.html HTTP/1.0" 200 2326');
 }
 
 runDemo();

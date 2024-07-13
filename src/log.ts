@@ -18,11 +18,9 @@ import {
   mergeConfiguration,
   stacktrace,
 } from './functions';
-import { formatISO } from 'date-fns/formatISO';
-import PrettyFormatter from './formatters/pretty/pretty';
 import { Middleware } from './middleware';
 
-export default class Log<N extends string = string> {
+export default class Log<N extends string = string, Msg = unknown> {
   /**
    * The global context object.
    */
@@ -88,6 +86,7 @@ export default class Log<N extends string = string> {
    *
    * This is a non-standard API.
    */
+  public alert(...args: [Msg, ...unknown[]]): void;
   public alert(...args: unknown[]): void {
     this.terminate('alert', args);
   }
@@ -105,7 +104,7 @@ export default class Log<N extends string = string> {
    *
    * This is a non-standard API.
    */
-  public static alert(...args: unknown[]): void {
+  public static alert<M extends string>(...args: [M, ...unknown[]]): void {
     return new this().alert(...args);
   }
 
@@ -119,7 +118,7 @@ export default class Log<N extends string = string> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/error)
    */
-  public error(...args: unknown[]): void {
+  public error(...args: [Msg, ...unknown[]]): void {
     this.terminate('error', args);
   }
 
@@ -133,7 +132,7 @@ export default class Log<N extends string = string> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/error)
    */
-  public static error(...args: unknown[]): void {
+  public static error<M extends string>(...args: [M, ...unknown[]]): void {
     return new this().error(...args);
   }
 
@@ -148,7 +147,7 @@ export default class Log<N extends string = string> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/warn)
    */
-  public warn(...args: unknown[]): void {
+  public warn(...args: [Msg, ...unknown[]]): void {
     this.terminate('warn', args);
   }
 
@@ -163,7 +162,7 @@ export default class Log<N extends string = string> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/warn)
    */
-  public static warn(...args: unknown[]): void {
+  public static warn<M extends string>(...args: [M, ...unknown[]]): void {
     return new this().warn(...args);
   }
 
@@ -178,7 +177,7 @@ export default class Log<N extends string = string> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/info)
    */
-  public info(...args: unknown[]): void {
+  public info(...args: [Msg, ...unknown[]]): void {
     this.terminate('info', args);
   }
 
@@ -193,7 +192,7 @@ export default class Log<N extends string = string> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/info)
    */
-  public static info(...args: unknown[]): void {
+  public static info<M extends string>(...args: [M, ...unknown[]]): void {
     return new this().info(...args);
   }
 
@@ -207,7 +206,7 @@ export default class Log<N extends string = string> {
    *
    * This is a non-standard API.
    */
-  public fail(...args: unknown[]): void {
+  public fail(...args: [Msg, ...unknown[]]): void {
     this.terminate('fail', args);
   }
 
@@ -221,7 +220,7 @@ export default class Log<N extends string = string> {
    *
    * This is a non-standard API.
    */
-  public static fail(...args: unknown[]): void {
+  public static fail<M extends string>(...args: [M, ...unknown[]]): void {
     return new this().fail(...args);
   }
 
@@ -234,7 +233,7 @@ export default class Log<N extends string = string> {
    *
    * This is a non-standard API.
    */
-  public success(...args: unknown[]): void {
+  public success(...args: [Msg, ...unknown[]]): void {
     this.terminate('success', args);
   }
 
@@ -247,7 +246,7 @@ export default class Log<N extends string = string> {
    *
    * This is a non-standard API.
    */
-  public static success(...args: unknown[]): void {
+  public static success<M extends string>(...args: [M, ...unknown[]]): void {
     return new this().success(...args);
   }
 
@@ -261,6 +260,8 @@ export default class Log<N extends string = string> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
+  public log(...args: []): void;
+  public log(args_0: Msg, ...args: unknown[]): void;
   public log(...args: unknown[]): void {
     this.terminate('log', args);
   }
@@ -275,8 +276,8 @@ export default class Log<N extends string = string> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
-  public static log(...args: unknown[]): void {
-    return new this().log(...args);
+  public static log<M>(args_0: M, ...args: unknown[]): void {
+    return new this().log(...[args_0, ...args]);
   }
 
   /**
@@ -289,7 +290,7 @@ export default class Log<N extends string = string> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
-  public debug(...args: unknown[]): void {
+  public debug(...args: [Msg, ...unknown[]]): void {
     this.terminate('debug', args);
   }
 
@@ -303,7 +304,7 @@ export default class Log<N extends string = string> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
-  public static debug(...args: unknown[]): void {
+  public static debug<M extends string>(...args: [M, ...unknown[]]): void {
     return new this().debug(...args);
   }
 
@@ -319,7 +320,7 @@ export default class Log<N extends string = string> {
    *
    * This is a non-standard API.
    */
-  public verbose(...args: unknown[]): void {
+  public verbose(...args: [Msg, ...unknown[]]): void {
     this.terminate('verbose', args);
   }
 
@@ -335,7 +336,7 @@ export default class Log<N extends string = string> {
    *
    * This is a non-standard API.
    */
-  public static verbose(...args: unknown[]): void {
+  public static verbose<M extends string>(...args: [M, ...unknown[]]): void {
     return new this().verbose(...args);
   }
 
@@ -350,10 +351,14 @@ export default class Log<N extends string = string> {
    * sealed.log('Another log.'); // -> prints "#sealed [sealed-label] Another log."
    * ```
    */
-  public seal<N extends string = string>(cfg?: UserConfiguration): Log<N> {
+  public seal<N extends string = string, M = unknown>(cfg?: UserConfiguration): Log<N, M> {
     this.runModifierQueue();
     this.mergeConfiguration({ ...this._cfg, ...cfg });
-    return new Log(structuredClone(this._cfg), structuredClone(this._modifierData));
+    const { formatters, ...cfgWithoutFormatters } = this._cfg;
+    return new Log<N, M>(
+      { ...structuredClone(cfgWithoutFormatters), formatters },
+      structuredClone(this._modifierData)
+    );
   }
 
   /**
@@ -1056,9 +1061,8 @@ export default class Log<N extends string = string> {
   /**
    * Returns a formatter constructor based on the provided format.
    */
-  // TODO: Use the formatter from the global configuration if it is set.
   protected selectFormatter(format: string): FormatterConstructor {
-    return this.cfg?.formatters[format];
+    return this._cfg?.formatters[format];
   }
 
   /**

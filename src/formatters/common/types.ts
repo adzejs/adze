@@ -88,7 +88,7 @@ export type HttpStatus =
  *
  * https://en.wikipedia.org/wiki/Common_Log_Format
  */
-export interface CommonLogFormatMeta {
+export interface CommonLogFormatMeta extends Record<string, unknown> {
   host: string;
   ident?: string;
   user?: string;
@@ -103,4 +103,5 @@ export interface CommonLogFormatMeta {
  *
  * https://en.wikipedia.org/wiki/Common_Log_Format
  */
-export type CommonLogFormatLog = `"${HttpMethod} ${string} ${HttpVersion}" ${HttpStatus} ${number}`;
+export type CommonLogFormatMessage =
+  `"${HttpMethod} ${string} ${HttpVersion}" ${HttpStatus} ${number}`;
