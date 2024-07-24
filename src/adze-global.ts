@@ -7,6 +7,11 @@ export default class AdzeGlobal {
   private config: UserConfiguration;
 
   /**
+   * Incrementing ID counter for identifying logs.
+   */
+  private pidCounter = 1;
+
+  /**
    * All log labels.
    */
   private labels: LabelMap = new Map();
@@ -34,5 +39,14 @@ export default class AdzeGlobal {
    */
   public setLabel(name: string, label: Label): void {
     this.labels.set(name, label);
+  }
+
+  /**
+   * Get the next process ID.
+   */
+  public get pid(): number {
+    const current = this.pidCounter;
+    this.pidCounter++;
+    return current;
   }
 }

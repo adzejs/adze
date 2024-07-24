@@ -67,7 +67,6 @@ export interface AdzeConstructor {
 }
 
 export interface ModifierData {
-  meta?: Record<string, unknown>;
   method?: Method;
   namespace?: string[];
   timestamp?: string;

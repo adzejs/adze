@@ -41,14 +41,14 @@ export default class CommonFormatter extends Formatter {
    * **Example:** 127.0.0.1 user-identifier frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326
    */
   private formatMessage(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
-    if (mods.meta?.host === undefined) {
+    if (this.cfg.meta?.hostname === undefined) {
       console.warn(
-        "Adze: 'host' is required for the common log format. Please provide this value in your log's meta data."
+        "Adze: 'hostname' is required for the common log format. Please provide this value in your log's meta data."
       );
     }
-    const host = mods.meta?.host;
-    const ident = mods.meta?.ident ?? '-';
-    const user = mods.meta?.user ?? '-';
-    return [`${host} ${ident} ${user} [${timestamp}] ${args[0]}`];
+    const hostname = this.cfg.meta?.hostname;
+    const ident = this.cfg.meta?.ident ?? '-';
+    const user = this.cfg.meta?.user ?? '-';
+    return [`${hostname} ${ident} ${user} [${timestamp}] ${args[0]}`];
   }
 }

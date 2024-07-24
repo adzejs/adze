@@ -1,6 +1,10 @@
 import adze from './log';
+import Formatter from './formatters/formatter';
 import { setup, teardown, isBrowser } from './functions';
-export * from './formatters/common/types';
+export * from './middleware';
+export * from './formatters/common';
+export * from './formatters/standard';
+export * from './formatters/json';
 export * from './_types';
-export { setup, teardown, isBrowser };
+export { setup, teardown, isBrowser, Formatter };
 export default adze;

@@ -1,5 +1,6 @@
 import { Configuration, LevelConfig } from './_types';
 import CommonFormatter from './formatters/common';
+import JsonFormatter from './formatters/json';
 import PrettyFormatter from './formatters/pretty';
 import StandardFormatter from './formatters/standard/standard';
 import { isChrome, isSafari } from './functions';
@@ -113,7 +114,7 @@ export const defaultConfiguration: Configuration = {
     pretty: PrettyFormatter,
     standard: StandardFormatter,
     common: CommonFormatter,
-    json: PrettyFormatter,
+    json: JsonFormatter,
   },
 };
 

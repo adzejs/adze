@@ -20,24 +20,24 @@ export default class StandardFormatter extends Formatter {
   /**
    * Format the log message for the browser.
    */
-  protected formatBrowser(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
-    return this.formatMessage(mods, timestamp, args);
+  protected formatBrowser(_: ModifierData, timestamp: string, args: unknown[]): unknown[] {
+    return this.formatMessage(timestamp, args);
   }
 
   /**
    * Format the log message for Node.js.
    */
-  protected formatNode(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
-    return this.formatMessage(mods, timestamp, args);
+  protected formatNode(_: ModifierData, timestamp: string, args: unknown[]): unknown[] {
+    return this.formatMessage(timestamp, args);
   }
 
   /**
    * Format the log message for stdout lines.
    */
-  private formatMessage(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
+  private formatMessage(timestamp: string, args: unknown[]): unknown[] {
     let leader = '';
-    if (mods.meta) {
-      const { appname, hostname, port } = mods.meta;
+    if (this.cfg.meta) {
+      const { appname, hostname, port } = this.cfg.meta;
       let _port = port ? `/${port}` : '';
       let appPort = appname ? `${appname}${_port}` : '';
       let _host = hostname ? ` on ${hostname}: ` : '';

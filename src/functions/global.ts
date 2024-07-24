@@ -1,4 +1,4 @@
-import { Configuration, UserConfiguration } from '../_types';
+import { UserConfiguration } from '../_types';
 import AdzeGlobal from '../adze-global';
 
 declare global {
@@ -16,20 +16,22 @@ declare global {
  * Initialize the global log store for Adze. This is used for creating global configuration
  * overrides, storing labels, and optionally caching logs.
  */
-export function setup(cfg?: UserConfiguration): void {
+export function setup(cfg?: UserConfiguration): AdzeGlobal {
   const ctxt = globalContext();
-  if (isSetup(ctxt)) {
-    console.error('Adze has already been setup. Please only call setup once.');
-    return;
+  const store = ctxt.$adzeGlobal;
+  if (isGlobalInitialized(store)) {
+    return store;
   }
-  ctxt.$adzeGlobal = new AdzeGlobal(cfg);
+  const globalCtxt = new AdzeGlobal(cfg);
+  ctxt.$adzeGlobal = globalCtxt;
+  return globalCtxt;
 }
 
 /**
  * Removes the global log store from the environment.
  */
 export function teardown(): void {
-  if (isSetup(globalContext())) {
+  if (isGlobalInitialized(globalContext())) {
     delete globalContext().$adzeGlobal;
   }
 }
@@ -37,20 +39,8 @@ export function teardown(): void {
 /**
  * Adze has been setup.
  */
-export function isSetup(ctxt: Window | typeof globalThis): boolean {
-  return ctxt.$adzeGlobal instanceof AdzeGlobal;
-}
-
-/**
- * Gets the global store instance.
- */
-export function getGlobalStore(ctxt: Window | typeof globalThis): AdzeGlobal | undefined {
-  if (isSetup(ctxt)) {
-    return ctxt.$adzeGlobal;
-  }
-  console.error(
-    'Adze has not been setup. Please set up a global store prior to using labels. Refer to http://adzejs.com/docs/setup for more information.'
-  );
+export function isGlobalInitialized(global: unknown): global is AdzeGlobal {
+  return global instanceof AdzeGlobal;
 }
 
 /**

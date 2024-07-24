@@ -8,23 +8,24 @@ import {
   ModifierData,
   UserConfiguration,
 } from './_types';
+import AdzeGlobal from './adze-global';
 import {
   captureTimeNow,
   formatTime,
-  getGlobalStore,
-  globalContext,
+  setup,
   hrtime,
   isMethodWithArgs,
   mergeConfiguration,
   stacktrace,
 } from './functions';
+import { SealedLog } from './functions/seal';
 import { Middleware } from './middleware';
 
 export default class Log<N extends string = string, Msg = unknown> {
   /**
    * The global context object.
    */
-  protected globalContext: Window | typeof globalThis;
+  protected globalStore: AdzeGlobal;
 
   /**
    * The configuration for the adze log.
@@ -47,9 +48,9 @@ export default class Log<N extends string = string, Msg = unknown> {
   protected modifierQueue: Modifier[] = [];
 
   constructor(cfg: UserConfiguration = {}, modifierData?: ModifierData) {
-    this.globalContext = globalContext();
+    this.globalStore = setup(cfg);
     this._modifierData = modifierData ?? {};
-    this._cfg = mergeConfiguration({}, cfg, this.globalContext?.$adzeGlobal?.configuration);
+    this._cfg = mergeConfiguration({}, cfg, this.globalStore.configuration);
     this.doHook((m) => (m.constructed ? m.constructed(this) : null));
   }
 
@@ -366,14 +367,10 @@ export default class Log<N extends string = string, Msg = unknown> {
    * sealed.log('Another log.'); // -> prints "#sealed [sealed-label] Another log."
    * ```
    */
-  public seal<N extends string = string, M = unknown>(cfg?: UserConfiguration): Log<N, M> {
+  public seal<N extends string = string, M = unknown>(cfg?: UserConfiguration) {
     this.runModifierQueue();
     this.mergeConfiguration({ ...this._cfg, ...cfg });
-    const { formatters, ...cfgWithoutFormatters } = this._cfg;
-    return new Log<N, M>(
-      { ...structuredClone(cfgWithoutFormatters), formatters },
-      structuredClone(this._modifierData)
-    );
+    return SealedLog(Log<N, M>, this._cfg, this._modifierData);
   }
 
   /**
@@ -387,8 +384,8 @@ export default class Log<N extends string = string, Msg = unknown> {
    * sealed.log('Another log.'); // -> prints "#sealed [sealed-label] Another log."
    * ```
    */
-  public static seal<N extends string = string>(cfg?: UserConfiguration): Log<N> {
-    return new this().seal(cfg);
+  public static seal<N extends string = string>(cfg?: UserConfiguration) {
+    return new this().seal<N>(cfg);
   }
 
   ////////////////////////////////////////////////////////
@@ -738,12 +735,9 @@ export default class Log<N extends string = string, Msg = unknown> {
   public label(name: string): this {
     // prepend the modifier queue
     this.modifierQueue.unshift((data) => {
-      const globalStore = getGlobalStore(this.globalContext);
-      if (globalStore) {
-        const label = globalStore.getLabel(name) ?? { name };
-        data.label = label;
-        globalStore.setLabel(name, label);
-      }
+      const label = this.globalStore.getLabel(name) ?? { name };
+      data.label = label;
+      this.globalStore.setLabel(name, label);
       return data;
     });
     return this;
@@ -766,9 +760,9 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * This is a non-standard API.
    */
-  public meta<T extends Record<string, unknown> = Record<string, unknown>>(meta: T): this {
+  public meta<T extends Record<string, any> = Record<string, unknown>>(meta: T): this {
     this.modifierQueue.push((data) => {
-      data.meta = meta;
+      this._cfg.meta = { ...this._cfg.meta, ...meta };
       return data;
     });
     return this;
@@ -1084,7 +1078,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Merge the user configuration with the default configuration and the global configuration.
    */
   protected mergeConfiguration(cfg?: UserConfiguration): void {
-    this._cfg = mergeConfiguration(this._cfg, cfg, this.globalContext?.$adzeGlobal?.configuration);
+    this._cfg = mergeConfiguration(this._cfg, cfg, this.globalStore.configuration);
   }
 
   /**

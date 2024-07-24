@@ -1,4 +1,3 @@
-import js from '@eslint/js';
 import adze, {
   setup,
   teardown,
@@ -6,8 +5,11 @@ import adze, {
   UserConfiguration,
   CommonLogFormatMeta,
   CommonLogFormatMessage,
+  JsonLogMeta,
+  JsonLogOptionalFields,
 } from '.';
 import { StandardLogFormatMeta } from './formatters/standard/types';
+import { globalContext } from './functions';
 
 class logger extends adze {
   constructor(cfg: UserConfiguration = {}, modifierData?: ModifierData) {
@@ -34,28 +36,30 @@ class logger extends adze {
 
 // Run our demo modules
 function runDemo() {
-  // defaultLevels();
-  // configuration();
-  // custom();
-  // namespace();
-  // label();
-  // filterLevelRange();
-  // filterLevels();
-  // filterNamespaces();
-  // filterLabels();
-  // filterBoth();
-  // counting();
-  // tests();
-  // dir();
-  // table();
-  // group();
-  // groupCollapsed();
-  // trace();
-  // timestamp();
-  // silent();
+  defaultLevels();
+  configuration();
+  custom();
+  namespace();
+  label();
+  filterLevelRange();
+  filterLevels();
+  filterNamespaces();
+  filterLabels();
+  filterBoth();
+  counting();
+  tests();
+  dir();
+  table();
+  group();
+  groupCollapsed();
+  seal();
+  trace();
+  timestamp();
+  silent();
   common();
   standard();
-  // time();
+  json();
+  time();
 }
 
 function defaultLevels() {
@@ -373,7 +377,7 @@ function common() {
   const logger = adze
     .cfg({ activeLevel: 'verbose', format: 'common' })
     .meta<CommonLogFormatMeta>({
-      host: '192.168.1.5',
+      hostname: '192.168.1.5',
       ident: 'user-identifier',
       user: 'astacy',
     })
@@ -402,6 +406,64 @@ function standard() {
   logger.error('This is an error log');
   logger.warn('This is a warning log');
   logger.info('This is an info log');
+  logger.fail('This is a fail log');
+  logger.success('This is a success log');
+  logger.log('This is a log');
+  logger.debug('This is a debug log');
+  logger.verbose('This is a verbose log');
+}
+
+function seal() {
+  const x = adze.ns('doobadoo').withEmoji.seal();
+
+  x.ns('zibeedee').count.label('derp').success('Hello');
+  x.ns('zibeedee').count.label('derp').success('Hello');
+  x.ns('zibeedee').count.label('derp').success('Hello');
+  x.ns('zibeedee').count.label('flerp').log('World');
+  x.ns('zibeedee').count.label('flerp').log('World');
+  x.ns('zibeedee').count.label('flerp').log('World');
+}
+
+function json() {
+  const logger = adze
+    .cfg({ activeLevel: 'verbose', format: 'json' })
+    .meta<JsonLogMeta>({
+      hostname: '192.168.1.5',
+      name: 'myapp',
+    })
+    .seal();
+  const err = new Error('This is an error.');
+  logger
+    .meta<JsonLogOptionalFields>({
+      src: 'src/demo_funcs.ts',
+      err: {
+        message: err.message,
+        name: err.name,
+        stack: err.stack,
+      },
+      req_id: '12345',
+      req: {
+        method: 'GET',
+        url: '/path?q=1#anchor',
+        headers: {
+          'x-hi': 'Mom',
+          connection: 'close',
+        },
+        remoteAddress: '120.0.0.1',
+        remotePort: 51244,
+        username: 'astacy',
+        body: JSON.stringify({ foo: 'bar' }),
+      },
+      res: {
+        statusCode: 200,
+        header: 'Content-Type: text/html; charset=utf-8',
+      },
+      latency: 4444444,
+    })
+    .alert('This is an alert log');
+  logger.ns('foobar').error('This is an error log');
+  logger.warn('This is a warning log');
+  logger.ns('hello world').info('This is an info log');
   logger.fail('This is a fail log');
   logger.success('This is a success log');
   logger.log('This is a log');

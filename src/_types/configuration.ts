@@ -31,7 +31,7 @@ export interface Configuration {
   /**
    * Additional metadata to be included with each log.
    */
-  meta: Record<string, unknown>;
+  meta: Record<string, any>;
   /**
    * Applies middleware to execute along with the log.
    */
