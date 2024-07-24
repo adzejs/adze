@@ -1,4 +1,4 @@
-import { Label, LabelMap, UserConfiguration } from './_types';
+import { Label, LabelMap, LogListener, UserConfiguration } from './_types';
 
 export default class AdzeGlobal {
   /**
@@ -15,6 +15,11 @@ export default class AdzeGlobal {
    * All log labels.
    */
   private labels: LabelMap = new Map();
+
+  /**
+   * All log listeners.
+   */
+  private _listeners: Map<number, LogListener> = new Map();
 
   constructor(configuration: UserConfiguration = {}) {
     this.config = configuration;
@@ -48,5 +53,28 @@ export default class AdzeGlobal {
     const current = this.pidCounter;
     this.pidCounter++;
     return current;
+  }
+
+  /**
+   * Adds a log listener that will be called after a log has been terminated.
+   */
+  public addListener(listener: LogListener): number {
+    const id = this._listeners.size + 1;
+    this._listeners.set(id, listener);
+    return id;
+  }
+
+  /**
+   * Removes a log listener by its ID.
+   */
+  public removeListener(id: number): void {
+    this._listeners.delete(id);
+  }
+
+  /**
+   * Returns an array of log listener callback functions.
+   */
+  public get listeners(): LogListener[] {
+    return Array.from(this._listeners.values());
   }
 }

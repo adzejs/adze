@@ -7,9 +7,10 @@ import adze, {
   CommonLogFormatMessage,
   JsonLogMeta,
   JsonLogOptionalFields,
+  isBrowser,
 } from '.';
 import { StandardLogFormatMeta } from './formatters/standard/types';
-import { globalContext } from './functions';
+import { envIsWindow, globalContext } from './functions';
 
 class logger extends adze {
   constructor(cfg: UserConfiguration = {}, modifierData?: ModifierData) {
@@ -36,30 +37,31 @@ class logger extends adze {
 
 // Run our demo modules
 function runDemo() {
-  defaultLevels();
-  configuration();
-  custom();
-  namespace();
-  label();
-  filterLevelRange();
-  filterLevels();
-  filterNamespaces();
-  filterLabels();
-  filterBoth();
-  counting();
-  tests();
-  dir();
-  table();
-  group();
-  groupCollapsed();
-  seal();
-  trace();
-  timestamp();
-  silent();
-  common();
-  standard();
-  json();
-  time();
+  // defaultLevels();
+  // configuration();
+  // custom();
+  // namespace();
+  // label();
+  // filterLevelRange();
+  // filterLevels();
+  // filterNamespaces();
+  // filterLabels();
+  // filterBoth();
+  // counting();
+  // tests();
+  // dir();
+  // table();
+  // group();
+  // groupCollapsed();
+  // seal();
+  // trace();
+  // timestamp();
+  // silent();
+  // common();
+  // standard();
+  // json();
+  // time();
+  listener();
 }
 
 function defaultLevels() {
@@ -469,6 +471,17 @@ function json() {
   logger.log('This is a log');
   logger.debug('This is a debug log');
   logger.verbose('This is a verbose log');
+}
+
+function listener() {
+  const store = setup();
+  const id = store.addListener((data) => {
+    console.log(data);
+  });
+  adze.log('This is a log');
+  adze.ns('derp').log('This is a namespaced log');
+  adze.silent.log('This is a silent log');
+  store.removeListener(id);
 }
 
 runDemo();

@@ -1055,16 +1055,20 @@ export default class Log<N extends string = string, Msg = unknown> {
 
     this.doHook((m) => (m.beforePrint ? m.beforePrint(this) : null));
 
-    // Don't print if the message is empty.
-    if (data.message.length === 0) return;
-
-    if (isMethodWithArgs(data.method)) {
-      console[data.method](...data.message);
-    } else {
-      console[data.method]();
+    // Don't print the log if it has no message. This could mean it is silent.
+    if (data.message.length !== 0) {
+      // Only print the message with arguments if it is using a method that allows arguments.
+      if (isMethodWithArgs(data.method)) {
+        console[data.method](...data.message);
+      } else {
+        console[data.method]();
+      }
     }
 
     this.doHook((m) => (m.afterTerminated ? m.afterTerminated(this) : null));
+
+    // Fire all of the log listeners and pass this log instance to them.
+    this.globalStore.listeners.forEach((listener) => listener(data));
   }
 
   /**

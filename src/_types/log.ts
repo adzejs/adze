@@ -106,3 +106,8 @@ export type LogData = ModifierData &
     message: unknown[];
     timestamp: string;
   };
+
+/**
+ * A log listener callback function.
+ */
+export type LogListener = (data: LogData) => void;
