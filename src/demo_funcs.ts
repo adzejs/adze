@@ -478,7 +478,7 @@ function listener() {
   const id = store.addListener((data) => {
     console.log(data);
   });
-  adze.log('This is a log');
+  adze.withEmoji.log('This is a log');
   adze.ns('derp').log('This is a namespaced log');
   adze.silent.log('This is a silent log');
   store.removeListener(id);

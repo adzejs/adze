@@ -1,4 +1,4 @@
-import adze, { ChalkStyle } from '..';
+import adze, { ChalkStyle, ConfigurationData } from '..';
 import {
   methodsWithArgs,
   levels,
@@ -100,6 +100,7 @@ export interface LevelConfig {
  * The data structure that represents a complete log message.
  */
 export type LogData = ModifierData &
+  ConfigurationData &
   LevelConfig & {
     args: unknown[];
     terminator: string;

@@ -1040,7 +1040,16 @@ export default class Log<N extends string = string, Msg = unknown> {
     // Create our final log data object
     const message = formatter.print(this.modifierData, timestamp, args);
     this.doHook((m) => (m.beforeFormatApplied ? m.beforeFormatApplied(this, message) : null));
+    const { activeLevel, cache, dump, format, meta, showTimestamp, silent, withEmoji } = this._cfg;
     const data: LogData = {
+      activeLevel,
+      cache,
+      dump,
+      format,
+      meta,
+      showTimestamp,
+      silent,
+      withEmoji,
       ...level,
       ...this._modifierData,
       terminator,

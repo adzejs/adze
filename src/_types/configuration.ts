@@ -9,9 +9,9 @@ import { FormatterConstructor, Level, LevelConfig } from './log';
 export type Format = (typeof formats)[number];
 
 /**
- * Configuration for the logger.
+ * Configuration data points that are also emitted with log data.
  */
-export interface Configuration {
+export interface ConfigurationData {
   /**
    * The level of logs to render.
    */
@@ -25,17 +25,9 @@ export interface Configuration {
    */
   dump: boolean;
   /**
-   * The format to use when generating logs.
-   */
-  format: Format;
-  /**
    * Additional metadata to be included with each log.
    */
   meta: Record<string, any>;
-  /**
-   * Applies middleware to execute along with the log.
-   */
-  middleware?: Middleware[];
   /**
    * Allow processing of logs but do not generate them automatically.
    *
@@ -53,6 +45,20 @@ export interface Configuration {
    * Render emoji's in the log output.
    */
   withEmoji: boolean;
+  /**
+   * The format to use when generating logs.
+   */
+  format: Format;
+}
+
+/**
+ * Configuration for the logger.
+ */
+export interface Configuration extends ConfigurationData {
+  /**
+   * Applies middleware to execute along with the log.
+   */
+  middleware?: Middleware[];
   /**
    * Configuration of all log levels.
    */
