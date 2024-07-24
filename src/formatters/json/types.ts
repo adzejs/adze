@@ -127,7 +127,7 @@ export interface JsonLogHttpRequest {
   headers: Record<string, string>;
   body?: string;
   remoteAddress: string;
-  remotePort: number;
+  remotePort?: number;
   username?: string;
 }
 

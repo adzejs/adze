@@ -7,10 +7,10 @@ import adze, {
   CommonLogFormatMessage,
   JsonLogMeta,
   JsonLogOptionalFields,
-  isBrowser,
+  serializeRequest,
+  serializeResponse,
 } from '.';
 import { StandardLogFormatMeta } from './formatters/standard/types';
-import { envIsWindow, globalContext } from './functions';
 
 class logger extends adze {
   constructor(cfg: UserConfiguration = {}, modifierData?: ModifierData) {
@@ -36,7 +36,7 @@ class logger extends adze {
 }
 
 // Run our demo modules
-function runDemo() {
+async function runDemo() {
   // defaultLevels();
   // configuration();
   // custom();
@@ -59,9 +59,9 @@ function runDemo() {
   // silent();
   // common();
   // standard();
-  // json();
+  json();
   // time();
-  listener();
+  // listener();
 }
 
 function defaultLevels() {
@@ -426,7 +426,7 @@ function seal() {
   x.ns('zibeedee').count.label('flerp').log('World');
 }
 
-function json() {
+async function json() {
   const logger = adze
     .cfg({ activeLevel: 'verbose', format: 'json' })
     .meta<JsonLogMeta>({
@@ -434,6 +434,22 @@ function json() {
       name: 'myapp',
     })
     .seal();
+
+  const request = new Request('https://120.0.0.1:51244/path?q=1#anchor', {
+    method: 'POST',
+    headers: {
+      'x-hi': 'Mom',
+      connection: 'close',
+      Authorization: 'Basic ' + btoa('astacy:password'),
+    },
+    body: JSON.stringify({ foo: 'bar' }),
+  });
+  const response = new Response('hello world!', {
+    status: 200,
+    statusText: 'OK',
+    headers: { boop: 'beep' },
+  });
+  Object.defineProperty(response, 'url', { value: 'https://120.0.0.1:51244/path?q=1#anchor' });
   const err = new Error('This is an error.');
   logger
     .meta<JsonLogOptionalFields>({
@@ -444,24 +460,12 @@ function json() {
         stack: err.stack,
       },
       req_id: '12345',
-      req: {
-        method: 'GET',
-        url: '/path?q=1#anchor',
-        headers: {
-          'x-hi': 'Mom',
-          connection: 'close',
-        },
-        remoteAddress: '120.0.0.1',
-        remotePort: 51244,
-        username: 'astacy',
-        body: JSON.stringify({ foo: 'bar' }),
-      },
-      res: {
-        statusCode: 200,
-        header: 'Content-Type: text/html; charset=utf-8',
-      },
+      req: await serializeRequest(request, true),
+      res: await serializeResponse(response),
       latency: 4444444,
     })
+    .ns('foobar', 'baz')
+    .label('derp')
     .alert('This is an alert log');
   logger.ns('foobar').error('This is an error log');
   logger.warn('This is a warning log');
@@ -484,4 +488,17 @@ function listener() {
   store.removeListener(id);
 }
 
-runDemo();
+await runDemo();
+
+// {
+//   method: 'GET',
+//   url: '/path?q=1#anchor',
+//   headers: {
+//     'x-hi': 'Mom',
+//     connection: 'close',
+//   },
+//   remoteAddress: '120.0.0.1',
+//   remotePort: 51244,
+//   username: 'astacy',
+//   body: JSON.stringify({ foo: 'bar' }),
+// },
