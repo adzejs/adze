@@ -36,7 +36,7 @@ export default class PrettyFormatter extends Formatter {
    */
   protected formatNode(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
     const leaderRaw = addPadding(this.formatLeader(false), this.cfg.withEmoji, this.level.emoji);
-    const leader = leaderRaw.length >= 14 ? `${leaderRaw} ` : leaderRaw;
+    const leader = leaderRaw.length >= 12 ? `${leaderRaw} ` : leaderRaw;
     const meta = this.formatMeta(mods, timestamp);
 
     const styledLeader = applyChalkStyles(

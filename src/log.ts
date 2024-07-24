@@ -1,9 +1,11 @@
 import {
   Configuration,
+  DefaultTerminatorMethod,
   Format,
   FormatterConstructor,
   LevelConfig,
   LogData,
+  Method,
   Modifier,
   ModifierData,
   UserConfiguration,
@@ -20,6 +22,10 @@ import {
 } from './functions';
 import { SealedLog } from './functions/seal';
 import { Middleware } from './middleware';
+
+export function isCallback(maybeFunction: unknown): maybeFunction is (...args: any[]) => void {
+  return typeof maybeFunction === 'function';
+}
 
 export default class Log<N extends string = string, Msg = unknown> {
   /**
@@ -386,6 +392,49 @@ export default class Log<N extends string = string, Msg = unknown> {
    */
   public static seal<N extends string = string>(cfg?: UserConfiguration) {
     return new this().seal<N>(cfg);
+  }
+
+  /**
+   * Seals the configuration of a log and returns a template string tag function.
+   *
+   * Example:
+   *
+   * ```typescript
+   * const ERR = adze.ns('foo').sealTag('error');
+   * ERR`This is an error message.`; // => prints "Error #foo This is an error message."
+   * ```
+   */
+  public sealTag<T extends DefaultTerminatorMethod = DefaultTerminatorMethod>(
+    method: T,
+    cfg?: UserConfiguration
+  ) {
+    this.runModifierQueue();
+    this.mergeConfiguration({ ...this._cfg, ...cfg });
+    return (strings: TemplateStringsArray, ...values: string[]) => {
+      const message = String.raw({ raw: strings }, ...values);
+      const sealed = SealedLog(Log<N, Msg>, this._cfg, this._modifierData);
+      const _method: keyof typeof sealed = method;
+      if (isCallback(sealed[_method])) {
+        sealed[_method](message);
+      }
+    };
+  }
+
+  /**
+   * Seals the configuration of a log and returns a template string tag function.
+   *
+   * Example:
+   *
+   * ```typescript
+   * const ERR = adze.ns('foo').sealTag('error');
+   * ERR`This is an error message.`; // => prints "Error #foo This is an error message."
+   * ```
+   */
+  public static sealTag<T extends DefaultTerminatorMethod = DefaultTerminatorMethod>(
+    method: T,
+    cfg?: UserConfiguration
+  ) {
+    return new this().sealTag(method, cfg);
   }
 
   ////////////////////////////////////////////////////////

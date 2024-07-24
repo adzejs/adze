@@ -212,7 +212,7 @@ export function getSuccessConfig(overrides: Partial<LevelConfig> = {}): LevelCon
     level: 5,
     style:
       'font-size: 12px; border-radius: 4px; padding-right: 30px; background: linear-gradient(to right, #e6f6e4, #ceedc9); color: #4e594d; border-color: #b7d1b3;',
-    terminalStyle: ['gray', 'bgGreen'],
+    terminalStyle: ['white', 'bgGreen'],
     method: 'info',
     emoji: '🎉',
     ...overrides,

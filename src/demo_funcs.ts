@@ -37,31 +37,32 @@ class logger extends adze {
 
 // Run our demo modules
 async function runDemo() {
-  // defaultLevels();
-  // configuration();
-  // custom();
-  // namespace();
-  // label();
-  // filterLevelRange();
-  // filterLevels();
-  // filterNamespaces();
-  // filterLabels();
-  // filterBoth();
-  // counting();
-  // tests();
-  // dir();
-  // table();
-  // group();
-  // groupCollapsed();
-  // seal();
-  // trace();
-  // timestamp();
-  // silent();
-  // common();
-  // standard();
+  defaultLevels();
+  configuration();
+  custom();
+  namespace();
+  label();
+  filterLevelRange();
+  filterLevels();
+  filterNamespaces();
+  filterLabels();
+  filterBoth();
+  counting();
+  tests();
+  dir();
+  table();
+  group();
+  groupCollapsed();
+  seal();
+  trace();
+  timestamp();
+  sealTag();
+  silent();
+  common();
+  standard();
   json();
-  // time();
-  // listener();
+  time();
+  listener();
 }
 
 function defaultLevels() {
@@ -340,6 +341,15 @@ function groupCollapsed() {
   adze.groupEnd.log();
 }
 
+function sealTag() {
+  const ERR = adze.ns('doobadoo').withEmoji.sealTag('error');
+  const INFO = adze.ns('doobadoo').withEmoji.sealTag('info');
+  const SUCCESS = adze.ns('doobadoo').withEmoji.sealTag('success');
+  ERR`This is an error log`;
+  INFO`This is an info log`;
+  SUCCESS`This is a success log`;
+}
+
 function trace() {
   adze.trace.log('Tracing...');
 }
@@ -489,16 +499,3 @@ function listener() {
 }
 
 await runDemo();
-
-// {
-//   method: 'GET',
-//   url: '/path?q=1#anchor',
-//   headers: {
-//     'x-hi': 'Mom',
-//     connection: 'close',
-//   },
-//   remoteAddress: '120.0.0.1',
-//   remotePort: 51244,
-//   username: 'astacy',
-//   body: JSON.stringify({ foo: 'bar' }),
-// },

@@ -19,7 +19,7 @@ export function makeRange(start: number, end: number): number[] {
  * Add spaces to the end of a log title to make them all align.
  */
 export function addPadding(str: string, withEmoji = false, emoji?: string): string {
-  const len = withEmoji && emoji ? 14 + emoji.length : 14;
+  const len = withEmoji && emoji ? 9 + emoji.length : 9;
   const diff = len - str.length;
   let padded = str;
   for (let i = 0; i <= diff; i += 1) {

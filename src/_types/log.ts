@@ -23,6 +23,11 @@ export type Terminator = (typeof terminators)[number];
 export type Method = (typeof methods)[number];
 
 /**
+ * All valid default log level terminator methods.
+ */
+export type DefaultTerminatorMethod = (typeof levels)[number];
+
+/**
  * Valid console methods that accept at least one argument as the first argument.
  */
 export type MethodWithArgs = (typeof methodsWithArgs)[number];
