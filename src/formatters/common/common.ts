@@ -43,7 +43,9 @@ export default class CommonFormatter extends Formatter {
   private formatMessage(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
     if (this.cfg.meta?.hostname === undefined) {
       console.warn(
-        "Adze: 'hostname' is required for the common log format. Please provide this value in your log's meta data."
+        new Error(
+          "Adze: 'hostname' is required for the common log format. Please provide this value in your log's meta data."
+        )
       );
     }
     const hostname = this.cfg.meta?.hostname;

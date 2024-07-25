@@ -1,4 +1,5 @@
 import { Label, LabelMap, LogListener, UserConfiguration } from './_types';
+import Log from './log';
 
 export default class AdzeGlobal {
   /**
@@ -21,8 +22,34 @@ export default class AdzeGlobal {
    */
   private _listeners: Map<number, LogListener> = new Map();
 
+  /**
+   * Cache of logs that have been terminated.
+   */
+  private _cache: Log[] = [];
+
   constructor(configuration: UserConfiguration = {}) {
     this.config = configuration;
+  }
+
+  /**
+   * Returns the cache of logs that have been terminated.
+   */
+  public get cache(): Log[] {
+    return this._cache;
+  }
+
+  /**
+   * Adds a log to the log cache.
+   */
+  public addLogToCache(log: Log): void {
+    this._cache.push(log);
+  }
+
+  /**
+   * Clears the log cache.
+   */
+  public clearCache(): void {
+    this._cache = [];
   }
 
   /**

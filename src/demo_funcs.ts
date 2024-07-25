@@ -1,68 +1,55 @@
 import adze, {
   setup,
   teardown,
-  ModifierData,
-  UserConfiguration,
   CommonLogFormatMeta,
   CommonLogFormatMessage,
   JsonLogMeta,
   JsonLogOptionalFields,
   serializeRequest,
   serializeResponse,
+  LevelConfig,
 } from '.';
 import { StandardLogFormatMeta } from './formatters/standard/types';
 
-class logger extends adze {
-  constructor(cfg: UserConfiguration = {}, modifierData?: ModifierData) {
-    super(cfg, modifierData);
-    this.customLevel('leetLevel', {
-      levelName: 'leetLevel',
-      level: 1337,
-      method: 'log',
-      style:
-        'font-size: 12px; border-radius: 4px; padding-right: 10px; background: linear-gradient(to right, #ffcafc, #ff02f2); color: #fff; border-color: #e3bbbb;',
-      terminalStyle: ['white', 'bgBlue'],
-      emoji: '👾',
-    });
-  }
-
-  public leetLevel(...args: unknown[]): void {
-    this.terminate('leetLevel', args);
-  }
-
-  public static leetLevel(...args: unknown[]): void {
-    new logger().leetLevel(...args);
-  }
-}
+const leetLevel: LevelConfig = {
+  levelName: 'leetLevel',
+  level: 1337,
+  method: 'log',
+  style:
+    'font-size: 12px; border-radius: 4px; padding-right: 10px; background: linear-gradient(to right, #ffcafc, #ff02f2); color: #fff; border-color: #e3bbbb;',
+  terminalStyle: ['white', 'bgMagenta'],
+  emoji: '👾',
+};
 
 // Run our demo modules
 async function runDemo() {
-  defaultLevels();
-  configuration();
-  custom();
-  namespace();
-  label();
-  filterLevelRange();
-  filterLevels();
-  filterNamespaces();
-  filterLabels();
-  filterBoth();
-  counting();
-  tests();
-  dir();
-  table();
-  group();
-  groupCollapsed();
-  seal();
-  trace();
-  timestamp();
-  sealTag();
-  silent();
-  common();
-  standard();
-  json();
-  time();
-  listener();
+  // defaultLevels();
+  // configuration();
+  // custom();
+  // namespace();
+  // label();
+  // filterLevelRange();
+  // filterLevels();
+  // filterNamespaces();
+  // filterLabels();
+  // filterBoth();
+  // counting();
+  // tests();
+  // dir();
+  // table();
+  // group();
+  // groupCollapsed();
+  // seal();
+  // trace();
+  // timestamp();
+  // sealTag();
+  // silent();
+  // common();
+  // standard();
+  // json();
+  // time();
+  thread();
+  // listener();
 }
 
 function defaultLevels() {
@@ -97,7 +84,16 @@ function configuration() {
 }
 
 function custom() {
-  logger.cfg({ withEmoji: true, activeLevel: 1338 }).leetLevel('This is a custom log!');
+  const logger = adze
+    .cfg({
+      withEmoji: true,
+      activeLevel: 1338,
+      levels: {
+        leetLevel,
+      },
+    })
+    .seal();
+  logger.count.custom('leetLevel', 'This is a custom log!');
 }
 
 function namespace() {
@@ -383,6 +379,25 @@ function time() {
     adze.withEmoji.label('timer2').timeEnd.log('Ending a timer with emoji');
     teardown();
   }, 1000);
+}
+
+function thread() {
+  function add(a: number, b: number) {
+    const answer = a + b;
+    adze.label('foo').thread('added', { a, b, answer });
+    return answer;
+  }
+
+  function subtract(x: number, y: number) {
+    const answer = x - y;
+    adze.label('foo').thread('subtracted', { x, y, answer });
+    return answer;
+  }
+
+  add(1, 2);
+  subtract(4, 3);
+
+  adze.label('foo').dump.info('Results from our thread');
 }
 
 function common() {

@@ -31,7 +31,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   /**
    * The global context object.
    */
-  protected globalStore: AdzeGlobal;
+  private globalStore: AdzeGlobal;
 
   /**
    * The configuration for the adze log.
@@ -41,17 +41,17 @@ export default class Log<N extends string = string, Msg = unknown> {
   /**
    * Incomplete log data.
    */
-  protected _modifierData: ModifierData;
+  private _modifierData: ModifierData;
 
   /**
    * The log data object.
    */
-  protected _data?: LogData;
+  private _data?: LogData;
 
   /**
    * Queue up modifiers to ensure they are in the correct order when executed.
    */
-  protected modifierQueue: Modifier[] = [];
+  private modifierQueue: Modifier[] = [];
 
   constructor(cfg: UserConfiguration = {}, modifierData?: ModifierData) {
     this.globalStore = setup(cfg);
@@ -363,6 +363,55 @@ export default class Log<N extends string = string, Msg = unknown> {
   }
 
   /**
+   * Clears the console.
+   *
+   * This terminator simply exists as an alias for `console.clear()`.
+   */
+  public clear(): void {
+    console.clear();
+  }
+
+  /**
+   * Clears the console.
+   *
+   * This terminator simply exists as an alias for `console.clear()`.
+   */
+  public static clear(): void {
+    console.clear();
+  }
+
+  /**
+   * Alias for `clear()`. Clears the console.
+   *
+   * This terminator simply exists as an alias for `console.clear()`.
+   */
+  public clr(): void {
+    console.clear();
+  }
+
+  /**
+   * Alias for `clear()`. Clears the console.
+   *
+   * This terminator simply exists as an alias for `console.clear()`.
+   */
+  public static clr(): void {
+    console.clear();
+  }
+
+  /**
+   * Terminates the log at the provided custom log level. Custom log levels are defined within the
+   * Adze configuration object under the levels property.
+   */
+  public custom<M extends string>(levelName: string, ...args: [M, ...unknown[]]): this {
+    if (!this._cfg.levels[levelName]) {
+      console.warn(new Error('Custom log level not found in configuration.'));
+      return this;
+    }
+    this.terminate(levelName, args);
+    return this;
+  }
+
+  /**
    * Seals the configuration of a log and returns a function that
    * constructs a new log with the same configuration.
    *
@@ -437,6 +486,79 @@ export default class Log<N extends string = string, Msg = unknown> {
     return new this().sealTag(method, cfg);
   }
 
+  /**
+   * Following the MDC (Mapped Diagnostic Context) pattern, this method enables you to create a
+   * thread for adding context from different scopes before finally terminating the log.
+   *
+   * In order to create a thread, this log must specify a label. The label identifies the shared
+   * context that other logs in your thread can contribute to.
+   *
+   * Example:
+   *
+   * ```typescript
+   * function add(a, b) {
+   *   const answer = a + b;
+   *   adze.label('foo').thread('added', { a, b, answer });
+   *   return answer;
+   * }
+   *
+   * function subtract(x, y) {
+   *   const answer = x - y;
+   *   adze.label('foo').thread('subtracted', { x, y, answer });
+   *   return answer;
+   * }
+   *
+   * add(1, 2);
+   * subtract(4, 3);
+   *
+   * adze.label('foo').dump.info('Results from our thread');
+   * // => prints the log with the context values from both thread logs applied.
+   * ```
+   */
+  public thread<T>(key: string, value: T): void {
+    this.modifierQueue.push((data) => {
+      if (data.label) {
+        if (!data.label.context) data.label.context = {};
+        data.label.context = { ...data.label.context, [key]: value };
+      }
+      return data;
+    });
+    this.runModifierQueue();
+  }
+
+  /**
+   * Following the MDC (Mapped Diagnostic Context) pattern, this method enables you to create a
+   * thread for adding context from different scopes before finally terminating the log.
+   *
+   * In order to create a thread, this log must specify a label. The label identifies the shared
+   * context that other logs in your thread can contribute to.
+   *
+   * Example:
+   *
+   * ```typescript
+   * function add(a, b) {
+   *   const answer = a + b;
+   *   adze.label('foo').thread('added', { a, b, answer });
+   *   return answer;
+   * }
+   *
+   * function subtract(x, y) {
+   *   const answer = x - y;
+   *   adze.label('foo').thread('subtracted', { x, y, answer });
+   *   return answer;
+   * }
+   *
+   * add(1, 2);
+   * subtract(4, 3);
+   *
+   * adze.label('foo').dump.info('Results from our thread');
+   * // => prints the log with the context values from both thread logs applied.
+   * ```
+   */
+  public static thread<T>(key: string, value: T): void {
+    return new this().thread(key, value);
+  }
+
   ////////////////////////////////////////////////////////
   // Modifiers
   ////////////////////////////////////////////////////////
@@ -460,6 +582,24 @@ export default class Log<N extends string = string, Msg = unknown> {
   }
 
   /**
+   * Closes a thread by resetting its context.
+   */
+  public get closeThread(): this {
+    if (this._modifierData.label?.context) {
+      this._cfg.dump = true;
+      this._modifierData.label.context = undefined;
+    }
+    return this;
+  }
+
+  /**
+   * Closes a thread by resetting its context.
+   */
+  public static get closeThread(): Log {
+    return new this().closeThread;
+  }
+
+  /**
    * Configures the log instance. This is useful for applying many configuration values at once
    * rather than calling each modifier individually.
    */
@@ -475,8 +615,8 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Configures the log instance. This is useful for applying many configuration values at once
    * rather than calling each modifier individually.
    */
-  public static configure<T extends typeof Log>(cfg: UserConfiguration): InstanceType<T> {
-    return new Log().configure(cfg) as InstanceType<T>;
+  public static configure(cfg: UserConfiguration): Log {
+    return new this().configure(cfg);
   }
 
   /**
@@ -485,8 +625,8 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Configures the log instance. This is useful for applying many configuration values at once
    * rather than calling each modifier individually.
    */
-  public cfg<T extends typeof Log>(cfg: UserConfiguration): InstanceType<T> {
-    return this.configure(cfg) as InstanceType<T>;
+  public cfg(cfg: UserConfiguration): this {
+    return this.configure(cfg);
   }
 
   /**
@@ -495,10 +635,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Configures the log instance. This is useful for applying many configuration values at once
    * rather than calling each modifier individually.
    */
-  public static cfg<T extends Log>(
-    this: new (cfg?: UserConfiguration, modifierData?: ModifierData) => T,
-    cfg: UserConfiguration
-  ): T {
+  public static cfg(cfg: UserConfiguration): Log {
     return new this().configure(cfg);
   }
 
@@ -522,7 +659,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/count)
    */
-  public static get count(): Log {
+  public static get count() {
     return new this().count;
   }
 
@@ -1066,10 +1203,29 @@ export default class Log<N extends string = string, Msg = unknown> {
   }
 
   ////////////////////////////////////////////////////////
+  // Public Utility Methods
+  ////////////////////////////////////////////////////////
+  public print(data: LogData): void {
+    if (data) {
+      // Don't print the log if it has no message. This could mean it is silent.
+      if (data.message.length !== 0) {
+        // Only print the message with arguments if it is using a method that allows arguments.
+        if (isMethodWithArgs(data.method)) {
+          console[data.method](...data.message);
+        } else {
+          console[data.method]();
+        }
+      }
+    } else {
+      console.warn(new Error('Cannot reprint a log that has never been previously printed.'));
+    }
+  }
+
+  ////////////////////////////////////////////////////////
   // Private Methods
   ////////////////////////////////////////////////////////
 
-  protected terminate(terminator: string, args: unknown[]): void {
+  private terminate(terminator: string, args: unknown[]): void {
     // Run the beforeTerminated middleware hooks
     this.doHook((m) => (m.beforeTerminated ? m.beforeTerminated(this, terminator, args) : null));
 
@@ -1088,6 +1244,10 @@ export default class Log<N extends string = string, Msg = unknown> {
 
     // Create our final log data object
     const message = formatter.print(this.modifierData, timestamp, args);
+    // If dump is enabled, add the context to the message.
+    if (this._cfg.dump && this.modifierData.label?.context) {
+      message.push(this.modifierData.label.context);
+    }
     this.doHook((m) => (m.beforeFormatApplied ? m.beforeFormatApplied(this, message) : null));
     const { activeLevel, cache, dump, format, meta, showTimestamp, silent, withEmoji } = this._cfg;
     const data: LogData = {
@@ -1110,18 +1270,14 @@ export default class Log<N extends string = string, Msg = unknown> {
 
     // save the data to this instance
     this._data = data;
+    if (this._cfg.cache) {
+      this.globalStore.addLogToCache(this);
+    }
 
     this.doHook((m) => (m.beforePrint ? m.beforePrint(this) : null));
 
-    // Don't print the log if it has no message. This could mean it is silent.
-    if (data.message.length !== 0) {
-      // Only print the message with arguments if it is using a method that allows arguments.
-      if (isMethodWithArgs(data.method)) {
-        console[data.method](...data.message);
-      } else {
-        console[data.method]();
-      }
-    }
+    // Print the log to the console.
+    this.print(this._data);
 
     this.doHook((m) => (m.afterTerminated ? m.afterTerminated(this) : null));
 
@@ -1132,33 +1288,22 @@ export default class Log<N extends string = string, Msg = unknown> {
   /**
    * Returns a formatter constructor based on the provided format.
    */
-  protected selectFormatter(format: string): FormatterConstructor {
+  private selectFormatter(format: string): FormatterConstructor {
     return this._cfg?.formatters[format];
   }
 
   /**
    * Merge the user configuration with the default configuration and the global configuration.
    */
-  protected mergeConfiguration(cfg?: UserConfiguration): void {
+  private mergeConfiguration(cfg?: UserConfiguration): void {
     this._cfg = mergeConfiguration(this._cfg, cfg, this.globalStore.configuration);
   }
 
   /**
    * Returns the level configuration object based on the provided level name.
    */
-  protected getLevelConfig(levelName: string): LevelConfig {
+  private getLevelConfig(levelName: string): LevelConfig {
     return this._cfg.levels[levelName];
-  }
-
-  /**
-   * Adds a custom level to the log instance configuration.
-   */
-  protected customLevel(name: string, cfg: LevelConfig): void {
-    this.mergeConfiguration({
-      levels: {
-        [name]: cfg,
-      },
-    });
   }
 
   /**

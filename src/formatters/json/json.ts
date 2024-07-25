@@ -65,7 +65,9 @@ export default class JsonFormatter extends Formatter {
       };
       return [JSON.stringify(json)];
     }
-    console.warn('Required fields are missing from the log meta for generating a JSON log.');
+    console.warn(
+      new Error('Required fields are missing from the log meta for generating a JSON log.')
+    );
     return [...args];
   }
 }
