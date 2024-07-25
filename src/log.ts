@@ -1205,6 +1205,9 @@ export default class Log<N extends string = string, Msg = unknown> {
   ////////////////////////////////////////////////////////
   // Public Utility Methods
   ////////////////////////////////////////////////////////
+  /**
+   * Prints the log to the console.
+   */
   public print(data: LogData): void {
     if (data) {
       // Don't print the log if it has no message. This could mean it is silent.
