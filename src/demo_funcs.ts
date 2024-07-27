@@ -522,8 +522,8 @@ async function json() {
 
 function listener() {
   const store = setup();
-  const id = store.addListener((data) => {
-    console.log(data);
+  const id = store.addListener((log) => {
+    console.log(log.data);
   });
   adze.withEmoji.log('This is a log');
   adze.ns('derp').log('This is a namespaced log');

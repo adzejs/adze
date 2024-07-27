@@ -1286,7 +1286,7 @@ export default class Log<N extends string = string, Msg = unknown> {
     this.doHook((m) => (m.afterTerminated ? m.afterTerminated(this) : null));
 
     // Fire all of the log listeners and pass this log instance to them.
-    this.globalStore.listeners.forEach((listener) => listener(data));
+    this.globalStore.listeners.forEach((listener) => listener(this));
   }
 
   /**

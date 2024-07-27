@@ -9,6 +9,7 @@ import {
   specialMethodsWithArgsAndLeader,
 } from '../constants';
 import Formatter from '../formatters/formatter';
+import Log from '../log';
 import { Configuration, UserConfiguration } from './configuration';
 import { Label } from './label';
 
@@ -116,4 +117,4 @@ export type LogData = ModifierData &
 /**
  * A log listener callback function.
  */
-export type LogListener = (data: LogData) => void;
+export type LogListener = (log: Log) => void;
