@@ -22,6 +22,7 @@
     "lint": "prettier ./src --check && eslint .",
     "lint:fix": "prettier ./src --write && eslint . --fix",
     "test": "vitest",
+    "test:ui": "vitest --ui",
     "prepare": "husky",
     "size": "size-limit"
   },
@@ -59,7 +60,8 @@
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.10",
     "typescript": "^5.5.2",
-    "typescript-eslint": "^7.14.1"
+    "typescript-eslint": "^7.14.1",
+    "vitest": "^2.0.4"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

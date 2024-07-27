@@ -1,5 +1,5 @@
 import type { HrTime } from '../_types';
-import { envIsWindow, globalContext } from './global';
+import { envIsWindow, globalContext } from '.';
 
 /**
  * Takes an HrTime tuple and converts it into a human-readable formatted

@@ -55,3 +55,10 @@ export function render(log: Log): void {
     console[log.data.method](...log.data.message);
   }
 }
+
+/**
+ * Removes empty strings from a message array.
+ */
+export function cleanMessage(message: unknown[]): unknown[] {
+  return message.filter((msg) => msg !== '');
+}

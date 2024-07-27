@@ -31,7 +31,7 @@ export function setup(cfg?: UserConfiguration): AdzeGlobal {
  * Removes the global log store from the environment.
  */
 export function teardown(): void {
-  if (isGlobalInitialized(globalContext())) {
+  if (isGlobalInitialized(globalContext().$adzeGlobal)) {
     delete globalContext().$adzeGlobal;
   }
 }
@@ -65,7 +65,7 @@ export function envIsWindow(_: Window | typeof globalThis): _ is Window {
 }
 
 /**
- * Static method that validates the current environment is Chrome.
+ * Validates the current environment is Chrome.
  */
 export function isChrome(): boolean {
   const _glbl = globalContext();
@@ -76,7 +76,7 @@ export function isChrome(): boolean {
 }
 
 /**
- * Static method that validates the current environment is Firefox.
+ * Validates the current environment is Firefox.
  */
 export function isFirefox(): boolean {
   const _glbl = globalContext();
@@ -87,7 +87,7 @@ export function isFirefox(): boolean {
 }
 
 /**
- * Static method that validates the current environment is Safari.
+ * Validates the current environment is Safari.
  */
 export function isSafari(): boolean {
   const _glbl = globalContext();

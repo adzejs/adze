@@ -19,6 +19,7 @@ import {
   isMethodWithArgs,
   mergeConfiguration,
   stacktrace,
+  cleanMessage,
 } from './functions';
 import { SealedLog } from './functions/seal';
 import { Middleware } from './middleware';
@@ -1246,7 +1247,7 @@ export default class Log<N extends string = string, Msg = unknown> {
     this.runModifierQueue();
 
     // Create our final log data object
-    const message = formatter.print(this.modifierData, timestamp, args);
+    const message = cleanMessage(formatter.print(this.modifierData, timestamp, args));
     // If dump is enabled, add the context to the message.
     if (this._cfg.dump && this.modifierData.label?.context) {
       message.push(this.modifierData.label.context);
