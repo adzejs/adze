@@ -1,5 +1,6 @@
 import { Configuration, LevelFilter } from '..';
-import { isRange, isStringArray } from './type-guards';
+import Log from '../log';
+import { isNumber, isRange, isString, isStringArray } from './type-guards';
 import { makeRange } from './util';
 
 /**
@@ -8,7 +9,12 @@ import { makeRange } from './util';
 export function normalizeLevelFilter(cfg: Configuration, filter: LevelFilter): number[] {
   // If all, return numbers for all levels.
   if (filter === '*') return Object.values(cfg.levels).map((lvl) => lvl.level);
-  //
+  // If it's a string, convert it to a number and coerce it to a number array.
+  if (isString(filter)) {
+    return cfg.levels[filter] ? [cfg.levels[filter].level] : [];
+  }
+  // If it's a number, coerce it to a number array.
+  if (isNumber(filter)) return [filter];
   // Is the provided value a range?
   if (isRange(filter)) {
     // If they are strings, convert them to numbers and return the number range.
@@ -20,7 +26,7 @@ export function normalizeLevelFilter(cfg: Configuration, filter: LevelFilter): n
     return makeRange(filter[0], filter[2]);
   }
   // Return array of matching numbers for the provided levels.
-  if (isStringArray(filter)) {
+  if (Array.isArray(filter) && isStringArray(filter)) {
     return filter.map((f) => cfg.levels[f].level);
   }
   // If no other condition is met, return the provided array of numbers.
@@ -55,4 +61,33 @@ export function isExcluded(source: string[], values: string[]): boolean {
   if (source.length === 0) return false;
   if (source.length > 0 && values.length === 0) return true;
   return values.map((v) => source.includes(v)).includes(true);
+}
+
+/**
+ * Returns an array of Log instances that have the provided label.
+ */
+export function filterByLabel(label: string, logs: Log[]): Log[] {
+  console.log('logs arg', logs);
+  return logs.filter((log) => log.data?.label?.name === label);
+}
+
+/**
+ * Filters an array of Log instances that contain the provided namespaces.
+ */
+export function filterByNamespace(namespace: string[], logs: Log[]): Log[] {
+  return logs.filter((log) => {
+    if (log.data?.namespace) {
+      const isMatched = log.data.namespace.map((ns) => namespace.includes(ns)).includes(true);
+      return isMatched;
+    }
+    return false;
+  });
+}
+
+export function filterByLevel(level: LevelFilter, logs: Log[]): Log[] {
+  return logs.filter((log) => {
+    const levels = normalizeLevelFilter(log.configuration, level);
+    if (log.data?.level === undefined) return false;
+    return failsLevelFilter(levels, log.data.level);
+  });
 }

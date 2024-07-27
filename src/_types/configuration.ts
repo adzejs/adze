@@ -99,7 +99,14 @@ export interface Filters {
 /**
  * The log levels to filter.
  */
-export type LevelFilter = '*' | string[] | number[] | [number, '-', number] | [string, '-', string];
+export type LevelFilter =
+  | '*'
+  | string
+  | number
+  | string[]
+  | number[]
+  | [number, '-', number]
+  | [string, '-', string];
 
 /**
  * The values to include or exclude logs from printing.

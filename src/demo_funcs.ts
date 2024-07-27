@@ -8,8 +8,14 @@ import adze, {
   serializeRequest,
   serializeResponse,
   LevelConfig,
+  isBrowser,
 } from '.';
 import { StandardLogFormatMeta } from './formatters/standard/types';
+
+if (isBrowser()) {
+  // @ts-ignore
+  window.adze = adze;
+}
 
 const leetLevel: LevelConfig = {
   levelName: 'leetLevel',
@@ -44,11 +50,12 @@ async function runDemo() {
   // timestamp();
   // sealTag();
   // silent();
+  tools();
   // common();
   // standard();
   // json();
   // time();
-  thread();
+  // thread();
   // listener();
 }
 
@@ -449,6 +456,17 @@ function seal() {
   x.ns('zibeedee').count.label('flerp').log('World');
   x.ns('zibeedee').count.label('flerp').log('World');
   x.ns('zibeedee').count.label('flerp').log('World');
+}
+
+function tools() {
+  const logger = adze.cfg({ cache: true }).seal();
+  logger.label('meow').log('purrrr');
+  logger.label('meow').log('purrrrfect');
+  logger.label('meowzer').log('purrrrfectly');
+  logger.ns('foo').info('doobadoo');
+  logger.ns('foo', 'bar').info('doobadoo');
+  logger.ns('baz').info('doobadoo');
+  logger.log('nothing modified');
 }
 
 async function json() {

@@ -1,5 +1,6 @@
 import { Chalk } from 'chalk';
 import { ChalkStyle } from '..';
+import Log from '../log';
 
 /**
  * Capitalizes the first character of the provided string.
@@ -44,4 +45,13 @@ export function applyChalkStyles(
   return styles.reduce((acc, style) => {
     return chalk[style](acc);
   }, str);
+}
+
+/**
+ * Render a log from its log data.
+ */
+export function render(log: Log): void {
+  if (log.data) {
+    console[log.data.method](...log.data.message);
+  }
 }

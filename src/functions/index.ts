@@ -1,5 +1,6 @@
 export * from './chalk-dummy';
 export * from './data';
+export * from './filters';
 export * from './formatters';
 export * from './global';
 export * from './seal';

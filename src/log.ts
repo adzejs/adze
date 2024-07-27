@@ -65,7 +65,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   ////////////////////////////////////////////////////////
 
   public get data(): LogData | undefined {
-    return this.data;
+    return this._data;
   }
 
   public get modifierData(): ModifierData {

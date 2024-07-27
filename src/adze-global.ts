@@ -1,5 +1,6 @@
 import { Label, LabelMap, LogListener, UserConfiguration } from './_types';
 import Log from './log';
+import Tools from './tools';
 
 export default class AdzeGlobal {
   /**
@@ -103,5 +104,12 @@ export default class AdzeGlobal {
    */
   public get listeners(): LogListener[] {
     return Array.from(this._listeners.values());
+  }
+
+  /**
+   * Tools for rerendering and filtering cached logs.
+   */
+  public get tools(): Tools {
+    return new Tools(this);
   }
 }
