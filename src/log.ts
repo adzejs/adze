@@ -413,6 +413,14 @@ export default class Log<N extends string = string, Msg = unknown> {
   }
 
   /**
+   * Terminates the log at the provided custom log level. Custom log levels are defined within the
+   * Adze configuration object under the levels property.
+   */
+  public static custom<M extends string>(levelName: string, ...args: [M, ...unknown[]]): Log {
+    return new this().custom(levelName, ...args);
+  }
+
+  /**
    * Seals the configuration of a log and returns a function that
    * constructs a new log with the same configuration.
    *
@@ -586,10 +594,12 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Closes a thread by resetting its context.
    */
   public get closeThread(): this {
-    if (this._modifierData.label?.context) {
-      this._cfg.dump = true;
-      this._modifierData.label.context = undefined;
-    }
+    this.modifierQueue.push((data) => {
+      if (data.label?.context) {
+        data.label.context = undefined;
+      }
+      return data;
+    });
     return this;
   }
 
@@ -1235,6 +1245,7 @@ export default class Log<N extends string = string, Msg = unknown> {
 
     // Get the level configuration based on the level name.
     const level = this.getLevelConfig(terminator);
+    // console.log('LEVEL', level);
 
     // Get the log formatter
     const formatterConstructor = this.selectFormatter(this._cfg.format);

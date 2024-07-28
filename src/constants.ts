@@ -181,7 +181,7 @@ export function getInfoConfig(overrides: Partial<LevelConfig> = {}): LevelConfig
     }px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #d8ebff, #b2d7ff); color: #465464; border-color: #96b5d7;`,
     terminalStyle: ['white', 'bgBlue'],
     method: 'info',
-    emoji: '📬',
+    emoji: 'ℹ️',
     ...overrides,
   };
 }
@@ -229,7 +229,7 @@ export function getLogConfig(overrides: Partial<LevelConfig> = {}): LevelConfig 
     style: `font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;`,
     terminalStyle: ['white', 'bgGray'],
     method: 'log',
-    emoji: '📌',
+    emoji: '🪵',
     ...overrides,
   };
 }
@@ -260,7 +260,7 @@ export function getVerboseConfig(overrides: Partial<LevelConfig> = {}): LevelCon
     style: 'font-size: 12px; padding-right: 31px; color: #999999;',
     terminalStyle: ['white', 'italic'],
     method: 'debug',
-    emoji: '💤',
+    emoji: '💬',
     ...overrides,
   };
 }
