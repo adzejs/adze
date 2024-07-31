@@ -144,7 +144,7 @@ export interface JsonLogHttpResponse {
 /**
  * Required and optional JSON log meta data fields.
  */
-export type JsonLogMeta = JsonLogRequiredFields &
+export type JsonLogFormatMeta = JsonLogRequiredFields &
   JsonLogOptionalFields & {
     /**
      * The name of the application or logger that is generating the log.

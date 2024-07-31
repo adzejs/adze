@@ -1,8 +1,7 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import adze, { LevelConfig, setup, teardown } from '../../src';
-import { levels } from '../../src/constants';
+import adze, { LevelConfig, setup, teardown } from '../../../src';
 
-describe('terminators', () => {
+describe('terminators with pretty format', () => {
   afterEach(() => {
     teardown();
   });

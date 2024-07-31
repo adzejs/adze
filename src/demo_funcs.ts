@@ -3,7 +3,7 @@ import adze, {
   teardown,
   CommonLogFormatMeta,
   CommonLogFormatMessage,
-  JsonLogMeta,
+  JsonLogFormatMeta,
   JsonLogOptionalFields,
   serializeRequest,
   serializeResponse,
@@ -472,7 +472,7 @@ function tools() {
 async function json() {
   const logger = adze
     .cfg({ activeLevel: 'verbose', format: 'json' })
-    .meta<JsonLogMeta>({
+    .meta<JsonLogFormatMeta>({
       hostname: '192.168.1.5',
       name: 'myapp',
     })

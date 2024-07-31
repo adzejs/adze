@@ -22,7 +22,7 @@
     "lint": "prettier ./src --check && eslint .",
     "lint:fix": "prettier ./src --write && eslint . --fix",
     "test": "vitest",
-    "test:ui": "vitest --ui",
+    "test:ui": "vitest --ui --disable-console-intercept",
     "prepare": "husky",
     "size": "size-limit"
   },
