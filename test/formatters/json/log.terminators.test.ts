@@ -350,7 +350,7 @@ describe('terminators with json format', () => {
         name: 'test-app',
       })
       .log('This is a log log.', 'foo');
-    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.log).toHaveBeenCalledTimes(1);
     expect(fn).toHaveBeenCalledTimes(1);
     const log = JSON.parse(fn.mock.calls[0][0]);
     expect(isMatch(log.time, "yyyy-MM-dd'T'HH:mm:ssxxx")).toBe(true);

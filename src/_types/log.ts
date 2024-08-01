@@ -118,3 +118,8 @@ export type LogData = ModifierData &
  * A log listener callback function.
  */
 export type LogListener = (log: Log) => void;
+
+/**
+ * Data structure for creating a table log message.
+ */
+export type TableData = Record<string, unknown>[];

@@ -5,10 +5,10 @@ import {
   FormatterConstructor,
   LevelConfig,
   LogData,
-  Method,
   Modifier,
   ModifierData,
   UserConfiguration,
+  TableData,
 } from './_types';
 import AdzeGlobal from './adze-global';
 import {
@@ -699,7 +699,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   }
 
   /**
-   * Resets the count for the log instances that share this log's label.
+   * Resets the count for the log instances that share this log's label back to 0.
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/countReset)
    */
@@ -728,12 +728,12 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
    */
-  public get dir(): this {
+  public get dir(): Log<string, Record<string, unknown>> {
     this.modifierQueue.push((data) => {
       data.method = 'dir';
       return data;
     });
-    return this;
+    return this as Log<string, Record<string, unknown>>;
   }
 
   /**
@@ -742,7 +742,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
    */
-  public static get dir(): Log {
+  public static get dir(): Log<string, Record<string, unknown>> {
     return new this().dir;
   }
 
@@ -752,12 +752,12 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml)
    */
-  public get dirxml(): this {
+  public get dirxml(): Log<string, Element | XMLDocument | Node | ChildNode> {
     this.modifierQueue.push((data) => {
       data.method = 'dirxml';
       return data;
     });
-    return this;
+    return this as Log<string, Element | XMLDocument | Node | ChildNode>;
   }
 
   /**
@@ -766,7 +766,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml)
    */
-  public static get dirxml(): Log {
+  public static get dirxml(): Log<string, Element | XMLDocument | Node | ChildNode> {
     return new this().dirxml;
   }
 
@@ -865,12 +865,12 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupEnd)
    */
-  public get groupEnd(): this {
+  public get groupEnd(): Log<string, never> {
     this.modifierQueue.push((data) => {
       data.method = 'groupEnd';
       return data;
     });
-    return this;
+    return this as Log<string, never>;
   }
 
   /**
@@ -878,7 +878,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupEnd)
    */
-  public static get groupEnd(): Log {
+  public static get groupEnd(): Log<string, never> {
     return new this().groupEnd;
   }
 
@@ -1053,12 +1053,12 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/table)
    */
-  public get table(): this {
+  public get table(): Log<N, TableData> {
     this.modifierQueue.push((data) => {
       data.method = 'table';
       return data;
     });
-    return this;
+    return this as Log<N, TableData>;
   }
 
   /**
@@ -1066,7 +1066,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/table)
    */
-  public static get table(): Log {
+  public static get table(): Log<any, TableData> {
     return new this().table;
   }
 
@@ -1114,6 +1114,8 @@ export default class Log<N extends string = string, Msg = unknown> {
     });
     return this;
   }
+
+  // TODO: Fix types for modifiers that require specific messages like table, dir, dirxml.
 
   /**
    * Stops a timer that was previously started by calling time() on a *labeled* log. Calculates the
@@ -1245,7 +1247,6 @@ export default class Log<N extends string = string, Msg = unknown> {
 
     // Get the level configuration based on the level name.
     const level = this.getLevelConfig(terminator);
-    // console.log('LEVEL', level);
 
     // Get the log formatter
     const formatterConstructor = this.selectFormatter(this._cfg.format);

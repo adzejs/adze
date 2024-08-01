@@ -21,7 +21,7 @@ export function formatLabel(lbl?: Label): string {
  * Formats the log count for printing.
  */
 export function formatCount(count?: number): string {
-  return count ? `(Count: ${count}) ` : '';
+  return count !== undefined ? `(Count: ${count}) ` : '';
 }
 
 /**
