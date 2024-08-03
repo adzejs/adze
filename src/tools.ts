@@ -1,4 +1,4 @@
-import { LevelFilter } from '.';
+import { LevelSelector } from '.';
 import AdzeGlobal from './adze-global';
 import { filterByLabel, filterByLevel, filterByNamespace, render } from './functions';
 
@@ -35,7 +35,7 @@ export default class Tools {
     logs.forEach((log) => render(log));
   }
 
-  public filterByLevel(level: LevelFilter): void {
+  public filterByLevel(level: LevelSelector): void {
     const logs = filterByLevel(level, this.globalStore.cache);
     logs.forEach((log) => render(log));
   }

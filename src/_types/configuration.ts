@@ -85,7 +85,7 @@ export interface Configuration extends ConfigurationData {
  * Configuration for filtering logs.
  */
 export interface Filters {
-  levels?: LevelFilter;
+  levels?: LevelSelector;
   /**
    * Filter by log namespaces.
    */
@@ -99,7 +99,7 @@ export interface Filters {
 /**
  * The log levels to filter.
  */
-export type LevelFilter =
+export type LevelSelector =
   | '*'
   | string
   | number
@@ -107,6 +107,11 @@ export type LevelFilter =
   | number[]
   | [number, '-', number]
   | [string, '-', string];
+
+/**
+ * The normalized level selector.
+ */
+export type NormalizedLevelSelector = number[];
 
 /**
  * The values to include or exclude logs from printing.

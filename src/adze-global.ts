@@ -1,12 +1,28 @@
-import { Label, LabelMap, LogListener, UserConfiguration } from './_types';
+import {
+  Configuration,
+  Label,
+  LabelMap,
+  LevelSelector,
+  LogListener,
+  NormalizedLevelSelector,
+  UserConfiguration,
+} from './_types';
+import { mergeConfiguration, normalizeLevelSelector } from './functions';
 import Log from './log';
 import Tools from './tools';
+
+/**
+ * Maps the log listeners to a number.
+ *
+ * The number could be a log level or a listener ID.
+ */
+type ListenersMap = Map<number, Map<number, LogListener>>;
 
 export default class AdzeGlobal {
   /**
    * Global Adze configuration overrides.
    */
-  private config: UserConfiguration;
+  private config: Configuration;
 
   /**
    * Incrementing ID counter for identifying logs.
@@ -19,9 +35,14 @@ export default class AdzeGlobal {
   private labels: LabelMap = new Map();
 
   /**
-   * All log listeners.
+   * Counter for incrementing listener IDs.
    */
-  private _listeners: Map<number, LogListener> = new Map();
+  private _listenerCounter = 0;
+
+  /**
+   * Map of log levels to log listeners
+   */
+  private _levelsToListeners: ListenersMap = new Map();
 
   /**
    * Cache of logs that have been terminated.
@@ -29,7 +50,7 @@ export default class AdzeGlobal {
   private _cache: Log[] = [];
 
   constructor(configuration: UserConfiguration = {}) {
-    this.config = configuration;
+    this.config = mergeConfiguration(configuration);
   }
 
   /**
@@ -86,9 +107,17 @@ export default class AdzeGlobal {
   /**
    * Adds a log listener that will be called after a log has been terminated.
    */
-  public addListener(listener: LogListener): number {
-    const id = this._listeners.size + 1;
-    this._listeners.set(id, listener);
+  public addListener(levels: LevelSelector, listener: LogListener): number {
+    const id = (this._listenerCounter += 1);
+    const normalizedLevels = normalizeLevelSelector(this.config, levels);
+    normalizedLevels.forEach((level) => {
+      if (this._levelsToListeners.has(level)) {
+        const levelContainer = this._levelsToListeners.get(level) as Map<number, LogListener>;
+        levelContainer.set(id, listener);
+      } else {
+        this._levelsToListeners.set(level, new Map([[id, listener]]));
+      }
+    });
     return id;
   }
 
@@ -96,14 +125,16 @@ export default class AdzeGlobal {
    * Removes a log listener by its ID.
    */
   public removeListener(id: number): void {
-    this._listeners.delete(id);
+    this._levelsToListeners.forEach((levelContainer) => {
+      levelContainer.delete(id);
+    });
   }
 
   /**
    * Returns an array of log listener callback functions.
    */
-  public get listeners(): LogListener[] {
-    return Array.from(this._listeners.values());
+  public getListeners(level: number): LogListener[] {
+    return Array.from(this._levelsToListeners.get(level)?.values() ?? []);
   }
 
   /**

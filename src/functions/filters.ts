@@ -1,4 +1,4 @@
-import { Configuration, LevelFilter } from '..';
+import { Configuration, LevelSelector } from '..';
 import Log from '../log';
 import { isNumber, isRange, isString, isStringArray } from './type-guards';
 import { makeRange } from './util';
@@ -6,37 +6,37 @@ import { makeRange } from './util';
 /**
  * Normalize a level filter value to an array of log level numbers.
  */
-export function normalizeLevelFilter(cfg: Configuration, filter: LevelFilter): number[] {
+export function normalizeLevelSelector(cfg: Configuration, levels: LevelSelector): number[] {
   // If all, return numbers for all levels.
-  if (filter === '*') return Object.values(cfg.levels).map((lvl) => lvl.level);
+  if (levels === '*') return Object.values(cfg.levels).map((lvl) => lvl.level);
   // If it's a string, convert it to a number and coerce it to a number array.
-  if (isString(filter)) {
-    return cfg.levels[filter] ? [cfg.levels[filter].level] : [];
+  if (isString(levels)) {
+    return cfg.levels[levels] ? [cfg.levels[levels].level] : [];
   }
   // If it's a number, coerce it to a number array.
-  if (isNumber(filter)) return [filter];
+  if (isNumber(levels)) return [levels];
   // Is the provided value a range?
-  if (isRange(filter)) {
+  if (isRange(levels)) {
     // If they are strings, convert them to numbers and return the number range.
-    if (isStringArray(filter)) {
-      const start = cfg.levels[filter[0]].level;
-      const end = cfg.levels[filter[2]].level;
+    if (isStringArray(levels)) {
+      const start = cfg.levels[levels[0]].level;
+      const end = cfg.levels[levels[2]].level;
       return makeRange(start, end);
     }
-    return makeRange(filter[0], filter[2]);
+    return makeRange(levels[0], levels[2]);
   }
   // Return array of matching numbers for the provided levels.
-  if (Array.isArray(filter) && isStringArray(filter)) {
-    return filter.map((f) => cfg.levels[f].level);
+  if (Array.isArray(levels) && isStringArray(levels)) {
+    return levels.map((f) => cfg.levels[f].level);
   }
   // If no other condition is met, return the provided array of numbers.
-  return filter;
+  return levels;
 }
 
 /**
  * Is the provided level filtered out?
  */
-export function failsLevelFilter(levels: number[], level: number): boolean {
+export function failsLevelSelector(levels: number[], level: number): boolean {
   // If the filter is an empty array, then no levels are filtered.
   if (levels.length === 0) return false;
   // If the level is not in the provided levels, then it is filtered.
@@ -84,10 +84,10 @@ export function filterByNamespace(namespace: string[], logs: Log[]): Log[] {
   });
 }
 
-export function filterByLevel(level: LevelFilter, logs: Log[]): Log[] {
+export function filterByLevel(level: LevelSelector, logs: Log[]): Log[] {
   return logs.filter((log) => {
-    const levels = normalizeLevelFilter(log.configuration, level);
+    const levels = normalizeLevelSelector(log.configuration, level);
     if (log.data?.level === undefined) return false;
-    return failsLevelFilter(levels, log.data.level);
+    return failsLevelSelector(levels, log.data.level);
   });
 }

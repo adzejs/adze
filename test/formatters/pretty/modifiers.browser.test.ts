@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import adze, { LevelConfig, setup, TableData, teardown } from '../../../src';
+import { globalContext } from '../../../src/functions';
 
 describe('modifiers with pretty format in the browser', () => {
   afterEach(() => {
@@ -117,5 +118,72 @@ describe('modifiers with pretty format in the browser', () => {
     ];
     adze.table.log(tableData);
     expect(console.table).toHaveBeenCalledWith(tableData);
+  });
+
+  test('prints a group log', () => {
+    console.group = vi.fn();
+    adze.group.log('Grouping logs.');
+    expect(console.group).toHaveBeenCalledWith(
+      '%c Log',
+      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'Grouping logs.'
+    );
+  });
+
+  test('prints a groupCollapsed log', () => {
+    console.groupCollapsed = vi.fn();
+    adze.groupCollapsed.log('Grouping logs.');
+    expect(console.groupCollapsed).toHaveBeenCalledWith(
+      '%c Log',
+      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'Grouping logs.'
+    );
+  });
+
+  test('prints a groupCollapsed log', () => {
+    console.groupCollapsed = vi.fn();
+    adze.groupCollapsed.log('Grouping logs.');
+    expect(console.groupCollapsed).toHaveBeenCalledWith(
+      '%c Log',
+      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'Grouping logs.'
+    );
+  });
+
+  test('calls groupEnd when modifier applied', () => {
+    console.group = vi.fn();
+    console.groupEnd = vi.fn();
+    adze.group.log('Grouping logs.');
+    adze.groupEnd.log();
+    expect(console.group).toHaveBeenCalledWith(
+      '%c Log',
+      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'Grouping logs.'
+    );
+    expect(console.groupEnd).toHaveBeenCalled();
+  });
+
+  test('prints the label name in the log', () => {
+    console.log = vi.fn();
+    adze.label('test').log('Test log.');
+    expect(console.log).toHaveBeenCalledWith(
+      '%c Log',
+      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      '[test] ',
+      'Test log.'
+    );
+  });
+
+  test('prints the namespace in the log', () => {
+    console.log = vi.fn();
+    const store = setup();
+    store.addListener('*', (log) => {});
+    adze.label('test').meta({ blerp: 'derp' }).log('Test log.');
+    expect(console.log).toHaveBeenCalledWith(
+      '%c Log',
+      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      '[test] ',
+      'Test log.'
+    );
   });
 });

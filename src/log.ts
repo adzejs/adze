@@ -611,46 +611,6 @@ export default class Log<N extends string = string, Msg = unknown> {
   }
 
   /**
-   * Configures the log instance. This is useful for applying many configuration values at once
-   * rather than calling each modifier individually.
-   */
-  public configure(cfg: UserConfiguration): this {
-    this.modifierQueue.unshift((data) => {
-      this.mergeConfiguration(cfg);
-      return data;
-    });
-    return this;
-  }
-
-  /**
-   * Configures the log instance. This is useful for applying many configuration values at once
-   * rather than calling each modifier individually.
-   */
-  public static configure(cfg: UserConfiguration): Log {
-    return new this().configure(cfg);
-  }
-
-  /**
-   * Alias for the `configure` method.
-   *
-   * Configures the log instance. This is useful for applying many configuration values at once
-   * rather than calling each modifier individually.
-   */
-  public cfg(cfg: UserConfiguration): this {
-    return this.configure(cfg);
-  }
-
-  /**
-   * Alias for the `configure` method.
-   *
-   * Configures the log instance. This is useful for applying many configuration values at once
-   * rather than calling each modifier individually.
-   */
-  public static cfg(cfg: UserConfiguration): Log {
-    return new this().configure(cfg);
-  }
-
-  /**
    * Adds to the log count for log instances that share this log's label.
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/count)
@@ -728,12 +688,12 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
    */
-  public get dir(): Log<string, Record<string, unknown>> {
+  public get dir(): Log<string, Record<string | symbol | number, any>> {
     this.modifierQueue.push((data) => {
       data.method = 'dir';
       return data;
     });
-    return this as Log<string, Record<string, unknown>>;
+    return this as Log<string, Record<string | symbol | number, any>>;
   }
 
   /**
@@ -742,7 +702,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
    */
-  public static get dir(): Log<string, Record<string, unknown>> {
+  public static get dir(): Log<string, Record<string | symbol | number, any>> {
     return new this().dir;
   }
 
@@ -1298,7 +1258,7 @@ export default class Log<N extends string = string, Msg = unknown> {
     this.doHook((m) => (m.afterTerminated ? m.afterTerminated(this) : null));
 
     // Fire all of the log listeners and pass this log instance to them.
-    this.globalStore.listeners.forEach((listener) => listener(this));
+    this.globalStore.getListeners(level.level).forEach((listener) => listener(this));
   }
 
   /**

@@ -8,8 +8,8 @@ import {
   isSpecialMethodWithLeader,
 } from '../functions';
 import {
-  failsLevelFilter,
-  normalizeLevelFilter,
+  failsLevelSelector,
+  normalizeLevelSelector,
   isNotIncluded,
   isExcluded,
 } from '../functions/filters';
@@ -84,7 +84,7 @@ export default abstract class Formatter {
   protected abstract formatNode(data: ModifierData, timestamp: string, args: unknown[]): unknown[];
 
   private failsFilters(mods: ModifierData): boolean {
-    if (this.failsLevelFilter()) return true;
+    if (this.failsLevelSelector()) return true;
     if (this.failsNamespacesFilter(mods)) return true;
     if (this.failsLabelsFilter(mods)) return true;
     return false;
@@ -93,10 +93,10 @@ export default abstract class Formatter {
   /**
    * Validate that if a level filter is set the log passes the filter.
    */
-  private failsLevelFilter(): boolean {
+  private failsLevelSelector(): boolean {
     if (this.cfg.filters?.levels === undefined) return false;
-    const normalizedLevelFilter = normalizeLevelFilter(this.cfg, this.cfg.filters.levels);
-    if (failsLevelFilter(normalizedLevelFilter, this.level.level)) return true;
+    const normalizedLevelSelector = normalizeLevelSelector(this.cfg, this.cfg.filters.levels);
+    if (failsLevelSelector(normalizedLevelSelector, this.level.level)) return true;
     return false;
   }
 

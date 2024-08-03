@@ -1,4 +1,4 @@
-import { LevelFilter, Method, MethodWithArgs, MethodWithoutArgs, SpecialMethod } from '../_types';
+import { LevelSelector, Method, MethodWithArgs, MethodWithoutArgs, SpecialMethod } from '../_types';
 import {
   methodsWithArgs,
   specialMethods,
@@ -71,7 +71,7 @@ export function isStringArray(value: unknown[]): value is string[] {
  * Type guard to determine if the value is a range tuple.
  */
 export function isRange(
-  value: LevelFilter
+  value: LevelSelector
 ): value is [string, '-', string] | [number, '-', number] {
   return Array.isArray(value) && value.length === 3 && value[1] === '-';
 }
