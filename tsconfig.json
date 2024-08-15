@@ -10,7 +10,8 @@
     "outDir": "dist",
     "lib": ["DOM", "ES2015"],
     "declaration": true,
-    "preserveConstEnums": true
+    "preserveConstEnums": true,
+    "skipLibCheck": true
   },
   "include": ["src/**/*", "src/demo_funcs.ts"],
   "tsc-alias": {
