@@ -63,11 +63,12 @@ async function runDemo() {
 
 function middlewareFileTransport() {
   setup({
+    format: 'standard',
     middleware: [new AdzeFileTransport({ directory: './logs' })],
   });
-  const logger = adze.label('derps').count.timestamp.withEmoji.seal();
+  const logger = adze.label('derps').ns('test').count.timestamp.withEmoji.seal();
   for (let i = 0; i < 10; i++) {
-    logger.log('This is a labeled log');
+    logger.ns('subtest').log('This is a labeled log', i, { foo: 'bar' });
   }
 }
 

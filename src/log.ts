@@ -432,9 +432,8 @@ export default class Log<N extends string = string, Msg = unknown> {
    * ```
    */
   public seal<N extends string = string, M = unknown>(cfg?: UserConfiguration) {
-    this.runModifierQueue();
     this.mergeConfiguration({ ...this._cfg, ...cfg });
-    return SealedLog(Log<N, M>, this._cfg, this._modifierData);
+    return SealedLog(Log<N, M>, this._cfg, this.modifierData, this.modifierQueue);
   }
 
   /**
@@ -466,11 +465,10 @@ export default class Log<N extends string = string, Msg = unknown> {
     method: T,
     cfg?: UserConfiguration
   ) {
-    this.runModifierQueue();
     this.mergeConfiguration({ ...this._cfg, ...cfg });
     return (strings: TemplateStringsArray, ...values: string[]) => {
       const message = String.raw({ raw: strings }, ...values);
-      const sealed = SealedLog(Log<N, Msg>, this._cfg, this._modifierData);
+      const sealed = SealedLog(Log<N, Msg>, this._cfg, this.modifierData, this.modifierQueue);
       const _method: keyof typeof sealed = method;
       if (isCallback(sealed[_method])) {
         sealed[_method](message);
@@ -737,8 +735,8 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard API.
    */
   public get dump(): this {
-    this.modifierQueue.push((data) => {
-      this._cfg.dump = true;
+    this.modifierQueue.push((data, ctxt) => {
+      ctxt._cfg.dump = true;
       return data;
     });
     return this;
@@ -760,8 +758,8 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard API.
    */
   public format(format: Format): this {
-    this.modifierQueue.push((data) => {
-      this._cfg.format = format;
+    this.modifierQueue.push((data, ctxt) => {
+      ctxt._cfg.format = format;
       return data;
     });
     return this;
@@ -918,8 +916,8 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard API.
    */
   public meta<T extends Record<string, any> = Record<string, unknown>>(meta: T): this {
-    this.modifierQueue.push((data) => {
-      this._cfg.meta = { ...this._cfg.meta, ...meta };
+    this.modifierQueue.push((data, ctxt) => {
+      ctxt._cfg.meta = { ...ctxt._cfg.meta, ...meta };
       return data;
     });
     return this;
@@ -993,8 +991,8 @@ export default class Log<N extends string = string, Msg = unknown> {
    * listeners.
    */
   public get silent(): this {
-    this.modifierQueue.push((data) => {
-      this._cfg.silent = true;
+    this.modifierQueue.push((data, ctxt) => {
+      ctxt._cfg.silent = true;
       return data;
     });
     return this;
@@ -1117,8 +1115,8 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard API.
    */
   public get timestamp(): this {
-    this.modifierQueue.push((data) => {
-      this._cfg.showTimestamp = true;
+    this.modifierQueue.push((data, ctxt) => {
+      ctxt._cfg.showTimestamp = true;
       return data;
     });
     return this;
@@ -1161,8 +1159,8 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Allows emoji's to be printed in pretty logs.
    */
   public get withEmoji(): this {
-    this.modifierQueue.push((data) => {
-      this._cfg.withEmoji = true;
+    this.modifierQueue.push((data, ctxt) => {
+      ctxt._cfg.withEmoji = true;
       return data;
     });
     return this;
@@ -1207,15 +1205,15 @@ export default class Log<N extends string = string, Msg = unknown> {
     // Get the level configuration based on the level name.
     const level = this.getLevelConfig(terminator);
 
+    // Run the modifier queue to modify the data object.
+    this.runModifierQueue();
+
     // Get the log formatter
     const formatterConstructor = this.selectFormatter(this._cfg.format);
     // Instantiate the formatter.
     const formatter = new formatterConstructor(this._cfg, level);
     // Generate the timestamp. Use the user configured formatter if it is set.
     const timestamp = formatter.timestampFormatter(new Date());
-
-    // Run the modifier queue to modify the data object.
-    this.runModifierQueue();
 
     // Create our final log data object
     const message = cleanMessage(formatter.print(this.modifierData, timestamp, args));
@@ -1286,7 +1284,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    */
   private runModifierQueue(): void {
     this.modifierQueue.forEach((modifier) => {
-      const result = modifier(this.modifierData);
+      const result = modifier(this.modifierData, this);
       this.doHook((m) => (m.beforeModifierApplied ? m.beforeModifierApplied(this, result) : null));
       this._modifierData = result;
       this.doHook((m) => (m.afterModifierApplied ? m.afterModifierApplied(this, result) : null));

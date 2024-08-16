@@ -10,6 +10,8 @@ import {
   printStandardFail,
   printStandardInfo,
   printStandardLog,
+  printStandardLogWithLabel,
+  printStandardLogWithNamespace,
   printStandardSuccess,
   printStandardVerbose,
   printStandardWarn,
@@ -41,6 +43,10 @@ describe('terminators with standard format', () => {
   test('prints a standard log with level of debug', printStandardDebug);
 
   test('prints a standard log with level of verbose', printStandardVerbose);
+
+  test('prints a standard log with a namespace', printStandardLogWithNamespace);
+
+  test('prints a standard log with a label', printStandardLogWithLabel);
 
   test('prints a custom standard log', printStandardCustom);
 

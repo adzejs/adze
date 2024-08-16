@@ -1,15 +1,21 @@
-import { Configuration, ModifierData } from '..';
+import { Configuration, Modifier, ModifierData } from '..';
 
 type Constructor = new (...args: any[]) => {};
 
 export function SealedLog<TBase extends Constructor>(
   Base: TBase,
   cfg: Configuration,
-  mods: ModifierData
+  mods: ModifierData,
+  modifierQueue: Modifier[]
 ) {
-  const { formatters, ...cfgWithoutFormatters } = cfg;
+  const { formatters, middleware = [], ...cfgWithoutFormatters } = cfg;
   return class Sealing extends Base {
-    _cfg = { ...structuredClone(cfgWithoutFormatters), formatters: { ...formatters } };
+    _cfg = {
+      ...structuredClone(cfgWithoutFormatters),
+      formatters: { ...formatters },
+      middleware: [...middleware],
+    };
     _modifierData = structuredClone(mods);
+    modifierQueue = [...modifierQueue];
   };
 }

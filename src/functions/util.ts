@@ -62,3 +62,10 @@ export function render(log: Log): void {
 export function cleanMessage(message: unknown[]): unknown[] {
   return message.filter((msg) => msg !== '');
 }
+
+/**
+ * Determines if the provided value is an object.
+ */
+export function isObject(val: unknown): boolean {
+  return typeof val === 'object' && val !== null;
+}

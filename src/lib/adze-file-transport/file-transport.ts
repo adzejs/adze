@@ -1,5 +1,4 @@
 import adze, { LogData } from '../..';
-// import jetpack from 'fs-jetpack';
 import * as Rotator from 'file-stream-rotator';
 import FileStreamRotator from 'file-stream-rotator/lib/FileStreamRotator';
 import { FileStreamRotatorOptions } from 'file-stream-rotator/src/types';
@@ -54,13 +53,19 @@ export class AdzeFileTransport implements Middleware {
     this.logStream = stream as FileStreamRotator;
   }
 
+  /**
+   * Target the afterTerminated hook to write terminated logs to the file stream.
+   */
   public afterTerminated({ data }: adze) {
     if (data && data.message.length > 0) {
       this.writeLog(data);
     }
   }
 
+  /**
+   * Write a log to the log file stream.
+   */
   private writeLog(data: LogData) {
-    this.logStream.write(data.message.join(''));
+    this.logStream.write(data.message.join('') + '\n');
   }
 }

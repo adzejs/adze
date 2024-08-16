@@ -18,7 +18,7 @@ export const printStandardAlert = async () => {
 
   expect(console.error).toHaveBeenCalledTimes(1);
   expect(console.error).toHaveBeenCalledWith(
-    '[2013-01-04T19:01:18.241Z]  ALERT: myapp/40208 on localhost: This is an alert log.',
+    '[2013-01-04T19:01:18.241Z] ALERT: myapp/40208 on localhost: This is an alert log.',
     'foo'
   );
 };
@@ -39,7 +39,7 @@ export const printStandardError = () => {
 
   expect(console.error).toHaveBeenCalledTimes(1);
   expect(console.error).toHaveBeenCalledWith(
-    '[2013-01-04T19:01:18.241Z]  ERROR: myapp/40208 on localhost: This is an error log.',
+    '[2013-01-04T19:01:18.241Z] ERROR: myapp/40208 on localhost: This is an error log.',
     'foo'
   );
 };
@@ -60,7 +60,7 @@ export const printStandardWarn = () => {
 
   expect(console.warn).toHaveBeenCalledTimes(1);
   expect(console.warn).toHaveBeenCalledWith(
-    '[2013-01-04T19:01:18.241Z]  WARN: myapp/40208 on localhost: This is a warn log.',
+    '[2013-01-04T19:01:18.241Z] WARN: myapp/40208 on localhost: This is a warn log.',
     'foo'
   );
 };
@@ -81,7 +81,7 @@ export const printStandardInfo = () => {
 
   expect(console.info).toHaveBeenCalledTimes(1);
   expect(console.info).toHaveBeenCalledWith(
-    '[2013-01-04T19:01:18.241Z]  INFO: myapp/40208 on localhost: This is an info log.',
+    '[2013-01-04T19:01:18.241Z] INFO: myapp/40208 on localhost: This is an info log.',
     'foo'
   );
 };
@@ -102,7 +102,7 @@ export const printStandardFail = () => {
 
   expect(console.info).toHaveBeenCalledTimes(1);
   expect(console.info).toHaveBeenCalledWith(
-    '[2013-01-04T19:01:18.241Z]  FAIL: myapp/40208 on localhost: This is a fail log.',
+    '[2013-01-04T19:01:18.241Z] FAIL: myapp/40208 on localhost: This is a fail log.',
     'foo'
   );
 };
@@ -123,7 +123,7 @@ export const printStandardSuccess = () => {
 
   expect(console.info).toHaveBeenCalledTimes(1);
   expect(console.info).toHaveBeenCalledWith(
-    '[2013-01-04T19:01:18.241Z]  SUCCESS: myapp/40208 on localhost: This is a success log.',
+    '[2013-01-04T19:01:18.241Z] SUCCESS: myapp/40208 on localhost: This is a success log.',
     'foo'
   );
 };
@@ -144,7 +144,7 @@ export const printStandardLog = () => {
 
   expect(console.log).toHaveBeenCalledTimes(1);
   expect(console.log).toHaveBeenCalledWith(
-    '[2013-01-04T19:01:18.241Z]  LOG: myapp/40208 on localhost: This is a log log.',
+    '[2013-01-04T19:01:18.241Z] LOG: myapp/40208 on localhost: This is a log log.',
     'foo'
   );
 };
@@ -169,7 +169,7 @@ export const printStandardDebug = () => {
 
   expect(console.debug).toHaveBeenCalledTimes(1);
   expect(console.debug).toHaveBeenCalledWith(
-    '[2013-01-04T19:01:18.241Z]  DEBUG: myapp/40208 on localhost: This is a debug log.',
+    '[2013-01-04T19:01:18.241Z] DEBUG: myapp/40208 on localhost: This is a debug log.',
     'foo'
   );
 };
@@ -194,7 +194,59 @@ export const printStandardVerbose = () => {
 
   expect(console.debug).toHaveBeenCalledTimes(1);
   expect(console.debug).toHaveBeenCalledWith(
-    '[2013-01-04T19:01:18.241Z]  VERBOSE: myapp/40208 on localhost: This is a verbose log.',
+    '[2013-01-04T19:01:18.241Z] VERBOSE: myapp/40208 on localhost: This is a verbose log.',
+    'foo'
+  );
+};
+
+export const printStandardLogWithNamespace = () => {
+  const fn = vi.fn();
+  console.log = fn;
+  setup({
+    activeLevel: 'verbose',
+    format: 'standard',
+    timestampFormatter: () => '2013-01-04T19:01:18.241Z',
+  });
+
+  adze
+    .meta<StandardLogFormatMeta>({
+      hostname: 'localhost',
+      port: 40208,
+      appname: 'myapp',
+      name: 'test-app',
+    })
+    .ns('foo', 'bar')
+    .log('This is a standard log with a namespace.', 'foo');
+
+  expect(console.log).toHaveBeenCalledTimes(1);
+  expect(console.log).toHaveBeenCalledWith(
+    '[2013-01-04T19:01:18.241Z] LOG: myapp/40208 on localhost: foo/bar This is a standard log with a namespace.',
+    'foo'
+  );
+};
+
+export const printStandardLogWithLabel = () => {
+  const fn = vi.fn();
+  console.log = fn;
+  setup({
+    activeLevel: 'verbose',
+    format: 'standard',
+    timestampFormatter: () => '2013-01-04T19:01:18.241Z',
+  });
+
+  adze
+    .meta<StandardLogFormatMeta>({
+      hostname: 'localhost',
+      port: 40208,
+      appname: 'myapp',
+      name: 'test-app',
+    })
+    .label('foo')
+    .log('This is a standard log with a label.', 'foo');
+
+  expect(console.log).toHaveBeenCalledTimes(1);
+  expect(console.log).toHaveBeenCalledWith(
+    '[2013-01-04T19:01:18.241Z] LOG: myapp/40208 on localhost: [foo] This is a standard log with a label.',
     'foo'
   );
 };
@@ -229,7 +281,7 @@ export const printStandardCustom = () => {
 
   expect(console.log).toHaveBeenCalledTimes(1);
   expect(console.log).toHaveBeenCalledWith(
-    '[2013-01-04T19:01:18.241Z]  LEETLEVEL: myapp/40208 on localhost: This is a custom log.',
+    '[2013-01-04T19:01:18.241Z] LEETLEVEL: myapp/40208 on localhost: This is a custom log.',
     'foo'
   );
 };
@@ -250,7 +302,7 @@ export const noEmoji = () => {
 
   expect(console.log).toHaveBeenCalledTimes(1);
   expect(console.log).toHaveBeenCalledWith(
-    '[2013-01-04T19:01:18.241Z]  LOG: myapp/40208 on localhost: This is a log log.',
+    '[2013-01-04T19:01:18.241Z] LOG: myapp/40208 on localhost: This is a log log.',
     'foo'
   );
 };

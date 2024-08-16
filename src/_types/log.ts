@@ -88,7 +88,7 @@ export interface ModifierData {
 /**
  * A modifier function.
  */
-export type Modifier = (data: ModifierData) => ModifierData;
+export type Modifier = (data: ModifierData, ctxt: Log) => ModifierData;
 
 /**
  * Configuration object for a specific log level.
