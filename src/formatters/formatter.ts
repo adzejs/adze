@@ -55,7 +55,6 @@ export default abstract class Formatter {
     // Do not print the log if its log level is higher than the active level.
     if (this.level.level > getActiveLevel(this.cfg)) return [];
     if (this.failsFilters(mods)) return [];
-    if (this.cfg.silent) return [];
     if (mods.assertion === true) return [];
     if (mods.if === false) return [];
     if (mods.method && !isSpecialMethodWithLeader(mods.method)) {

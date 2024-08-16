@@ -1,5 +1,4 @@
 import { formats } from '../constants';
-import Formatter from '../formatters/formatter';
 import { Middleware } from '../middleware';
 import { FormatterConstructor, Level, LevelConfig } from './log';
 

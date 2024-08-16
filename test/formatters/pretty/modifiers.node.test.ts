@@ -1,17 +1,21 @@
+import { JSDOM } from 'jsdom';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import adze, { setup, TableData, teardown } from '../../../src';
+import { applyChalkStyles } from '../../../src/functions';
+import { getLogConfig } from '../../../src/constants';
 
 /**
- * @vitest-environment jsdom
+ * @vitest-environment node
  */
 
-describe('modifiers with pretty format in the browser', () => {
+describe('modifiers with pretty format in node', () => {
   afterEach(() => {
     teardown();
   });
 
   test('prints a log with a timer', () => {
-    vi.useFakeTimers();
+    const spy = vi.spyOn(process, 'hrtime');
+    spy.mockReturnValue([0, 0]);
     console.log = vi.fn();
 
     adze.label('timer').time.log('Test timer.');
@@ -19,29 +23,27 @@ describe('modifiers with pretty format in the browser', () => {
 
     expect(console.log).toHaveBeenNthCalledWith(
       1,
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       '[timer] ',
       'Test timer.'
     );
     expect(console.log).toHaveBeenNthCalledWith(
       2,
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       '[timer] (Time elapsed: 0s 0ms)',
       'Test timer.'
     );
   });
 
   test('prints a log with a timer since page load', () => {
-    vi.useFakeTimers();
+    const spy = vi.spyOn(process, 'hrtime');
+    spy.mockReturnValue([0, 0]);
     console.log = vi.fn();
 
     adze.label('timer').timeNow.log('Test timer.');
 
     expect(console.log).toHaveBeenCalledWith(
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       '[timer] (Time elapsed: 0s 0ms)',
       'Test timer.'
     );
@@ -58,8 +60,7 @@ describe('modifiers with pretty format in the browser', () => {
     for (let i = 1; i <= amount; i++) {
       expect(console.log).toHaveBeenNthCalledWith(
         i,
-        '%c Log',
-        'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+        applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
         `[counter] (Count: ${i}) `,
         'Counting log.'
       );
@@ -76,8 +77,7 @@ describe('modifiers with pretty format in the browser', () => {
     adze.label('counter').countClear.log('Clearing count.');
     expect(console.log).toHaveBeenNthCalledWith(
       6,
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       '[counter] ',
       'Clearing count.'
     );
@@ -93,8 +93,7 @@ describe('modifiers with pretty format in the browser', () => {
     adze.label('counter').countReset.log('Resetting count.');
     expect(console.log).toHaveBeenNthCalledWith(
       6,
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       '[counter] (Count: 0) ',
       'Resetting count.'
     );
@@ -108,7 +107,10 @@ describe('modifiers with pretty format in the browser', () => {
 
   test('prints a dirxml log', () => {
     console.dirxml = vi.fn();
-    const div = document.createElement('div');
+    const dom = new JSDOM('', {
+      url: 'https://example.com/',
+    });
+    const div = dom.window.document.createElement('div');
     adze.dirxml.log(div);
     expect(console.dirxml).toHaveBeenCalledWith(div);
   });
@@ -127,8 +129,7 @@ describe('modifiers with pretty format in the browser', () => {
     console.group = vi.fn();
     adze.group.log('Grouping logs.');
     expect(console.group).toHaveBeenCalledWith(
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       'Grouping logs.'
     );
   });
@@ -137,8 +138,7 @@ describe('modifiers with pretty format in the browser', () => {
     console.groupCollapsed = vi.fn();
     adze.groupCollapsed.log('Grouping logs.');
     expect(console.groupCollapsed).toHaveBeenCalledWith(
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       'Grouping logs.'
     );
   });
@@ -147,8 +147,7 @@ describe('modifiers with pretty format in the browser', () => {
     console.groupCollapsed = vi.fn();
     adze.groupCollapsed.log('Grouping logs.');
     expect(console.groupCollapsed).toHaveBeenCalledWith(
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       'Grouping logs.'
     );
   });
@@ -159,8 +158,7 @@ describe('modifiers with pretty format in the browser', () => {
     adze.group.log('Grouping logs.');
     adze.groupEnd.log();
     expect(console.group).toHaveBeenCalledWith(
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       'Grouping logs.'
     );
     expect(console.groupEnd).toHaveBeenCalled();
@@ -170,8 +168,7 @@ describe('modifiers with pretty format in the browser', () => {
     console.log = vi.fn();
     adze.label('test').log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       '[test] ',
       'Test log.'
     );
@@ -181,8 +178,7 @@ describe('modifiers with pretty format in the browser', () => {
     console.log = vi.fn();
     adze.namespace('foo', 'bar').log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       '#foo #bar ',
       'Test log.'
     );
@@ -192,8 +188,7 @@ describe('modifiers with pretty format in the browser', () => {
     console.log = vi.fn();
     adze.ns('foo', 'bar').log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       '#foo #bar ',
       'Test log.'
     );
@@ -203,8 +198,7 @@ describe('modifiers with pretty format in the browser', () => {
     console.log = vi.fn();
     adze.if(2 === 2).log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       'Expression passed:',
       'Test log.'
     );
@@ -214,9 +208,7 @@ describe('modifiers with pretty format in the browser', () => {
     console.log = vi.fn();
     adze.withEmoji.if(2 === 2).log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
-      '%c🪵 %c Log',
-      'font-size: 12px;',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles('🪵 Log       ', getLogConfig().terminalStyle),
       '✅ Expression passed:',
       'Test log.'
     );
@@ -227,8 +219,7 @@ describe('modifiers with pretty format in the browser', () => {
     // @ts-ignore
     adze.assert(2 === 3).log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       'Assertion failed:',
       'Test log.'
     );
@@ -239,9 +230,7 @@ describe('modifiers with pretty format in the browser', () => {
     // @ts-ignore
     adze.withEmoji.assert(2 === 3).log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
-      '%c🪵 %c Log',
-      'font-size: 12px;',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles('🪵 Log       ', getLogConfig().terminalStyle),
       '❌ Assertion failed:',
       'Test log.'
     );
@@ -255,8 +244,7 @@ describe('modifiers with pretty format in the browser', () => {
     // @ts-ignore
     adze.timestamp.log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
-      '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      applyChalkStyles(' Log      ', getLogConfig().terminalStyle),
       '2024-08-03T16:37:11-04:00 ',
       'Test log.'
     );
@@ -267,11 +255,10 @@ describe('modifiers with pretty format in the browser', () => {
     const store = setup();
     store.addListener('log', (log) => {
       if (log.data) {
-        expect(log.data.message[0]).toBe('%c Log');
-        expect(log.data.message[1]).toBe(
-          'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;'
+        expect(log.data.message[0]).toBe(
+          applyChalkStyles(' Log      ', getLogConfig().terminalStyle)
         );
-        expect(log.data.message[2]).toBe('Test log.');
+        expect(log.data.message[1]).toBe('Test log.');
         expect(log.data.stacktrace).toBeTruthy();
       } else {
         throw new Error('The log did not contain data.');

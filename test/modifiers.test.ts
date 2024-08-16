@@ -1,0 +1,44 @@
+import { afterEach, describe, expect, test, vi } from 'vitest';
+import adze, { setup, teardown } from '../src';
+
+describe('modifiers with pretty format in the browser', () => {
+  afterEach(() => {
+    teardown();
+  });
+
+  test('adds meta data to the log', () => {
+    console.log = vi.fn();
+    const ctxt = setup();
+    ctxt.addListener('log', (log) => {
+      if (log.data) {
+        expect(log.data.meta).toEqual({ foo: 'bar' });
+      } else {
+        throw new Error('Failed to get log meta data.');
+      }
+    });
+    adze.meta({ foo: 'bar' }).log('Test log.');
+    expect(console.log).toHaveBeenCalledWith(
+      '%c Log',
+      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'Test log.'
+    );
+  });
+
+  test('log does not print when marked as silent', () => {
+    console.log = vi.fn();
+    const ctxt = setup();
+    ctxt.addListener('log', (log) => {
+      if (log.data) {
+        expect(log.data.message).toStrictEqual([
+          '%c Log',
+          'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+          'Test log.',
+        ]);
+      } else {
+        throw new Error('Failed to get log meta data.');
+      }
+    });
+    adze.silent.log('Test log.');
+    expect(console.log).not.toHaveBeenCalled();
+  });
+});

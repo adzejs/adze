@@ -38,6 +38,6 @@ export function formatAssert(expression?: boolean, withEmoji?: boolean): string 
  */
 export function formatIf(expression?: boolean, withEmoji?: boolean): string {
   return expression !== undefined && expression === true
-    ? `${withEmoji ? '✅ ' : ''}Expression Passed:`
+    ? `${withEmoji ? '✅ ' : ''}Expression passed:`
     : '';
 }

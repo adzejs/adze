@@ -53,10 +53,10 @@ async function runDemo() {
   tools();
   common();
   standard();
-  json();
-  time();
   thread();
   listener();
+  await json();
+  await time();
 }
 
 function defaultLevels() {
@@ -86,21 +86,21 @@ function defaultLevels() {
 }
 
 function configuration() {
-  const logger = adze.cfg({ withEmoji: true }).seal();
-  logger.alert('Example alert log with emoji from configuration!');
+  setup({ withEmoji: true });
+  adze.alert('Example alert log with emoji from configuration!');
+  teardown();
 }
 
 function custom() {
-  const logger = adze
-    .cfg({
-      withEmoji: true,
-      activeLevel: 1338,
-      levels: {
-        leetLevel,
-      },
-    })
-    .seal();
-  logger.count.custom('leetLevel', 'This is a custom log!');
+  setup({
+    withEmoji: true,
+    activeLevel: 1337,
+    levels: {
+      leetLevel,
+    },
+  });
+  adze.count.custom('leetLevel', 'This is a custom log!');
+  teardown();
 }
 
 function namespace() {
@@ -373,22 +373,8 @@ function silent() {
   adze.silent.log('You should not see me.');
 }
 
-function time() {
-  setup();
-  adze.timeNow.log('This is a time log');
-  adze.withEmoji.timeNow.log('This is a time log with emoji');
-  adze.label('timer').time.log('Starting a timer');
-  setTimeout(() => {
-    adze.label('timer').timeEnd.log('Ending a timer');
-  }, 1000);
-  adze.withEmoji.label('timer2').time.log('Starting a timer');
-  setTimeout(() => {
-    adze.withEmoji.label('timer2').timeEnd.log('Ending a timer with emoji');
-    teardown();
-  }, 1000);
-}
-
 function thread() {
+  console.log(window.$adzeGlobal);
   function add(a: number, b: number) {
     const answer = a + b;
     adze.label('foo').thread('added', { a, b, answer });
@@ -408,8 +394,8 @@ function thread() {
 }
 
 function common() {
+  setup({ activeLevel: 'verbose', format: 'common' });
   const logger = adze
-    .cfg({ activeLevel: 'verbose', format: 'common' })
     .meta<CommonLogFormatMeta>({
       hostname: '192.168.1.5',
       ident: 'user-identifier',
@@ -425,11 +411,12 @@ function common() {
   logger.log('"GET /index.html HTTP/1.0" 200 2326');
   logger.debug('"GET /index.html HTTP/1.0" 200 2326');
   logger.verbose('"GET /index.html HTTP/1.0" 200 2326');
+  teardown();
 }
 
 function standard() {
+  setup({ activeLevel: 'verbose', format: 'standard' });
   const logger = adze
-    .cfg({ activeLevel: 'verbose', format: 'standard' })
     .meta<StandardLogFormatMeta>({
       hostname: '192.168.1.5',
       appname: 'myapp',
@@ -445,6 +432,7 @@ function standard() {
   logger.log('This is a log');
   logger.debug('This is a debug log');
   logger.verbose('This is a verbose log');
+  teardown();
 }
 
 function seal() {
@@ -459,7 +447,8 @@ function seal() {
 }
 
 function tools() {
-  const logger = adze.cfg({ cache: true }).seal();
+  setup({ cache: true });
+  const logger = adze.seal();
   logger.label('meow').log('purrrr');
   logger.label('meow').log('purrrrfect');
   logger.label('meowzer').log('purrrrfectly');
@@ -467,11 +456,12 @@ function tools() {
   logger.ns('foo', 'bar').info('doobadoo');
   logger.ns('baz').info('doobadoo');
   logger.log('nothing modified');
+  teardown();
 }
 
 async function json() {
+  setup({ activeLevel: 'verbose', format: 'json' });
   const logger = adze
-    .cfg({ activeLevel: 'verbose', format: 'json' })
     .meta<JsonLogFormatMeta>({
       hostname: '192.168.1.5',
       name: 'myapp',
@@ -518,17 +508,34 @@ async function json() {
   logger.log('This is a log');
   logger.debug('This is a debug log');
   logger.verbose('This is a verbose log');
+  teardown();
 }
 
 function listener() {
   const store = setup();
-  const id = store.addListener((log) => {
+  const id = store.addListener('*', (log) => {
     console.log(log.data);
   });
   adze.withEmoji.log('This is a log');
   adze.ns('derp').log('This is a namespaced log');
   adze.silent.log('This is a silent log');
   store.removeListener(id);
+  teardown();
+}
+
+function time() {
+  setup();
+  adze.timeNow.log('This is a time log');
+  adze.withEmoji.timeNow.log('This is a time log with emoji');
+  adze.label('timer').time.log('Starting a timer');
+  setTimeout(() => {
+    adze.label('timer').timeEnd.log('Ending a timer');
+  }, 1000);
+  adze.withEmoji.label('timer2').time.log('Starting a timer');
+  setTimeout(() => {
+    adze.withEmoji.label('timer2').timeEnd.log('Ending a timer with emoji');
+    teardown();
+  }, 1000);
 }
 
 await runDemo();
