@@ -1183,14 +1183,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    */
   public print(data: LogData): void {
     if (data) {
-      // Don't print the log if it has no message. This could mean it is silent.
-      if (data.message.length !== 0) {
-        // Only print the message with arguments if it is using a method that allows arguments.
-        if (isMethodWithArgs(data.method)) {
-          console[data.method](...data.message);
-        } else {
-          console[data.method]();
-        }
+      // Don't print if it is configured to be silent.
+      if (data.silent) return;
+      // Only print the message with arguments if it is using a method that allows arguments.
+      if (isMethodWithArgs(data.method)) {
+        console[data.method](...data.message);
+      } else {
+        console[data.method]();
       }
     } else {
       console.warn(new Error('Cannot reprint a log that has never been previously printed.'));

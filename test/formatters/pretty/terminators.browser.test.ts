@@ -1,6 +1,10 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import adze, { LevelConfig, setup, teardown } from '../../../src';
 
+/**
+ * @vitest-environment jsdom
+ */
+
 describe('terminators with pretty format in the browser', () => {
   afterEach(() => {
     teardown();
