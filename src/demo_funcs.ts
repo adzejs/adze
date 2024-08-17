@@ -58,15 +58,31 @@ async function runDemo() {
   // time();
   // thread();
   // listener();
-  middlewareFileTransport();
+  await middlewareFileTransport();
 }
 
-function middlewareFileTransport() {
+function defaultLevels() {
+  adze.log('This is a default log.');
+  const logger = adze.ns('foo').seal();
+  logger.log('This is a namespaced log.');
+  logger.ns('bar').info('extra namespace applied');
+}
+
+async function middlewareFileTransport() {
+  const fileTransport = new AdzeFileTransport({ directory: './logs' });
+  await fileTransport.load();
   setup({
-    format: 'standard',
-    middleware: [new AdzeFileTransport({ directory: './logs' })],
+    format: 'json',
+    middleware: [fileTransport],
   });
-  const logger = adze.label('derps').ns('test').count.timestamp.withEmoji.seal();
+  const logger = adze
+    .meta<JsonLogFormatMeta>({
+      hostname: 'localhost',
+      name: 'myapp',
+    })
+    .label('derps')
+    .ns('test')
+    .count.timestamp.withEmoji.seal();
   for (let i = 0; i < 10; i++) {
     logger.ns('subtest').log('This is a labeled log', i, { foo: 'bar' });
   }
@@ -361,7 +377,6 @@ function silent() {
 }
 
 function thread() {
-  console.log(window.$adzeGlobal);
   function add(a: number, b: number) {
     const answer = a + b;
     adze.label('foo').thread('added', { a, b, answer });

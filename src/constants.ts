@@ -83,6 +83,36 @@ export const specialMethods = [...specialMethodsWithArgs, ...specialMethodsWitho
 export const methods = [...methodsWithArgs, ...specialMethodsWithoutArgs] as const;
 
 /**
+ * All valid log modifier names.
+ */
+export const modifiers = [
+  'assert',
+  'count',
+  'countClear',
+  'countReset',
+  'closeThread',
+  'dir',
+  'dirxml',
+  'dump',
+  'format',
+  'group',
+  'groupCollapsed',
+  'groupEnd',
+  'if',
+  'label',
+  'meta',
+  'namespace',
+  'silent',
+  'table',
+  'time',
+  'timeEnd',
+  'timeNow',
+  'timestamp',
+  'trace',
+  'withEmoji',
+] as const;
+
+/**
  * All valid log formats. These determine the style that is emitted.
  */
 export const formats = ['pretty', 'prettyEmoji', 'json', 'standard', 'common', 'default'] as const;

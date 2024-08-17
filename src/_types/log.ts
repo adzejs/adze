@@ -7,6 +7,7 @@ import {
   specialMethodsWithoutArgs,
   terminators,
   specialMethodsWithArgsAndLeader,
+  modifiers,
 } from '../constants';
 import Formatter from '../formatters/formatter';
 import Log from '../log';
@@ -86,9 +87,14 @@ export interface ModifierData {
 }
 
 /**
- * A modifier function.
+ * A valid log modifier name.
  */
-export type Modifier = (data: ModifierData, ctxt: Log) => ModifierData;
+export type ModifierName = (typeof modifiers)[number];
+
+/**
+ * A modifier name and function tuple.
+ */
+export type Modifier = [ModifierName, (data: ModifierData, ctxt: Log) => ModifierData];
 
 /**
  * Configuration object for a specific log level.

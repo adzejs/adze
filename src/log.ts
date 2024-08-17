@@ -523,14 +523,11 @@ export default class Log<N extends string = string, Msg = unknown> {
    * ```
    */
   public thread<T>(key: string, value: T): void {
-    this.modifierQueue.push((data) => {
-      if (data.label) {
-        if (!data.label.context) data.label.context = {};
-        data.label.context = { ...data.label.context, [key]: value };
-      }
-      return data;
-    });
     this.runModifierQueue();
+    if (this._modifierData.label) {
+      if (!this._modifierData.label.context) this._modifierData.label.context = {};
+      this._modifierData.label.context = { ...this._modifierData.label.context, [key]: value };
+    }
   }
 
   /**
@@ -574,10 +571,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Generates a log message if the provided expression is falsey.
    */
   public assert(expression: boolean): this {
-    this.modifierQueue.push((data) => {
-      data.assertion = expression;
-      return data;
-    });
+    this.modifierQueue.push([
+      'assert',
+      (data) => {
+        data.assertion = expression;
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -592,12 +592,15 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Closes a thread by resetting its context.
    */
   public get closeThread(): this {
-    this.modifierQueue.push((data) => {
-      if (data.label?.context) {
-        data.label.context = undefined;
-      }
-      return data;
-    });
+    this.modifierQueue.push([
+      'closeThread',
+      (data) => {
+        if (data.label?.context) {
+          data.label.context = undefined;
+        }
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -614,12 +617,15 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/count)
    */
   public get count(): this {
-    this.modifierQueue.push((data) => {
-      if (data.label) {
-        data.label.count = data.label.count !== undefined ? data.label.count + 1 : 1;
-      }
-      return data;
-    });
+    this.modifierQueue.push([
+      'count',
+      (data) => {
+        if (data.label) {
+          data.label.count = data.label.count !== undefined ? data.label.count + 1 : 1;
+        }
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -638,12 +644,15 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard method.
    */
   public get countClear(): this {
-    this.modifierQueue.push((data) => {
-      if (data.label) {
-        delete data.label.count;
-      }
-      return data;
-    });
+    this.modifierQueue.push([
+      'countClear',
+      (data) => {
+        if (data.label) {
+          delete data.label.count;
+        }
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -662,12 +671,15 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/countReset)
    */
   public get countReset(): this {
-    this.modifierQueue.push((data) => {
-      if (data.label) {
-        data.label.count = 0;
-      }
-      return data;
-    });
+    this.modifierQueue.push([
+      'countReset',
+      (data) => {
+        if (data.label) {
+          data.label.count = 0;
+        }
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -687,10 +699,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
    */
   public get dir(): Log<string, Record<string | symbol | number, any>> {
-    this.modifierQueue.push((data) => {
-      data.method = 'dir';
-      return data;
-    });
+    this.modifierQueue.push([
+      'dir',
+      (data) => {
+        data.method = 'dir';
+        return data;
+      },
+    ]);
     return this as Log<string, Record<string | symbol | number, any>>;
   }
 
@@ -711,10 +726,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml)
    */
   public get dirxml(): Log<string, Element | XMLDocument | Node | ChildNode> {
-    this.modifierQueue.push((data) => {
-      data.method = 'dirxml';
-      return data;
-    });
+    this.modifierQueue.push([
+      'dirxml',
+      (data) => {
+        data.method = 'dirxml';
+        return data;
+      },
+    ]);
     return this as Log<string, Element | XMLDocument | Node | ChildNode>;
   }
 
@@ -735,10 +753,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard API.
    */
   public get dump(): this {
-    this.modifierQueue.push((data, ctxt) => {
-      ctxt._cfg.dump = true;
-      return data;
-    });
+    this.modifierQueue.push([
+      'dump',
+      (data, ctxt) => {
+        ctxt._cfg.dump = true;
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -758,10 +779,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard API.
    */
   public format(format: Format): this {
-    this.modifierQueue.push((data, ctxt) => {
-      ctxt._cfg.format = format;
-      return data;
-    });
+    this.modifierQueue.push([
+      'format',
+      (data, ctxt) => {
+        ctxt._cfg.format = format;
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -780,10 +804,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/group)
    */
   public get group(): this {
-    this.modifierQueue.push((data) => {
-      data.method = 'group';
-      return data;
-    });
+    this.modifierQueue.push([
+      'group',
+      (data) => {
+        data.method = 'group';
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -802,10 +829,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupCollapsed)
    */
   public get groupCollapsed(): this {
-    this.modifierQueue.push((data) => {
-      data.method = 'groupCollapsed';
-      return data;
-    });
+    this.modifierQueue.push([
+      'groupCollapsed',
+      (data) => {
+        data.method = 'groupCollapsed';
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -824,10 +854,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/groupEnd)
    */
   public get groupEnd(): Log<string, never> {
-    this.modifierQueue.push((data) => {
-      data.method = 'groupEnd';
-      return data;
-    });
+    this.modifierQueue.push([
+      'groupEnd',
+      (data) => {
+        data.method = 'groupEnd';
+        return data;
+      },
+    ]);
     return this as Log<string, never>;
   }
 
@@ -846,10 +879,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard API.
    */
   public if(expression: boolean): this {
-    this.modifierQueue.push((data) => {
-      data.if = expression;
-      return data;
-    });
+    this.modifierQueue.push([
+      'if',
+      (data) => {
+        data.if = expression;
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -889,12 +925,15 @@ export default class Log<N extends string = string, Msg = unknown> {
    */
   public label(name: string): this {
     // prepend the modifier queue
-    this.modifierQueue.unshift((data) => {
-      const label = this.globalStore.getLabel(name) ?? { name };
-      data.label = label;
-      this.globalStore.setLabel(name, label);
-      return data;
-    });
+    this.modifierQueue.unshift([
+      'label',
+      (data) => {
+        const label = this.globalStore.getLabel(name) ?? { name };
+        data.label = label;
+        this.globalStore.setLabel(name, label);
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -916,10 +955,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard API.
    */
   public meta<T extends Record<string, any> = Record<string, unknown>>(meta: T): this {
-    this.modifierQueue.push((data, ctxt) => {
-      ctxt._cfg.meta = { ...ctxt._cfg.meta, ...meta };
-      return data;
-    });
+    this.modifierQueue.push([
+      'meta',
+      (data, ctxt) => {
+        ctxt._cfg.meta = { ...ctxt._cfg.meta, ...meta };
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -941,11 +983,14 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard API.
    */
   public namespace(...namespace: string[]): this {
-    this.modifierQueue.push((data) => {
-      let arr = data.namespace ?? [];
-      data.namespace = arr.length > 0 ? [...arr, ...namespace] : namespace;
-      return data;
-    });
+    this.modifierQueue.push([
+      'namespace',
+      (data) => {
+        let arr = data.namespace ?? [];
+        data.namespace = arr.length > 0 ? [...arr, ...namespace] : namespace;
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -991,10 +1036,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * listeners.
    */
   public get silent(): this {
-    this.modifierQueue.push((data, ctxt) => {
-      ctxt._cfg.silent = true;
-      return data;
-    });
+    this.modifierQueue.push([
+      'silent',
+      (data, ctxt) => {
+        ctxt._cfg.silent = true;
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -1012,10 +1060,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/table)
    */
   public get table(): Log<N, TableData> {
-    this.modifierQueue.push((data) => {
-      data.method = 'table';
-      return data;
-    });
+    this.modifierQueue.push([
+      'table',
+      (data) => {
+        data.method = 'table';
+        return data;
+      },
+    ]);
     return this as Log<N, TableData>;
   }
 
@@ -1035,13 +1086,16 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/time).
    */
   public get time(): this {
-    this.modifierQueue.push((data) => {
-      const timeStart = hrtime();
-      if (data.label) {
-        data.label.timeStart = timeStart;
-      }
-      return data;
-    });
+    this.modifierQueue.push([
+      'time',
+      (data) => {
+        const timeStart = hrtime();
+        if (data.label) {
+          data.label.timeStart = timeStart;
+        }
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -1064,12 +1118,15 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/timeEnd).
    */
   public get timeEnd(): this {
-    this.modifierQueue.push((data) => {
-      if (data.label && data.label?.timeStart) {
-        data.label.timeElapsed = formatTime(hrtime(data.label.timeStart));
-      }
-      return data;
-    });
+    this.modifierQueue.push([
+      'timeEnd',
+      (data) => {
+        if (data.label && data.label?.timeStart) {
+          data.label.timeElapsed = formatTime(hrtime(data.label.timeStart));
+        }
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -1093,10 +1150,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard method.
    */
   public get timeNow(): this {
-    this.modifierQueue.push((data) => {
-      data.timeNow = captureTimeNow();
-      return data;
-    });
+    this.modifierQueue.push([
+      'timeNow',
+      (data) => {
+        data.timeNow = captureTimeNow();
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -1115,10 +1175,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard API.
    */
   public get timestamp(): this {
-    this.modifierQueue.push((data, ctxt) => {
-      ctxt._cfg.showTimestamp = true;
-      return data;
-    });
+    this.modifierQueue.push([
+      'timestamp',
+      (data, ctxt) => {
+        ctxt._cfg.showTimestamp = true;
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -1138,10 +1201,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/trace)
    */
   public get trace(): this {
-    this.modifierQueue.push((data) => {
-      data.stacktrace = stacktrace();
-      return data;
-    });
+    this.modifierQueue.push([
+      'trace',
+      (data) => {
+        data.stacktrace = stacktrace();
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -1159,10 +1225,13 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Allows emoji's to be printed in pretty logs.
    */
   public get withEmoji(): this {
-    this.modifierQueue.push((data, ctxt) => {
-      ctxt._cfg.withEmoji = true;
-      return data;
-    });
+    this.modifierQueue.push([
+      'withEmoji',
+      (data, ctxt) => {
+        ctxt._cfg.withEmoji = true;
+        return data;
+      },
+    ]);
     return this;
   }
 
@@ -1221,7 +1290,9 @@ export default class Log<N extends string = string, Msg = unknown> {
     if (this._cfg.dump && this.modifierData.label?.context) {
       message.push(this.modifierData.label.context);
     }
-    this.doHook((m) => (m.beforeFormatApplied ? m.beforeFormatApplied(this, message) : null));
+    this.doHook((m) =>
+      m.beforeFormatApplied ? m.beforeFormatApplied(this, this._cfg.format, message) : null
+    );
     const { activeLevel, cache, dump, format, meta, showTimestamp, silent, withEmoji } = this._cfg;
     const data: LogData = {
       activeLevel,
@@ -1239,7 +1310,9 @@ export default class Log<N extends string = string, Msg = unknown> {
       timestamp,
       message,
     };
-    this.doHook((m) => (m.afterFormatApplied ? m.afterFormatApplied(this, message) : null));
+    this.doHook((m) =>
+      m.afterFormatApplied ? m.afterFormatApplied(this, this._cfg.format, message) : null
+    );
 
     // save the data to this instance
     this._data = data;
@@ -1252,7 +1325,7 @@ export default class Log<N extends string = string, Msg = unknown> {
     // Print the log to the console.
     this.print(this._data);
 
-    this.doHook((m) => (m.afterTerminated ? m.afterTerminated(this) : null));
+    this.doHook((m) => (m.afterTerminated ? m.afterTerminated(this, terminator, args) : null));
 
     // Fire all of the log listeners and pass this log instance to them.
     this.globalStore.getListeners(level.level).forEach((listener) => listener(this));
@@ -1283,11 +1356,15 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Runs the modifier queue against this instance.
    */
   private runModifierQueue(): void {
-    this.modifierQueue.forEach((modifier) => {
-      const result = modifier(this.modifierData, this);
-      this.doHook((m) => (m.beforeModifierApplied ? m.beforeModifierApplied(this, result) : null));
+    this.modifierQueue.forEach(([modName, modFunc]) => {
+      const result = modFunc(this.modifierData, this);
+      this.doHook((m) =>
+        m.beforeModifierApplied ? m.beforeModifierApplied(this, modName, result) : null
+      );
       this._modifierData = result;
-      this.doHook((m) => (m.afterModifierApplied ? m.afterModifierApplied(this, result) : null));
+      this.doHook((m) =>
+        m.afterModifierApplied ? m.afterModifierApplied(this, modName, result) : null
+      );
     });
   }
 

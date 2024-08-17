@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import adze, { Middleware, setup, teardown } from '../src';
+import adze, { Middleware, ModifierData, ModifierName, setup, teardown } from '../src';
 
 // export interface Middleware {
 //   /**
@@ -45,7 +45,7 @@ describe('middleware', () => {
     console.log = vi.fn();
     const func = vi.fn();
 
-    class TestMiddleware implements Middleware {
+    class TestMiddleware extends Middleware {
       constructed(log: adze) {
         func();
         expect(log).toBeDefined();
@@ -65,7 +65,7 @@ describe('middleware', () => {
     console.log = vi.fn();
     const func = vi.fn();
 
-    class TestMiddleware implements Middleware {
+    class TestMiddleware extends Middleware {
       beforeTerminated(log: adze) {
         func();
         expect(log).toBeDefined();
@@ -81,17 +81,18 @@ describe('middleware', () => {
     expect(func).toHaveBeenCalledTimes(1);
   });
 
-  // TODO: see if this hook can be enhanced.
-
   test('beforeModifierApplied hook fires', () => {
     console.log = vi.fn();
     const func = vi.fn();
 
-    class TestMiddleware implements Middleware {
-      beforeModifierApplied(log: adze) {
+    class TestMiddleware extends Middleware {
+      beforeModifierApplied(log: adze, name: ModifierName, data: ModifierData) {
         func();
+        expect(name).toBe('meta');
         expect(log).toBeDefined();
-        expect(log.data).toBeUndefined();
+        expect(log.configuration.meta).toStrictEqual({
+          foo: 'bar',
+        });
       }
     }
     setup({

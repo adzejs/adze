@@ -47,7 +47,7 @@ export default class StandardFormatter extends Formatter {
       leader = `${appPort}${_host}${namespace}${label}`;
     }
     return [
-      `[${timestamp}] ${this.level.levelName.toUpperCase()}: ${leader}${args[0]}`,
+      `[${timestamp}] ${this.level.levelName.toUpperCase()}: ${leader}${args[0]} `,
       args
         .map((arg) => (isObject(arg) ? JSON.stringify(arg) : arg))
         .slice(1)
