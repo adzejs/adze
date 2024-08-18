@@ -48,7 +48,7 @@ export abstract class Middleware {
    *
    * This instructs the middleware to only load dependencies for the specified environment.
    */
-  protected targetEnvironment: TargetEnvironment = 'both';
+  protected targetEnvironment: TargetEnvironment;
 
   /**
    * The environment that the middleware is running in.
@@ -60,7 +60,8 @@ export abstract class Middleware {
    */
   private dependencyLoaders: Promise<void>[] = [];
 
-  constructor() {
+  constructor(targetEnvironment?: TargetEnvironment) {
+    this.targetEnvironment = targetEnvironment ?? 'both';
     if (!isBrowser() && (this.targetEnvironment === 'node' || this.targetEnvironment === 'both')) {
       this.dependencyLoaders.push(this.loadNodeDependencies());
     }

@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import adze, { Middleware, setup, TargetEnvironment, teardown } from '../src';
+import adze, { Middleware, setup, teardown } from '../src';
 
 /**
- * @vitest-environment node
+ * @vitest-environment jsdom
  */
 
 describe('middleware', () => {
@@ -10,7 +10,7 @@ describe('middleware', () => {
     teardown();
   });
 
-  test('fires the loadNodeDependencies method for loading dependencies when in a node environment', () => {
+  test('fires the loadBrowserDependencies method for loading dependencies when in a browser environment', () => {
     console.log = vi.fn();
     const funcBrowser = vi.fn();
     const funcNode = vi.fn();
@@ -29,18 +29,18 @@ describe('middleware', () => {
 
     adze.log('Test log.');
     expect(console.log).toHaveBeenCalled();
-    expect(funcNode).toHaveBeenCalledTimes(1);
-    expect(funcBrowser).not.toHaveBeenCalled();
+    expect(funcNode).not.toHaveBeenCalled();
+    expect(funcBrowser).toHaveBeenCalledTimes(1);
   });
 
-  test("doesn't fire loadNodeDependencies when running in node when the target environment is browser", async () => {
+  test("doesn't fire loadBrowserDependencies when running in node when the target environment is browser", async () => {
     console.log = vi.fn();
     const funcBrowser = vi.fn();
     const funcNode = vi.fn();
 
     class TestMiddleware extends Middleware {
       constructor() {
-        super('browser');
+        super('node');
       }
 
       protected async loadBrowserDependencies(): Promise<void> {
