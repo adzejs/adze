@@ -1,5 +1,5 @@
 import { Chalk } from 'chalk';
-import { ChalkStyle } from '..';
+import { ChalkStyle, Configuration } from '..';
 import Log from '../log';
 
 /**
@@ -10,10 +10,17 @@ export function initialCaps(str: string): string {
 }
 
 /**
+ * Get all of the available level numbers.
+ */
+export function allLevels(levels: Configuration['levels']): number[] {
+  return Object.values(levels).map((level) => level.level);
+}
+
+/**
  * Make a range of numbers from the start to the end.
  */
-export function makeRange(start: number, end: number): number[] {
-  return Array.from({ length: end - start + 1 }, (_, i) => i + start);
+export function makeRange(allLevels: number[], start: number, end: number): number[] {
+  return allLevels.filter((level) => level >= start && level <= end);
 }
 
 /**

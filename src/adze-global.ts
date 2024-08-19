@@ -4,7 +4,6 @@ import {
   LabelMap,
   LevelSelector,
   LogListener,
-  NormalizedLevelSelector,
   UserConfiguration,
 } from './_types';
 import { mergeConfiguration, normalizeLevelSelector } from './functions';

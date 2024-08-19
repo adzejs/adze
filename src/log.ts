@@ -1252,6 +1252,8 @@ export default class Log<N extends string = string, Msg = unknown> {
     if (data) {
       // Don't print if it is configured to be silent.
       if (data.silent) return;
+      // Don't print if the message is empty.
+      if (data.message.length < 1) return;
       // Only print the message with arguments if it is using a method that allows arguments.
       if (isMethodWithArgs(data.method)) {
         console[data.method](...data.message);

@@ -1,7 +1,7 @@
 import { Configuration, LevelSelector } from '..';
 import Log from '../log';
 import { isNumber, isRange, isString, isStringArray } from './type-guards';
-import { makeRange } from './util';
+import { allLevels, makeRange } from './util';
 
 /**
  * Normalize a level filter value to an array of log level numbers.
@@ -21,9 +21,9 @@ export function normalizeLevelSelector(cfg: Configuration, levels: LevelSelector
     if (isStringArray(levels)) {
       const start = cfg.levels[levels[0]].level;
       const end = cfg.levels[levels[2]].level;
-      return makeRange(start, end);
+      return makeRange(allLevels(cfg.levels), start, end);
     }
-    return makeRange(levels[0], levels[2]);
+    return makeRange(allLevels(cfg.levels), levels[0], levels[2]);
   }
   // Return array of matching numbers for the provided levels.
   if (Array.isArray(levels) && isStringArray(levels)) {
