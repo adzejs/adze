@@ -94,8 +94,12 @@ export default abstract class Formatter {
    */
   private failsLevelSelector(): boolean {
     if (this.cfg.filters?.levels === undefined) return false;
-    const normalizedLevelSelector = normalizeLevelSelector(this.cfg, this.cfg.filters.levels);
-    if (failsLevelSelector(normalizedLevelSelector, this.level.level)) return true;
+    const normalizedLevelSelector = normalizeLevelSelector(
+      this.cfg,
+      this.cfg.filters.levels.values
+    );
+    if (failsLevelSelector(this.cfg.filters.levels.type, normalizedLevelSelector, this.level.level))
+      return true;
     return false;
   }
 

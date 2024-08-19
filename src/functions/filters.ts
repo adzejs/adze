@@ -36,11 +36,15 @@ export function normalizeLevelSelector(cfg: Configuration, levels: LevelSelector
 /**
  * Is the provided level filtered out?
  */
-export function failsLevelSelector(levels: number[], level: number): boolean {
+export function failsLevelSelector(
+  type: 'include' | 'exclude',
+  levels: number[],
+  level: number
+): boolean {
   // If the filter is an empty array, then no levels are filtered.
   if (levels.length === 0) return false;
   // If the level is not in the provided levels, then it is filtered.
-  return levels.includes(level);
+  return type === 'include' ? !levels.includes(level) : levels.includes(level);
 }
 
 /**
@@ -88,6 +92,6 @@ export function filterByLevel(level: LevelSelector, logs: Log[]): Log[] {
   return logs.filter((log) => {
     const levels = normalizeLevelSelector(log.configuration, level);
     if (log.data?.level === undefined) return false;
-    return failsLevelSelector(levels, log.data.level);
+    return failsLevelSelector('exclude', levels, log.data.level);
   });
 }

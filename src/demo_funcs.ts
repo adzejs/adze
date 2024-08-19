@@ -69,10 +69,17 @@ function defaultLevels() {
 }
 
 async function middlewareFileTransport() {
-  const fileTransport = new AdzeFileTransport({ directory: './logs' });
+  const fileTransport = new AdzeFileTransport({ directory: './logs', compressOnRotate: true });
   await fileTransport.load();
   setup({
+    cache: true,
     format: 'json',
+    filters: {
+      levels: {
+        type: 'include',
+        values: 'log',
+      },
+    },
     middleware: [fileTransport],
   });
   const logger = adze
@@ -121,7 +128,10 @@ function filterLevelRange() {
   setup({
     activeLevel: 'verbose',
     filters: {
-      levels: [4, '-', 8],
+      levels: {
+        type: 'include',
+        values: [4, '-', 8],
+      },
     },
   });
   adze.alert('This should show.');
@@ -137,7 +147,10 @@ function filterLevelRange() {
   setup({
     activeLevel: 'verbose',
     filters: {
-      levels: ['fail', '-', 'verbose'],
+      levels: {
+        type: 'include',
+        values: ['fail', '-', 'verbose'],
+      },
     },
   });
   adze.alert('This should show.');
@@ -156,7 +169,10 @@ function filterLevels() {
   setup({
     activeLevel: 'verbose',
     filters: {
-      levels: [0, 2, 4, 6, 8],
+      levels: {
+        type: 'include',
+        values: [0, 2, 4, 6, 8],
+      },
     },
   });
   adze.alert('This should not show.');

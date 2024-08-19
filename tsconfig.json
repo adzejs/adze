@@ -9,6 +9,7 @@
     "strict": true,
     "outDir": "dist",
     "lib": ["DOM", "ES2015"],
+    "types": ["node"],
     "declaration": true,
     "preserveConstEnums": true,
     "skipLibCheck": true
