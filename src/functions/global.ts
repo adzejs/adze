@@ -16,13 +16,15 @@ declare global {
  * Initialize the global log store for Adze. This is used for creating global configuration
  * overrides, storing labels, and optionally caching logs.
  */
-export function setup(cfg?: UserConfiguration): AdzeGlobal {
+export function setup<Meta extends Record<string, any> = Record<string, any>>(
+  cfg?: UserConfiguration<Meta>
+): AdzeGlobal {
   const ctxt = globalContext();
   const store = ctxt.$adzeGlobal;
   if (isGlobalInitialized(store)) {
     return store;
   }
-  const globalCtxt = new AdzeGlobal(cfg);
+  const globalCtxt = new AdzeGlobal<Meta>(cfg);
   ctxt.$adzeGlobal = globalCtxt;
   return globalCtxt;
 }

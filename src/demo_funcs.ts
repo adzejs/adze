@@ -30,46 +30,70 @@ const leetLevel: LevelConfig = {
 // Run our demo modules
 async function runDemo() {
   defaultLevels();
-  configuration();
-  custom();
-  namespace();
-  label();
-  filterLevelRange();
-  filterLevels();
-  filterNamespaces();
-  filterLabels();
-  filterBoth();
-  counting();
-  tests();
-  dir();
-  table();
-  group();
-  groupCollapsed();
-  seal();
-  trace();
-  timestamp();
-  sealTag();
-  silent();
-  tools();
-  common();
-  standard();
-  await json();
-  time();
-  thread();
-  listener();
+  // configuration();
+  // custom();
+  // namespace();
+  // label();
+  // filterLevelRange();
+  // filterLevels();
+  // filterNamespaces();
+  // filterLabels();
+  // filterBoth();
+  // counting();
+  // tests();
+  // dir();
+  // table();
+  // group();
+  // groupCollapsed();
+  // seal();
+  // trace();
+  // timestamp();
+  // sealTag();
+  // silent();
+  // tools();
+  // common();
+  // standard();
+  // await json();
+  // time();
+  // thread();
+  // listener();
 }
 
 function defaultLevels() {
-  setup({ activeLevel: 'verbose' });
-  adze.alert('This is an alert log');
-  adze.error('This is an error log');
-  adze.warn('This is a warning log');
-  adze.info('This is an info log');
-  adze.fail('This is a fail log');
-  adze.success('This is a success log');
-  adze.log('This is a log');
-  adze.debug('This is a debug log');
-  adze.verbose('This is a verbose log');
+  function add(a: number, b: number) {
+    const answer = a + b;
+    adze.label('maths').thread('added', { a, b, answer });
+    return answer;
+  }
+
+  function subtract(x: number, y: number) {
+    const answer = x - y;
+    adze.label('maths').thread('subtracted', { x, y, answer });
+    return answer;
+  }
+
+  add(1, 2);
+  subtract(4, 3);
+
+  adze.label('maths').dump.info('Results from our thread');
+  // setup({
+  //   withEmoji: true,
+  //   activeLevel: 1337,
+  //   levels: {
+  //     leetLevel,
+  //   },
+  // });
+  // adze.alert('This is an alert log');
+  // adze.error('This is an error log');
+  // adze.warn('This is a warning log');
+  // adze.info('This is an info log');
+  // adze.fail('This is a fail log');
+  // adze.success('This is a success log');
+  // adze.log('This is a log');
+  // adze.debug('This is a debug log');
+  // adze.verbose('This is a verbose log');
+  // adze.count.custom('leetLevel', 'This is a custom log!');
+  // teardown();
 }
 
 function configuration() {

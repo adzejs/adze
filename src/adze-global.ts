@@ -17,7 +17,7 @@ import Tools from './tools';
  */
 type ListenersMap = Map<number, Map<number, LogListener>>;
 
-export default class AdzeGlobal {
+export default class AdzeGlobal<Meta extends Record<string, any> = Record<string, any>> {
   /**
    * Global Adze configuration overrides.
    */
@@ -48,7 +48,7 @@ export default class AdzeGlobal {
    */
   private _cache: Log[] = [];
 
-  constructor(configuration: UserConfiguration = {}) {
+  constructor(configuration: UserConfiguration<Meta> = {}) {
     this.config = mergeConfiguration(configuration);
   }
 
@@ -63,7 +63,9 @@ export default class AdzeGlobal {
    * Adds a log to the log cache.
    */
   public addLogToCache(log: Log): void {
-    this._cache.push(log);
+    if (this._cache.length < this.config.cacheSize) {
+      this._cache.push(log);
+    }
   }
 
   /**

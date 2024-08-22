@@ -10,9 +10,11 @@ export type Format = (typeof formats)[number];
 /**
  * Configuration data points that are also emitted with log data.
  */
-export interface ConfigurationData {
+export interface ConfigurationData<Meta extends Record<string, any> = Record<string, any>> {
   /**
    * The level of logs to render.
+   *
+   * Note: You must use a number value if you are referencing a custom log level.
    */
   activeLevel: Level | number;
   /**
@@ -20,13 +22,19 @@ export interface ConfigurationData {
    */
   cache: boolean;
   /**
+   * The maximum number of logs that can be cached.
+   *
+   * Default: 300
+   */
+  cacheSize: number;
+  /**
    * Add log meta data to the printed message.
    */
   dump: boolean;
   /**
    * Additional metadata to be included with each log.
    */
-  meta: Record<string, any>;
+  meta: Meta;
   /**
    * Allow processing of logs but do not generate them automatically.
    *
@@ -53,7 +61,8 @@ export interface ConfigurationData {
 /**
  * Configuration for the logger.
  */
-export interface Configuration extends ConfigurationData {
+export interface Configuration<Meta extends Record<string, any> = Record<string, any>>
+  extends ConfigurationData<Meta> {
   /**
    * Applies middleware to execute along with the log.
    */
@@ -129,7 +138,9 @@ export interface FilterConfig<T = string[]> {
 /**
  * Partial configuration provided by the user.
  */
-export type UserConfiguration = Partial<Configuration>;
+export type UserConfiguration<Meta extends Record<string, any> = Record<string, any>> = Partial<
+  Configuration<Meta>
+>;
 
 /**
  * Extended configuration if the user specifies a the formatter as "common".

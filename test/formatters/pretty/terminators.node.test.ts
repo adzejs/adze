@@ -130,7 +130,7 @@ describe('terminators with pretty format in node stdout', () => {
     adze.custom('leetLevel', 'This is a custom log.');
 
     expect(console.log).toHaveBeenCalledWith(
-      applyChalkStyles(' LeetLevel', leetLevel.terminalStyle),
+      applyChalkStyles(' LeetLevel ', leetLevel.terminalStyle),
       'This is a custom log.'
     );
   });
@@ -186,7 +186,7 @@ describe('terminators with emoji', () => {
     const chalkStyles = getFailConfig().terminalStyle;
     adze.withEmoji.fail('This is a fail log.');
     expect(console.info).toHaveBeenCalledWith(
-      applyChalkStyles('❌ Fail     ', chalkStyles),
+      applyChalkStyles('❌ Fail      ', chalkStyles),
       'This is a fail log.'
     );
   });

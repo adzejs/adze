@@ -120,6 +120,7 @@ export const formats = ['pretty', 'prettyEmoji', 'json', 'standard', 'common', '
 export const defaultConfiguration: Configuration = {
   activeLevel: 'log',
   cache: false,
+  cacheSize: 300,
   dump: false,
   format: 'pretty',
   meta: {},
@@ -192,7 +193,7 @@ export function getWarnConfig(overrides: Partial<LevelConfig> = {}): LevelConfig
     style: `font-size: 12px; border-radius: 4px;  background: linear-gradient(to right, #fff, #fff0a8); color: #715100; border-color: #e3d696; padding-right: ${
       isChrome() ? '38' : '44'
     }px;`,
-    terminalStyle: ['gray', 'bgYellow'],
+    terminalStyle: ['white', 'bgYellow'],
     method: 'warn',
     emoji: '🔔',
     ...overrides,
@@ -288,7 +289,7 @@ export function getVerboseConfig(overrides: Partial<LevelConfig> = {}): LevelCon
     levelName: 'verbose',
     level: 8,
     style: 'font-size: 12px; padding-right: 31px; color: #999999;',
-    terminalStyle: ['white', 'italic'],
+    terminalStyle: ['black', 'italic'],
     method: 'debug',
     emoji: '💬',
     ...overrides,

@@ -35,8 +35,9 @@ export default class PrettyFormatter extends Formatter {
    * Format the log message for Node.js.
    */
   protected formatNode(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
+    const message = [];
     const leaderRaw = addPadding(this.formatLeader(false), this.cfg.withEmoji, this.level.emoji);
-    const leader = leaderRaw.length >= 12 ? `${leaderRaw} ` : leaderRaw;
+    const leader = `${leaderRaw} `;
     const meta = this.formatMeta(mods, timestamp);
 
     const styledLeader = applyChalkStyles(
@@ -44,6 +45,8 @@ export default class PrettyFormatter extends Formatter {
       this.level.terminalStyle,
       this.cfg.terminalFidelity
     );
+    message.push(styledLeader);
+    meta !== '' ? message.push(meta) : null;
     return [styledLeader, meta, ...(args ?? [])];
   }
 
@@ -71,7 +74,7 @@ export default class PrettyFormatter extends Formatter {
    * Returns a formatted log meta data string. This is not data defined by the meta modifier.
    */
   private formatMeta(mods: ModifierData, timestamp: string): string {
-    const ts = this.cfg.showTimestamp ? timestamp + ' ' : '';
+    const ts = this.cfg.showTimestamp ? `${timestamp} ` : '';
     const ns = formatNamespace(mods.namespace);
     const lbl = formatLabel(mods.label);
     const time = this.formatTime(mods);

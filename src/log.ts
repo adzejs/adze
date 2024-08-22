@@ -433,7 +433,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    */
   public seal<N extends string = string, M = unknown>(cfg?: UserConfiguration) {
     this.mergeConfiguration({ ...this._cfg, ...cfg });
-    return SealedLog(Log<N, M>, this._cfg, this.modifierData, this.modifierQueue);
+    return SealedLog<N, M>(Log<N, M>, this._cfg, this.modifierData, this.modifierQueue);
   }
 
   /**
@@ -503,22 +503,22 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Example:
    *
    * ```typescript
-   * function add(a, b) {
+   * function add(a: number, b: number) {
    *   const answer = a + b;
-   *   adze.label('foo').thread('added', { a, b, answer });
+   *   adze.label('maths').thread('added', { a, b, answer });
    *   return answer;
    * }
    *
-   * function subtract(x, y) {
+   * function subtract(x: number, y: number) {
    *   const answer = x - y;
-   *   adze.label('foo').thread('subtracted', { x, y, answer });
+   *   adze.label('maths').thread('subtracted', { x, y, answer });
    *   return answer;
    * }
    *
    * add(1, 2);
    * subtract(4, 3);
    *
-   * adze.label('foo').dump.info('Results from our thread');
+   * adze.label('maths').dump.info('Results from our thread');
    * // => prints the log with the context values from both thread logs applied.
    * ```
    */
@@ -1295,10 +1295,12 @@ export default class Log<N extends string = string, Msg = unknown> {
     this.doHook((m) =>
       m.beforeFormatApplied ? m.beforeFormatApplied(this, this._cfg.format, message) : null
     );
-    const { activeLevel, cache, dump, format, meta, showTimestamp, silent, withEmoji } = this._cfg;
+    const { activeLevel, cache, cacheSize, dump, format, meta, showTimestamp, silent, withEmoji } =
+      this._cfg;
     const data: LogData = {
       activeLevel,
       cache,
+      cacheSize,
       dump,
       format,
       meta,
