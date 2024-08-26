@@ -155,6 +155,7 @@ export default defineUserConfig({
             { text: 'Introduction & Lifecycle', link: '/reference/introduction' },
             { text: 'Log Class', link: '/reference/log-class' },
             { text: 'Modifiers', link: '/reference/modifiers' },
+            { text: 'Terminators', link: '/reference/terminators' },
             // 'factories',
             // 'modifiers',
             // 'default-terminators',
