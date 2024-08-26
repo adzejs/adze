@@ -27,7 +27,7 @@ describe('terminators with pretty format in node stdout', () => {
     const chalkStyles = getAlertConfig().terminalStyle;
     adze.alert('This is an alert log.');
     expect(console.error).toHaveBeenCalledWith(
-      applyChalkStyles(' Alert    ', chalkStyles),
+      applyChalkStyles(' Alert     ', chalkStyles),
       'This is an alert log.'
     );
   });
@@ -37,7 +37,7 @@ describe('terminators with pretty format in node stdout', () => {
     const chalkStyles = getErrorConfig().terminalStyle;
     adze.error('This is an error log.');
     expect(console.error).toHaveBeenCalledWith(
-      applyChalkStyles(' Error    ', chalkStyles),
+      applyChalkStyles(' Error     ', chalkStyles),
       'This is an error log.'
     );
   });
@@ -47,7 +47,7 @@ describe('terminators with pretty format in node stdout', () => {
     const chalkStyles = getWarnConfig().terminalStyle;
     adze.warn('This is a warn log.');
     expect(console.warn).toHaveBeenCalledWith(
-      applyChalkStyles(' Warn     ', chalkStyles),
+      applyChalkStyles(' Warn      ', chalkStyles),
       'This is a warn log.'
     );
   });
@@ -57,7 +57,7 @@ describe('terminators with pretty format in node stdout', () => {
     const chalkStyles = getInfoConfig().terminalStyle;
     adze.info('This is an info log.');
     expect(console.info).toHaveBeenCalledWith(
-      applyChalkStyles(' Info     ', chalkStyles),
+      applyChalkStyles(' Info      ', chalkStyles),
       'This is an info log.'
     );
   });
@@ -67,7 +67,7 @@ describe('terminators with pretty format in node stdout', () => {
     const chalkStyles = getFailConfig().terminalStyle;
     adze.fail('This is a fail log.');
     expect(console.info).toHaveBeenCalledWith(
-      applyChalkStyles(' Fail     ', chalkStyles),
+      applyChalkStyles(' Fail      ', chalkStyles),
       'This is a fail log.'
     );
   });
@@ -77,7 +77,7 @@ describe('terminators with pretty format in node stdout', () => {
     const chalkStyles = getSuccessConfig().terminalStyle;
     adze.success('This is a success log.');
     expect(console.info).toHaveBeenCalledWith(
-      applyChalkStyles(' Success  ', chalkStyles),
+      applyChalkStyles(' Success   ', chalkStyles),
       'This is a success log.'
     );
   });
@@ -87,7 +87,7 @@ describe('terminators with pretty format in node stdout', () => {
     const chalkStyles = getLogConfig().terminalStyle;
     adze.log('This is a log log.');
     expect(console.log).toHaveBeenCalledWith(
-      applyChalkStyles(' Log      ', chalkStyles),
+      applyChalkStyles(' Log       ', chalkStyles),
       'This is a log log.'
     );
   });
@@ -98,7 +98,7 @@ describe('terminators with pretty format in node stdout', () => {
     const chalkStyles = getDebugConfig().terminalStyle;
     adze.debug('This is a debug log.');
     expect(console.debug).toHaveBeenCalledWith(
-      applyChalkStyles(' Debug    ', chalkStyles),
+      applyChalkStyles(' Debug     ', chalkStyles),
       'This is a debug log.'
     );
   });
@@ -109,7 +109,7 @@ describe('terminators with pretty format in node stdout', () => {
     const chalkStyles = getVerboseConfig().terminalStyle;
     adze.verbose('This is a verbose log.');
     expect(console.debug).toHaveBeenCalledWith(
-      applyChalkStyles(' Verbose  ', chalkStyles),
+      applyChalkStyles(' Verbose   ', chalkStyles),
       'This is a verbose log.'
     );
   });

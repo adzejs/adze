@@ -54,8 +54,14 @@ export interface ConfigurationData<Meta extends Record<string, any> = Record<str
   withEmoji: boolean;
   /**
    * The format to use when generating logs.
+   *
+   * The built-in values are:
+   * - pretty (default)
+   * - json
+   * - common
+   * - standard
    */
-  format: Format;
+  format: string;
 }
 
 /**

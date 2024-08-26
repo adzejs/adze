@@ -778,11 +778,15 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * This is a non-standard API.
    */
-  public format(format: Format): this {
+  public format(format: string): this {
     this.modifierQueue.push([
       'format',
       (data, ctxt) => {
-        ctxt._cfg.format = format;
+        if (Object.keys(ctxt._cfg.formatters).includes(format)) {
+          ctxt._cfg.format = format;
+          return data;
+        }
+        console.warn(new Error(`Adze: Formatter "${format}" not found in configuration.`));
         return data;
       },
     ]);
@@ -794,7 +798,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * This is a non-standard API.
    */
-  public static format(format: Format): Log {
+  public static format(format: string): Log {
     return new this().format(format);
   }
 
@@ -1261,7 +1265,7 @@ export default class Log<N extends string = string, Msg = unknown> {
         console[data.method]();
       }
     } else {
-      console.warn(new Error('Cannot reprint a log that has never been previously printed.'));
+      console.warn(new Error('Adze: Cannot reprint a log that has never been previously printed.'));
     }
   }
 

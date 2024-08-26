@@ -42,16 +42,6 @@ export const routes = Object.fromEntries([
     },
   ],
   [
-    '/faqs/',
-    {
-      loader: () =>
-        import(
-          /* webpackChunkName: "faqs_index.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/faqs/index.html.js'
-        ),
-      meta: { title: 'Frequently Asked Questions' },
-    },
-  ],
-  [
     '/config/',
     {
       loader: () =>
@@ -62,131 +52,161 @@ export const routes = Object.fromEntries([
     },
   ],
   [
-    '/guide/data.html',
+    '/faqs/',
     {
       loader: () =>
         import(
-          /* webpackChunkName: "guide_data.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/guide/data.html.js'
+          /* webpackChunkName: "faqs_index.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/faqs/index.html.js'
+        ),
+      meta: { title: 'Frequently Asked Questions' },
+    },
+  ],
+  [
+    '/reference/data.html',
+    {
+      loader: () =>
+        import(
+          /* webpackChunkName: "reference_data.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/data.html.js'
         ),
       meta: { title: 'Data' },
     },
   ],
   [
-    '/guide/default-terminators.html',
+    '/reference/default-terminators.html',
     {
       loader: () =>
         import(
-          /* webpackChunkName: "guide_default-terminators.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/guide/default-terminators.html.js'
+          /* webpackChunkName: "reference_default-terminators.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/default-terminators.html.js'
         ),
       meta: { title: 'Default Terminators' },
     },
   ],
   [
-    '/guide/filtering-and-utility-functions.html',
+    '/reference/filtering-and-utility-functions.html',
     {
       loader: () =>
         import(
-          /* webpackChunkName: "guide_filtering-and-utility-functions.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/guide/filtering-and-utility-functions.html.js'
+          /* webpackChunkName: "reference_filtering-and-utility-functions.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/filtering-and-utility-functions.html.js'
         ),
       meta: { title: 'Filtering & Utility Functions' },
     },
   ],
   [
-    '/guide/getters-and-setters.html',
+    '/reference/getters-and-setters.html',
     {
       loader: () =>
         import(
-          /* webpackChunkName: "guide_getters-and-setters.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/guide/getters-and-setters.html.js'
+          /* webpackChunkName: "reference_getters-and-setters.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/getters-and-setters.html.js'
         ),
       meta: { title: 'Getters and Setters' },
     },
   ],
   [
-    '/guide/globalstore-concepts.html',
+    '/reference/globalstore-concepts.html',
     {
       loader: () =>
         import(
-          /* webpackChunkName: "guide_globalstore-concepts.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/guide/globalstore-concepts.html.js'
+          /* webpackChunkName: "reference_globalstore-concepts.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/globalstore-concepts.html.js'
         ),
       meta: { title: 'GlobalStore Concepts' },
     },
   ],
   [
-    '/guide/machine-readable-logs.html',
+    '/reference/introduction.html',
     {
       loader: () =>
         import(
-          /* webpackChunkName: "guide_machine-readable-logs.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/guide/machine-readable-logs.html.js'
+          /* webpackChunkName: "reference_introduction.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/introduction.html.js'
+        ),
+      meta: { title: 'Introduction & Lifecycle' },
+    },
+  ],
+  [
+    '/reference/log-class.html',
+    {
+      loader: () =>
+        import(
+          /* webpackChunkName: "reference_log-class.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/log-class.html.js'
+        ),
+      meta: { title: 'Log Class' },
+    },
+  ],
+  [
+    '/reference/machine-readable-logs.html',
+    {
+      loader: () =>
+        import(
+          /* webpackChunkName: "reference_machine-readable-logs.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/machine-readable-logs.html.js'
         ),
       meta: { title: 'Machine Readable Logs' },
     },
   ],
   [
-    '/guide/mapped-diagnostic-context.html',
+    '/reference/mapped-diagnostic-context.html',
     {
       loader: () =>
         import(
-          /* webpackChunkName: "guide_mapped-diagnostic-context.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/guide/mapped-diagnostic-context.html.js'
+          /* webpackChunkName: "reference_mapped-diagnostic-context.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/mapped-diagnostic-context.html.js'
         ),
       meta: { title: 'Mapped Diagnostic Context (MDC)' },
     },
   ],
   [
-    '/guide/micro-frontends.html',
+    '/reference/micro-frontends.html',
     {
       loader: () =>
         import(
-          /* webpackChunkName: "guide_micro-frontends.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/guide/micro-frontends.html.js'
+          /* webpackChunkName: "reference_micro-frontends.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/micro-frontends.html.js'
         ),
       meta: { title: 'Micro-Frontends' },
     },
   ],
   [
-    '/guide/modifiers.html',
+    '/reference/modifiers.html',
     {
       loader: () =>
         import(
-          /* webpackChunkName: "guide_modifiers.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/guide/modifiers.html.js'
+          /* webpackChunkName: "reference_modifiers.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/modifiers.html.js'
         ),
       meta: { title: 'Modifiers' },
     },
   ],
   [
-    '/guide/other-terminators.html',
+    '/reference/other-terminators.html',
     {
       loader: () =>
         import(
-          /* webpackChunkName: "guide_other-terminators.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/guide/other-terminators.html.js'
+          /* webpackChunkName: "reference_other-terminators.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/other-terminators.html.js'
         ),
       meta: { title: 'Other Terminators' },
     },
   ],
   [
-    '/guide/shed-concepts.html',
+    '/reference/shed-concepts.html',
     {
       loader: () =>
         import(
-          /* webpackChunkName: "guide_shed-concepts.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/guide/shed-concepts.html.js'
+          /* webpackChunkName: "reference_shed-concepts.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/shed-concepts.html.js'
         ),
       meta: { title: 'GlobalStore Concepts' },
     },
   ],
   [
-    '/guide/unit-testing.html',
+    '/reference/unit-testing.html',
     {
       loader: () =>
         import(
-          /* webpackChunkName: "guide_unit-testing.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/guide/unit-testing.html.js'
+          /* webpackChunkName: "reference_unit-testing.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/unit-testing.html.js'
         ),
       meta: { title: 'Unit Testing' },
     },
   ],
   [
-    '/guide/using-globalstore.html',
+    '/reference/using-globalstore.html',
     {
       loader: () =>
         import(
-          /* webpackChunkName: "guide_using-globalstore.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/guide/using-globalstore.html.js'
+          /* webpackChunkName: "reference_using-globalstore.html" */ '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/pages/reference/using-globalstore.html.js'
         ),
       meta: { title: 'Using GlobalStore' },
     },

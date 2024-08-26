@@ -66,7 +66,7 @@ export default class JsonFormatter extends Formatter {
       return [JSON.stringify(json)];
     }
     console.warn(
-      new Error('Required fields are missing from the log meta for generating a JSON log.')
+      new Error('Adze: Required fields are missing from the log meta for generating a JSON log.')
     );
     return [...args];
   }

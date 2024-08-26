@@ -120,7 +120,11 @@ export default defineUserConfig({
 
   theme: defaultTheme({
     logo: 'https://vuejs.press/images/hero.png',
-    navbar: ['/', { text: 'Getting Started', link: '/getting-started/introduction' }],
+    navbar: [
+      '/',
+      { text: 'Getting Started', link: '/getting-started/introduction' },
+      { text: 'Reference Manual', link: '/reference/introduction' },
+    ],
     sidebar: {
       '/getting-started/': [
         {
@@ -139,6 +143,18 @@ export default defineUserConfig({
             { text: 'Filtering Logs', link: '/getting-started/filtering' },
             { text: 'Tools', link: '/getting-started/tools' },
             { text: 'Putting It All Together', link: '/getting-started/putting-it-all-together' },
+          ],
+        },
+      ],
+      '/reference/': [
+        {
+          text: 'Reference Manual',
+          link: '/reference/introduction',
+          collapsible: false,
+          children: [
+            { text: 'Introduction & Lifecycle', link: '/reference/introduction' },
+            { text: 'Log Class', link: '/reference/log-class' },
+            { text: 'Modifiers', link: '/reference/modifiers' },
             // 'factories',
             // 'modifiers',
             // 'default-terminators',

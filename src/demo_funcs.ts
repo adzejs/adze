@@ -62,20 +62,22 @@ async function runDemo() {
 function defaultLevels() {
   function add(a: number, b: number) {
     const answer = a + b;
-    adze.label('maths').thread('added', { a, b, answer });
+    adze.label('foo').thread('added', { a, b, answer });
     return answer;
   }
 
   function subtract(x: number, y: number) {
     const answer = x - y;
-    adze.label('maths').thread('subtracted', { x, y, answer });
+    adze.label('foo').thread('subtracted', { x, y, answer });
     return answer;
   }
 
   add(1, 2);
   subtract(4, 3);
 
-  adze.label('maths').dump.info('Results from our thread');
+  adze.label('foo').dump.info('Results from our thread');
+  adze.label('foo').closeThread.info('Closing the foo thread.');
+  adze.label('foo').dump.info('Dumping the thread context after closing it.');
   // setup({
   //   withEmoji: true,
   //   activeLevel: 1337,
