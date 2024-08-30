@@ -67,3 +67,7 @@ typings/
 
 # eslint_cache
 .eslint_cache
+
+# vuepress
+docs/.vuepress/.temp
+docs/.vuepress/.cache

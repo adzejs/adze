@@ -1,7 +1,7 @@
 import { mergician as merge } from 'mergician';
 import { Configuration, UserConfiguration } from '../_types';
 import { defaultConfiguration as dflt } from '../constants';
-import { envIsWindow, globalContext } from './global';
+import { envIsWindow } from './global';
 import { isNumber } from './type-guards';
 
 /**
@@ -15,7 +15,7 @@ export function stacktrace(): string | undefined {
  * Gets a URLSearchParams object of the current URL.
  */
 export function getSearchParams(): URLSearchParams | undefined {
-  const ctxt = globalContext();
+  const ctxt = globalThis;
   if (envIsWindow(ctxt)) {
     return new URLSearchParams(ctxt.document.location.search.substring(1));
   }
@@ -32,13 +32,9 @@ export function getActiveLevel(cfg: Configuration): number {
 /**
  * Merges configurations together in the proper order of precedence.
  */
-export function mergeConfiguration(
-  cfg?: UserConfiguration,
-  newCfg?: UserConfiguration,
-  globalCfg?: UserConfiguration
-): Configuration {
+export function mergeConfiguration(...configs: UserConfiguration[]): Configuration {
   return merge({
     appendArrays: true,
     dedupArrays: true,
-  })(dflt, cfg ?? {}, newCfg ?? {}, globalCfg ?? {}) as Configuration;
+  })(dflt, ...configs) as Configuration;
 }

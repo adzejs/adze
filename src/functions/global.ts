@@ -2,7 +2,7 @@ import { UserConfiguration } from '../_types';
 import AdzeGlobal from '../adze-global';
 
 declare global {
-  var $adzeGlobal: AdzeGlobal;
+  var $adzeGlobal: AdzeGlobal | undefined;
   var ADZE_ENV: 'test' | 'dev';
   var ADZE_ENV_CONTEXT: 'global' | 'window';
   interface Window {
@@ -19,13 +19,12 @@ declare global {
 export function setup<Meta extends Record<string, any> = Record<string, any>>(
   cfg?: UserConfiguration<Meta>
 ): AdzeGlobal {
-  const ctxt = globalContext();
-  const store = ctxt.$adzeGlobal;
+  const store = globalThis.$adzeGlobal;
   if (isGlobalInitialized(store)) {
     return store;
   }
   const globalCtxt = new AdzeGlobal<Meta>(cfg);
-  ctxt.$adzeGlobal = globalCtxt;
+  globalThis.$adzeGlobal = globalCtxt;
   return globalCtxt;
 }
 
@@ -33,23 +32,16 @@ export function setup<Meta extends Record<string, any> = Record<string, any>>(
  * Removes the global log store from the environment.
  */
 export function teardown(): void {
-  if (isGlobalInitialized(globalContext().$adzeGlobal)) {
-    delete globalContext().$adzeGlobal;
+  if (isGlobalInitialized(globalThis.$adzeGlobal)) {
+    delete globalThis.$adzeGlobal;
   }
 }
 
 /**
- * Adze has been setup.
+ * Adze global store has been instantiated.
  */
 export function isGlobalInitialized(global: unknown): global is AdzeGlobal {
   return global instanceof AdzeGlobal;
-}
-
-/**
- * Returns the environment's global context.
- */
-export function globalContext(): Window | typeof globalThis {
-  return isBrowser() ? window : global;
 }
 
 /**
@@ -70,7 +62,7 @@ export function envIsWindow(_: Window | typeof globalThis): _ is Window {
  * Validates the current environment is Chrome.
  */
 export function isChrome(): boolean {
-  const _glbl = globalContext();
+  const _glbl = globalThis;
   if (envIsWindow(_glbl)) {
     return _glbl.navigator?.userAgent?.indexOf('Chrome') > -1;
   }
@@ -81,7 +73,7 @@ export function isChrome(): boolean {
  * Validates the current environment is Firefox.
  */
 export function isFirefox(): boolean {
-  const _glbl = globalContext();
+  const _glbl = globalThis;
   if (envIsWindow(_glbl)) {
     return _glbl.navigator?.userAgent?.indexOf('Firefox') > -1;
   }
@@ -92,7 +84,7 @@ export function isFirefox(): boolean {
  * Validates the current environment is Safari.
  */
 export function isSafari(): boolean {
-  const _glbl = globalContext();
+  const _glbl = globalThis;
   if (envIsWindow(_glbl)) {
     return _glbl.navigator?.userAgent?.indexOf('Safari') > -1 && !isChrome();
   }

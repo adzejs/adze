@@ -32,7 +32,7 @@ namespaces.</p>
 <span class="line">adze<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'I will not print because I do not have any namespaces.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="example-output" tabindex="-1"><a class="header-anchor" href="#example-output"><span>Example Output</span></a></h4>
-<p><img src="@source/getting-started/examples/filtering-example-namespaces-1.png" alt="Example output after filtering only namespaces that include the names foo and bar"></p>
+<p><img src="@source/getting-started/examples/filtering/filtering-example-namespaces-1.png" alt="Example output after filtering only namespaces that include the names foo and bar"></p>
 <hr>
 <p>Filtering by namespaces is particularly useful when debugging as it allows you to focus on a
 specific code module without the noise of other logs. There is, however, one drawback that can
@@ -85,7 +85,7 @@ namespaces of <code v-pre>&quot;foo&quot;</code> and <code v-pre>&quot;bar&quot;
 <span class="line">adze<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'I will not print because I do not have a label.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="example-output-1" tabindex="-1"><a class="header-anchor" href="#example-output-1"><span>Example Output</span></a></h4>
-<p><img src="@source/getting-started/examples/filter-example-labels-1.png" alt="Example output after filtering labels that exclude the name foo"></p>
+<p><img src="@source/getting-started/examples/filtering/filter-example-labels-1.png" alt="Example output after filtering labels that exclude the name foo"></p>
 <hr>
 <h2 id="filtering-by-levels" tabindex="-1"><a class="header-anchor" href="#filtering-by-levels"><span>Filtering by Levels</span></a></h2>
 <p>Lastly, we can filter logs by log levels using a <a href="">LevelFilter</a> value.</p>
@@ -107,7 +107,7 @@ namespaces of <code v-pre>&quot;foo&quot;</code> and <code v-pre>&quot;bar&quot;
 <span class="line">adze<span class="token punctuation">.</span><span class="token function">verbose</span><span class="token punctuation">(</span><span class="token string">'I will not print because I am not included.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="example-output-2" tabindex="-1"><a class="header-anchor" href="#example-output-2"><span>Example Output</span></a></h4>
-<p><img src="@source/getting-started/examples/filter-example-levels-1.png" alt="Example output after filtering levels that include the levels warn and log"></p>
+<p><img src="@source/getting-started/examples/filtering/filter-example-levels-1.png" alt="Example output after filtering levels that include the levels warn and log"></p>
 <hr>
 </div></template>
 

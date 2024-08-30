@@ -252,7 +252,7 @@ logger.custom('issue', 'An issue has occurred that needs attention.');
 
 #### Example Output
 
-![Example of custom log level output](./examples/custom-log-example.png)
+![Example of custom log level output](./examples/configuration/custom-log-example.png)
 
 ---
 

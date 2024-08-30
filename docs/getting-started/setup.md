@@ -30,6 +30,7 @@ import adze, { setup } from 'adze';
 
 const logger = adze.withEmoji.timestamp.seal();
 export default logger;
+set;
 ```
 
 The interesting thing about the code above is that we are calling the `seal` method instead of a
@@ -49,4 +50,4 @@ logger.log('Logging from the index.');
 
 #### Example output from index.ts
 
-![Shared logger output](./examples/setup-shared-logger.png)
+![Shared logger output](./examples/setup/setup-shared-logger.png)

@@ -9,17 +9,17 @@ describe('log filtering', () => {
   });
 
   test('level filter value normalized from array of log level names to level number values', () => {
-    const values = normalizeLevelSelector(defaultConfiguration, ['log', 'info', 'alert']);
+    const values = normalizeLevelSelector(defaultConfiguration.levels, ['log', 'info', 'alert']);
     expect(values).toStrictEqual([6, 3, 0]);
   });
 
   test('level filter of a single number value is normalized to an array of that value', () => {
-    const values = normalizeLevelSelector(defaultConfiguration, 6);
+    const values = normalizeLevelSelector(defaultConfiguration.levels, 6);
     expect(values).toStrictEqual([6]);
   });
 
   test('level filter of a single level name value is normalized to an array of that value', () => {
-    const values = normalizeLevelSelector(defaultConfiguration, 'log');
+    const values = normalizeLevelSelector(defaultConfiguration.levels, 'log');
     expect(values).toStrictEqual([6]);
   });
 
@@ -38,7 +38,7 @@ describe('log filtering', () => {
         },
       },
     };
-    const values = normalizeLevelSelector(cfg, [3, '-', 1337]);
+    const values = normalizeLevelSelector(cfg.levels, [3, '-', 1337]);
     expect(values).toStrictEqual([3, 4, 5, 6, 7, 8, 1337]);
   });
 
@@ -57,7 +57,7 @@ describe('log filtering', () => {
         },
       },
     };
-    const values = normalizeLevelSelector(cfg, ['info', '-', 'leet']);
+    const values = normalizeLevelSelector(cfg.levels, ['info', '-', 'leet']);
     expect(values).toStrictEqual([3, 4, 5, 6, 7, 8, 1337]);
   });
 
@@ -76,7 +76,7 @@ describe('log filtering', () => {
         },
       },
     };
-    const values = normalizeLevelSelector(cfg, '*');
+    const values = normalizeLevelSelector(cfg.levels, '*');
     expect(values).toStrictEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 1337]);
   });
 

@@ -40,7 +40,7 @@ adze.log('I will not print because I do not have any namespaces.');
 
 #### Example Output
 
-![Example output after filtering only namespaces that include the names foo and bar](./examples/filtering-example-namespaces-1.png)
+![Example output after filtering only namespaces that include the names foo and bar](./examples/filtering/filtering-example-namespaces-1.png)
 
 ---
 
@@ -110,7 +110,7 @@ adze.log('I will not print because I do not have a label.');
 
 #### Example Output
 
-![Example output after filtering labels that exclude the name foo](./examples/filter-example-labels-1.png)
+![Example output after filtering labels that exclude the name foo](./examples/filtering/filter-example-labels-1.png)
 
 ---
 
@@ -139,6 +139,6 @@ adze.verbose('I will not print because I am not included.');
 
 #### Example Output
 
-![Example output after filtering levels that include the levels warn and log](./examples/filter-example-levels-1.png)
+![Example output after filtering levels that include the levels warn and log](./examples/filtering/filter-example-levels-1.png)
 
 ---

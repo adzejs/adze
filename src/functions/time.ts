@@ -1,5 +1,5 @@
 import type { HrTime } from '../_types';
-import { envIsWindow, globalContext } from '.';
+import { envIsWindow } from '.';
 
 /**
  * Takes an HrTime tuple and converts it into a human-readable formatted
@@ -20,7 +20,7 @@ export function captureTimeNow(): string {
  * Returns an hrtime object with different implementations based on the current environment.
  */
 export function hrtime(prev?: [number, number]): [number, number] {
-  const ctxt = globalContext();
+  const ctxt = globalThis;
   if (envIsWindow(ctxt)) {
     return hrtimeBrowser(ctxt, prev);
   } else {

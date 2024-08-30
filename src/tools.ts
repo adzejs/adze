@@ -36,7 +36,7 @@ export default class Tools {
   }
 
   /**
-   * Rerenders all logs that match the level filter.
+   * Rerenders all logs that match the level selector.
    */
   public filterByLevel(level: LevelSelector): void {
     const logs = filterByLevel(level, this.globalStore.cache);

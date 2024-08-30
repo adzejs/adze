@@ -6,7 +6,8 @@ import {
   LogListener,
   UserConfiguration,
 } from './_types';
-import { mergeConfiguration, normalizeLevelSelector } from './functions';
+import { defaultConfiguration } from './constants';
+import { normalizeLevelSelector } from './functions';
 import Log from './log';
 import Tools from './tools';
 
@@ -21,7 +22,7 @@ export default class AdzeGlobal<Meta extends Record<string, any> = Record<string
   /**
    * Global Adze configuration overrides.
    */
-  private config: Configuration;
+  private config: UserConfiguration<Meta>;
 
   /**
    * Incrementing ID counter for identifying logs.
@@ -49,7 +50,7 @@ export default class AdzeGlobal<Meta extends Record<string, any> = Record<string
   private _cache: Log[] = [];
 
   constructor(configuration: UserConfiguration<Meta> = {}) {
-    this.config = mergeConfiguration(configuration);
+    this.config = configuration;
   }
 
   /**
@@ -60,10 +61,33 @@ export default class AdzeGlobal<Meta extends Record<string, any> = Record<string
   }
 
   /**
+   * Get the global Adze configuration overrides.
+   */
+  public get configuration(): UserConfiguration {
+    return this.config;
+  }
+
+  /**
+   * Get the next process ID.
+   */
+  public get pid(): number {
+    const current = this.pidCounter;
+    this.pidCounter++;
+    return current;
+  }
+
+  /**
+   * Tools for rerendering and filtering cached logs.
+   */
+  public get tools(): Tools {
+    return new Tools(this);
+  }
+
+  /**
    * Adds a log to the log cache.
    */
   public addLogToCache(log: Log): void {
-    if (this._cache.length < this.config.cacheSize) {
+    if (this._cache.length < (this.config.cacheSize ?? 300)) {
       this._cache.push(log);
     }
   }
@@ -73,13 +97,6 @@ export default class AdzeGlobal<Meta extends Record<string, any> = Record<string
    */
   public clearCache(): void {
     this._cache = [];
-  }
-
-  /**
-   * Get the global Adze configuration.
-   */
-  public get configuration(): UserConfiguration {
-    return this.config;
   }
 
   /**
@@ -97,20 +114,14 @@ export default class AdzeGlobal<Meta extends Record<string, any> = Record<string
   }
 
   /**
-   * Get the next process ID.
-   */
-  public get pid(): number {
-    const current = this.pidCounter;
-    this.pidCounter++;
-    return current;
-  }
-
-  /**
    * Adds a log listener that will be called after a log has been terminated.
    */
   public addListener(levels: LevelSelector, listener: LogListener): number {
     const id = (this._listenerCounter += 1);
-    const normalizedLevels = normalizeLevelSelector(this.config, levels);
+    const normalizedLevels = normalizeLevelSelector(
+      { ...defaultConfiguration.levels, ...(this.config.levels ?? {}) },
+      levels
+    );
     normalizedLevels.forEach((level) => {
       if (this._levelsToListeners.has(level)) {
         const levelContainer = this._levelsToListeners.get(level) as Map<number, LogListener>;
@@ -136,12 +147,5 @@ export default class AdzeGlobal<Meta extends Record<string, any> = Record<string
    */
   public getListeners(level: number): LogListener[] {
     return Array.from(this._levelsToListeners.get(level)?.values() ?? []);
-  }
-
-  /**
-   * Tools for rerendering and filtering cached logs.
-   */
-  public get tools(): Tools {
-    return new Tools(this);
   }
 }

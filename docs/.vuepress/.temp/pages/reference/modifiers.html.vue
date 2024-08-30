@@ -30,8 +30,8 @@ the log instance so that you may chain more modifiers or terminate the instance.
 <p><img src="@source/reference/examples/modifiers/assert-example-node.png" alt="assert modifier example standard Output"></p>
 <h2 id="closethread" tabindex="-1"><a class="header-anchor" href="#closethread"><span>closeThread</span></a></h2>
 <p>This modifier closes a thread by deleting its tracked context from a shared label group.</p>
-<p>This is used primarily in conjunction with a <a href="#label">label</a> and the <a href="">thread</a> terminator for
-implementing <RouteLink to="/getting-started/threading.html">Threading</RouteLink>.</p>
+<p>This is used primarily in conjunction with a <a href="#label">label</a> and the <RouteLink to="/reference/terminators.html#thread">thread</RouteLink>
+terminator for implementing <RouteLink to="/getting-started/threading.html">Threading</RouteLink>.</p>
 <p><em>This is not a standard API.</em></p>
 <h4 id="interface-1" tabindex="-1"><a class="header-anchor" href="#interface-1"><span>Interface</span></a></h4>
 <div class="language-typescript line-numbers-mode" data-highlighter="prismjs" data-ext="ts" data-title="ts"><pre v-pre><code><span class="line"><span class="token keyword">class</span> <span class="token class-name">Log</span> <span class="token punctuation">{</span></span>
@@ -84,9 +84,12 @@ implementing <RouteLink to="/getting-started/threading.html">Threading</RouteLin
 <h4 id="standard-output-2" tabindex="-1"><a class="header-anchor" href="#standard-output-2"><span>Standard Output</span></a></h4>
 <p><img src="@source/reference/examples/modifiers/count-example-node.png" alt="Count modifier terminal output"></p>
 <h2 id="countclear" tabindex="-1"><a class="header-anchor" href="#countclear"><span>countClear</span></a></h2>
-<p>The countClear modifier completely clears the count from a <a href="#label">label</a>. Rather than setting the count to 0 it instead becomes null.</p>
+<p>The countClear modifier completely clears the count from a <a href="#label">label</a>. Rather than setting the
+count to <code v-pre>0</code> it instead becomes <code v-pre>null</code>.</p>
 <p><em>NOTE:</em>
-This method is deliberately a modifier rather than a terminator because it forces you to write a log that gives you insight into when a counter was cleared. It also makes the countClear log recallable from the <a href="/guide/globalstore">GlobalStore</a> in the order it was created.</p>
+This method is deliberately a modifier rather than a terminator because it forces you to write a log
+that gives you insight into when a counter was cleared. It also makes the countClear log recallable
+from the <a href="">global store</a> in the order it was created.</p>
 <p><em>This is not a standard API.</em></p>
 <h4 id="interface-3" tabindex="-1"><a class="header-anchor" href="#interface-3"><span>Interface</span></a></h4>
 <div class="language-typescript line-numbers-mode" data-highlighter="prismjs" data-ext="ts" data-title="ts"><pre v-pre><code><span class="line"><span class="token keyword">class</span> <span class="token class-name">Log</span> <span class="token punctuation">{</span></span>
@@ -136,8 +139,11 @@ from the <a href="/guide/globalstore">global store</a> in the order it was creat
 <h4 id="standard-output-3" tabindex="-1"><a class="header-anchor" href="#standard-output-3"><span>Standard Output</span></a></h4>
 <p><img src="@source/reference/examples/modifiers/countReset-example-node.png" alt="count reset modifier example standard Output"></p>
 <h2 id="dir" tabindex="-1"><a class="header-anchor" href="#dir"><span>dir</span></a></h2>
-<p>The dir modifier transforms the output of the log by directing it to use the <code v-pre>console.dir()</code> method for printing purposes only.</p>
-<p><em>NOTE:</em> Logs that use <code v-pre>dir</code> as a modifier should only be given a single argument which is usually an object. If multiple arguments are given, behavior may differ between browser and node environments. Refer to the MDN docs for more details.</p>
+<p>The dir modifier transforms the output of the log by directing it to use the <code v-pre>console.dir()</code> method
+for printing purposes only.</p>
+<p><em>NOTE:</em> Logs that use <code v-pre>dir</code> as a modifier should only be given a single argument which is usually an
+object. If multiple arguments are given, behavior may differ between browser and node environments.
+Refer to the MDN docs for more details.</p>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Console/dir" target="_blank" rel="noopener noreferrer"><strong>MDN Docs</strong></a></p>
 <h4 id="interface-5" tabindex="-1"><a class="header-anchor" href="#interface-5"><span>Interface</span></a></h4>
 <div class="language-typescript line-numbers-mode" data-highlighter="prismjs" data-ext="ts" data-title="ts"><pre v-pre><code><span class="line"><span class="token keyword">class</span> <span class="token class-name">Log</span> <span class="token punctuation">{</span></span>
@@ -179,8 +185,9 @@ browser and node environments. Refer to the MDN docs for more details.</p>
 <span class="line">adze<span class="token punctuation">.</span>dirxml<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>newDiv<span class="token punctuation">)</span><span class="token punctuation">;</span></span>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="dump" tabindex="-1"><a class="header-anchor" href="#dump"><span>dump</span></a></h2>
-<p>This modifier instructs the <a href="#label">labeled</a> log to print the context values from a <a href="#thread">thread</a>.</p>
-<p>Refer to the <RouteLink to="/reference/mapped-diagnostic-context.html">Mapped Diagnostic Context (MDC)</RouteLink> page for more information about the purpose of MDC.</p>
+<p>This modifier instructs the <a href="#label">labeled</a> log to print the context values from a <RouteLink to="/reference/terminators.html#thread">thread</RouteLink>.</p>
+<p>Refer to the <RouteLink to="/getting-started/threading.html">threading</RouteLink> section of the <RouteLink to="/getting-started/">Getting Started</RouteLink>
+guide for more information.</p>
 <p>This modifier is dependent upon having a <a href="#label">label</a>.</p>
 <p><em>This is not a standard API.</em></p>
 <h4 id="interface-6" tabindex="-1"><a class="header-anchor" href="#interface-6"><span>Interface</span></a></h4>
@@ -223,7 +230,8 @@ browser and node environments. Refer to the MDN docs for more details.</p>
 <p><img src="@source/reference/examples/modifiers/dump-example-node.png" alt="dump modifier example standard Output"></p>
 <h2 id="format" tabindex="-1"><a class="header-anchor" href="#format"><span>format</span></a></h2>
 <p>The format modifier sets the formatter that will be used for the log. This can also be used in
-conjunction with the <a href="">seal terminator</a> to create specifically formatted child loggers.</p>
+conjunction with the <RouteLink to="/reference/terminators.html#seal">seal</RouteLink> or <RouteLink to="/reference/terminators.html#sealTag">sealTag</RouteLink>
+terminators to create specifically formatted child loggers.</p>
 <p><em>This is not a standard API.</em></p>
 <h4 id="interface-7" tabindex="-1"><a class="header-anchor" href="#interface-7"><span>Interface</span></a></h4>
 <div class="language-typescript line-numbers-mode" data-highlighter="prismjs" data-ext="ts" data-title="ts"><pre v-pre><code><span class="line"><span class="token keyword">class</span> <span class="token class-name">Log</span> <span class="token punctuation">{</span></span>
@@ -240,7 +248,8 @@ conjunction with the <a href="">seal terminator</a> to create specifically forma
 <h4 id="standard-output-6" tabindex="-1"><a class="header-anchor" href="#standard-output-6"><span>Standard Output</span></a></h4>
 <p><img src="@source/reference/examples/modifiers/format-example-node.png" alt="format modifier standard output"></p>
 <h2 id="group" tabindex="-1"><a class="header-anchor" href="#group"><span>group</span></a></h2>
-<p>The group modifier starts an uncollapsed group of logs. This means that all subsequent logs will be nested beneath this log until a <a href="#groupEnd">groupEnd</a> log occurs.</p>
+<p>The group modifier starts an uncollapsed group of logs. This means that all subsequent logs will be
+nested beneath this log until a <a href="#groupEnd">groupEnd</a> log occurs.</p>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Console/group" target="_blank" rel="noopener noreferrer"><strong>MDN Docs</strong></a></p>
 <h4 id="interface-8" tabindex="-1"><a class="header-anchor" href="#interface-8"><span>Interface</span></a></h4>
 <div class="language-typescript line-numbers-mode" data-highlighter="prismjs" data-ext="ts" data-title="ts"><pre v-pre><code><span class="line"><span class="token keyword">class</span> <span class="token class-name">Log</span> <span class="token punctuation">{</span></span>
@@ -264,7 +273,8 @@ conjunction with the <a href="">seal terminator</a> to create specifically forma
 <h4 id="standard-output-7" tabindex="-1"><a class="header-anchor" href="#standard-output-7"><span>Standard Output</span></a></h4>
 <p><img src="@source/reference/examples/modifiers/group-example-node.png" alt="group modifier example standard Output"></p>
 <h2 id="groupcollapsed" tabindex="-1"><a class="header-anchor" href="#groupcollapsed"><span>groupCollapsed</span></a></h2>
-<p>The groupCollapsed modifier starts an collapsed group of logs. This means that all subsequent logs will be nested beneath this log until a <a href="#groupEnd">groupEnd</a> log occurs.</p>
+<p>The groupCollapsed modifier starts an collapsed group of logs. This means that all subsequent logs
+will be nested beneath this log until a <a href="#groupEnd">groupEnd</a> log occurs.</p>
 <p><em>Note:</em> This will not be collapsed in a terminal environment since there is no way to uncollapse it.</p>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/console/groupCollapsed_static" target="_blank" rel="noopener noreferrer"><strong>MDN Docs</strong></a></p>
 <h4 id="interface-9" tabindex="-1"><a class="header-anchor" href="#interface-9"><span>Interface</span></a></h4>
@@ -346,13 +356,13 @@ a truthy value). This modifier is the opposite behavior of the <a href="#assert"
 <p>Applies an identifying label to a log. All logs that share the same label will be linked together in
 the <a href="">Global Store</a>. This enables global tracking for modifiers that require a label as a
 prerequisite.</p>
-<p>These are the modifiers that require a label to be useful:</p>
+<p>These are the modifiers and terminators that require a label to be useful:</p>
 <ul>
 <li><a href="#count">count</a></li>
 <li><a href="#countreset">countReset</a></li>
 <li><a href="#countclear">countClear</a></li>
 <li><a href="#closeThread">closeThread</a></li>
-<li><a href="#thread">thread</a></li>
+<li><RouteLink to="/reference/terminators.html#thread">thread</RouteLink></li>
 <li><a href="#time">time</a></li>
 <li><a href="#timenow">timeNow</a></li>
 <li><a href="#timeend">timeEnd</a></li>
@@ -428,7 +438,8 @@ later time from within a log listener or by calling the <code v-pre>data()</code
 human readable group identifiers but are also useful for filtering logs and for identifying logs
 from a log listener. This modifier does not do any special grouping under the hood.</p>
 <p>Multiple calls to the namespace modifier are additive by nature and will not overwrite previously
-applied namespaces. This is especially useful when working with <a href="">sealed</a> child loggers.</p>
+applied namespaces. This is especially useful when working with <RouteLink to="/reference/terminators.html#seal">sealed</RouteLink>
+child loggers.</p>
 <p>The <code v-pre>ns()</code> method is just a shorter alias for <code v-pre>namespace()</code>.</p>
 <p><em>This is not a standard API.</em></p>
 <h4 id="interface-14" tabindex="-1"><a class="header-anchor" href="#interface-14"><span>Interface</span></a></h4>
@@ -456,11 +467,11 @@ applied namespaces. This is especially useful when working with <a href="">seale
 <h4 id="node-output-3" tabindex="-1"><a class="header-anchor" href="#node-output-3"><span>Node Output</span></a></h4>
 <p><img src="@source/reference/examples/modifiers/namespace-example-node-1.png" alt="namespace modifier terminal example output"></p>
 <h3 id="namespaces-with-constraints" tabindex="-1"><a class="header-anchor" href="#namespaces-with-constraints"><span>Namespaces with Constraints</span></a></h3>
-<p>Adze also supports passing a constraints type when <a href="">sealing</a> a new logger or when calling the
-<a href="">setup</a> function. This is beneficial because it will force users to add any new namespace
-to the central constraints type. This will make it easier to filter namespaces throughout your
-application because you will only have a single place to reference to understand what namespaces are
-being used.</p>
+<p>Adze also supports passing a constraints type when <RouteLink to="/reference/terminators.html#seal">sealing</RouteLink> a new logger or
+when calling the <a href="">setup</a> function. This is beneficial because it will force users to add any
+new namespace to the central constraints type. This will make it easier to filter namespaces
+throughout your application because you will only have a single place to reference to understand
+what namespaces are being used.</p>
 <div class="language-typescript line-numbers-mode" data-highlighter="prismjs" data-ext="ts" data-title="ts"><pre v-pre><code><span class="line"><span class="token keyword">import</span> adze<span class="token punctuation">,</span> <span class="token punctuation">{</span> setup <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span></span>
 <span class="line"></span>
 <span class="line"><span class="token comment">// First we will create our app namespace constraints.</span></span>

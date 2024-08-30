@@ -45,16 +45,16 @@ logger.log("I'm just a log... Yes I'm only a log...");
 If we open up the developer console in a browser, we can see all of our Adze logs that were
 generated when our web application executed.
 
-![Example of the generated logs in the browser](./examples/tools-example-levels-1.png)
+![Example of the generated logs in the browser](./examples/tools/tools-example-levels-1.png)
 
 Now, let's clear the logs. Type `console.clear()` in the developer tools console.
 
-![Example of clearing the developer tools console](./examples/tools-example-levels-2.png)
+![Example of clearing the developer tools console](./examples/tools/tools-example-levels-2.png)
 
 Now that the console has been cleared, let's use our tools to rerender all logs with a level of
 `"log"`.
 
-![Example of using browser tools to rerender logs](./examples/tools-example-levels-3.png)
+![Example of using browser tools to rerender logs](./examples/tools/tools-example-levels-3.png)
 
 Our log that we generated earlier has now been rerendered from the log cache.
 

@@ -1277,11 +1277,14 @@ export default class Log<N extends string = string, Msg = unknown> {
     // Run the beforeTerminated middleware hooks
     this.doHook((m) => (m.beforeTerminated ? m.beforeTerminated(this, terminator, args) : null));
 
-    // Get the level configuration based on the level name.
-    const level = this.getLevelConfig(terminator);
-
     // Run the modifier queue to modify the data object.
     this.runModifierQueue();
+
+    // Apply the global configuration overrides
+    this._cfg = mergeConfiguration(this._cfg, {}, this.globalStore.configuration);
+
+    // Get the level configuration based on the level name.
+    const level = this.getLevelConfig(terminator);
 
     // Get the log formatter
     const formatterConstructor = this.selectFormatter(this._cfg.format);
@@ -1349,7 +1352,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   /**
    * Merge the user configuration with the default configuration and the global configuration.
    */
-  private mergeConfiguration(cfg?: UserConfiguration): void {
+  private mergeConfiguration(cfg: UserConfiguration = {}): void {
     this._cfg = mergeConfiguration(this._cfg, cfg, this.globalStore.configuration);
   }
 

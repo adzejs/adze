@@ -1,6 +1,6 @@
 # Annotating Logs
 
-When logs, often there is extra information we would like to know about the context of the log.
+When logging, often there is extra information we would like to know about the context of the log.
 
 For instance, if I generate a log inside of a utility function, I might want to know that's where
 it came from when I'm reading through my logs at a later time.
@@ -72,7 +72,7 @@ in the `getJsonData` function.
 
 #### Example Output
 
-![Example output of an error log with namespaces](./examples/namespaces-example-1.png)
+![Example output of an error log with namespaces](./examples/log-annotation/namespaces-example-1.png)
 
 > Notice, the log output contains `#utilities #getJsonData` which indicates the namespaces.
 
@@ -124,7 +124,7 @@ export function isNumber(value: unknown): value is number {
 
 #### Example Output
 
-![Example output of an error log and warn log with namespaces](./examples/namespaces-example-2.png)
+![Example output of an error log and warn log with namespaces](./examples/log-annotation/namespaces-example-2.png)
 
 ## Using Labels
 
@@ -158,7 +158,7 @@ export function doTen(cb: () => void) {
 
 #### Example Output
 
-![Example of log printed 10 times](./examples/annotation-label-example-1.png)
+![Example of log printed 10 times](./examples/log-annotation/annotation-label-example-1.png)
 
 ---
 
@@ -185,7 +185,7 @@ export function doTen(cb: () => void) {
 
 #### Example Output
 
-![Example of log printed 10 times with a counter](./examples/annotation-label-example-2.png)
+![Example of log printed 10 times with a counter](./examples/log-annotation/annotation-label-example-2.png)
 
 ---
 

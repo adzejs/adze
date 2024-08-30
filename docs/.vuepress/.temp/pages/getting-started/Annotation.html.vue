@@ -1,5 +1,5 @@
 <template><div><h1 id="annotating-logs" tabindex="-1"><a class="header-anchor" href="#annotating-logs"><span>Annotating Logs</span></a></h1>
-<p>When logs, often there is extra information we would like to know about the context of the log.</p>
+<p>When logging, often there is extra information we would like to know about the context of the log.</p>
 <p>For instance, if I generate a log inside of a utility function, I might want to know that's where
 it came from when I'm reading through my logs at a later time.</p>
 <p>This is where <strong>namespaces</strong> and <strong>labels</strong> come in to help.</p>
@@ -59,7 +59,7 @@ modifier. We'll use the shorter <code v-pre>.ns()</code> for our example.</p>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>When we run our application, we will see a log that looks like the following when an error occurs
 in the <code v-pre>getJsonData</code> function.</p>
 <h4 id="example-output" tabindex="-1"><a class="header-anchor" href="#example-output"><span>Example Output</span></a></h4>
-<p><img src="@source/getting-started/examples/namespaces-example-1.png" alt="Example output of an error log with namespaces"></p>
+<p><img src="@source/getting-started/examples/log-annotation/namespaces-example-1.png" alt="Example output of an error log with namespaces"></p>
 <blockquote>
 <p>Notice, the log output contains <code v-pre>#utilities #getJsonData</code> which indicates the namespaces.</p>
 </blockquote>
@@ -105,7 +105,7 @@ look at how we can apply a namespace of <strong>&quot;utilities&quot;</strong> t
 <span class="line"><span class="token punctuation">}</span></span>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="example-output-1" tabindex="-1"><a class="header-anchor" href="#example-output-1"><span>Example Output</span></a></h4>
-<p><img src="@source/getting-started/examples/namespaces-example-2.png" alt="Example output of an error log and warn log with namespaces"></p>
+<p><img src="@source/getting-started/examples/log-annotation/namespaces-example-2.png" alt="Example output of an error log and warn log with namespaces"></p>
 <h2 id="using-labels" tabindex="-1"><a class="header-anchor" href="#using-labels"><span>Using Labels</span></a></h2>
 <p>When writing logs we can also apply a label to the log using the <code v-pre>label()</code> modifier.</p>
 <p>Labels differ from namespaces in a couple ways.</p>
@@ -132,7 +132,7 @@ function 10 times and generates a log that counts its iterations.</p>
 <span class="line"><span class="token punctuation">}</span></span>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="example-output-2" tabindex="-1"><a class="header-anchor" href="#example-output-2"><span>Example Output</span></a></h4>
-<p><img src="@source/getting-started/examples/annotation-label-example-1.png" alt="Example of log printed 10 times"></p>
+<p><img src="@source/getting-started/examples/log-annotation/annotation-label-example-1.png" alt="Example of log printed 10 times"></p>
 <hr>
 <p>Notice here that no counter was applied to the generated logs. This is because in order for the logs
 to be properly counted, they must be associated with each other via a label. Let's fix our mistake.</p>
@@ -153,7 +153,7 @@ to be properly counted, they must be associated with each other via a label. Let
 <span class="line"><span class="token punctuation">}</span></span>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="example-output-3" tabindex="-1"><a class="header-anchor" href="#example-output-3"><span>Example Output</span></a></h4>
-<p><img src="@source/getting-started/examples/annotation-label-example-2.png" alt="Example of log printed 10 times with a counter"></p>
+<p><img src="@source/getting-started/examples/log-annotation/annotation-label-example-2.png" alt="Example of log printed 10 times with a counter"></p>
 <hr>
 <p>Now we see in the output above the name of the label <code v-pre>[doTenLoop]</code> as well as the counter showing
 the number of times this log was called; <code v-pre>(Count: n)</code>.</p>

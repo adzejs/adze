@@ -60,13 +60,15 @@ async function runDemo() {
 }
 
 function defaultLevels() {
-  setup({
-    activeLevel: 'verbose',
+  const store = setup({
+    cache: true,
   });
 
-  adze.verbose('Logging some extreme detail.');
-  // With emoji's enabled
-  adze.withEmoji.verbose('Logging some extreme detail.');
+  adze.info('This is a log that will rerender.');
+  adze.log('This is another log that will rerender.');
+
+  // Get the log cache.
+  store.tools.renderAll();
   // setup({
   //   withEmoji: true,
   //   activeLevel: 1337,

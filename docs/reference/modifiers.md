@@ -47,8 +47,8 @@ adze.withEmoji.assert(x === y).log('X does not equal Y');
 
 This modifier closes a thread by deleting its tracked context from a shared label group.
 
-This is used primarily in conjunction with a [label](#label) and the [thread]() terminator for
-implementing [Threading](../getting-started/threading.md).
+This is used primarily in conjunction with a [label](#label) and the [thread](./terminators.md#thread)
+terminator for implementing [Threading](../getting-started/threading.md).
 
 _This is not a standard API._
 
@@ -127,10 +127,13 @@ for (let i = 0; i < 5; i += 1) {
 
 ## countClear
 
-The countClear modifier completely clears the count from a [label](#label). Rather than setting the count to 0 it instead becomes null.
+The countClear modifier completely clears the count from a [label](#label). Rather than setting the
+count to `0` it instead becomes `null`.
 
 _NOTE:_
-This method is deliberately a modifier rather than a terminator because it forces you to write a log that gives you insight into when a counter was cleared. It also makes the countClear log recallable from the [GlobalStore](/guide/globalstore) in the order it was created.
+This method is deliberately a modifier rather than a terminator because it forces you to write a log
+that gives you insight into when a counter was cleared. It also makes the countClear log recallable
+from the [global store]() in the order it was created.
 
 _This is not a standard API._
 
@@ -205,9 +208,12 @@ for (let i = 0; i < 4; i += 1) {
 
 ## dir
 
-The dir modifier transforms the output of the log by directing it to use the `console.dir()` method for printing purposes only.
+The dir modifier transforms the output of the log by directing it to use the `console.dir()` method
+for printing purposes only.
 
-_NOTE:_ Logs that use `dir` as a modifier should only be given a single argument which is usually an object. If multiple arguments are given, behavior may differ between browser and node environments. Refer to the MDN docs for more details.
+_NOTE:_ Logs that use `dir` as a modifier should only be given a single argument which is usually an
+object. If multiple arguments are given, behavior may differ between browser and node environments.
+Refer to the MDN docs for more details.
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
 
@@ -272,9 +278,10 @@ adze.dirxml.log(newDiv);
 
 ## dump
 
-This modifier instructs the [labeled](#label) log to print the context values from a [thread](#thread).
+This modifier instructs the [labeled](#label) log to print the context values from a [thread](./terminators.md#thread).
 
-Refer to the [Mapped Diagnostic Context (MDC)](mapped-diagnostic-context.md) page for more information about the purpose of MDC.
+Refer to the [threading](../getting-started/threading.md) section of the [Getting Started](../getting-started/)
+guide for more information.
 
 This modifier is dependent upon having a [label](#label).
 
@@ -331,7 +338,8 @@ adze.label('foo').dump.info('Results from our thread');
 ## format
 
 The format modifier sets the formatter that will be used for the log. This can also be used in
-conjunction with the [seal terminator]() to create specifically formatted child loggers.
+conjunction with the [seal](./terminators.md#seal) or [sealTag](./terminators.md#sealTag)
+terminators to create specifically formatted child loggers.
 
 _This is not a standard API._
 
@@ -361,7 +369,8 @@ adze.format('standard').log('Logging a JSON formatted message.');
 
 ## group
 
-The group modifier starts an uncollapsed group of logs. This means that all subsequent logs will be nested beneath this log until a [groupEnd](#groupEnd) log occurs.
+The group modifier starts an uncollapsed group of logs. This means that all subsequent logs will be
+nested beneath this log until a [groupEnd](#groupEnd) log occurs.
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/group)
 
@@ -398,7 +407,8 @@ adze.groupEnd.info();
 
 ## groupCollapsed
 
-The groupCollapsed modifier starts an collapsed group of logs. This means that all subsequent logs will be nested beneath this log until a [groupEnd](#groupEnd) log occurs.
+The groupCollapsed modifier starts an collapsed group of logs. This means that all subsequent logs
+will be nested beneath this log until a [groupEnd](#groupEnd) log occurs.
 
 _Note:_ This will not be collapsed in a terminal environment since there is no way to uncollapse it.
 
@@ -521,13 +531,13 @@ Applies an identifying label to a log. All logs that share the same label will b
 the [Global Store](). This enables global tracking for modifiers that require a label as a
 prerequisite.
 
-These are the modifiers that require a label to be useful:
+These are the modifiers and terminators that require a label to be useful:
 
 - [count](#count)
 - [countReset](#countreset)
 - [countClear](#countclear)
 - [closeThread](#closeThread)
-- [thread](#thread)
+- [thread](./terminators.md#thread)
 - [time](#time)
 - [timeNow](#timenow)
 - [timeEnd](#timeend)
@@ -635,7 +645,8 @@ human readable group identifiers but are also useful for filtering logs and for 
 from a log listener. This modifier does not do any special grouping under the hood.
 
 Multiple calls to the namespace modifier are additive by nature and will not overwrite previously
-applied namespaces. This is especially useful when working with [sealed]() child loggers.
+applied namespaces. This is especially useful when working with [sealed](./terminators.md#seal)
+child loggers.
 
 The `ns()` method is just a shorter alias for `namespace()`.
 
@@ -677,11 +688,11 @@ adze.ns('foo').ns('bar', 'baz').log('This log has all applied namespaces.');
 
 ### Namespaces with Constraints
 
-Adze also supports passing a constraints type when [sealing]() a new logger or when calling the
-[setup]() function. This is beneficial because it will force users to add any new namespace
-to the central constraints type. This will make it easier to filter namespaces throughout your
-application because you will only have a single place to reference to understand what namespaces are
-being used.
+Adze also supports passing a constraints type when [sealing](./terminators.md#seal) a new logger or
+when calling the [setup]() function. This is beneficial because it will force users to add any
+new namespace to the central constraints type. This will make it easier to filter namespaces
+throughout your application because you will only have a single place to reference to understand
+what namespaces are being used.
 
 ```typescript
 import adze, { setup } from 'adze';

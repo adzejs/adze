@@ -34,12 +34,12 @@ in the previous section of this guide. The tools are as follows:</p>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>If we open up the developer console in a browser, we can see all of our Adze logs that were
 generated when our web application executed.</p>
-<p><img src="@source/getting-started/examples/tools-example-levels-1.png" alt="Example of the generated logs in the browser"></p>
+<p><img src="@source/getting-started/examples/tools/tools-example-levels-1.png" alt="Example of the generated logs in the browser"></p>
 <p>Now, let's clear the logs. Type <code v-pre>console.clear()</code> in the developer tools console.</p>
-<p><img src="@source/getting-started/examples/tools-example-levels-2.png" alt="Example of clearing the developer tools console"></p>
+<p><img src="@source/getting-started/examples/tools/tools-example-levels-2.png" alt="Example of clearing the developer tools console"></p>
 <p>Now that the console has been cleared, let's use our tools to rerender all logs with a level of
 <code v-pre>&quot;log&quot;</code>.</p>
-<p><img src="@source/getting-started/examples/tools-example-levels-3.png" alt="Example of using browser tools to rerender logs"></p>
+<p><img src="@source/getting-started/examples/tools/tools-example-levels-3.png" alt="Example of using browser tools to rerender logs"></p>
 <p>Our log that we generated earlier has now been rerendered from the log cache.</p>
 <p>We can repeat this process for logs with <strong>namespaces</strong> and <strong>labels</strong> as well.</p>
 <h2 id="terminal-tools" tabindex="-1"><a class="header-anchor" href="#terminal-tools"><span>Terminal Tools</span></a></h2>

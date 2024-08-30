@@ -197,7 +197,7 @@ level.</p>
 <span class="line">logger<span class="token punctuation">.</span><span class="token function">custom</span><span class="token punctuation">(</span><span class="token string">'issue'</span><span class="token punctuation">,</span> <span class="token string">'An issue has occurred that needs attention.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="example-output-2" tabindex="-1"><a class="header-anchor" href="#example-output-2"><span>Example Output</span></a></h4>
-<p><img src="@source/getting-started/examples/custom-log-example.png" alt="Example of custom log level output"></p>
+<p><img src="@source/getting-started/examples/configuration/custom-log-example.png" alt="Example of custom log level output"></p>
 <hr>
 <p>Adze will always apply namespaces in an additive manner. Inherited namespaces will never be
 overwritten by subsequent calls to the <code v-pre>namespace</code> modifier.</p>

@@ -13,7 +13,7 @@ log data transport separately.</p>
 <h2 id="lifecycle" tabindex="-1"><a class="header-anchor" href="#lifecycle"><span>Lifecycle</span></a></h2>
 <p>Let's take a look under the hood to see how the Adze architecture enables its API and see when the
 various middleware hooks are called.</p>
-<p><img src="@source/getting-started/assets/basic-architecture.svg" alt="Lifecycle Diagram of Adze Logs"></p>
+<p><img src="@source/assets/lifecycle.svg" alt="Lifecycle Diagram of Adze Logs"></p>
 <h2 id="the-log-chain" tabindex="-1"><a class="header-anchor" href="#the-log-chain"><span>The Log Chain</span></a></h2>
 <p>As you can see in the diagram, a log chain is made up of three parts:</p>
 <ul>
@@ -50,18 +50,18 @@ could use the <code v-pre>timeNow</code> modifier.</p>
 <div class="language-typescript line-numbers-mode" data-highlighter="prismjs" data-ext="ts" data-title="ts"><pre v-pre><code><span class="line">adze<span class="token punctuation">.</span>timeNow<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'This is the time from pageload.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><p>And it would output like this:</p>
-<p><img src="@source/getting-started/examples/modifier-example.png" alt="Adze log with time now modifier preview"></p>
+<p><img src="@source/getting-started/examples/concepts/modifier-example.png" alt="Adze log with time now modifier preview"></p>
 <hr>
-<p>For documentation of all of the supported modifiers, please read the <a href="">Modifiers</a> page of the
-<a href="">Reference Manual</a>.</p>
+<p>For documentation of all of the supported modifiers, please read the <RouteLink to="/reference/modifiers.html">Modifiers</RouteLink> page of the
+<RouteLink to="/reference/introduction.html">Reference Manual</RouteLink>.</p>
 <h3 id="terminator" tabindex="-1"><a class="header-anchor" href="#terminator"><span>Terminator</span></a></h3>
-<p>In our <a href="modifiers">Modifiers</a> example code above, you can see we ended our
+<p>In our <RouteLink to="/reference/modifiers.html">Modifiers</RouteLink> example code above, you can see we ended our
 chain with <RouteLink to="/getting-started/default-terminators.html#log"><code v-pre>log()</code></RouteLink>. The log method is one of the eight <RouteLink to="/getting-started/default-terminators.html">default log terminators</RouteLink>.
 The library also comes with <RouteLink to="/getting-started/other-terminators.html">other special terminators</RouteLink> like
 <RouteLink to="/getting-started/other-terminators.html#custom">custom</RouteLink>. A log method is considered a terminator when it
 ends your log chain and returns a <RouteLink to="/getting-started/data.html#terminated-log-object">terminated log object</RouteLink>.</p>
-<p>For more information about all of the supported terminators, please read the <a href="">Terminators</a> page of
-the <a href="">Reference Manual</a>.</p>
+<p>For more information about all of the supported terminators, please read the <RouteLink to="/reference/terminators.html">Terminators</RouteLink> page of
+the <RouteLink to="/reference/introduction.html">Reference Manual</RouteLink>.</p>
 </div></template>
 
 

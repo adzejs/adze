@@ -20,7 +20,7 @@ log data transport separately.
 Let's take a look under the hood to see how the Adze architecture enables its API and see when the
 various middleware hooks are called.
 
-![Lifecycle Diagram of Adze Logs](./assets/basic-architecture.svg)
+![Lifecycle Diagram of Adze Logs](../assets/lifecycle.svg)
 
 ## The Log Chain
 
@@ -61,20 +61,20 @@ adze.timeNow.log('This is the time from pageload.');
 
 And it would output like this:
 
-![Adze log with time now modifier preview](./examples/modifier-example.png)
+![Adze log with time now modifier preview](./examples/concepts/modifier-example.png)
 
 ---
 
-For documentation of all of the supported modifiers, please read the [Modifiers]() page of the
-[Reference Manual]().
+For documentation of all of the supported modifiers, please read the [Modifiers](../reference/modifiers.md) page of the
+[Reference Manual](../reference/introduction.md).
 
 ### Terminator
 
-In our [Modifiers](modifiers) example code above, you can see we ended our
+In our [Modifiers](../reference/modifiers.md) example code above, you can see we ended our
 chain with [`log()`](default-terminators.md#log). The log method is one of the eight [default log terminators](default-terminators.md).
 The library also comes with [other special terminators](other-terminators.md) like
 [custom](other-terminators.md#custom). A log method is considered a terminator when it
 ends your log chain and returns a [terminated log object](data.md#terminated-log-object).
 
-For more information about all of the supported terminators, please read the [Terminators]() page of
-the [Reference Manual]().
+For more information about all of the supported terminators, please read the [Terminators](../reference/terminators.md) page of
+the [Reference Manual](../reference/introduction.md).

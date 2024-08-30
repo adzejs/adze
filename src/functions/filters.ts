@@ -1,4 +1,4 @@
-import { Configuration, LevelSelector } from '..';
+import { Configuration, LevelConfig, LevelSelector } from '..';
 import Log from '../log';
 import { isNumber, isRange, isString, isStringArray } from './type-guards';
 import { allLevels, makeRange } from './util';
@@ -6,31 +6,34 @@ import { allLevels, makeRange } from './util';
 /**
  * Normalize a level filter value to an array of log level numbers.
  */
-export function normalizeLevelSelector(cfg: Configuration, levels: LevelSelector): number[] {
+export function normalizeLevelSelector(
+  levels: Record<string, LevelConfig>,
+  selector: LevelSelector
+): number[] {
   // If all, return numbers for all levels.
-  if (levels === '*') return Object.values(cfg.levels).map((lvl) => lvl.level);
+  if (selector === '*') return Object.values(levels).map((lvl) => lvl.level);
   // If it's a string, convert it to a number and coerce it to a number array.
-  if (isString(levels)) {
-    return cfg.levels[levels] ? [cfg.levels[levels].level] : [];
+  if (isString(selector)) {
+    return levels[selector] ? [levels[selector].level] : [];
   }
   // If it's a number, coerce it to a number array.
-  if (isNumber(levels)) return [levels];
+  if (isNumber(selector)) return [selector];
   // Is the provided value a range?
-  if (isRange(levels)) {
+  if (isRange(selector)) {
     // If they are strings, convert them to numbers and return the number range.
-    if (isStringArray(levels)) {
-      const start = cfg.levels[levels[0]].level;
-      const end = cfg.levels[levels[2]].level;
-      return makeRange(allLevels(cfg.levels), start, end);
+    if (isStringArray(selector)) {
+      const start = levels[selector[0]].level;
+      const end = levels[selector[2]].level;
+      return makeRange(allLevels(levels), start, end);
     }
-    return makeRange(allLevels(cfg.levels), levels[0], levels[2]);
+    return makeRange(allLevels(levels), selector[0], selector[2]);
   }
   // Return array of matching numbers for the provided levels.
-  if (Array.isArray(levels) && isStringArray(levels)) {
-    return levels.map((f) => cfg.levels[f].level);
+  if (Array.isArray(selector) && isStringArray(selector)) {
+    return selector.map((f) => levels[f].level);
   }
   // If no other condition is met, return the provided array of numbers.
-  return levels;
+  return selector;
 }
 
 /**
@@ -71,7 +74,6 @@ export function isExcluded(source: string[], values: string[]): boolean {
  * Returns an array of Log instances that have the provided label.
  */
 export function filterByLabel(label: string, logs: Log[]): Log[] {
-  console.log('logs arg', logs);
   return logs.filter((log) => log.data?.label?.name === label);
 }
 
@@ -90,7 +92,7 @@ export function filterByNamespace(namespace: string[], logs: Log[]): Log[] {
 
 export function filterByLevel(level: LevelSelector, logs: Log[]): Log[] {
   return logs.filter((log) => {
-    const levels = normalizeLevelSelector(log.configuration, level);
+    const levels = normalizeLevelSelector(log.configuration.levels, level);
     if (log.data?.level === undefined) return false;
     return failsLevelSelector('exclude', levels, log.data.level);
   });
