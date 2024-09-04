@@ -1,14 +1,14 @@
 import { defaultTheme } from '@vuepress/theme-default';
 import { defineUserConfig } from 'vuepress/cli';
 import { viteBundler } from '@vuepress/bundler-vite';
-import { searchPlugin } from '@vuepress/plugin-search';
+import { searchProPlugin } from 'vuepress-plugin-search-pro';
 const { description } = require('../../package');
 
 export default defineUserConfig({
   lang: 'en-US',
   title: 'Adze - Isomorphic Logging for JavaScript',
   description,
-  plugins: [searchPlugin()],
+  plugins: [searchProPlugin({})],
   /**
    * Extra tags to be injected to the page HTML `<head>`
    *
