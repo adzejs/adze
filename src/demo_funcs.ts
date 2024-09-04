@@ -9,6 +9,7 @@ import adze, {
   serializeResponse,
   LevelConfiguration,
   isBrowser,
+  serializeError,
   getAlertConfig,
 } from '.';
 import { StandardLogFormatMeta } from './formatters/standard/types';
@@ -60,12 +61,28 @@ async function runDemo() {
   // listener();
 }
 
-function defaultLevels() {
-  setup({
-    timestampFormatter: (date: Date) => '07/04/1776',
+async function defaultLevels() {
+  setup<JsonLogFormatMeta>({
+    format: 'json',
+    meta: {
+      name: 'myApp',
+      hostname: 'localhost',
+    },
   });
 
-  adze.timestamp.success('America has achieved independence!');
+  const response = new Response('hello world!', {
+    status: 200,
+    statusText: 'OK',
+    headers: { boop: 'beep' },
+  });
+  Object.defineProperty(response, 'url', { value: 'https://example.com/login' });
+
+  // The Request serializer returns a promise so it must be awaited.
+  adze
+    .meta<JsonLogOptionalFields>({
+      res: await serializeResponse(response),
+    })
+    .log('Received a response!');
   // setup({
   //   withEmoji: true,
   //   activeLevel: 1337,

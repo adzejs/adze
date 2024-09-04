@@ -3,247 +3,286 @@
 The primary purpose of Adze is to give the user simple ways of shaping their logs to fit their
 needs. Adze comes with **four** formatters out of the box.
 
-| Formatter    | Value        | Description                                                                                                       |
-| ------------ | ------------ | ----------------------------------------------------------------------------------------------------------------- |
-| [Pretty]()   | `"pretty"`   | The default formatter. This prints logs in a pretty, human-readable format.                                       |
-| [JSON]()     | `"json"`     | This formatter prints logs as machine-readable JSON objects that are compatible with the [Bunyan CLI]().          |
-| [Standard]() | `"standard"` | This formatter prints human-readable logs for a simple **stdout** format for terminals or files.                  |
-| [Common]()   | `"common"`   | This formatter prints logs according to the [Common Log Format](https://en.wikipedia.org/wiki/Common_Log_Format). |
+| Formatter                   | Value        | Description                                                                                                                                                                |
+| --------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Pretty](#pretty-formatter) | `"pretty"`   | The default formatter. This prints logs in a pretty, human-readable format.                                                                                                |
+| [JSON]()                    | `"json"`     | This formatter prints logs as machine-readable JSON objects that are compatible with the [Bunyan CLI](https://github.com/trentm/node-bunyan?tab=readme-ov-file#cli-usage). |
+| [Standard]()                | `"standard"` | This formatter prints human-readable logs for a simple **stdout** format for terminals or files.                                                                           |
+| [Common]()                  | `"common"`   | This formatter prints logs according to the [Common Log Format](https://en.wikipedia.org/wiki/Common_Log_Format).                                                          |
 
-## Environment Targeting
+## Pretty Formatter
 
-When creating middleware, sometimes you care about browser and backend environments, and sometimes
-you only care about one of them.
+The **Pretty** formatter is the default formatter used by Adze. It formats logs in a pretty,
+human-readable manner.
 
-The Middleware Class requires that you specify your target if you only care about a single
-environment. If you don't specify your target environment, it will default to assuming your
-middleware cares about `'both'`. You can specify your target by providing your value as the first
-parameter to the `super()` call in your middleware constructor.
-
-The options are:
-
-- `"both"` - (Default) This middleware will operate in both server and browser environments.
-- `"browser"` - This middleware only operates in the browser.
-- `"server"` - This middleware only operates in backend environments.
-
-#### Example
-
-```typescript
-import { Middleware } from 'adze';
-
-export class HelloMiddleware extends Middleware {
-  constructor() {
-    // Let's target the server environment for our middleware.
-    super('server');
-  }
-}
-```
-
-## Loading Dependencies
-
-Middleware dependencies may function in one or both types of environments. To support all of the
-various situations, the Middleware Class provides simple hooks for conditionally loading
-dependencies.
-
-These hooks are called when the consumer of the middleware calls the `load` method on the middleware
-instance. This is required because we must await our conditionally loaded dependencies.
-
-The methods that are called for each environment are:
-
-- `protected async loadServerDependencies()` - Hook for loading server side dependencies.
-- `protected async loadBrowserDependencies()` - Hook for loading browser side dependencies.
-
-#### Example
-
-```typescript
-import { Middleware } from 'adze';
-// Make sure to include the "type" value here! Otherwise your code will try to import the function!
-import type { writeFile } from 'node:fs';
-
-export class HelloMiddleware extends Middleware {
-  private writeFile: typeof writeFile;
-
-  constructor() {
-    super('server');
-  }
-
-  /**
-   * Load dependencies for the node environment.
-   */
-  protected async loadServerDependencies() {
-    // We'll load the fs.readFile function so we can write data to our file system.
-    const fs = await import('node:fs');
-    // Save our dependency to the private writeFile property to be used elsewhere in our middleware.
-    this.writeFile = fs.writeFile;
-  }
-  /**
-   * Load dependencies for the browser environment.
-   */
-  protected async loadBrowserDependencies() {
-    // We won't put anything here because we're only targeting the server.
-  }
-}
-```
-
-### Using the Middleware
-
-To use our middleware, we'll need to make sure we instantiate it and await a call to the load method
-before passing it in to the [setup](./configuration.md#setup-function) function.
+To use it, set the [User Configuration](./configuration.md#user-configuration) `format` value to be
+`"pretty"`.
 
 ```typescript
 import adze, { setup } from 'adze';
-import HelloMiddleware from './hello-middleware';
-
-const helloMw = new HelloMiddleware();
-await helloMw.load();
 
 setup({
-  middleware: [helloMw],
+  format: 'pretty',
 });
 ```
 
+#### Browser and Terminal Output
+
+![example of browser and terminal output for the pretty format](../getting-started/examples/introduction/demo.jpg)
+
 <br />
 
-## Using Lifecycle Hooks
+## JSON Formatter
 
-To hook into various points in the Adze log [lifecycle](./introduction.md#lifecycle), we can define
-hooks in our middleware. The hooks listed below are in order of when they are called in the
-lifecycle.
+The JSON formatter is used to generate machine-readable JSON logs. The logs that are generated are
+compatible with the [Bunyan CLI](https://github.com/trentm/node-bunyan?tab=readme-ov-file#cli-usage)
+for parsing logs to be human-readable or for filtering them based on their values.
 
-### constructed
-
-This hook is called during construction of a log instance.
+To use it, set the [User Configuration](./configuration.md#user-configuration) `format` value to be
+`"json"`.
 
 ```typescript
-interface Middleware {
-  constructed?(log: Log): void;
+import adze, { setup } from 'adze';
+
+setup({
+  format: 'json',
+});
+```
+
+### JsonLogFormatMeta Interface
+
+JSON formatted logs require some meta data to be compatible with the [Bunyan JSON Schema](https://github.com/trentm/node-bunyan?tab=readme-ov-file#log-record-fields).
+To apply these values you must include them when calling the [meta modifier](./modifiers.md#meta) or
+apply them in the [setup function](./configuration.md#setup-function).
+
+#### Usage Example
+
+To get TS type checking for these values, Adze exports an interface called `JsonLogFormatMeta` that
+can be passed to the meta modifier as a generic type.
+
+The minimum required fields are `name` and `hostname`.
+
+```typescript
+import adze, { setup, type JsonLogFormatMeta } from 'adze';
+
+setup({
+  level: 'debug',
+  format: 'json',
+});
+
+const logger = adze.meta<JsonLogFormatMeta>({ name: 'myApp', hostname: 'localhost' }).seal();
+export default logger;
+
+// --- OR ALTERNATIVELY
+
+setup<JsonLogFormatMeta>({
+  level: 'debug',
+  format: 'json',
+  meta: {
+    name: 'myApp',
+    hostname: 'localhost',
+  },
+});
+```
+
+If you want to later apply extra optional JSON log meta fields, you can use the
+`JsonLogOptionalFields` interface.
+
+```typescript
+// ./elsewhere.ts
+import { type JsonLogOptionalFields } from 'adze';
+import logger from './logger';
+
+logger.meta<JsonLogOptionalFields>({ latency: 400 }).debug('Logging the latency of our app.');
+```
+
+#### Interface
+
+```typescript
+interface JsonLogFormatMeta {
+  /**
+   * The name of the application or logger that is generating the log.
+   */
+  name: string;
+  /**
+   * The hostname of the machine that generated the log.
+   */
+  hostname: string;
+  /**
+   * The name of the log level.
+   */
+  levelName?: string;
+  /**
+   * Optional. Object giving log call source info. This is added automatically by Bunyan if the
+   * "src: true" config option is given to the Logger. Never use in production as this is really
+   * slow.
+   */
+  src?: string;
+  /**
+   * A caught JS exception. This will be added anytime adze detects an Error object in the log
+   * terminator arguments. You may also manually serialize an error with the `serializeError`
+   * function from adze.
+   */
+  err?: JsonLogError;
+  /**
+   * A request identifier. Including this field in all logging tied to handling a particular request
+   * to your server is strongly suggested. This allows post analysis of logs to easily collate all
+   * related logging for a request. This really shines when you have a SOA with multiple services
+   * and you carry a single request ID from the top API down through all APIs.
+   */
+  req_id?: string;
+  /**
+   * An HTTP server request. This can be generated with the `serializeRequest` function from adze.
+   */
+  req?: JsonLogHttpRequest;
+  /**
+   * An HTTP server response. This can be generated with the `serializeResponse` function from adze.
+   */
+  res?: JsonLogHttpResponse;
+  /**
+   * The latency of the logged request in milliseconds.
+   */
+  latency?: number;
+  /**
+   * Any additional meta data that you want to include in the log.
+   */
+  meta?: Record<string, unknown>;
+}
+
+/**
+ * Type for a JSON Log error on the `err` property.
+ */
+export interface JsonLogError {
+  message: string;
+  name: string;
+  stack?: string;
+}
+
+/**
+ * Type for declaring a JSON log HTTP request object.
+ *
+ * This can be generated from the `serializeRequest` function from adze.
+ */
+export interface JsonLogHttpRequest {
+  method: HttpMethod;
+  url: string;
+  headers: Record<string, string>;
+  body?: string;
+  remoteAddress: string;
+  remotePort?: number;
+  username?: string;
+}
+
+/**
+ * Type for declaring a JSON log HTTP response object.
+ *
+ * This can be generated from the `serializeResponse` function from adze.
+ */
+export interface JsonLogHttpResponse {
+  statusCode: HttpStatus;
+  header: string;
 }
 ```
 
-| Order | Parameter | Description                                                                             |
-| ----- | --------- | --------------------------------------------------------------------------------------- |
-| 1     | log       | The instance of the log. This can be used to access its [data](./log-class.md#getters). |
+### JsonLogFormatMeta Serializer Functions
 
-<br/>
+For the JSON log meta properties of `err`, `req`, and `res` Adze provides a set of serializer
+functions to make it much simpler to apply these meta data values.
 
-### beforeModifierApplied
+#### serializeError
 
-This hook is called just before a modifier is applied to a log instance.
+---
 
-```typescript
-interface Middleware {
-  beforeModifierApplied?(log: Log, name: ModifierName, data: ModifierData): void;
-}
-```
+This function accepts a [JavaScript Error object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
+and returns a serialized meta data object that is compatible with the
+[JsonLogFormatMeta interface](#jsonlogformatmeta-interface).
 
-| Order | Parameter | Description                                                                             |
-| ----- | --------- | --------------------------------------------------------------------------------------- |
-| 1     | log       | The instance of the log. This can be used to access its [data](./log-class.md#getters). |
-| 2     | name      | The name of the [modifier](./modifiers.md) that was called (ie. `"withEmoji"`)          |
-| 3     | data      | The cumulative [modifier](./modifiers.md) data object from all modifier calls.          |
-
-<br/>
-
-### afterModifierApplied
-
-This hook is called just after a modifier is applied to a log instance.
+##### Example
 
 ```typescript
-interface Middleware {
-  afterModifierApplied?(log: Log, name: ModifierName, data: ModifierData): void;
-}
+import adze, { serializeError, type JsonLogOptionalFields } from 'adze';
+
+// Doing some stuff and an error occurs!
+const errMsg = 'An error occurred! UH OH!';
+adze
+  .meta<JsonLogOptionalFields>({
+    err: serializeError(new Error(errMsg)),
+  })
+  .error(errMsg);
 ```
 
-| Order | Parameter | Description                                                                             |
-| ----- | --------- | --------------------------------------------------------------------------------------- |
-| 1     | log       | The instance of the log. This can be used to access its [data](./log-class.md#getters). |
-| 2     | name      | The name of the [modifier](./modifiers.md) that was called (ie. `"withEmoji"`)          |
-| 3     | data      | The cumulative [modifier](./modifiers.md) data object from all modifier calls.          |
+##### Example Output
 
-<br/>
+![example of a json log with a serialized error](./examples/formatters/jsonFormatErrorSerializer-example-node.png)
 
-### beforeFormatApplied
+<br />
 
-This hook is called just before a formatter is applied to a log instance to format a message.
+#### serializeRequest
+
+---
+
+This function accepts a [JavaScript Request object](https://developer.mozilla.org/en-US/docs/Web/API/Request)
+and returns a serialized meta data object that is compatible with the
+[JsonLogFormatMeta interface](#jsonlogformatmeta-interface).
+
+##### Example
 
 ```typescript
-interface Middleware {
-  beforeFormatApplied?(log: Log, format: string, message: unknown[]): void;
-}
+import adze, { serializeRequest, type JsonLogOptionalFields } from 'adze';
+
+const request = new Request('https://example.com/login', {
+  method: 'POST',
+  headers: {
+    'x-hi': 'Mom',
+    connection: 'close',
+    Authorization: 'Basic ' + btoa('username:password'),
+  },
+  body: JSON.stringify({ foo: 'bar' }),
+});
+
+// The Request serializer returns a promise so it must be awaited.
+adze
+  .meta<JsonLogOptionalFields>({
+    req: await serializeRequest(request),
+  })
+  .log('Made a request!');
 ```
 
-| Order | Parameter | Description                                                                             |
-| ----- | --------- | --------------------------------------------------------------------------------------- |
-| 1     | log       | The instance of the log. This can be used to access its [data](./log-class.md#getters). |
-| 2     | format    | The name of the log [formatter]() that will be used.                                    |
-| 3     | message   | Array of arguments to be printed to the console.                                        |
+##### Example Output
 
-<br/>
+![example of a json log with a serialized request](./examples/formatters/jsonFormatRequestSerializer-example-node.png)
 
-### afterFormatApplied
+<br />
 
-This hook is called just after a formatter is applied to a log instance to format a message.
+#### serializeResponse
+
+---
+
+This function accepts a [JavaScript Response object](https://developer.mozilla.org/en-US/docs/Web/API/Response)
+and returns a serialized meta data object that is compatible with the
+[JsonLogFormatMeta interface](#jsonlogformatmeta-interface).
+
+##### Example
 
 ```typescript
-interface Middleware {
-  afterFormatApplied?(log: Log, format: string, message: unknown[]): void;
-}
+import adze, { serializeResponse, type JsonLogOptionalFields } from 'adze';
+
+// We'll make a fake response just for this example
+const response = new Response('hello world!', {
+  status: 200,
+  statusText: 'OK',
+  headers: { boop: 'beep' },
+});
+Object.defineProperty(response, 'url', { value: 'https://example.com/login' });
+
+// The Request serializer returns a promise so it must be awaited.
+adze
+  .meta<JsonLogOptionalFields>({
+    res: await serializeResponse(response),
+  })
+  .log('Received a response!');
 ```
 
-| Order | Parameter | Description                                                                             |
-| ----- | --------- | --------------------------------------------------------------------------------------- |
-| 1     | log       | The instance of the log. This can be used to access its [data](./log-class.md#getters). |
-| 2     | format    | The name of the log [formatter]() that was used.                                        |
-| 3     | message   | Array of [formatted]() arguments to be printed to the console.                          |
+##### Example Output
 
-<br/>
-
-### beforePrint
-
-This hook is called just before a log instance message is printed to the browser or console.
-
-```typescript
-interface Middleware {
-  beforePrint?(log: Log): void;
-}
-```
-
-| Order | Parameter | Description                                                                             |
-| ----- | --------- | --------------------------------------------------------------------------------------- |
-| 1     | log       | The instance of the log. This can be used to access its [data](./log-class.md#getters). |
-
-<br/>
-
-### beforeTerminated
-
-This hook is called just before a log is terminated.
-
-```typescript
-interface Middleware {
-  beforeTerminated?(log: Log, terminator: string, args: unknown[]): void;
-}
-```
-
-| Order | Parameter  | Description                                                                             |
-| ----- | ---------- | --------------------------------------------------------------------------------------- |
-| 1     | log        | The instance of the log. This can be used to access its [data](./log-class.md#getters). |
-| 2     | terminator | The name of the [terminator](./terminators.md) that is being called to print the log.   |
-| 3     | args       | The log arguments prior to formatting.                                                  |
-
-<br/>
-
-### afterTerminated
-
-This hook is called just when a log instance has completed termination.
-
-```typescript
-interface Middleware {
-  afterTerminated?(log: Log, terminator: string, args: unknown[]): void;
-}
-```
-
-| Order | Parameter  | Description                                                                             |
-| ----- | ---------- | --------------------------------------------------------------------------------------- |
-| 1     | log        | The instance of the log. This can be used to access its [data](./log-class.md#getters). |
-| 2     | terminator | The name of the [terminator](./terminators.md) that is being called to print the log.   |
-| 3     | args       | The [formatted]() arguments that will be printed.                                       |
+![example of a json log with a serialized response](./examples/formatters/jsonFormatResponseSerializer-example-node.png)

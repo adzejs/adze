@@ -1,5 +1,5 @@
 import { HttpMethod, HttpStatus } from '../..';
-import { JsonLogHttpRequest, JsonLogHttpResponse } from './types';
+import { JsonLogHttpRequest, JsonLogHttpResponse, JsonLogError } from './types';
 
 /**
  * Serializes a Request object into a JSON Log HTTP Request object.
@@ -73,5 +73,16 @@ export async function serializeResponse(response: Response): Promise<JsonLogHttp
   return {
     statusCode: response.status as HttpStatus,
     header,
+  };
+}
+
+/**
+ * Serializes an Error object into a JSON Log Error object that is compatible with JsonLogFormatMeta.
+ */
+export function serializeError(error: Error): JsonLogError {
+  return {
+    message: error.message,
+    name: error.name,
+    stack: error.stack,
   };
 }

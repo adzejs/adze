@@ -1,7 +1,7 @@
 import { expect, vi } from 'vitest';
 import adze, {
   JsonLogFormatMeta,
-  LevelConfig,
+  LevelConfiguration,
   serializeRequest,
   serializeResponse,
   setup,
@@ -263,7 +263,7 @@ export const printJsonCustom = () => {
   const fn = vi.fn();
   console.log = fn;
 
-  const leetLevel: LevelConfig = {
+  const leetLevel: LevelConfiguration = {
     levelName: 'leetLevel',
     level: 1337,
     method: 'log',
