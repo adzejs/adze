@@ -7,8 +7,9 @@ import adze, {
   JsonLogOptionalFields,
   serializeRequest,
   serializeResponse,
-  LevelConfig,
+  LevelConfiguration,
   isBrowser,
+  getAlertConfig,
 } from '.';
 import { StandardLogFormatMeta } from './formatters/standard/types';
 
@@ -17,7 +18,7 @@ if (isBrowser()) {
   window.adze = adze;
 }
 
-const leetLevel: LevelConfig = {
+const leetLevel: LevelConfiguration = {
   levelName: 'leetLevel',
   level: 1337,
   method: 'log',
@@ -60,15 +61,11 @@ async function runDemo() {
 }
 
 function defaultLevels() {
-  const store = setup({
-    cache: true,
+  setup({
+    timestampFormatter: (date: Date) => '07/04/1776',
   });
 
-  adze.info('This is a log that will rerender.');
-  adze.log('This is another log that will rerender.');
-
-  // Get the log cache.
-  store.tools.renderAll();
+  adze.timestamp.success('America has achieved independence!');
   // setup({
   //   withEmoji: true,
   //   activeLevel: 1337,

@@ -42,13 +42,9 @@ export function addPadding(str: string, withEmoji = false, emoji?: string): stri
  *
  * Refer to https://github.com/chalk/chalk#chalklevel
  */
-export function applyChalkStyles(
-  str: string,
-  styles: ChalkStyle[],
-  fidelity: 0 | 1 | 2 | 3 = 1
-): string {
+export function applyChalkStyles(str: string, styles: ChalkStyle[]): string {
   // Force chalk colors
-  const chalk = new Chalk({ level: fidelity });
+  const chalk = new Chalk();
   return styles.reduce((acc, style) => {
     return chalk[style](acc);
   }, str);

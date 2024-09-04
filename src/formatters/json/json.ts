@@ -1,5 +1,5 @@
 import Formatter from '../formatter';
-import { Configuration, LevelConfig, ModifierData } from '../../_types';
+import { Configuration, LevelConfiguration, ModifierData } from '../../_types';
 import { formatISO } from 'date-fns/formatISO';
 import { JsonLog, JsonLogOptionalFields, JsonLogRequiredFields } from './types';
 import { hasRequiredFields } from './type-guards';
@@ -14,7 +14,7 @@ export default class JsonFormatter extends Formatter {
    */
   protected timestampFormatFunction: (date: Date) => string = (date: Date) => formatISO(date);
 
-  constructor(cfg: Configuration, level: LevelConfig) {
+  constructor(cfg: Configuration, level: LevelConfiguration) {
     super(cfg, level);
   }
 

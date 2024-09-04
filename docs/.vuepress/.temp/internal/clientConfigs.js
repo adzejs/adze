@@ -6,6 +6,8 @@ import * as clientConfig4 from '/Users/andrewstacy/Projects/personal/adze/node_m
 import * as clientConfig5 from '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/.temp/prismjs/config.js'
 import * as clientConfig6 from '/Users/andrewstacy/Projects/personal/adze/node_modules/@vuepress/plugin-theme-data/lib/client/config.js'
 import * as clientConfig7 from '/Users/andrewstacy/Projects/personal/adze/node_modules/@vuepress/theme-default/lib/client/config.js'
+import * as clientConfig8 from '/Users/andrewstacy/Projects/personal/adze/node_modules/@vuepress/plugin-search/lib/client/config.js'
+import * as clientConfig9 from '/Users/andrewstacy/Projects/personal/adze/docs/.vuepress/client.ts'
 
 export const clientConfigs = [
   clientConfig0,
@@ -16,4 +18,6 @@ export const clientConfigs = [
   clientConfig5,
   clientConfig6,
   clientConfig7,
+  clientConfig8,
+  clientConfig9,
 ].map((m) => m.default).filter(Boolean)

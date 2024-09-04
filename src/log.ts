@@ -3,7 +3,7 @@ import {
   DefaultTerminatorMethod,
   Format,
   FormatterConstructor,
-  LevelConfig,
+  LevelConfiguration,
   LogData,
   Modifier,
   ModifierData,
@@ -1359,7 +1359,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   /**
    * Returns the level configuration object based on the provided level name.
    */
-  private getLevelConfig(levelName: string): LevelConfig {
+  private getLevelConfig(levelName: string): LevelConfiguration {
     return this._cfg.levels[levelName];
   }
 

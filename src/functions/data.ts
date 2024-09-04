@@ -36,5 +36,13 @@ export function mergeConfiguration(...configs: UserConfiguration[]): Configurati
   return merge({
     appendArrays: true,
     dedupArrays: true,
+    beforeEach: ({ key, srcVal }) => {
+      if (key === 'terminalStyle') {
+        return {
+          value: srcVal,
+          writable: true,
+        };
+      }
+    },
   })(dflt, ...configs) as Configuration;
 }

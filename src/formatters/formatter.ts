@@ -1,5 +1,5 @@
 import { formatISO } from 'date-fns/formatISO';
-import { Configuration, LevelConfig, ModifierData } from '../_types';
+import { Configuration, LevelConfiguration, ModifierData } from '../_types';
 import {
   getActiveLevel,
   isBrowser,
@@ -26,14 +26,14 @@ export default abstract class Formatter {
   /**
    * The log level configuration.
    */
-  protected level: LevelConfig;
+  protected level: LevelConfiguration;
 
   /**
    * The default timestamp formatter. Override this to customize for your own formatter.
    */
   protected timestampFormatFunction: (date: Date) => string = (date: Date) => formatISO(date);
 
-  constructor(cfg: Configuration, level: LevelConfig) {
+  constructor(cfg: Configuration, level: LevelConfiguration) {
     this.cfg = cfg;
     this.level = level;
   }

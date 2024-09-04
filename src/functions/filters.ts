@@ -1,4 +1,4 @@
-import { Configuration, LevelConfig, LevelSelector } from '..';
+import { LevelConfiguration, LevelSelector } from '..';
 import Log from '../log';
 import { isNumber, isRange, isString, isStringArray } from './type-guards';
 import { allLevels, makeRange } from './util';
@@ -7,7 +7,7 @@ import { allLevels, makeRange } from './util';
  * Normalize a level filter value to an array of log level numbers.
  */
 export function normalizeLevelSelector(
-  levels: Record<string, LevelConfig>,
+  levels: Record<string, LevelConfiguration>,
   selector: LevelSelector
 ): number[] {
   // If all, return numbers for all levels.

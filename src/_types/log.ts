@@ -63,7 +63,7 @@ export type IObject = Record<string, unknown>;
  * Type for the constructor of a Formatter class.
  */
 export interface FormatterConstructor {
-  new (cfg: Configuration, level: LevelConfig): Formatter;
+  new (cfg: Configuration, level: LevelConfiguration): Formatter;
 }
 
 /**
@@ -99,7 +99,7 @@ export type Modifier = [ModifierName, (data: ModifierData, ctxt: Log) => Modifie
 /**
  * Configuration object for a specific log level.
  */
-export interface LevelConfig {
+export interface LevelConfiguration {
   levelName: string;
   level: number;
   style: string;
@@ -113,7 +113,7 @@ export interface LevelConfig {
  */
 export type LogData = ModifierData &
   ConfigurationData &
-  LevelConfig & {
+  LevelConfiguration & {
     args: unknown[];
     terminator: string;
     message: unknown[];

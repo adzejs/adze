@@ -1,13 +1,14 @@
 import { defaultTheme } from '@vuepress/theme-default';
 import { defineUserConfig } from 'vuepress/cli';
 import { viteBundler } from '@vuepress/bundler-vite';
+import { searchPlugin } from '@vuepress/plugin-search';
 const { description } = require('../../package');
 
 export default defineUserConfig({
   lang: 'en-US',
   title: 'Adze - Isomorphic Logging for JavaScript',
   description,
-
+  plugins: [searchPlugin()],
   /**
    * Extra tags to be injected to the page HTML `<head>`
    *
@@ -159,6 +160,9 @@ export default defineUserConfig({
             { text: 'Terminators', link: '/reference/terminators' },
             { text: 'Global Store', link: '/reference/global-store' },
             { text: 'Tools', link: '/reference/tools' },
+            { text: 'Configuration', link: '/reference/configuration' },
+            { text: 'Middleware', link: '/reference/middleware' },
+            { text: 'Formatters', link: '/reference/formatters' },
             // 'factories',
             // 'modifiers',
             // 'default-terminators',

@@ -9,13 +9,13 @@ import {
   formatNamespace,
   initialCaps,
 } from '../../functions';
-import { Configuration, LevelConfig, ModifierData } from '../../_types';
+import { Configuration, LevelConfiguration, ModifierData } from '../../_types';
 
 /**
  * Formats log messages in a pretty, human-readable manner.
  */
 export default class PrettyFormatter extends Formatter {
-  constructor(cfg: Configuration, level: LevelConfig) {
+  constructor(cfg: Configuration, level: LevelConfiguration) {
     super(cfg, level);
   }
 
@@ -40,11 +40,8 @@ export default class PrettyFormatter extends Formatter {
     const leader = `${leaderRaw} `;
     const meta = this.formatMeta(mods, timestamp);
 
-    const styledLeader = applyChalkStyles(
-      leader,
-      this.level.terminalStyle,
-      this.cfg.terminalFidelity
-    );
+    const styledLeader = applyChalkStyles(leader, this.level.terminalStyle);
+
     message.push(styledLeader);
     meta !== '' ? message.push(meta) : null;
     return [styledLeader, meta, ...(args ?? [])];

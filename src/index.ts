@@ -7,4 +7,5 @@ export * from './formatters/standard';
 export * from './formatters/json';
 export * from './_types';
 export { setup, teardown, isBrowser, Formatter };
+export * from './constants';
 export default adze;

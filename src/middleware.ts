@@ -2,7 +2,7 @@ import { ModifierName } from '.';
 import { isBrowser, ModifierData } from '.';
 import Log from './log';
 
-export type TargetEnvironment = 'node' | 'browser' | 'both';
+export type TargetEnvironment = 'server' | 'browser' | 'both';
 
 export interface Middleware {
   /**
@@ -53,7 +53,7 @@ export abstract class Middleware {
   /**
    * The environment that the middleware is running in.
    */
-  protected readonly environment = isBrowser() ? 'browser' : 'node';
+  protected readonly environment = isBrowser() ? 'browser' : 'server';
 
   /**
    * Array of asynchronous dependency loaders.
@@ -62,8 +62,11 @@ export abstract class Middleware {
 
   constructor(targetEnvironment?: TargetEnvironment) {
     this.targetEnvironment = targetEnvironment ?? 'both';
-    if (!isBrowser() && (this.targetEnvironment === 'node' || this.targetEnvironment === 'both')) {
-      this.dependencyLoaders.push(this.loadNodeDependencies());
+    if (
+      !isBrowser() &&
+      (this.targetEnvironment === 'server' || this.targetEnvironment === 'both')
+    ) {
+      this.dependencyLoaders.push(this.loadServerDependencies());
     }
     if (
       isBrowser() &&
@@ -81,7 +84,7 @@ export abstract class Middleware {
   /**
    * Load dependencies for the node environment.
    */
-  protected async loadNodeDependencies() {}
+  protected async loadServerDependencies() {}
   /**
    * Load dependencies for the browser environment.
    */

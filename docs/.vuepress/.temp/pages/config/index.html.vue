@@ -1,43 +1,33 @@
 <template><div><h1 id="config" tabindex="-1"><a class="header-anchor" href="#config"><span>Config</span></a></h1>
-<p>Adze is a completely configurable library by design that comes with sensible defaults. There are two primary configurations to understand; the Adze configuration and the GlobalStore configuration. In this section we'll take a look at each configuration and explain each property in detail.</p>
-<p><em>NOTE: <a href="https://github.com/chalk/chalk#chalklevel" target="_blank" rel="noopener noreferrer">Chalk</a> is what Adze uses under the hood for terminal coloring. Because terminals differ in their color fidelity, Chalk exposes a setting allowing you to specify your fidelity. Adze is basic with its colors so the low level of 1 is sufficient, however, you can change it to your liking with the <code v-pre>terminalColorFidelity</code> option described below. Please refer to the <a href="https://github.com/chalk/chalk#chalklevel" target="_blank" rel="noopener noreferrer">Chalk</a> docs for information about what the fidelity levels mean.</em></p>
-<h2 id="adze-configuration" tabindex="-1"><a class="header-anchor" href="#adze-configuration"><span>Adze Configuration</span></a></h2>
+<p>Adze is a completely configurable library by design that comes with sensible defaults. There are two
+primary configurations to understand; the log configuration and the <RouteLink to="/reference/global-store.html">Global Store</RouteLink>
+configuration. In this section we'll take a look at each configuration and explain each property in
+detail.</p>
+<h2 id="user-configuration" tabindex="-1"><a class="header-anchor" href="#user-configuration"><span>User Configuration</span></a></h2>
+<p>This configuration is generated when you use <RouteLink to="/reference/modifiers.html">modifiers</RouteLink> or when you pass
+in a configuration object with the <RouteLink to="/reference/terminators.html#seal">seal</RouteLink> or
+<RouteLink to="/reference/terminators.html#sealtag">sealTag</RouteLink> terminators.</p>
 <h3 id="interface" tabindex="-1"><a class="header-anchor" href="#interface"><span>Interface</span></a></h3>
-<div class="language-typescript line-numbers-mode" data-highlighter="prismjs" data-ext="ts" data-title="ts"><pre v-pre><code><span class="line"><span class="token comment">// This is the top level Adze configuration</span></span>
-<span class="line"><span class="token keyword">interface</span> <span class="token class-name">Configuration</span> <span class="token punctuation">{</span></span>
-<span class="line">  renderLeader<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span></span>
-<span class="line">  renderArgCount<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span></span>
-<span class="line">  logLevel<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span></span>
-<span class="line">  useEmoji<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span></span>
-<span class="line">  unstyled<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span></span>
-<span class="line">  terminalColorFidelity<span class="token operator">?</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token operator">|</span> <span class="token number">1</span> <span class="token operator">|</span> <span class="token number">2</span> <span class="token operator">|</span> <span class="token number">3</span><span class="token punctuation">;</span></span>
-<span class="line">  captureStacktrace<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span></span>
-<span class="line">  machineReadable<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span></span>
-<span class="line">  baseStyle<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span></span>
-<span class="line">  logLevels<span class="token operator">?</span><span class="token operator">:</span> LogLevels<span class="token punctuation">;</span></span>
-<span class="line">  customLevels<span class="token operator">?</span><span class="token operator">:</span> Partial<span class="token operator">&lt;</span>LogLevels<span class="token operator">></span><span class="token punctuation">;</span></span>
-<span class="line">  meta<span class="token operator">?</span><span class="token operator">:</span> <span class="token punctuation">{</span></span>
-<span class="line">    <span class="token punctuation">[</span>key<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">]</span><span class="token operator">:</span> <span class="token builtin">unknown</span><span class="token punctuation">;</span></span>
-<span class="line">  <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
-<span class="line">  filters<span class="token operator">?</span><span class="token operator">:</span> AdzeFilters<span class="token punctuation">;</span></span>
+<div class="language-typescript line-numbers-mode" data-highlighter="prismjs" data-ext="ts" data-title="ts"><pre v-pre><code><span class="line"><span class="token keyword">interface</span> <span class="token class-name">UserConfiguration</span> <span class="token punctuation">{</span></span>
+<span class="line">  activeLevel<span class="token operator">?</span><span class="token operator">:</span> Level <span class="token operator">|</span> <span class="token builtin">number</span><span class="token punctuation">;</span></span>
+<span class="line">  cache<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span></span>
+<span class="line">  cacheSize<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span></span>
+<span class="line">  dump<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span></span>
+<span class="line">  filters<span class="token operator">?</span><span class="token operator">:</span> Filters<span class="token punctuation">;</span></span>
+<span class="line">  format<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span></span>
+<span class="line">  formatters<span class="token operator">:</span> Record<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> FormatterConstructor<span class="token operator">></span><span class="token punctuation">;</span></span>
+<span class="line">  levels<span class="token operator">:</span> Record<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> LevelConfig<span class="token operator">></span><span class="token punctuation">;</span></span>
+<span class="line">  meta<span class="token operator">?</span><span class="token operator">:</span> Record<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token builtin">any</span><span class="token operator">></span><span class="token punctuation">;</span></span>
+<span class="line">  middleware<span class="token operator">?</span><span class="token operator">:</span> Middleware<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span></span>
+<span class="line">  silent<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span></span>
+<span class="line">  showTimestamp<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span></span>
+<span class="line">  timestampFormatter<span class="token operator">?</span><span class="token operator">:</span> <span class="token punctuation">(</span>date<span class="token operator">:</span> Date<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token builtin">string</span><span class="token punctuation">;</span></span>
+<span class="line">  withEmoji<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span></span>
 <span class="line"><span class="token punctuation">}</span></span>
 <span class="line"></span>
-<span class="line"><span class="token comment">// The allowable values for the method property</span></span>
-<span class="line"><span class="token keyword">type</span> <span class="token class-name">ConsoleMethod</span> <span class="token operator">=</span></span>
-<span class="line">  <span class="token operator">|</span> <span class="token string">'error'</span></span>
-<span class="line">  <span class="token operator">|</span> <span class="token string">'warn'</span></span>
-<span class="line">  <span class="token operator">|</span> <span class="token string">'info'</span></span>
-<span class="line">  <span class="token operator">|</span> <span class="token string">'log'</span></span>
-<span class="line">  <span class="token operator">|</span> <span class="token string">'debug'</span></span>
-<span class="line">  <span class="token operator">|</span> <span class="token string">'trace'</span></span>
-<span class="line">  <span class="token operator">|</span> <span class="token string">'group'</span></span>
-<span class="line">  <span class="token operator">|</span> <span class="token string">'groupCollapsed'</span></span>
-<span class="line">  <span class="token operator">|</span> <span class="token string">'groupEnd'</span></span>
-<span class="line">  <span class="token operator">|</span> <span class="token string">'table'</span></span>
-<span class="line">  <span class="token operator">|</span> <span class="token string">'dir'</span></span>
-<span class="line">  <span class="token operator">|</span> <span class="token string">'dirxml'</span><span class="token punctuation">;</span></span>
+<span class="line"><span class="token keyword">type</span> <span class="token class-name">Level</span> <span class="token operator">=</span> <span class="token string">'alert'</span> <span class="token operator">|</span> <span class="token string">'error'</span> <span class="token operator">|</span> <span class="token string">'warn'</span> <span class="token operator">|</span> <span class="token string">'info'</span> <span class="token operator">|</span> <span class="token string">'fail'</span> <span class="token operator">|</span> <span class="token string">'success'</span> <span class="token operator">|</span> <span class="token string">'log'</span> <span class="token operator">|</span> <span class="token string">'debug'</span> <span class="token operator">|</span> <span class="token string">'verbose'</span><span class="token punctuation">;</span></span>
 <span class="line"></span></code></pre>
-<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="descriptions" tabindex="-1"><a class="header-anchor" href="#descriptions"><span>Descriptions</span></a></h3>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="descriptions" tabindex="-1"><a class="header-anchor" href="#descriptions"><span>Descriptions</span></a></h3>
 <table>
 <thead>
 <tr>
@@ -48,39 +38,39 @@
 </thead>
 <tbody>
 <tr>
-<td>renderLeader</td>
-<td>true</td>
-<td>Render the leader for pretty printed logs which includes the log level name, the emoji, and the number of args in the log.</td>
+<td>activeLevel</td>
+<td><code v-pre>&quot;log&quot;</code></td>
+<td>Set the maximum log level that will be rendered.</td>
 </tr>
 <tr>
-<td>renderArgCount</td>
-<td>true</td>
-<td>Renders the number of args in the leader on pretty printed logs.</td>
+<td>cache</td>
+<td><code v-pre>false</code></td>
+<td>Allows the <RouteLink to="/reference/global-store.html">Global Store</RouteLink> to cache logs for later recall.</td>
 </tr>
 <tr>
-<td>logLevel</td>
-<td>8</td>
-<td>The highest log level that will be allowed to render.</td>
+<td>cacheSize</td>
+<td><code v-pre>300</code></td>
+<td>The maximum number of logs that will be cached. This is to prevent memory leaks. This only applies if <code v-pre>cache</code> is <code v-pre>true</code>.</td>
 </tr>
 <tr>
-<td>useEmoji</td>
-<td>false</td>
-<td>Toggle emoji's on or off for log rendering.</td>
+<td>dump</td>
+<td><code v-pre>false</code></td>
+<td>Tells logs to add any associated <RouteLink to="/getting-started/threading.html">thread</RouteLink> data to the log output.</td>
 </tr>
 <tr>
-<td>unstyled</td>
-<td>false</td>
-<td>Disables all styling of logs. Useful for stdout use cases.</td>
+<td>filters</td>
+<td><code v-pre>undefined</code></td>
+<td>Controls <RouteLink to="/getting-started/filtering.html">filtering</RouteLink> of logs by level, label, or namespace.</td>
 </tr>
 <tr>
-<td>terminalColorFidelity</td>
-<td>1</td>
-<td>Control terminal color fidelity with <a href="https://github.com/chalk/chalk#chalklevel" target="_blank" rel="noopener noreferrer">Chalk</a>.</td>
+<td>format</td>
+<td><code v-pre>&quot;pretty&quot;</code></td>
+<td>Sets the <a href="">format</a> of how logs will be generated.</td>
 </tr>
 <tr>
-<td>captureStacktrace</td>
-<td>false</td>
-<td>Logs will record their stacktrace when they are created. Disabled by default for performance.</td>
+<td>formatters</td>
+<td><code v-pre>{ pretty, json, common, standard }</code></td>
+<td>Key / value pairs of formatter names to Formatter classes. Comes with four built in. Pretty, JSON, Common, and Standard.</td>
 </tr>
 <tr>
 <td>machineReadable</td>

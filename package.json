@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "type": "module",
   "engines": {
-    "node": ">=18.18.0"
+    "node": ">=18.19.0"
   },
   "directories": {
     "doc": "docs"
@@ -78,7 +78,8 @@
   "dependencies": {
     "chalk": "^5.3.0",
     "date-fns": "^3.6.0",
-    "mergician": "^2.0.2"
+    "mergician": "^2.0.2",
+    "vuepress-plugin-search-pro": "^2.0.0-rc.52"
   },
   "size-limit": [
     {

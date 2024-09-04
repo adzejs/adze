@@ -1,4 +1,4 @@
-import { Configuration, LevelConfig } from './_types';
+import { Configuration, LevelConfiguration } from './_types';
 import CommonFormatter from './formatters/common';
 import JsonFormatter from './formatters/json';
 import PrettyFormatter from './formatters/pretty';
@@ -139,7 +139,6 @@ export const defaultConfiguration: Configuration = {
     debug: getDebugConfig(),
     verbose: getVerboseConfig(),
   },
-  terminalFidelity: 1,
   formatters: {
     default: PrettyFormatter,
     pretty: PrettyFormatter,
@@ -152,7 +151,7 @@ export const defaultConfiguration: Configuration = {
 /**
  * Default log configuration for alert logs.
  */
-export function getAlertConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
+export function getAlertConfig(overrides: Partial<LevelConfiguration> = {}): LevelConfiguration {
   return {
     levelName: 'alert',
     level: 0,
@@ -169,7 +168,7 @@ export function getAlertConfig(overrides: Partial<LevelConfig> = {}): LevelConfi
 /**
  * Default log configuration for error logs.
  */
-export function getErrorConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
+export function getErrorConfig(overrides: Partial<LevelConfiguration> = {}): LevelConfiguration {
   return {
     levelName: 'error',
     level: 1,
@@ -186,7 +185,7 @@ export function getErrorConfig(overrides: Partial<LevelConfig> = {}): LevelConfi
 /**
  * Default log configuration for warn logs.
  */
-export function getWarnConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
+export function getWarnConfig(overrides: Partial<LevelConfiguration> = {}): LevelConfiguration {
   return {
     levelName: 'warn',
     level: 2,
@@ -203,7 +202,7 @@ export function getWarnConfig(overrides: Partial<LevelConfig> = {}): LevelConfig
 /**
  * Default log configuration for info logs.
  */
-export function getInfoConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
+export function getInfoConfig(overrides: Partial<LevelConfiguration> = {}): LevelConfiguration {
   return {
     levelName: 'info',
     level: 3,
@@ -220,7 +219,7 @@ export function getInfoConfig(overrides: Partial<LevelConfig> = {}): LevelConfig
 /**
  * Default log configuration for fail logs.
  */
-export function getFailConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
+export function getFailConfig(overrides: Partial<LevelConfiguration> = {}): LevelConfiguration {
   return {
     levelName: 'fail',
     level: 4,
@@ -237,7 +236,7 @@ export function getFailConfig(overrides: Partial<LevelConfig> = {}): LevelConfig
 /**
  * Default log configuration for success logs.
  */
-export function getSuccessConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
+export function getSuccessConfig(overrides: Partial<LevelConfiguration> = {}): LevelConfiguration {
   return {
     levelName: 'success',
     level: 5,
@@ -253,7 +252,7 @@ export function getSuccessConfig(overrides: Partial<LevelConfig> = {}): LevelCon
 /**
  * Default log configuration for log logs.
  */
-export function getLogConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
+export function getLogConfig(overrides: Partial<LevelConfiguration> = {}): LevelConfiguration {
   return {
     levelName: 'log',
     level: 6,
@@ -268,7 +267,7 @@ export function getLogConfig(overrides: Partial<LevelConfig> = {}): LevelConfig 
 /**
  * Default log configuration for debug logs.
  */
-export function getDebugConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
+export function getDebugConfig(overrides: Partial<LevelConfiguration> = {}): LevelConfiguration {
   return {
     levelName: 'debug',
     level: 7,
@@ -284,7 +283,7 @@ export function getDebugConfig(overrides: Partial<LevelConfig> = {}): LevelConfi
 /**
  * Default log configuration for verbose logs.
  */
-export function getVerboseConfig(overrides: Partial<LevelConfig> = {}): LevelConfig {
+export function getVerboseConfig(overrides: Partial<LevelConfiguration> = {}): LevelConfiguration {
   return {
     levelName: 'verbose',
     level: 8,
