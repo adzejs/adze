@@ -1,4 +1,4 @@
-# Official Add-on's
+<!-- # Official Add-on's
 
 The following list contains add-on's that are officially supported by core Adze contributors and are maintained under the [`@adze` npm organization namespace](). We hope that over time this list will grow and hopefully community created add-on's can be adopted by the official organization.
 
@@ -24,4 +24,4 @@ This library exposes a log listener factory for setting up log groups and stream
 |             | Location                                                                                                                       |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | Source Code | [https://github.com/AJStacy/adze-transport-cloudwatch-logs](https://github.com/AJStacy/adze-transport-cloudwatch-logs)         |
-| npm         | [https://www.npmjs.com/package/@adze/transport-cloudwatch-logs](https://www.npmjs.com/package/@adze/transport-cloudwatch-logs) |
+| npm         | [https://www.npmjs.com/package/@adze/transport-cloudwatch-logs](https://www.npmjs.com/package/@adze/transport-cloudwatch-logs) | --> |

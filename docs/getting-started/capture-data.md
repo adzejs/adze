@@ -12,7 +12,7 @@ The two supported methods are **middleware** and **log listeners**.
 ## Middleware
 
 Middleware can be created by extending the base **Middleware class** that is provided by Adze. The
-Middleware class allows you to hook into various points in the [Adze log lifecycle]().
+Middleware class allows you to hook into various points in the [Adze log lifecycle](../reference/introduction.md#lifecycle).
 
 When the lifecycle hooks are called, they always provide the log instance which can be accessed to
 get its data, configuration, and formatted message, as well as any other relevant information to
@@ -21,8 +21,8 @@ that hook.
 The hook can then process the data and transport it to a destination, such as a file, API, or
 database.
 
-For more information about creating middleware, please visit the [creating middleware]() page in the
-[Reference Manual]().
+For more information about creating middleware, please visit the [middleware](../reference/middleware.md) page in the
+[Reference Manual](../reference/introduction.md).
 
 As an example, let's take a look at adding middleware to a logger that transports data to a local
 file and rotates the file on a specified interval. We'll use the [@adze/transport-file](https://github.com/adzejs/transport-file)
@@ -90,7 +90,7 @@ export default logger;
 In the above example we have created two log listeners. One targets all logs and the other targets
 only alert logs. You can also target logs with a number array that represents specific log levels
 or a string array of log level names. For more information on targeting levels, refer to the
-[Reference Manual]() on [LevelFilter's]().
+[Reference Manual](../reference/introduction.md) on [LevelSelector's](../reference/configuration.md#levelselector-type).
 
 Also notice that the `addListener` returns the ID for the registered listener. You can use this ID
 elsewhere in your application to remove the listeners if necessary.

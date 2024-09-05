@@ -11,14 +11,14 @@ user guide.
 
 Before diving into the rest of the reference manual, it can be beneficial to have an understanding
 of the workflow / lifecycle of an Adze log. Understanding the lifecycle is vital to understanding
-how [middleware](), [log listeners](), and the [global store]() work.
+how [middleware](./middleware.md), [log listeners](./global-store.md#addlistener), and the [global store](./global-store.md) work.
 
 ### Lifecycle Diagram
 
 ![Lifecycle diagram of an Adze log](../assets/lifecycle.svg)
 
-The Adze class is a class that contains static method equivalents for every [modifier]() and
-[terminator]() method. If a modifier method has been called statically, a new instance of Adze will
+The Adze class is a class that contains static method equivalents for every [modifier](./modifiers.md) and
+[terminator](./terminators.md) method. If a modifier method has been called statically, a new instance of Adze will
 be created and returned, thus allowing you to chain more modifier method calls or call a terminator
 method.
 
@@ -28,10 +28,10 @@ Modifier methods can be chained indefinitely whereas a terminator method which f
 not return the log instance and the chain is ended. At this point is when the properties of the log
 instance are evaluated and then the log message is generated and printed.
 
-Throughout the termination process, various lifecycle hooks will be called on any [middleware]()
+Throughout the termination process, various lifecycle hooks will be called on any [middleware](./middleware.md)
 instances that have been registered. This is useful for plugins to capture log data or manipulate
 logs in various ways.
 
-After a log has been terminated, its instance is stored in the [Global Store]() if [caching is
-enabled](). From the global store you can filter and recall logs that have already been generated
-using the [global store tools]().
+After a log has been terminated, its instance is stored in the [Global Store](./global-store.md) if
+[caching is enabled](./configuration.md). From the global store you can filter and recall logs that
+have already been generated using the [global store tools](./tools.md).

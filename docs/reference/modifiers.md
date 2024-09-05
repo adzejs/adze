@@ -133,7 +133,7 @@ count to `0` it instead becomes `null`.
 _NOTE:_
 This method is deliberately a modifier rather than a terminator because it forces you to write a log
 that gives you insight into when a counter was cleared. It also makes the countClear log recallable
-from the [global store]() in the order it was created.
+from the [global store](./global-store.md) in the order it was created.
 
 _This is not a standard API._
 
@@ -716,8 +716,8 @@ logger.ns('foo', 'bar', 'baz').fail('This is not allowed.');
 ## silent
 
 The silent modifier allows a log to be terminated and cached but prevents it from printing to the
-console. Because the log is still processed, it will still trigger [middleware hooks]() and
-[listeners]().
+console. Because the log is still processed, it will still trigger [middleware hooks](./middleware.md#using-lifecycle-hooks) and
+[listeners](./global-store.md#addlistener).
 
 _This is not a standard API._
 
@@ -982,7 +982,7 @@ adze.trace.log('Trying to find an issue...');
 
 This modifier instructs the log to be printed with an emoji if the formatter supports it.
 
-The only formatter that supports this out of the box is the [pretty]() formatter.
+The only formatter that supports this out of the box is the [pretty](./formatters.md#pretty-formatter) formatter.
 
 _This is not a standard API._
 

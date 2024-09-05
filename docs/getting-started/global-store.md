@@ -1,9 +1,9 @@
 # Global Store
 
 The **Global Store** is a global cache and control hub for your Adze logs. The primary purposes of a
-GlobalStore are to enable global [configuration]() overrides, log listeners, and [tools]() for
-filtering and recalling your [cached]() logs. To see how a GlobalStore fits into the architecture,
-refer to the [Lifecycle Diagram](./introduction.md#lifecycle).
+GlobalStore are to enable global [configuration](../reference/configuration.md) overrides, log listeners,
+and [tools](../reference/global-store.md#tools) for filtering and recalling your [cached](../reference/configuration.md#user-configuration) logs. To
+see how a GlobalStore fits into the architecture, refer to the [Lifecycle Diagram](./introduction.md#lifecycle).
 
 ## How Does It Work?
 
@@ -100,6 +100,6 @@ logger.debug('Logging some more details for debugging purposes.', { foo: 'bar' }
 Notice that in our example output that the [log](../reference/terminators.md#log) and
 [debug](../reference/terminators.md#debug) logs are not rendering. This is because our store is
 forcing their log level to only show up to [info](../reference/terminators.md#info) level. Also,
-even though each application is defining the log format to use the [json format](), the logs are
-printing with the [pretty format]() because the log configuration is overwritten by the global
+even though each application is defining the log format to use the [json format](../reference/formatters.md#json-formatter), the logs are
+printing with the [pretty format](../reference/formatters.md#pretty-formatter) because the log configuration is overwritten by the global
 configuration.

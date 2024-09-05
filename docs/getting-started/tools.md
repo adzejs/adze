@@ -28,9 +28,9 @@ export default logger;
 The filtering tools that are available are similar to the [configuration based filtering](./filtering.md)
 in the previous section of this guide. The tools are as follows:
 
-- **filterByNamespace** - Reprints logs that match the [namespace]() values provided.
-- **filterByLabel** - Reprints logs that match the [label]() value provided.
-- **filterByLevel** - Reprints logs that match the [LevelFilter]() value provided.
+- **filterByNamespace** - Reprints logs that match the [namespace](../reference/modifiers.md#namespace--ns) values provided.
+- **filterByLabel** - Reprints logs that match the [label](../reference/modifiers.md#label) value provided.
+- **filterByLevel** - Reprints logs that match the [LevelSelector](../reference/configuration.md#levelselector-type) value provided.
 
 As an example, let's first write some basic logs to showcase the browser tools.
 

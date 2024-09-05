@@ -7,7 +7,7 @@ the [Getting Started](../getting-started/introduction.md) guide.
 ## Setup Function
 
 The primary way of configuring the global store is through the `setup()` function. This function
-accepts a [UserConfiguration]() value and uses it as a global configuration override.
+accepts a [UserConfiguration](./configuration.md#user-configuration) value and uses it as a global configuration override.
 
 The setup function also returns a reference to the **Global Store** instance. You can use this
 reference to apply [listeners](#addlistener) among other things.
@@ -44,7 +44,7 @@ adze.log('This is another log.');
 
 ## Public Getters
 
-These are used for retrieving data and accessing the browser console [tools]().
+These are used for retrieving data and accessing the browser console [tools](./tools.md).
 
 ### cache
 
@@ -134,7 +134,7 @@ const pid2 = store.pid; // => 2
 
 ---
 
-Returns a reference to the browser console [tools]() for filtering and recalling logs.
+Returns a reference to the browser console [tools](./tools.md) for filtering and recalling logs.
 
 #### Interface
 
@@ -159,7 +159,7 @@ store.tools.filterByLevel('error');
 
 ## Public Methods
 
-These are used for caching logs, setting up log listeners, and creating and modifying [labels]().
+These are used for caching logs, setting up log listeners, and creating and modifying [labels](./modifiers.md#label).
 
 ### addLogToCache
 
@@ -167,7 +167,7 @@ These are used for caching logs, setting up log listeners, and creating and modi
 
 Adds a log to the log cache.
 
-**This is done automatically when [log caching]() is enabled.**
+**This is done automatically when [log caching](./configuration.md) is enabled.**
 
 #### Interface
 

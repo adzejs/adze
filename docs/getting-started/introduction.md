@@ -7,24 +7,28 @@
 _Illustration from [Wikipedia](https://en.wikipedia.org/wiki/Adze)_
 
 > Adze - [a cutting tool that ... is used chiefly for shaping wood](https://www.merriam-webster.com/dictionary/adze).
+>
+> Pronounced as "adz"
 
 Adze was chosen as a name for this library to maintain solidarity with the logging puns and to emphasize that this library is a tool for shaping the logs of your application.
 
-## Adze Demo
+<!-- ## Adze Demo
 
 TODO: Redo the demo video
 
 <div class="youtube-video-container">
   <iframe width="560" height="315"  src="https://www.youtube-nocookie.com/embed/8Ht3LKowKR0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+</div> -->
 
 ## Why should I use Adze?
 
-Compared to existing Javascript logging libraries, Adze sets itself apart because it is **isomorphic**, meaning **it can run in both server and browser environments with zero config**. Other libraries, such as Winston or Bunyan only support the node server environment. Libraries like Pino and Log4JS support both environments, but it either requires some configuration or it only provides you with a very limited feature set. None of them directly support Deno or Bun.
+> Adze is **UNIVERSAL**, meaning it can run in any JS runtime (node, bun, deno, browser) without any special considerations.
 
-Javascript frameworks have been shifting to server-side rendering (SSR) and to micro-frontend style architectures. Both of these architecture approaches present unique challenges with logging in a production-ready environment. Because Adze is isomorphic by nature, you can write your logs the same way throughout your application and **it will just work**.
+Compared to existing Javascript logging libraries, Adze sets itself apart because it is **universal**, meaning **it can run in both server and browser environments with zero config**. Other libraries, such as Winston or Bunyan only support server environments. Libraries like Pino and Log4JS support both environments, but it either requires some configuration or it only provides you with a very limited feature set. None of them directly support Deno or Bun.
 
-Aside from isomorphism, Adze also offers many other compelling features:
+Javascript frameworks have been shifting to server-side rendering (SSR) and to micro-frontend style architectures. Both of these architecture approaches present unique challenges with logging in a production-ready environment. Because Adze is universal by nature, you can write your logs the same way throughout your application and **it will just work**.
+
+Aside from universalism, Adze also offers many other compelling features:
 
 - First-class TypeScript support (not bolted-on)
 - Wraps and extends the entire [standard API](https://developer.mozilla.org/en-US/docs/Web/API/console)

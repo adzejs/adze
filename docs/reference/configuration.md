@@ -36,22 +36,22 @@ type Level = 'alert' | 'error' | 'warn' | 'info' | 'fail' | 'success' | 'log' | 
 
 ### UserConfiguration Property Descriptions
 
-| Property Name      | Default Value                                 | Description                                                                                                                                |
-| ------------------ | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| activeLevel        | `"log"`                                       | Set the maximum log level that will be rendered.                                                                                           |
-| cache              | `false`                                       | Allows the [Global Store](./global-store.md) to [cache logs](./global-store.md#cache) for later recall.                                    |
-| cacheSize          | `300`                                         | The maximum number of logs that will be cached. This is to prevent memory leaks. This only applies if `cache` is `true`.                   |
-| dump               | `false`                                       | Tells logs to add any associated [thread](../getting-started/threading.md) data to the log output.                                         |
-| filters            | `undefined`                                   | Controls [filtering](../getting-started/filtering.md) of logs by level, label, or namespace.                                               |
-| format             | `"pretty"`                                    | Sets the [format]() of how logs will be generated.                                                                                         |
-| formatters         | `{ pretty, json, common, standard }`          | Key / value pairs of formatter names to [Formatter]() classes. Comes with four built in. Pretty, JSON, Common, and Standard.               |
-| levels             | `{ [levelName: string]: LevelConfiguration }` | [Level Configuration](#levelconfiguration) for each [log level](./terminators.md), including [custom](./terminators.md#custom) log levels. |
-| meta               | `{}`                                          | Series of user defined key/value pairs of [meta data](./modifiers.md#meta) to attach to logs.                                              |
-| middleware         | [Middleware]()\[\]                            | Array of middleware instances that will be used during the each log's lifecycle.                                                           |
-| silent             | `false`                                       | [Silent](./modifiers.md#silent) logs will not print but will still be evaluated and trigger listeners and middleware hooks.                |
-| showTimestamp      | `false`                                       | Instructs logs to record and print the [timestamp](./modifiers.md#timestamp) of when they were generated.                                  |
-| timestampFormatter | `undefined`                                   | A callback function for taking a log Date object and returning a timestamp with the preferred custom formatting.                           |
-| withEmoji          | `false`                                       | Tells formatters that they are allowed to print an emoji with the output.                                                                  |
+| Property Name      | Default Value                                 | Description                                                                                                                                 |
+| ------------------ | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| activeLevel        | `"log"`                                       | Set the maximum log level that will be rendered.                                                                                            |
+| cache              | `false`                                       | Allows the [Global Store](./global-store.md) to [cache logs](./global-store.md#cache) for later recall.                                     |
+| cacheSize          | `300`                                         | The maximum number of logs that will be cached. This is to prevent memory leaks. This only applies if `cache` is `true`.                    |
+| dump               | `false`                                       | Tells logs to add any associated [thread](../getting-started/threading.md) data to the log output.                                          |
+| filters            | `undefined`                                   | Controls [filtering](../getting-started/filtering.md) of logs by level, label, or namespace.                                                |
+| format             | `"pretty"`                                    | Sets the [format](./formatters.md) of how logs will be generated.                                                                           |
+| formatters         | `{ pretty, json, common, standard }`          | Key / value pairs of formatter names to [Formatter](./formatters.md) classes. Comes with four built in. Pretty, JSON, Common, and Standard. |
+| levels             | `{ [levelName: string]: LevelConfiguration }` | [Level Configuration](#levelconfiguration) for each [log level](./terminators.md), including [custom](./terminators.md#custom) log levels.  |
+| meta               | `{}`                                          | Series of user defined key/value pairs of [meta data](./modifiers.md#meta) to attach to logs.                                               |
+| middleware         | [Middleware](./middleware.md)\[\]             | Array of [middleware](./middleware.md) instances that will be used during the each log's lifecycle.                                         |
+| silent             | `false`                                       | [Silent](./modifiers.md#silent) logs will not print but will still be evaluated and trigger listeners and middleware hooks.                 |
+| showTimestamp      | `false`                                       | Instructs logs to record and print the [timestamp](./modifiers.md#timestamp) of when they were generated.                                   |
+| timestampFormatter | `undefined`                                   | A callback function for taking a log Date object and returning a timestamp with the preferred custom formatting.                            |
+| withEmoji          | `false`                                       | Tells formatters that they are allowed to print an emoji with the output.                                                                   |
 
 ## Setup Function
 

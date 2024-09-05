@@ -133,7 +133,7 @@ When writing logs we can also apply a label to the log using the `label()` modif
 Labels differ from namespaces in a couple ways.
 
 - Only one label may be applied to a log.
-- Labels associate logs together for modifiers like `count` and `time` and for other features like [threads]().
+- Labels associate logs together for modifiers like `count` and `time` and for other features like [threads](../getting-started/threading.md).
 
 Let's revisit our utility functions above and let's add a new function that executes a callback
 function 10 times and generates a log that counts its iterations.

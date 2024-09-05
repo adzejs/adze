@@ -6,7 +6,7 @@ const { description } = require('../../package');
 
 export default defineUserConfig({
   lang: 'en-US',
-  title: 'Adze - Isomorphic Logging for JavaScript',
+  title: 'Adze - Universal Logging for JavaScript',
   description,
   plugins: [searchProPlugin({})],
   /**

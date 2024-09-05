@@ -11,8 +11,9 @@ In summary, we have learned how to do the following:
 - [and using tools to filter our logs in our runtime environments](./tools.md)
 
 If you would like to dive even deeper into the functionality that Adze provides, please read through
-the [Reference Manual](). Here you will be introduced to all of the available [modifiers]() and
-[terminators](), as well as greater detail about [log formatting]() and [customizability]().
+the [Reference Manual](../reference/introduction.md). Here you will be introduced to all of the
+available [modifiers](../reference/modifiers.md) and [terminators](../reference/terminators.md), as
+well as greater detail about [log formatting](../reference/formatters.md) and [customizability](../reference/configuration.md).
 
 ## Production Example
 
@@ -60,4 +61,4 @@ const logger = _logger.ns('my-module').seal();
 logger.info('This is some information about my application.');
 ```
 
-> Now go read the [reference manual]() and have fun!
+> Now go read the [reference manual](../reference/introduction.md) and have fun!

@@ -116,7 +116,7 @@ adze.log('I will not print because I do not have a label.');
 
 ## Filtering by Levels
 
-Lastly, we can filter logs by log levels using a [LevelFilter]() value.
+Lastly, we can filter logs by log levels using a [LevelSelector](../reference/configuration.md#levelselector-type) value.
 
 ```typescript
 import adze, { setup } from 'adze';

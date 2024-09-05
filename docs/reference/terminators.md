@@ -426,10 +426,10 @@ adze.clear();
 ### custom
 
 Terminates the log at the provided custom log level. Custom log levels are defined within the Adze
-configuration object under the [`levels`]() property. Adze can be configured by the [setup]()
+configuration object under the [`levels`](./configuration.md#user-configuration) property. Adze can be configured by the [setup](./configuration.md#setup-function)
 function or by passing configuration to the [seal](#seal) or [sealTag](#sealTag) terminator.
 
-[Configuration Details]()
+[Configuration Details](./configuration.md#custom-level-example)
 
 _This is not a standard API._
 

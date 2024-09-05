@@ -3,12 +3,12 @@
 The primary purpose of Adze is to give the user simple ways of shaping their logs to fit their
 needs. Adze comes with **four** formatters out of the box.
 
-| Formatter                   | Value        | Description                                                                                                                                                                |
-| --------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Pretty](#pretty-formatter) | `"pretty"`   | The default formatter. This prints logs in a pretty, human-readable format.                                                                                                |
-| [JSON]()                    | `"json"`     | This formatter prints logs as machine-readable JSON objects that are compatible with the [Bunyan CLI](https://github.com/trentm/node-bunyan?tab=readme-ov-file#cli-usage). |
-| [Standard]()                | `"standard"` | This formatter prints human-readable logs for a simple **stdout** format for terminals or files.                                                                           |
-| [Common]()                  | `"common"`   | This formatter prints logs according to the [Common Log Format](https://en.wikipedia.org/wiki/Common_Log_Format).                                                          |
+| Formatter                       | Value        | Description                                                                                                                                                                |
+| ------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Pretty](#pretty-formatter)     | `"pretty"`   | The default formatter. This prints logs in a pretty, human-readable format.                                                                                                |
+| [JSON](#json-formatter)         | `"json"`     | This formatter prints logs as machine-readable JSON objects that are compatible with the [Bunyan CLI](https://github.com/trentm/node-bunyan?tab=readme-ov-file#cli-usage). |
+| [Standard](#standard-formatter) | `"standard"` | This formatter prints human-readable logs for a simple **stdout** format for terminals or files.                                                                           |
+| [Common](#common-formatter)     | `"common"`   | This formatter prints logs according to the [Common Log Format](https://en.wikipedia.org/wiki/Common_Log_Format).                                                          |
 
 ## Pretty Formatter
 
