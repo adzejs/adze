@@ -35,7 +35,7 @@ export default defineUserConfig({
       'meta',
       {
         property: 'og:image',
-        content: 'https://adzejs.com/assets/img/demo.ce24f23e.png',
+        content: 'https://adzejs.com/assets/img/demo.png',
       },
     ],
     [
@@ -65,7 +65,7 @@ export default defineUserConfig({
       'meta',
       {
         property: 'twitter:image',
-        content: 'https://adzejs.com/assets/img/demo.ce24f23e.png',
+        content: 'https://adzejs.com/assets/img/demo.png',
       },
     ],
     [
@@ -122,9 +122,9 @@ export default defineUserConfig({
   theme: defaultTheme({
     logo: 'https://vuejs.press/images/hero.png',
     navbar: [
-      '/',
       { text: 'Getting Started', link: '/getting-started/introduction' },
       { text: 'Reference Manual', link: '/reference/introduction' },
+      { text: 'Plugins', link: '/plugins' },
     ],
     sidebar: {
       '/getting-started/': [

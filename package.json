@@ -1,6 +1,6 @@
 {
   "name": "adze",
-  "description": "A modern, isomorphic, and extendable logging library for JavaScript and TypeScript.",
+  "description": "A universal, modern, and extendable logging library for JavaScript and TypeScript.",
   "version": "2.0.0",
   "main": "dist/index.js",
   "type": "module",
