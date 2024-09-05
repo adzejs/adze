@@ -162,7 +162,7 @@ export interface CommonLogConfiguration extends Configuration {
    *
    * **Defaults:**
    * - Browsers - The browser's name and version.
-   * - Node - The host IP address.
+   * - Server - The host IP address.
    */
   hostname: string;
 }

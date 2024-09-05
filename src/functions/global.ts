@@ -3,12 +3,10 @@ import AdzeGlobal from '../adze-global';
 
 declare global {
   var $adzeGlobal: AdzeGlobal | undefined;
-  var ADZE_ENV: 'test' | 'dev';
-  var ADZE_ENV_CONTEXT: 'global' | 'window';
+  var $ADZE_ENV: 'test' | 'dev' | undefined;
   interface Window {
     $adzeGlobal?: AdzeGlobal;
-    ADZE_ENV?: 'test' | 'dev';
-    ADZE_ENV_CONTEXT?: 'global' | 'window';
+    $ADZE_ENV?: 'test' | 'dev';
   }
 }
 
@@ -56,6 +54,18 @@ export function isBrowser(): boolean {
  */
 export function envIsWindow(_: Window | typeof globalThis): _ is Window {
   return isBrowser();
+}
+
+/**
+ * Determines if the current environment is an Adze test environment.
+ */
+export function isTestEnvironment(): boolean {
+  let urlAdzeEnvTest = false;
+  if (isBrowser()) {
+    const urlParams = new URLSearchParams(globalThis.location.search);
+    urlAdzeEnvTest = urlParams.get('ADZE_ENV') === 'test';
+  }
+  return globalThis.$ADZE_ENV === 'test' || urlAdzeEnvTest;
 }
 
 /**

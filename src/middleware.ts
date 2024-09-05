@@ -82,7 +82,7 @@ export abstract class Middleware {
     await Promise.all(this.dependencyLoaders);
   }
   /**
-   * Load dependencies for the node environment.
+   * Load dependencies for the server environment.
    */
   protected async loadServerDependencies() {}
   /**

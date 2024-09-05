@@ -9,9 +9,7 @@ import adze, {
   serializeResponse,
   LevelConfiguration,
   isBrowser,
-  serializeError,
-  getAlertConfig,
-} from '.';
+} from './index';
 import { StandardLogFormatMeta } from './formatters/standard/types';
 
 if (isBrowser()) {
@@ -56,36 +54,34 @@ async function runDemo() {
   // common();
   // standard();
   // await json();
-  // time();
+  // // time();
   // thread();
   // listener();
 }
 
 async function defaultLevels() {
   setup({
-    format: 'standard',
+    withEmoji: true,
+    activeLevel: 1337,
+    levels: {
+      leetLevel,
+    },
   });
-
-  adze.warn('This is a standard warn log.');
-
-  // setup({
-  //   withEmoji: true,
-  //   activeLevel: 1337,
-  //   levels: {
-  //     leetLevel,
-  //   },
-  // });
-  // adze.alert('This is an alert log');
-  // adze.error('This is an error log');
-  // adze.warn('This is a warning log');
-  // adze.info('This is an info log');
-  // adze.fail('This is a fail log');
-  // adze.success('This is a success log');
-  // adze.log('This is a log');
-  // adze.debug('This is a debug log');
-  // adze.verbose('This is a verbose log');
-  // adze.count.custom('leetLevel', 'This is a custom log!');
-  // teardown();
+  adze.label('performance').time.log('Starting a performance timer');
+  for (let i = 0; i < 10000; i++) {
+    adze.alert('This is an alert log');
+    adze.error('This is an error log');
+    adze.warn('This is a warning log');
+    adze.info('This is an info log');
+    adze.fail('This is a fail log');
+    adze.success('This is a success log');
+    adze.log('This is a log');
+    adze.debug('This is a debug log');
+    adze.verbose('This is a verbose log');
+    adze.label('leetCounter').count.custom('leetLevel', 'This is a custom log!');
+  }
+  adze.label('performance').timeEnd.log('Ending a performance timer');
+  teardown();
 }
 
 function configuration() {
@@ -332,7 +328,6 @@ function tests() {
 }
 
 function dir() {
-  adze.log({ foo: 'bar' });
   adze.dir.log({ foo: 'bar' });
 }
 
@@ -525,7 +520,7 @@ async function json() {
 function listener() {
   const store = setup();
   const id = store.addListener('*', (log) => {
-    console.log(log.data);
+    // console.log(log.data);
   });
   adze.withEmoji.log('This is a log');
   adze.ns('derp').log('This is a namespaced log');
@@ -541,12 +536,11 @@ function time() {
   adze.label('timer').time.log('Starting a timer');
   setTimeout(() => {
     adze.label('timer').timeEnd.log('Ending a timer');
-  }, 1000);
+  });
   adze.withEmoji.label('timer2').time.log('Starting a timer');
   setTimeout(() => {
     adze.withEmoji.label('timer2').timeEnd.log('Ending a timer with emoji');
-    teardown();
-  }, 1000);
+  });
 }
 
 await runDemo();

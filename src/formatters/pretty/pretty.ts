@@ -32,9 +32,9 @@ export default class PrettyFormatter extends Formatter {
   }
 
   /**
-   * Format the log message for Node.js.
+   * Format the log message for the server environment.
    */
-  protected formatNode(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
+  protected formatServer(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
     const message = [];
     const leaderRaw = addPadding(this.formatLeader(false), this.cfg.withEmoji, this.level.emoji);
     const leader = `${leaderRaw} `;

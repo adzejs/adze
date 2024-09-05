@@ -39,9 +39,9 @@ adze.withEmoji.assert(x === y).log('X does not equal Y');
 
 ![assert modifier example browser output](./examples/modifiers/assert-example-browser.png)
 
-#### Standard Output
+#### Server Output
 
-![assert modifier example standard Output](./examples/modifiers/assert-example-node.png)
+![assert modifier example server Output](./examples/modifiers/assert-example-node.png)
 
 ## closeThread
 
@@ -89,9 +89,9 @@ adze.label('foo').dump.info('Dumping the thread context after closing it.');
 
 ![close thread modifier example browser output](./examples/modifiers/closeThread-example-browser.png)
 
-#### Standard Output
+#### Server Output
 
-![close thread modifier example standard Output](./examples/modifiers/closeThread-example-node.png)
+![close thread modifier example server output](./examples/modifiers/closeThread-example-node.png)
 
 ## count
 
@@ -121,9 +121,9 @@ for (let i = 0; i < 5; i += 1) {
 
 ![Count modifier output](./examples/modifiers/count-example-browser.png)
 
-#### Standard Output
+#### Server Output
 
-![Count modifier terminal output](./examples/modifiers/count-example-node.png)
+![Count modifier server output](./examples/modifiers/count-example-node.png)
 
 ## countClear
 
@@ -202,9 +202,9 @@ for (let i = 0; i < 4; i += 1) {
 
 ![count reset modifier example browser output](./examples/modifiers/countReset-example-browser.png)
 
-#### Standard Output
+#### Server Output
 
-![count reset modifier example standard Output](./examples/modifiers/countReset-example-node.png)
+![count reset modifier example server output](./examples/modifiers/countReset-example-node.png)
 
 ## dir
 
@@ -212,7 +212,7 @@ The dir modifier transforms the output of the log by directing it to use the `co
 for printing purposes only.
 
 _NOTE:_ Logs that use `dir` as a modifier should only be given a single argument which is usually an
-object. If multiple arguments are given, behavior may differ between browser and node environments.
+object. If multiple arguments are given, behavior may differ between browser and server environments.
 Refer to the MDN docs for more details.
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
@@ -237,9 +237,9 @@ adze.dir.log({ foo: 'bar' });
 
 ![dir modifier browser output](./examples/modifiers/dir-example-browser.png)
 
-#### Standard Output
+#### Server Output
 
-![dir modifier standard output](./examples/modifiers/dir-example-node.png)
+![dir modifier server output](./examples/modifiers/dir-example-node.png)
 
 ## dirxml
 
@@ -248,7 +248,7 @@ method for printing purposes only. This is mainly useful for logging out DOM ele
 
 _NOTE:_ Logs that use `dirxml` as a modifier should only be given a single argument which is usually
 a DOM Element or other XML object. If multiple arguments are given, behavior may differ between
-browser and node environments. Refer to the MDN docs for more details.
+browser and server environments. Refer to the MDN docs for more details.
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml)
 
@@ -331,9 +331,9 @@ adze.label('foo').dump.info('Results from our thread');
 
 ![dump modifier example browser output](./examples/modifiers/dump-example-browser.png)
 
-#### Standard Output
+#### Server Output
 
-![dump modifier example standard Output](./examples/modifiers/dump-example-node.png)
+![dump modifier example server output](./examples/modifiers/dump-example-node.png)
 
 ## format
 
@@ -363,9 +363,9 @@ adze.format('standard').log('Logging a JSON formatted message.');
 
 ![format modifier browser output](./examples/modifiers/format-example-browser.png)
 
-#### Standard Output
+#### Server Output
 
-![format modifier standard output](./examples/modifiers/format-example-node.png)
+![format modifier server output](./examples/modifiers/format-example-node.png)
 
 ## group
 
@@ -401,9 +401,9 @@ adze.groupEnd.info();
 
 ![group modifier example browser output](./examples/modifiers/group-example-browser.png)
 
-#### Standard Output
+#### Server Output
 
-![group modifier example standard Output](./examples/modifiers/group-example-node.png)
+![group modifier example server output](./examples/modifiers/group-example-node.png)
 
 ## groupCollapsed
 
@@ -441,9 +441,9 @@ adze.groupEnd.info();
 
 ![groupCollapsed modifier example output](./examples/modifiers/groupCollapsed-example-browser.png)
 
-#### Standard Output
+#### Server Output
 
-![groupCollapsed modifier terminal example output](./examples/modifiers/groupCollapsed-example-node.png)
+![groupCollapsed modifier server example output](./examples/modifiers/groupCollapsed-example-node.png)
 
 ## groupEnd
 
@@ -480,9 +480,9 @@ adze.info('Some other information...');
 
 ![groupEnd modifier example browser output](./examples/modifiers/groupEnd-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![groupEnd modifier example node output](./examples/modifiers/groupEnd-example-node.png)
+![groupEnd modifier example server output](./examples/modifiers/groupEnd-example-node.png)
 
 ## if
 
@@ -521,14 +521,14 @@ adze.withEmoji.if(y === 3).log('Y equals 3');
 
 ![if modifier example browser output](./examples/modifiers/if-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![if modifier example node output](./examples/modifiers/if-example-node.png)
+![if modifier example server output](./examples/modifiers/if-example-node.png)
 
 ## label
 
 Applies an identifying label to a log. All logs that share the same label will be linked together in
-the [Global Store](). This enables global tracking for modifiers that require a label as a
+the [Global Store](./global-store.md). This enables global tracking for modifiers that require a label as a
 prerequisite.
 
 These are the modifiers and terminators that require a label to be useful:
@@ -566,9 +566,9 @@ adze.count.label('foo').log('Bar');
 
 ![label modifier example output](./examples/modifiers/label-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![label modifier terminal example output](./examples/modifiers/label-example-node.png)
+![label modifier server example output](./examples/modifiers/label-example-node.png)
 
 ## meta
 
@@ -634,9 +634,9 @@ adze.meta({ message: 'Hello world!' }).log('This log contains an important messa
 
 ![meta modifier browser output with listener output](./examples/modifiers/meta-example-browser.png)
 
-#### Node Output from Listener
+#### Server Output from Listener
 
-![meta modifier node output with listener output](./examples/modifiers/meta-example-node.png)
+![meta modifier server output with listener output](./examples/modifiers/meta-example-node.png)
 
 ## namespace / ns
 
@@ -682,14 +682,14 @@ adze.ns('foo').ns('bar', 'baz').log('This log has all applied namespaces.');
 
 ![namespace modifier example browser output](./examples/modifiers/namespace-example-browser-1.png)
 
-#### Node Output
+#### Server Output
 
-![namespace modifier terminal example output](./examples/modifiers/namespace-example-node-1.png)
+![namespace modifier server example output](./examples/modifiers/namespace-example-node-1.png)
 
 ### Namespaces with Constraints
 
 Adze also supports passing a constraints type when [sealing](./terminators.md#seal) a new logger or
-when calling the [setup]() function. This is beneficial because it will force users to add any
+when calling the [setup function](./configuration.md#setup-function). This is beneficial because it will force users to add any
 new namespace to the central constraints type. This will make it easier to filter namespaces
 throughout your application because you will only have a single place to reference to understand
 what namespaces are being used.
@@ -743,9 +743,9 @@ adze.log('I guess nobody is home :(');
 
 ![example of silent log browser output](./examples/modifiers/silent-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![example of silent log node output](./examples/modifiers/silent-example-node.png)
+![example of silent log server output](./examples/modifiers/silent-example-node.png)
 
 ## table
 
@@ -779,9 +779,9 @@ adze.table.log(tabular_data);
 
 ![table modifier browser output](./examples/modifiers/table-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![table modifier node output](./examples/modifiers/table-example-node.png)
+![table modifier server output](./examples/modifiers/table-example-node.png)
 
 ## time
 
@@ -824,9 +824,9 @@ adze.withEmoji.label('loop').timeEnd.log('Performance of our loop.');
 
 ![time modifier example browser output](./examples/modifiers/time-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![time modifier example node output](./examples/modifiers/time-example-node.png)
+![time modifier example server output](./examples/modifiers/time-example-node.png)
 
 ## timeEnd
 
@@ -869,9 +869,9 @@ adze.withEmoji.label('loop').timeEnd.log('Performance of our loop.');
 
 ![time end modifier example browser output](./examples/modifiers/timeEnd-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![time end modifier example node output](./examples/modifiers/timeEnd-example-node.png)
+![time end modifier example server output](./examples/modifiers/timeEnd-example-node.png)
 
 ## timeNow
 
@@ -910,9 +910,9 @@ adze.withEmoji.timeNow.log('Recording the time elapsed since page load.');
 
 ![time now modifier example browser output](./examples/modifiers/timeNow-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![time now modifier example node output](./examples/modifiers/timeNow-example-node.png)
+![time now modifier example server output](./examples/modifiers/timeNow-example-node.png)
 
 ## timestamp
 
@@ -941,9 +941,9 @@ adze.timestamp.log('This log has a timestamp.');
 
 ![timestamp modifier example browser output](./examples/modifiers/timestamp-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![timestamp modifier example node output](./examples/modifiers/timestamp-example-node.png)
+![timestamp modifier example server output](./examples/modifiers/timestamp-example-node.png)
 
 ## trace
 
@@ -974,9 +974,9 @@ adze.trace.log('Trying to find an issue...');
 
 ![trace modifier example browser output](./examples/modifiers/trace-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![trace modifier example node output](./examples/modifiers/trace-example-node.png)
+![trace modifier example server output](./examples/modifiers/trace-example-node.png)
 
 ## withEmoji
 
@@ -1006,6 +1006,6 @@ adze.withEmoji.log('Logging with an emoji!');
 
 ![with emoji modifier example browser output](./examples/modifiers/withEmoji-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![with emoji modifier example node output](./examples/modifiers/withEmoji-example-node.png)
+![with emoji modifier example server output](./examples/modifiers/withEmoji-example-node.png)

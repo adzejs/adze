@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import adze, { LevelConfig, setup, teardown } from '../../../src';
+import adze, { LevelConfiguration, setup, teardown } from '../../../src';
 import { applyChalkStyles } from '../../../src/functions';
 import {
   getAlertConfig,
@@ -116,7 +116,7 @@ describe('terminators with pretty format in node stdout', () => {
 
   test('prints a custom log', () => {
     console.log = vi.fn();
-    const leetLevel: LevelConfig = {
+    const leetLevel: LevelConfiguration = {
       levelName: 'leetLevel',
       level: 1337,
       method: 'log',
@@ -235,7 +235,7 @@ describe('terminators with emoji', () => {
 
   test('prints a custom log with an emoji', () => {
     console.log = vi.fn();
-    const leetLevel: LevelConfig = {
+    const leetLevel: LevelConfiguration = {
       levelName: 'leetLevel',
       level: 1337,
       method: 'log',

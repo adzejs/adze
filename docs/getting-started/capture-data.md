@@ -36,7 +36,7 @@ import AdzeFileTransport from '@adze/transport-file';
 const fileTransport = new AdzeTransportFile({ directory: './logs', frequency: '12h' });
 // Next, we call the load method.
 // This is necessary for our middleware to conditionally load its dependencies based on the runtime environment.
-// File transports are only relative to node environments.
+// File transports are only relative to server environments.
 await fileTransport.load();
 
 // Now, we'll setup Adze and provide the middleware instance.
@@ -51,10 +51,10 @@ export default logger;
 Pay special attention to how the AdzeTransportFile middleware class is used. First, it is instantiated
 with some options. Second, we must call the `load` method.
 
-We must call the `load` method because Adze is isomorphic and support both the browser and node out
-of the box. The dependencies that AdzeTransportFile uses under the hood can only be loaded in a node
+We must call the `load` method because Adze is isomorphic and support both the browser and server out
+of the box. The dependencies that AdzeTransportFile uses under the hood can only be loaded in a server
 environment. The `load` method allows the middleware to load these dependencies only if it is in a
-node environment, thus prevent errors from occuring in the browser.
+server environment, thus prevent errors from occuring in the browser.
 
 ## Log Listeners
 

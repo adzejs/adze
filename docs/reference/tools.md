@@ -9,7 +9,7 @@ of the [Getting Started](../getting-started/introduction.md) guide.
 
 ## Public Methods
 
-These are used for retrieving data and accessing the browser console [tools]().
+These are used for retrieving data and accessing the browser console tools.
 
 ### filterByLabel
 
@@ -45,9 +45,9 @@ store.tools.filterByLabel('foo');
 
 ![filterByLabel tool method example browser output](./examples/tools/filterByLabel-example-browser.png)
 
-#### Standard Output
+#### Server Output
 
-![filterByLabel tool method example standard Output](./examples/tools/filterByLabel-example-node.png)
+![filterByLabel tool method example server output](./examples/tools/filterByLabel-example-node.png)
 
 ### filterByNamespace
 
@@ -83,9 +83,9 @@ store.tools.filterByNamespace('foo');
 
 ![filterByNamespace tool method example browser output](./examples/tools/filterByNamespace-example-browser.png)
 
-#### Standard Output
+#### Server Output
 
-![filterByNamespace tool method example standard Output](./examples/tools/filterByNamespace-example-node.png)
+![filterByNamespace tool method example server output](./examples/tools/filterByNamespace-example-node.png)
 
 ### filterByLevel
 
@@ -121,9 +121,9 @@ store.tools.filterByLevel('info');
 
 ![filterByLevel tool method example browser output](./examples/tools/filterByLevel-example-browser.png)
 
-#### Standard Output
+#### Server Output
 
-![filterByLevel tool method example standard Output](./examples/tools/filterByLevel-example-node.png)
+![filterByLevel tool method example server output](./examples/tools/filterByLevel-example-node.png)
 
 ### renderAll
 
@@ -159,6 +159,6 @@ store.tools.renderAll();
 
 ![renderAll tool method example browser output](./examples/tools/renderAll-example-browser.png)
 
-#### Standard Output
+#### Server Output
 
-![renderAll tool method example standard Output](./examples/tools/renderAll-example-node.png)
+![renderAll tool method example server output](./examples/tools/renderAll-example-node.png)

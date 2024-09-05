@@ -163,6 +163,7 @@ export default defineUserConfig({
             { text: 'Configuration', link: '/reference/configuration' },
             { text: 'Middleware', link: '/reference/middleware' },
             { text: 'Formatters', link: '/reference/formatters' },
+            { text: 'Unit Testing', link: '/reference/unit-testing' },
             // 'factories',
             // 'modifiers',
             // 'default-terminators',

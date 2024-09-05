@@ -2,7 +2,7 @@
 
 Adze as a library has a few core goals it attempts to meet.
 
-The first goal is to provide **a logging library that just works** in both the node and browser
+The first goal is to provide **a logging library that just works** in both the server and browser
 environments.
 
 The second goal is to provide **a simple Typescript compatible API** that wraps, extends, or replicates

@@ -65,9 +65,9 @@ adze.withEmoji.alert('Something went horribly wrong!');
 
 ![alert example browser output](./examples/terminators/alert-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![alert example node output](./examples/terminators/alert-example-node.png)
+![alert example server output](./examples/terminators/alert-example-node.png)
 
 ---
 
@@ -103,9 +103,9 @@ adze.withEmoji.error('An error occurred!');
 
 ![error example browser output](./examples/terminators/error-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![error example node output](./examples/terminators/error-example-node.png)
+![error example server output](./examples/terminators/error-example-node.png)
 
 ---
 
@@ -141,9 +141,9 @@ adze.withEmoji.warn("I'm warning you!");
 
 ![warn example browser output](./examples/terminators/warn-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![warn example node output](./examples/terminators/warn-example-node.png)
+![warn example server output](./examples/terminators/warn-example-node.png)
 
 ---
 
@@ -180,9 +180,9 @@ adze.withEmoji.info('App information');
 
 ![info example browser output](./examples/terminators/info-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![info example node output](./examples/terminators/info-example-node.png)
+![info example server output](./examples/terminators/info-example-node.png)
 
 ---
 
@@ -219,9 +219,9 @@ adze.withEmoji.fail('An operation failed to execute!');
 
 ![fail example browser output](./examples/terminators/fail-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![fail example node output](./examples/terminators/fail-example-node.png)
+![fail example server output](./examples/terminators/fail-example-node.png)
 
 ---
 
@@ -258,9 +258,9 @@ adze.withEmoji.success('An operation was successful!');
 
 ![success example browser output](./examples/terminators/success-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![success example node output](./examples/terminators/success-example-node.png)
+![success example server output](./examples/terminators/success-example-node.png)
 
 ---
 
@@ -296,9 +296,9 @@ adze.withEmoji.log('Logging a message.');
 
 ![log example browser output](./examples/terminators/log-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![log example node output](./examples/terminators/log-example-node.png)
+![log example server output](./examples/terminators/log-example-node.png)
 
 ---
 
@@ -340,9 +340,9 @@ adze.withEmoji.debug('Debugging an issue.');
 
 ![debug example browser output](./examples/terminators/debug-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![debug example node output](./examples/terminators/debug-example-node.png)
+![debug example server output](./examples/terminators/debug-example-node.png)
 
 ---
 
@@ -384,9 +384,9 @@ adze.withEmoji.verbose('Logging some extreme detail.');
 
 ![verbose example browser output](./examples/terminators/verbose-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![verbose example node output](./examples/terminators/verbose-example-node.png)
+![verbose example server output](./examples/terminators/verbose-example-node.png)
 
 ---
 
@@ -468,9 +468,9 @@ adze.withEmoji.custom('myLevel', 'This is my custom log level with an emoji.');
 
 ![custom example browser output](./examples/terminators/custom-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![custom example node output](./examples/terminators/custom-example-node.png)
+![custom example server output](./examples/terminators/custom-example-node.png)
 
 ---
 
@@ -508,9 +508,9 @@ logger.log('This is a log from my sealed child logger.');
 
 ![seal example browser output](./examples/terminators/seal-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![seal example node output](./examples/terminators/seal-example-node.png)
+![seal example server output](./examples/terminators/seal-example-node.png)
 
 ---
 
@@ -551,9 +551,9 @@ try {
 
 ![sealTag example browser output](./examples/terminators/sealTag-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![sealTag example node output](./examples/terminators/sealTag-example-node.png)
+![sealTag example server output](./examples/terminators/sealTag-example-node.png)
 
 ---
 
@@ -604,6 +604,6 @@ adze.label('maths').dump.info('Results from our thread');
 
 ![thread example browser output](./examples/terminators/thread-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![thread example node output](./examples/terminators/thread-example-node.png)
+![thread example server output](./examples/terminators/thread-example-node.png)

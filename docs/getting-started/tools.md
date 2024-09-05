@@ -60,9 +60,9 @@ Our log that we generated earlier has now been rerendered from the log cache.
 
 We can repeat this process for logs with **namespaces** and **labels** as well.
 
-## Terminal Tools
+## Server Tools
 
-When working with logs in a backend node environment, often times we write our logs to a file, much
+When working with logs in a server environment, often times we write our logs to a file, much
 like our example in the [Capturing Log Data - Middleware](./capture-data.md#middleware) section of
 the guide.
 

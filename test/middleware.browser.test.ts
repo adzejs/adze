@@ -13,14 +13,14 @@ describe('middleware', () => {
   test('fires the loadBrowserDependencies method for loading dependencies when in a browser environment', () => {
     console.log = vi.fn();
     const funcBrowser = vi.fn();
-    const funcNode = vi.fn();
+    const funcServer = vi.fn();
 
     class TestMiddleware extends Middleware {
       protected async loadBrowserDependencies(): Promise<void> {
         funcBrowser();
       }
-      protected async loadNodeDependencies(): Promise<void> {
-        funcNode();
+      protected async loadServerDependencies(): Promise<void> {
+        funcServer();
       }
     }
     setup({
@@ -29,25 +29,25 @@ describe('middleware', () => {
 
     adze.log('Test log.');
     expect(console.log).toHaveBeenCalled();
-    expect(funcNode).not.toHaveBeenCalled();
+    expect(funcServer).not.toHaveBeenCalled();
     expect(funcBrowser).toHaveBeenCalledTimes(1);
   });
 
-  test("doesn't fire loadBrowserDependencies when running in node when the target environment is browser", async () => {
+  test("doesn't fire loadBrowserDependencies when running in a server when the target environment is browser", async () => {
     console.log = vi.fn();
     const funcBrowser = vi.fn();
-    const funcNode = vi.fn();
+    const funcServer = vi.fn();
 
     class TestMiddleware extends Middleware {
       constructor() {
-        super('node');
+        super('server');
       }
 
       protected async loadBrowserDependencies(): Promise<void> {
         funcBrowser();
       }
-      protected async loadNodeDependencies(): Promise<void> {
-        funcNode();
+      protected async loadServerDependencies(): Promise<void> {
+        funcServer();
       }
     }
     const testMiddleware = new TestMiddleware();
@@ -58,7 +58,7 @@ describe('middleware', () => {
 
     adze.log('Test log.');
     expect(console.log).toHaveBeenCalled();
-    expect(funcNode).not.toHaveBeenCalled();
+    expect(funcServer).not.toHaveBeenCalled();
     expect(funcBrowser).not.toHaveBeenCalled();
   });
 });

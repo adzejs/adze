@@ -29,9 +29,9 @@ export default class CommonFormatter extends Formatter {
   }
 
   /**
-   * Format the log message for Node.js.
+   * Format the log message for the server environment.
    */
-  protected formatNode(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
+  protected formatServer(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
     return this.formatMessage(mods, timestamp, args);
   }
 
@@ -40,7 +40,7 @@ export default class CommonFormatter extends Formatter {
    *
    * **Example:** 127.0.0.1 user-identifier frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326
    */
-  private formatMessage(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
+  private formatMessage(_: ModifierData, timestamp: string, args: unknown[]): unknown[] {
     if (this.cfg.meta?.hostname === undefined) {
       console.warn(
         new Error(

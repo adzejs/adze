@@ -26,9 +26,9 @@ setup({
 });
 ```
 
-#### Browser and Terminal Output
+#### Browser and Server Output
 
-![example of browser and terminal output for the pretty format](../getting-started/examples/introduction/demo.jpg)
+![example of browser and server output for the pretty format](../getting-started/examples/introduction/demo.jpg)
 
 <br />
 
@@ -311,7 +311,7 @@ adze.warn('This is a standard warn log.');
 
 #### Example Output
 
-![example of terminal output for the standard format](./examples/formatters/standardFormat-example-node.png)
+![example of server output for the standard format](./examples/formatters/standardFormat-example-node.png)
 
 <br />
 
@@ -359,7 +359,7 @@ interface CommonLogFormatMeta {
 
 #### Example Output
 
-![example of terminal output for the common format](./examples/formatters/commonFormat-example-node.png)
+![example of server output for the common format](./examples/formatters/commonFormat-example-node.png)
 
 <br />
 
@@ -392,7 +392,11 @@ class Formatter {
     timestamp: string,
     args: unknown[]
   ): unknown[];
-  protected abstract formatNode(data: ModifierData, timestamp: string, args: unknown[]): unknown[];
+  protected abstract formatServer(
+    data: ModifierData,
+    timestamp: string,
+    args: unknown[]
+  ): unknown[];
 }
 ```
 
@@ -440,16 +444,16 @@ class HelloFormatter extends Formatter {
 }
 ```
 
-### formatNode
+### formatServer
 
 This method is called when in a backend environment for formatting the provided log arguments to be
-output terminal.
+output to the server terminal.
 
 This method is provided the [modifier data](./modifiers.md) for all modifiers applied to the log,
 the timestamp according to the [timestampFormatter getter](#timestampformatter-getter), and the
 raw arguments for the log provided by the user.
 
-After applying formatting to the arguments, the `formatNode` method should return the formatted
+After applying formatting to the arguments, the `formatServer` method should return the formatted
 arguments as an array in the same order they were provided.
 
 #### Example
@@ -462,7 +466,7 @@ class HelloFormatter extends Formatter {
     super(cfg, level);
   }
 
-  protected formatNode(data: ModifierData, timestamp: string, args: unknown[]): unknown[] {
+  protected formatServer(data: ModifierData, timestamp: string, args: unknown[]): unknown[] {
     // We'll make the first arg printed always the word "Hello".
     return ['Hello', ...args];
   }

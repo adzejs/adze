@@ -37,7 +37,7 @@ automatically instantiate and instance of it in the global context of your envir
 Here's where it will be created:
 
 - `window.$adzeGlobal` - If your environment is a web browser / [deno](https://docs.deno.com/api/web/~/Window), the Global Store will be attached to the `window`.
-- `global.$adzeGlobal` - If your environment is [node](https://nodejs.org/api/globals.html#global) / [bun](https://bun.sh/docs/api/globals), the Global Store will be attached to the `global` or `globalThis` value.
+- `global.$adzeGlobal` - If your environment is [node](https://nodejs.org/api/globals.html#global) / [bun](https://bun.sh/docs/api/globals), the Global Store will be attached to the `global` value.
 
 The logs that are generated within your runtime context will take any configuration that is set on
 the Global Store and merge it on top of its current configuration as an override.
@@ -91,9 +91,9 @@ logger.debug('Logging some more details for debugging purposes.', { foo: 'bar' }
 
 ![Example browser output of the active level overrides](./examples/global-store/overrides-example-browser.png)
 
-#### Node Output
+#### Server Output
 
-![Example node output of the active level overrides](./examples/global-store/overrides-example-node.png)
+![Example server output of the active level overrides](./examples/global-store/overrides-example-node.png)
 
 ---
 

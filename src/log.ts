@@ -20,6 +20,7 @@ import {
   mergeConfiguration,
   stacktrace,
   cleanMessage,
+  isTestEnvironment,
 } from './functions';
 import { SealedLog } from './functions/seal';
 import { Middleware } from './middleware';
@@ -1253,6 +1254,8 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Prints the log to the console.
    */
   public print(data: LogData): void {
+    // Skip printing if the Adze environment is set to test.
+    if (isTestEnvironment()) return;
     if (data) {
       // Don't print if it is configured to be silent.
       if (data.silent) return;

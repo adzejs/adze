@@ -1,6 +1,6 @@
 # Middleware
 
-Adze is able to be extended through middleware classes. Adze exports a [Middleware Class]() that can
+Adze is able to be extended through middleware classes. Adze exports a **Middleware Class** that can
 be extended to hook into various points in a log's [lifecycle](./introduction.md#lifecycle).
 
 Look for Adze middleware libraries for extending the functionality of your logs or for transporting
@@ -70,7 +70,7 @@ export class HelloMiddleware extends Middleware {
   }
 
   /**
-   * Load dependencies for the node environment.
+   * Load dependencies for the server environment.
    */
   protected async loadServerDependencies() {
     // We'll load the fs.readFile function so we can write data to our file system.
@@ -177,7 +177,7 @@ interface Middleware {
 | Order | Parameter | Description                                                                             |
 | ----- | --------- | --------------------------------------------------------------------------------------- |
 | 1     | log       | The instance of the log. This can be used to access its [data](./log-class.md#getters). |
-| 2     | format    | The name of the log [formatter]() that will be used.                                    |
+| 2     | format    | The name of the log [formatter](./formatters.md) that will be used.                     |
 | 3     | message   | Array of arguments to be printed to the console.                                        |
 
 <br/>
@@ -195,8 +195,8 @@ interface Middleware {
 | Order | Parameter | Description                                                                             |
 | ----- | --------- | --------------------------------------------------------------------------------------- |
 | 1     | log       | The instance of the log. This can be used to access its [data](./log-class.md#getters). |
-| 2     | format    | The name of the log [formatter]() that was used.                                        |
-| 3     | message   | Array of [formatted]() arguments to be printed to the console.                          |
+| 2     | format    | The name of the log [formatter](./formatters.md) that was used.                         |
+| 3     | message   | Array of [formatted](./formatters.md) arguments to be printed to the console.           |
 
 <br/>
 
@@ -248,4 +248,4 @@ interface Middleware {
 | ----- | ---------- | --------------------------------------------------------------------------------------- |
 | 1     | log        | The instance of the log. This can be used to access its [data](./log-class.md#getters). |
 | 2     | terminator | The name of the [terminator](./terminators.md) that is being called to print the log.   |
-| 3     | args       | The [formatted]() arguments that will be printed.                                       |
+| 3     | args       | The [formatted](./formatters.md) arguments that will be printed.                        |

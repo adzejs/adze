@@ -20,6 +20,8 @@ yarn add adze
 | Dependency | Supported Versions | Notes                                    |
 | ---------- | ------------------ | ---------------------------------------- |
 | node       | >= 18.18.0         | When running Adze in a Node environment. |
+| bun        | ???                | When running in a Bun environment.       |
+| deno       | ???                | When running in a Deno environment.      |
 | typescript | >= 5.5.x           | When using Adze with TypeScript          |
 
 ## TypeScript Configuration
@@ -46,7 +48,7 @@ For more information about configuring TypeScript, go to [https://www.typescript
 
 Adze comes bundled with a few different ways of accessing it. Here are some examples:
 
-### Node JS (CommonJS)
+### CommonJS
 
 ```javascript
 const { adze } = require('adze'); // Or alternatively `const adze = require('adze').adze;`
@@ -54,7 +56,7 @@ const { adze } = require('adze'); // Or alternatively `const adze = require('adz
 adze.log('Hello World!');
 ```
 
-### ES6 / TypeScript
+### ESM / TypeScript
 
 ```typescript
 import adze from 'adze';

@@ -129,7 +129,7 @@ adze.withEmoji.custom('leetLevel', 'This is an example leetLevel log!');
 
 ![Example of a custom level named leet level in a browser](./examples/configuration/customLevel-example-browser.png)
 
-#### Node Output
+#### Server Output
 
 ![Example of a custom level named leet level in a terminal](./examples/configuration/customLevel-example-node.png)
 
@@ -162,9 +162,9 @@ adze.withEmoji.error('This is an error log with overridden style configuration.'
 
 ![Example of the default error level with overridden configuration in the browser](./examples/configuration/defaultOverride-example-browser.png)
 
-#### Terminal Output
+#### Server Output
 
-![Example of the default error level with overridden configuration in the terminal](./examples/configuration/defaultOverride-example-node.png)
+![Example of the default error level with overridden configuration in the server](./examples/configuration/defaultOverride-example-node.png)
 
 <br />
 
@@ -208,10 +208,10 @@ to change the padding based on the browser environment. These functions are also
 
 ---
 
-### Default Terminal Styles
+### Default Server Styles
 
-Adze styling for the terminal makes use of a library named [Chalk](https://github.com/chalk/chalk).
-Chalk exposes several formatting functions for terminal text styling that Adze exposes in its
+Adze styling for the server makes use of a library named [Chalk](https://github.com/chalk/chalk).
+Chalk exposes several formatting functions for server text styling that Adze exposes in its
 configuration.
 
 For a list of styles available for use with Chalk, refer to the
@@ -274,9 +274,9 @@ adze.withEmoji.alert('A customized alert log.');
 
 ![customized alert log browser example](./examples/configuration/customizedAlert-example-browser.png)
 
-#### Terminal Output
+#### Server Output
 
-![customized alert log terminal example](./examples/configuration/customizedAlert-example-node.png)
+![customized alert log server example](./examples/configuration/customizedAlert-example-node.png)
 
 <br />
 
@@ -284,7 +284,7 @@ adze.withEmoji.alert('A customized alert log.');
 
 ## Filters
 
-Filters determine whether logs are allowed to print to the console/terminal based on their log level,
+Filters determine whether logs are allowed to print to the developer console/server based on their log level,
 [label](./modifiers.md#label), or [namespace](./modifiers.md#namespace--ns). When filtering levels,
 you can provide a [level selector](#levelselector) data type.
 
@@ -331,9 +331,9 @@ adze.fail('I should not print because I do not have a namespace.');
 
 ![customized alert log browser example](./examples/configuration/filter-example-browser.png)
 
-#### Terminal Output
+#### Server Output
 
-![customized alert log terminal example](./examples/configuration/filter-example-node.png)
+![customized alert log server example](./examples/configuration/filter-example-node.png)
 
 <br />
 
@@ -369,9 +369,9 @@ adze.timestamp.success('America has achieved independence!');
 
 ![customized timestamp browser example](./examples/configuration/timestampFormatter-example-browser.png)
 
-#### Terminal Output
+#### Server Output
 
-![customized timestamp terminal example](./examples/configuration/timestampFormatter-example-node.png)
+![customized timestamp server example](./examples/configuration/timestampFormatter-example-node.png)
 
 <br />
 

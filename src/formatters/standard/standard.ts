@@ -26,9 +26,9 @@ export default class StandardFormatter extends Formatter {
   }
 
   /**
-   * Format the log message for Node.js.
+   * Format the log message for the server.
    */
-  protected formatNode(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
+  protected formatServer(mods: ModifierData, timestamp: string, args: unknown[]): unknown[] {
     return this.formatMessage(timestamp, mods, args);
   }
 

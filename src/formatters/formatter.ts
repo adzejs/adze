@@ -63,7 +63,7 @@ export default abstract class Formatter {
     // Select the appropriate formatter method on the environment.
     const message = isBrowser()
       ? this.formatBrowser(mods, timestamp, args)
-      : this.formatNode(mods, timestamp, args);
+      : this.formatServer(mods, timestamp, args);
     if (mods.stacktrace) message.push(mods.stacktrace);
     return message;
   }
@@ -78,9 +78,13 @@ export default abstract class Formatter {
   ): unknown[];
 
   /**
-   * Return a string format for your logs in Node.js.
+   * Return a string format for your logs in a server environment.
    */
-  protected abstract formatNode(data: ModifierData, timestamp: string, args: unknown[]): unknown[];
+  protected abstract formatServer(
+    data: ModifierData,
+    timestamp: string,
+    args: unknown[]
+  ): unknown[];
 
   private failsFilters(mods: ModifierData): boolean {
     if (this.failsLevelSelector()) return true;
