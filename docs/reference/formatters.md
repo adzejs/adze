@@ -34,7 +34,7 @@ setup({
 
 ## JSON Formatter
 
-The JSON formatter is used to generate machine-readable JSON logs. The logs that are generated are
+The **JSON** formatter is used to generate machine-readable JSON logs. The logs that are generated are
 compatible with the [Bunyan CLI](https://github.com/trentm/node-bunyan?tab=readme-ov-file#cli-usage)
 for parsing logs to be human-readable or for filtering them based on their values.
 
@@ -275,7 +275,7 @@ const response = new Response('hello world!', {
 });
 Object.defineProperty(response, 'url', { value: 'https://example.com/login' });
 
-// The Request serializer returns a promise so it must be awaited.
+// The Response serializer returns a promise so it must be awaited.
 adze
   .meta<JsonLogOptionalFields>({
     res: await serializeResponse(response),
@@ -286,3 +286,211 @@ adze
 ##### Example Output
 
 ![example of a json log with a serialized response](./examples/formatters/jsonFormatResponseSerializer-example-node.png)
+
+<br />
+
+## Standard Formatter
+
+The **Standard** formatter is for generating human-readable logs in a [stdout](https://en.wikipedia.org/wiki/Standard_streams)
+environment. This is useful for writing human-readable logs to a file or for transporting them to
+other platforms. The Standard formatter does not require you to specify that you want [timestamps](./modifiers.md#timestamp)
+as it is a requirement for all logs of this type.
+
+To use it, set the [User Configuration](./configuration.md#user-configuration) `format` value to be
+`"standard"`.
+
+```typescript
+import adze, { setup } from 'adze';
+
+setup({
+  format: 'standard',
+});
+
+adze.warn('This is a standard warn log.');
+```
+
+#### Example Output
+
+![example of terminal output for the standard format](./examples/formatters/standardFormat-example-node.png)
+
+<br />
+
+## Common Formatter
+
+The **Common** formatter is for generating human-readable logs according to the [Common Log Format](https://en.wikipedia.org/wiki/Common_Log_Format).
+This is primarily used for tracking network communications on servers.
+
+To use it, set the [User Configuration](./configuration.md#user-configuration) `format` value to be
+`"common"`.
+
+### CommonLogFormatMeta
+
+The Common formatter requires some extra meta data to fill in various properties within a log
+formatted to the Common Log standard. Adze exports the `CommonLogFormatMeta` interface to assist you
+with filling in the necessary data. The Common formatter does not require you to specify that you
+want [timestamps](./modifiers.md#timestamp) as it is a requirement for all logs of this type.
+
+#### Usage Example
+
+```typescript
+import adze, { setup, type CommonLogFormatMeta } from 'adze';
+
+setup<CommonLogFormatMeta>({
+  format: 'common',
+  meta: {
+    hostname: 'localhost',
+    ident: 'user-identifier',
+    user: 'joe',
+  },
+});
+
+adze.log('This is a standard warn log.');
+```
+
+#### Interface
+
+```typescript
+interface CommonLogFormatMeta {
+  hostname: string;
+  ident?: string;
+  user?: string;
+}
+```
+
+#### Example Output
+
+![example of terminal output for the common format](./examples/formatters/commonFormat-example-node.png)
+
+<br />
+
+## Creating Third-party Formatters
+
+If the formatters provided by Adze do not meet your requirements, you can create a custom formatter
+by extending the [Formatter class](#formatter-class).
+
+### Formatter Class
+
+The **Formatter class** is the base for all built-in formatters and third-party formatters. It
+abstracts some of the basic logic away from the formatter in regards to the visibility, setting an
+apex timestamp formatter override method, and routing the log to the appropriate formatter method
+depending on the environment.
+
+#### Interface
+
+```typescript
+class Formatter {
+  // Properties
+  protected cfg: Configuration;
+  protected level: LevelConfiguration;
+  protected timestampFormatFunction: (date: Date) => string;
+  // Constructor
+  constructor(cfg: Configuration, level: LevelConfiguration) {}
+  // Methods
+  public get timestampFormatter(): (date: Date) => string;
+  protected abstract formatBrowser(
+    data: ModifierData,
+    timestamp: string,
+    args: unknown[]
+  ): unknown[];
+  protected abstract formatNode(data: ModifierData, timestamp: string, args: unknown[]): unknown[];
+}
+```
+
+#### Properties
+
+| Property                | Type                   | Description                                                                          |
+| ----------------------- | ---------------------- | ------------------------------------------------------------------------------------ |
+| cfg                     | Configuration          | The configuration of the log that is being formatted.                                |
+| level                   | LevelConfiguration     | The configuration for the log level that this log is being terminated as.            |
+| timestampFormatFunction | (date: Date) => string | An optional override function for the formatting the timestamp of the formatted log. |
+
+### timestampFormatter getter
+
+This method returns the most relevant `timestampFormatter` function based on the hierarchy of
+the default function for formatting ISO-8601, then the timestampFormatter override from the
+`UserConfiguration`, then the timestamp formatter function defined by the Formatter class, with the
+Formatter class taking the highest priority.
+
+### formatBrowser
+
+This method is called when in a browser environment for formatting the provided log arguments to be
+output in a browser developer console.
+
+This method is provided the [modifier data](./modifiers.md) for all modifiers applied to the log,
+the timestamp according to the [timestampFormatter getter](#timestampformatter-getter), and the
+raw arguments for the log provided by the user.
+
+After applying formatting to the arguments, the `formatBrowser` method should return the formatted
+arguments as an array in the same order they were provided.
+
+#### Example
+
+```typescript
+import { Formatter } from 'adze';
+
+class HelloFormatter extends Formatter {
+  constructor(cfg: Configuration, level: LevelConfiguration) {
+    super(cfg, level);
+  }
+
+  protected formatBrowser(data: ModifierData, timestamp: string, args: unknown[]): unknown[] {
+    // We'll make the first arg printed always the word "Hello".
+    return ['Hello', ...args];
+  }
+}
+```
+
+### formatNode
+
+This method is called when in a backend environment for formatting the provided log arguments to be
+output terminal.
+
+This method is provided the [modifier data](./modifiers.md) for all modifiers applied to the log,
+the timestamp according to the [timestampFormatter getter](#timestampformatter-getter), and the
+raw arguments for the log provided by the user.
+
+After applying formatting to the arguments, the `formatNode` method should return the formatted
+arguments as an array in the same order they were provided.
+
+#### Example
+
+```typescript
+import { Formatter } from 'adze';
+
+class HelloFormatter extends Formatter {
+  constructor(cfg: Configuration, level: LevelConfiguration) {
+    super(cfg, level);
+  }
+
+  protected formatNode(data: ModifierData, timestamp: string, args: unknown[]): unknown[] {
+    // We'll make the first arg printed always the word "Hello".
+    return ['Hello', ...args];
+  }
+}
+```
+
+### Using a Third-party Formatter
+
+To include a third-party formatter for use with Adze you must add it to the `formatters` object
+property of the [User Configuration](./configuration.md#user-configuration) as a key/value pair.
+
+#### Example
+
+```typescript
+import adze, { setup } from 'adze';
+import HelloFormatter from './hello-formatter.ts';
+
+setup({
+  formatters: {
+    hello: HelloFormatter,
+  },
+});
+
+// And to use the HelloFormatter, simply use the key as the value for the `format` property.
+setup({
+  format: 'hello',
+  formatters: {
+    hello: HelloFormatter,
+  },
+});
+```

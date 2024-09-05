@@ -62,27 +62,12 @@ async function runDemo() {
 }
 
 async function defaultLevels() {
-  setup<JsonLogFormatMeta>({
-    format: 'json',
-    meta: {
-      name: 'myApp',
-      hostname: 'localhost',
-    },
+  setup({
+    format: 'standard',
   });
 
-  const response = new Response('hello world!', {
-    status: 200,
-    statusText: 'OK',
-    headers: { boop: 'beep' },
-  });
-  Object.defineProperty(response, 'url', { value: 'https://example.com/login' });
+  adze.warn('This is a standard warn log.');
 
-  // The Request serializer returns a promise so it must be awaited.
-  adze
-    .meta<JsonLogOptionalFields>({
-      res: await serializeResponse(response),
-    })
-    .log('Received a response!');
   // setup({
   //   withEmoji: true,
   //   activeLevel: 1337,
