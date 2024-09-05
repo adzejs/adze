@@ -30,36 +30,36 @@ const leetLevel: LevelConfiguration = {
 // Run our demo modules
 async function runDemo() {
   defaultLevels();
-  // configuration();
-  // custom();
-  // namespace();
-  // label();
-  // filterLevelRange();
-  // filterLevels();
-  // filterNamespaces();
-  // filterLabels();
-  // filterBoth();
-  // counting();
-  // tests();
-  // dir();
-  // table();
-  // group();
-  // groupCollapsed();
-  // seal();
-  // trace();
-  // timestamp();
-  // sealTag();
-  // silent();
-  // tools();
-  // common();
-  // standard();
-  // await json();
-  // // time();
-  // thread();
-  // listener();
+  configuration();
+  custom();
+  namespace();
+  label();
+  filterLevelRange();
+  filterLevels();
+  filterNamespaces();
+  filterLabels();
+  filterBoth();
+  counting();
+  tests();
+  dir();
+  table();
+  group();
+  groupCollapsed();
+  seal();
+  trace();
+  timestamp();
+  sealTag();
+  silent();
+  tools();
+  common();
+  standard();
+  await json();
+  // time();
+  thread();
+  listener();
 }
 
-async function defaultLevels() {
+async function performance() {
   setup({
     withEmoji: true,
     activeLevel: 1337,
@@ -81,6 +81,27 @@ async function defaultLevels() {
     adze.label('leetCounter').count.custom('leetLevel', 'This is a custom log!');
   }
   adze.label('performance').timeEnd.log('Ending a performance timer');
+  teardown();
+}
+
+async function defaultLevels() {
+  setup({
+    withEmoji: true,
+    activeLevel: 1337,
+    levels: {
+      leetLevel,
+    },
+  });
+  adze.alert('This is an alert log');
+  adze.error('This is an error log');
+  adze.warn('This is a warning log');
+  adze.info('This is an info log');
+  adze.fail('This is a fail log');
+  adze.success('This is a success log');
+  adze.log('This is a log');
+  adze.debug('This is a debug log');
+  adze.verbose('This is a verbose log');
+  adze.label('leetCounter').count.custom('leetLevel', 'This is a custom log!');
   teardown();
 }
 

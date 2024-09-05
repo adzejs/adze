@@ -1,7 +1,6 @@
 import {
   Configuration,
   DefaultTerminatorMethod,
-  Format,
   FormatterConstructor,
   LevelConfiguration,
   LogData,
@@ -1277,6 +1276,8 @@ export default class Log<N extends string = string, Msg = unknown> {
   ////////////////////////////////////////////////////////
 
   private terminate(terminator: string, args: unknown[]): void {
+    // TODO: For performance reasons, check if the terminator is allowed before doing anything else.
+
     // Run the beforeTerminated middleware hooks
     this.doHook((m) => (m.beforeTerminated ? m.beforeTerminated(this, terminator, args) : null));
 
@@ -1284,6 +1285,7 @@ export default class Log<N extends string = string, Msg = unknown> {
     this.runModifierQueue();
 
     // Apply the global configuration overrides
+    // TODO: configuration merging is causing performance issues. Need to find a better way.
     this._cfg = mergeConfiguration(this._cfg, {}, this.globalStore.configuration);
 
     // Get the level configuration based on the level name.

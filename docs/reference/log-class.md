@@ -37,57 +37,53 @@ adze.log('This is a log.', x);
 
 The public getters are used for getting data from a log instance.
 
-- [data]() - Returns the log data.
-- [modifierData]() - Returns object containing key/values from called modifiers.
-- [configuration]() - Returns the configuration that this log instance is using.
+- [data](./getters.md#data) - Returns the log data.
+- [modifierData](./getters.md#modifierdata) - Returns object containing key/values from called modifiers.
+- [configuration](./getters.md#configuration) - Returns the configuration that this log instance is using.
 
 ### Modifiers
 
 Modifiers are used to alter log behavior or add context.
 
-- [assert]()
-- [closeThread]()
-- [count]()
-- [countClear]()
-- [countReset]()
-- [dir]()
-- [dirxml]()
-- [dump]()
-- [format]()
-- [group]()
-- [groupCollapsed]()
-- [groupEnd]()
-- [if]()
-- [label]()
-- [meta]()
-- [namespace/ns]()
-- [silent]()
-- [table]()
-- [time]()
-- [timeEnd]()
-- [timeNow]()
-- [timestamp]()
-- [trace]()
-- [withEmoji]()
+- [assert](./modifiers.md#assert)
+- [closeThread](./modifiers.md#closethread)
+- [count](./modifiers.md#count)
+- [countClear](./modifiers.md#countclear)
+- [countReset](./modifiers.md#countreset)
+- [dir](./modifiers.md#dir)
+- [dirxml](./modifiers.md#dirxml)
+- [dump](./modifiers.md#dump)
+- [format](./modifiers.md#format)
+- [group](./modifiers.md#group)
+- [groupCollapsed](./modifiers.md#groupcollapsed)
+- [groupEnd](./modifiers.md#groupend)
+- [if](./modifiers.md#if)
+- [label](./modifiers.md#label)
+- [meta](./modifiers.md#meta)
+- [namespace/ns](./modifiers.md#namespace--ns)
+- [silent](./modifiers.md#silent)
+- [table](./modifiers.md#table)
+- [time](./modifiers.md#time)
+- [timeEnd](./modifiers.md#timeend)
+- [timeNow](./modifiers.md#timenow)
+- [timestamp](./modifiers.md#timestamp)
+- [trace](./modifiers.md#trace)
+- [withEmoji](./modifiers.md#withemoji)
 
 ### Terminators
 
 Terminators end a log and generate it at the specified level.
 
-- [alert]()
-- [error]()
-- [warn]()
-- [info]()
-- [fail]()
-- [success]()
-- [log]()
-- [debug]()
-- [verbose]()
-- [custom]()
-- [thread]()
-- [seal]()
-- [sealTag]()
-
-### Other Methods
-
-- [print]() - Prints the log message to the console if it has a generated message.
+- [alert](./terminators.md#alert)
+- [error](./terminators.md#error)
+- [warn](./terminators.md#warn)
+- [info](./terminators.md#info)
+- [fail](./terminators.md#fail)
+- [success](./terminators.md#success)
+- [log](./terminators.md#log)
+- [debug](./terminators.md#debug)
+- [verbose](./terminators.md#verbose)
+- [custom](./terminators.md#custom)
+- [thread](./terminators.md#thread)
+- [seal](./terminators.md#seal)
+- [sealTag](./terminators.md#sealtag)
