@@ -6,7 +6,7 @@ const { description } = require('../../package');
 
 export default defineUserConfig({
   lang: 'en-US',
-  title: 'Adze - Universal Logging for JavaScript',
+  title: 'Universal Logging for JavaScript',
   description,
   plugins: [searchProPlugin({})],
   /**
@@ -120,7 +120,9 @@ export default defineUserConfig({
   ],
 
   theme: defaultTheme({
-    logo: 'https://vuejs.press/images/hero.png',
+    logo: '/images/icon.svg',
+    logoDark: '/images/icon-borderless.svg',
+    repo: 'https://github.com/AJStacy/adze',
     navbar: [
       { text: 'Getting Started', link: '/getting-started/introduction' },
       { text: 'Reference Manual', link: '/reference/introduction' },

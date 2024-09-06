@@ -1,7 +1,8 @@
 ---
 home: true
 title: Home
-heroImage: https://vuejs.press/images/hero.png
+heroImage: /images/logo.svg
+heroImageDark: /images/logo-light.svg
 actions:
   - text: Get Started
     link: /getting-started.html
@@ -12,8 +13,8 @@ actions:
     type: secondary
 
 features:
-  - title: Simplicity First
-    details: Minimal setup with markdown-centered project structure helps you focus on writing.
+  - title: Universal
+    details: This library "just works." Use it with Bun, Deno, Node, or in the Browser.
   - title: Vue-Powered
     details: Enjoy the dev experience of Vue, use Vue components in markdown, and develop custom themes with Vue.
   - title: Performant

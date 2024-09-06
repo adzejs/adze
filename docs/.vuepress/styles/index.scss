@@ -1,0 +1,164 @@
+// === colors ===
+:root {
+  --c-bg: hsl(0, 0%, 100%);
+  --c-bg-light: #f3f4f5;
+  --c-bg-lighter: #eeeeee;
+  --c-text: #2c3e50;
+  --c-text-light: #3a5169;
+  --c-text-lighter: #4e6e8e;
+  --c-border: #eaecef;
+  --c-border-dark: #dfe2e5;
+  --c-brand: #6c2820;
+  --c-brand-light: #97382d;
+  --t-color: 0.3s ease;
+  --t-transform: 0.3s ease;
+  --box-shadow: #f0f1f2;
+  --card-shadow: rgba(0, 0, 0, 0.15);
+  --black: #000;
+  --grey-dark: #666;
+  --grey-light: #999;
+  --white: #fff;
+  --grey-darker: #333;
+  --grey-lighter: #bbb;
+  --grey14: #eee;
+
+  // accent colors
+  --vp-c-accent: #6c2820;
+  --vp-c-accent-hover: #6c2820;
+  --vp-c-accent-text: var(--c-brand-light);
+
+  // background colors
+  --vp-c-bg: #fff;
+  --vp-c-bg-alt: #f6f6f7;
+  --vp-c-bg-elv: #fff;
+
+  // text colors
+  --vp-c-text: rgba(60 60 67);
+  --vp-c-text-mute: rgb(60 60 67 / 78%);
+  --vp-c-text-subtle: rgb(60 60 67 / 56%);
+
+  // border colors
+  --vp-c-border: #d7d9da;
+  --vp-c-gutter: #eaecef;
+  --vp-c-border-hard: #d1d4d7;
+
+  // shadow colors
+  --vp-c-shadow: rgb(0 0 0 / 15%);
+  --vp-c-shadow-hard: #f1f3f5;
+
+  // control colors
+  --vp-c-control: #f8f9fa;
+  --vp-c-control-hover: #f1f3f5;
+  --vp-c-control-active: #e9ecef;
+  --vp-c-control-disabled: #ccc;
+
+  // layout colors
+  --vp-navbar-c-bg: var(--vp-c-bg);
+  --vp-sidebar-c-bg: var(--vp-c-bg);
+
+  // code group colors
+  --vp-c-code-tab-title: var(--code-c-text, rgb(255 255 255 / 90%));
+  --vp-c-code-tab-bg: var(--code-bg-color, var(--code-c-bg));
+  --vp-c-code-tab-active: var(--vp-c-accent);
+
+  // badge colors
+  --c-badge-tip: var(--c-tip);
+  --c-badge-warning: #ecc808;
+  --c-badge-warning-text: var(--vp-c-bg);
+  --c-badge-danger: #97382d;
+  --c-badge-danger-text: var(--vp-c-bg);
+
+  // font vars
+  --font-family: -apple-system, 'BlinkMacSystemFont', 'Segoe UI', roboto, oxygen, ubuntu, cantarell,
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+
+  // layout vars
+  --navbar-height: 3.6rem;
+  --navbar-padding-v: 0.7rem;
+  --navbar-padding-h: 1.5rem;
+  --sidebar-width: 20rem;
+  --sidebar-width-mobile: calc(var(--sidebar-width) * 0.82);
+  --content-width: 740px;
+  --homepage-width: 960px;
+
+  // transition vars
+  --vp-t-color: 0.3s ease;
+  --vp-t-transform: 0.3s ease;
+
+  // external-link-icon
+  --external-link-icon: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' %3E%3Cpath d='M0 0h24v24H0V0z' fill='none' /%3E%3Cpath d='M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5H9z' /%3E%3C/svg%3E");
+  --external-link-c-icon: var(--vp-c-text-mute);
+}
+
+// plugin-docsearch
+/* stylelint-disable-next-line selector-class-pattern */
+.DocSearch {
+  --docsearch-primary-color: var(--vp-c-accent);
+  --docsearch-text-color: var(--vp-c-text);
+  --docsearch-highlight-color: var(--vp-c-accent);
+  --docsearch-muted-color: var(--vp-c-text-mute);
+  --docsearch-container-background: rgb(9 10 17 / 80%);
+  --docsearch-modal-background: var(--vp-c-bg-alt);
+  --docsearch-searchbox-background: var(--vp-c-gutter);
+  --docsearch-searchbox-focus-background: var(--vp-c-bg);
+  --docsearch-searchbox-shadow: inset 0 0 0 2px var(--vp-c-accent);
+  --docsearch-hit-color: var(--vp-c-text-mute);
+  --docsearch-hit-active-color: var(--vp-c-bg);
+  --docsearch-hit-background: var(--vp-c-bg);
+  --docsearch-hit-shadow: 0 1px 3px 0 var(--vp-c-border-hard);
+  --docsearch-footer-background: var(--vp-c-bg);
+}
+
+// plugin-search
+.search-box {
+  --search-c-item-text: var(--vp-c-text-subtle);
+}
+
+html.dark {
+  // brand colors
+  --c-brand: #d9887f;
+  --c-brand-light: #e6b0a9;
+  // --vp-c-accent: #3aa675;
+  // --vp-c-accent-hover: #349469;
+
+  // background colors
+  --vp-c-bg: #22272e;
+  --vp-c-bg-alt: #343b44;
+  --vp-c-bg-elv: #22272e;
+
+  // text colors
+  --vp-c-text: #adbac7;
+  --vp-c-text-mute: rgb(235 235 245 / 60%);
+  --vp-c-text-subtle: rgb(235 235 245 / 38%);
+
+  // border colors
+  --vp-c-border: #3e4c5a;
+  --vp-c-gutter: #373f4c;
+  --vp-c-border-hard: #405064;
+
+  // shadow color
+  --vp-c-shadow: rgb(0 0 0 / 30%);
+  --vp-c-shadow-hard: #2f3841;
+
+  // control colors
+  --vp-c-control: #2d333b;
+  --vp-c-control-hover: #2f3841;
+  --vp-c-control-active: #333a44;
+  --vp-c-control-disabled: #3e4c5a;
+
+  // badge component colors
+  --c-badge-warning: var(--c-warning);
+  --c-badge-warning-text: #3c2e05;
+  --c-badge-danger: var(--c-danger);
+  --c-badge-danger-text: #401416;
+
+  // plugin-docsearch
+  /* stylelint-disable-next-line selector-class-pattern */
+  .DocSearch {
+    --docsearch-modal-shadow: inset 1px 1px 0 0 #2c2e40, 0 3px 8px 0 #000309;
+    --docsearch-key-shadow: inset 0 -2px 0 0 #282d55, inset 0 0 1px 1px #51577d,
+      0 2px 2px 0 rgb(3 4 9 / 30%);
+    --docsearch-key-gradient: linear-gradient(-225deg, #444950, #1c1e21);
+    --docsearch-footer-shadow: inset 0 1px 0 0 rgb(73 76 106 / 50%), 0 -4px 8px 0 rgb(0 0 0 / 20%);
+  }
+}
