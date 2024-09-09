@@ -140,6 +140,7 @@ export default defineUserConfig({
       { text: 'Getting Started', link: '/getting-started/introduction' },
       { text: 'Reference Manual', link: '/reference/introduction' },
       { text: 'Plugins', link: '/plugins' },
+      { text: 'v1.x', link: 'https://adzejs.com/v1/' },
     ],
     sidebar: {
       '/getting-started/': [
@@ -150,6 +151,7 @@ export default defineUserConfig({
           children: [
             { text: 'Introduction', link: '/getting-started/introduction' },
             { text: 'Installation', link: '/getting-started/installation' },
+            { text: 'Migrating from v1', link: '/getting-started/migrating' },
             { text: 'Concepts', link: '/getting-started/concepts' },
             { text: 'Setup', link: '/getting-started/setup' },
             { text: 'Configuration', link: '/getting-started/configuration' },
