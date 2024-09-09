@@ -71,10 +71,8 @@ jobs:
         run: yarn install --force
       - name: Build Content
         run: yarn docs:build
-      - name: list files
-        run: cd docs/.vuepress && ls -la
       - name: Move to v1 directory
-        run: mv ./docs/.vuepress/dist ./dist/v1
+        run: mkdir ./dist && mv ./docs/.vuepress/dist ./dist/v1
       - name: Publish
         uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
         with:
