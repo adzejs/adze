@@ -72,7 +72,7 @@ jobs:
       - name: Build Content
         run: yarn docs:build
       - name: list files
-        run: ls -la
+        run: cd docs/.vuepress && ls -la
       - name: Move to v1 directory
         run: mv ./docs/.vuepress/dist ./dist/v1
       - name: Publish
