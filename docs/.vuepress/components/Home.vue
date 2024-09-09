@@ -20,7 +20,7 @@
         </p>
 
         <em style="color: red; font-size: 1.4rem;">
-          v1 is now in maintenance! Please upgrade to <a href="https://adzejs.com/getting-started/migrating">version 2</a>!
+          v1 is now deprecated! Please upgrade to <a href="https://adzejs.com/getting-started/migrating">version 2</a>!
         </em>
 
         <p v-if="data.actionText && data.actionLink" class="action">
