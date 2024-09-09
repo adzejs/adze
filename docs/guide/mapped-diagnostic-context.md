@@ -1,5 +1,9 @@
 # Mapped Diagnostic Context (MDC)
 
+:::danger
+This version is now deprecated! Please upgrade to [version 2](https://adzejs.com/)!
+:::
+
 ## What is Mapped Diagnostic Context?
 
 _"The basic idea of Mapped Diagnostic Context is to provide a way to enrich log messages with pieces of information that could be not available in the scope where the logging actually occurs, but that can be useful to better track the execution of the program."_

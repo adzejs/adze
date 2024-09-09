@@ -1,5 +1,9 @@
 # Data
 
+:::danger
+This version is now deprecated! Please upgrade to [version 2](https://adzejs.com/)!
+:::
+
 In this section of the guide we'll take a look at some of the important data structures that exist across the Adze API.
 
 ## Collections

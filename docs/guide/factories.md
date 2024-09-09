@@ -1,5 +1,9 @@
 # Factories
 
+:::danger
+This version is now deprecated! Please upgrade to [version 2](https://adzejs.com/)!
+:::
+
 As you know from the high-level concepts, Adze logs are typically generated from a factory function. Out-of-the-box you get the `adze()` function that is your normal entry point into creating logs. However, you can also use `seal()` and `bundle()` to take advantage of some other cool features that we will review below.
 
 ## adze

@@ -1,5 +1,9 @@
 # Introduction
 
+:::danger
+This version is now deprecated! Please upgrade to [version 2](https://adzejs.com/)!
+:::
+
 ## Why is this named Adze?
 
 ![A drawing of a man using an adze to shape a log](./assets/adze.png)

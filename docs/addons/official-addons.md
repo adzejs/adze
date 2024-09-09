@@ -1,5 +1,9 @@
 # Official Add-on's
 
+:::danger
+This version is now deprecated! Please upgrade to [version 2](https://adzejs.com/)!
+:::
+
 The following list contains add-on's that are officially supported by core Adze contributors and are maintained under the [`@adze` npm organization namespace](). We hope that over time this list will grow and hopefully community created add-on's can be adopted by the official organization.
 
 ---

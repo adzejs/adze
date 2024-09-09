@@ -1,5 +1,9 @@
 # Adze Concepts
 
+:::danger
+This version is now deprecated! Please upgrade to [version 2](https://adzejs.com/)!
+:::
+
 Adze as a library has a few core goals it attempts to meet. The first goal is to provide an API that wraps, extends, or replicates all of the functionality of the standard [Console API](https://developer.mozilla.org/en-US/docs/Web/API/console). The standard console API allows you to create logs based on severity, however other utility logs like table, assert, trace, etc. are all tied to the severity of `log`. Adze takes a different approach by turning these into [modifiers](modifiers.md) which can be terminated by whichever severity level you prefer.
 
 The second goal of the Adze project is to give you a natural log writing experience that doesn't feel too different from the standard. To make the experience of using Adze feel natural, Adze provides a chainable API that is similar to the standard `console.log()` API.

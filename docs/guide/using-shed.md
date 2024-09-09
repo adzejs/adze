@@ -1,5 +1,9 @@
 # Using Shed
 
+:::danger
+This version is now deprecated! Please upgrade to [version 2](https://adzejs.com/)!
+:::
+
 Let's take a deeper dive into each of Shed's public methods.
 
 ## addLabel

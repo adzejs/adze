@@ -135,6 +135,10 @@ module.exports = {
     sidebarDepth: 1,
     nav: [
       {
+        text: 'v2.x',
+        link: 'https://adzejs.com/',
+      },
+      {
         text: 'Guide',
         link: '/guide/',
       },

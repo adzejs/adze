@@ -4,6 +4,10 @@ sidebar: auto
 
 # Config
 
+:::danger
+This version is now deprecated! Please upgrade to [version 2](https://adzejs.com/)!
+:::
+
 Adze is a completely configurable library by design that comes with sensible defaults. There are two primary configurations to understand; the Adze configuration and the Shed configuration. In this section we'll take a look at each configuration and explain each property in detail.
 
 _NOTE: [Chalk](https://github.com/chalk/chalk#chalklevel) is what Adze uses under the hood for terminal coloring. Because terminals differ in their color fidelity, Chalk exposes a setting allowing you to specify your fidelity. Adze is basic with its colors so the low level of 1 is sufficient, however, you can change it to your liking with the `terminalColorFidelity` option described below. Please refer to the [Chalk](https://github.com/chalk/chalk#chalklevel) docs for information about what the fidelity levels mean._

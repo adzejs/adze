@@ -1,5 +1,9 @@
 # Shed Concepts
 
+:::danger
+This version is now deprecated! Please upgrade to [version 2](https://adzejs.com/)!
+:::
+
 ## What is a Shed?
 
 A **Shed** is an optional global cache and control hub for your Adze logs. The primary purposes of a Shed are to enable global configuration overrides and log listeners. To see how a Shed fits into the architecture, refer to the [Lifecycle Diagram](adze-concepts.html#lifecycle).

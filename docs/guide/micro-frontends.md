@@ -1,5 +1,9 @@
 # Micro-Frontends
 
+:::danger
+This version is now deprecated! Please upgrade to [version 2](https://adzejs.com/)!
+:::
+
 You may be asking yourself, "What are micro-frontends?" To be brief, micro-frontends are an extension of the micro-services architecture pattern all the way through to the frontend of an application.
 
 For a more detailed explanation, please visit these excellent resources:

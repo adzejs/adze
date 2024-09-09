@@ -1,5 +1,9 @@
 # Machine Readable Logs
 
+:::danger
+This version is now deprecated! Please upgrade to [version 2](https://adzejs.com/)!
+:::
+
 When working with your logs, typically in a production environment, the best practice is to generate logs as JSON objects. By generating them as JSON objects it makes them simpler to index, search, and sort at a later time. Adze supports this out of the box through the [`machineReadable` configuration property](#configuration). When this is enabled, all logs will cease printing in a user-friendly human-readable format and print to the console as JSON objects. These objects will contain all of the information that would normally be present in a human-readable log.
 
 ## Configuration

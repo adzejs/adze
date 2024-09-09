@@ -1,5 +1,9 @@
 # Getters and Setters
 
+:::danger
+This version is now deprecated! Please upgrade to [version 2](https://adzejs.com/)!
+:::
+
 Adze log instances have a few setters and getters that you can take advantage of.
 
 ## context
