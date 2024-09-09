@@ -1,5 +1,3 @@
-## Easy Microfrontend Logging
-
 Because Adze automatically comes with a [global store](../reference/global-store.md) that can have
 configuration applied that all logs will inherit from.
 

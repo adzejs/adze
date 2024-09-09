@@ -1,5 +1,3 @@
-## Getting Started is Easy
-
 First install Adze from [npm](https://www.npmjs.com/package/adze).
 
 ```bash

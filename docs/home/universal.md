@@ -1,5 +1,3 @@
-## Universal By Nature
-
 Modern JavaScript frameworks like [NextJS](https://nextjs.org/), [NuxtJS](https://nuxt.com/), and
 [SvelteKit](https://kit.svelte.dev/) combine your "back-end" and "front-end" code in the same
 location. **Adze is universal** which means it can be executed on the

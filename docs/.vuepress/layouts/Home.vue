@@ -10,6 +10,7 @@
       <div class="content-container box">
         <section class="content-block no-border centered no-padding">
           <div class="content">
+            <h2>Getting Started is Easy</h2>
             <Content path="/home/getting-started-is-easy.md" />
             <img
               :src="$withBase('/images/info-example-browser.svg')"
@@ -32,6 +33,7 @@
           />
         </div>
         <div class="content">
+          <h2>Universal By Nature</h2>
           <Content path="/home/universal.md" />
           <div class="great-with">
             <h3>Works great with</h3>
@@ -93,6 +95,7 @@
           <img :src="$withBase('images/chainsaw.svg')" style="width: 100%; max-height: 200px" />
         </div>
         <div class="content">
+          <h2>Simple, Chainable API</h2>
           <Content path="/home/chainable-api.md" />
           <img
             :src="$withBase('/images/alert-example-browser.svg')"
@@ -114,6 +117,7 @@
             />
           </div>
           <div class="content">
+            <h2>Choose Your Format</h2>
             <Content path="/home/configurable.md" />
           </div>
         </section>
@@ -128,6 +132,7 @@
           <img :src="$withBase('images/truck-loaded.svg')" style="max-height: 260px" />
         </div>
         <div class="content">
+          <h2>First Class TypeScript Support</h2>
           <Content path="/home/typescript-first.md" />
         </div>
       </section>
@@ -141,6 +146,7 @@
           <img :src="$withBase('images/woodmill.svg')" style="max-height: 260px" />
         </div>
         <div class="content">
+          <h2>Easy Microfrontend Logging</h2>
           <Content path="/home/global-store.md" />
         </div>
       </section>
@@ -154,6 +160,7 @@
             <img :src="$withBase('images/shaped-wood.svg')" style="max-height: 150px" />
           </div>
           <div class="content">
+            <h2>And Much More...</h2>
             <Content path="/home/much-more.md" />
             <br />
             <p class="action">
@@ -232,42 +239,6 @@ img {
   justify-content: space-between;
 }
 
-.feature {
-  flex-grow: 1;
-  flex-basis: 30%;
-  max-width: 30%;
-
-  h2 {
-    font-size: 1.4rem;
-    font-weight: 500;
-    border-bottom: none;
-    padding-bottom: 0;
-    color: lighten(palette.$textColor, 10%);
-  }
-
-  p {
-    color: lighten(palette.$textColor, 25%);
-  }
-
-  img {
-    display: block;
-    float: left;
-    margin-right: 15px;
-  }
-
-  #chainsaw {
-    max-height: 50px;
-  }
-
-  #lumberjack-bust {
-    max-height: 60px;
-  }
-
-  #logs-small {
-    max-height: 50px;
-  }
-}
-
 .content-container {
   max-width: 960px;
   margin: 0px auto;
@@ -292,6 +263,7 @@ img {
   }
 
   &.alt-bg-fade {
+    pointer-events: none;
     background: rgb(239, 239, 239);
     background: linear-gradient(0deg, rgba(239, 239, 239, 1) 30%, transparent 70%);
     z-index: 1;
