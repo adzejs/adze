@@ -1,5 +1,6 @@
 import Formatter from '../formatter';
-import { Configuration, LevelConfiguration, ModifierData } from '../../_types';
+import { Configuration } from '../../configuration';
+import { LevelConfiguration, ModifierData } from '../../_types';
 import { formatISO } from 'date-fns/formatISO';
 import { JsonLog, JsonLogOptionalFields, JsonLogRequiredFields } from './types';
 import { hasRequiredFields } from './type-guards';

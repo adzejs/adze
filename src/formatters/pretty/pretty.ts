@@ -1,4 +1,5 @@
 import Formatter from '../formatter';
+import { Configuration } from '../../configuration';
 import {
   addPadding,
   applyChalkStyles,
@@ -9,7 +10,7 @@ import {
   formatNamespace,
   initialCaps,
 } from '../../functions';
-import { Configuration, LevelConfiguration, ModifierData } from '../../_types';
+import { LevelConfiguration, ModifierData } from '../../_types';
 
 /**
  * Formats log messages in a pretty, human-readable manner.

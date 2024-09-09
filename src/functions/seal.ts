@@ -1,4 +1,5 @@
-import { Configuration, Modifier, ModifierData } from '..';
+import { Modifier, ModifierData } from '..';
+import { Configuration } from '../configuration';
 import Log from '../log';
 
 /**
@@ -15,7 +16,7 @@ export function SealedLog<N extends string, Msg, TBase extends Constructor = Con
   mods: ModifierData,
   modifierQueue: Modifier[]
 ) {
-  const { formatters, middleware = [], ...cfgWithoutFormatters } = cfg;
+  const { formatters, middleware = [], ...cfgWithoutFormatters } = cfg.exportValues();
   const sealing: unknown = class Sealing extends Base {
     _cfg = {
       ...structuredClone(cfgWithoutFormatters),

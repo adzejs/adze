@@ -11,7 +11,8 @@ import {
 } from '../constants';
 import Formatter from '../formatters/formatter';
 import Log from '../log';
-import { Configuration, UserConfiguration } from './configuration';
+import { Configuration } from '../configuration';
+import { UserConfiguration } from './configuration';
 import { Label } from './label';
 
 /**

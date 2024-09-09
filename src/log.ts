@@ -1,5 +1,4 @@
 import {
-  Configuration,
   DefaultTerminatorMethod,
   FormatterConstructor,
   LevelConfiguration,
@@ -10,13 +9,13 @@ import {
   TableData,
 } from './_types';
 import AdzeGlobal from './adze-global';
+import { Configuration } from './configuration';
 import {
   captureTimeNow,
   formatTime,
   setup,
   hrtime,
   isMethodWithArgs,
-  mergeConfiguration,
   stacktrace,
   cleanMessage,
   isTestEnvironment,
@@ -57,7 +56,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   constructor(cfg: UserConfiguration = {}, modifierData?: ModifierData) {
     this.globalStore = setup(cfg);
     this._modifierData = modifierData ?? {};
-    this._cfg = mergeConfiguration({}, cfg, this.globalStore.configuration);
+    this._cfg = new Configuration(cfg);
     this.doHook((m) => (m.constructed ? m.constructed(this) : null));
   }
 
@@ -432,7 +431,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * ```
    */
   public seal<N extends string = string, M = unknown>(cfg?: UserConfiguration) {
-    this.mergeConfiguration({ ...this._cfg, ...cfg });
+    this._cfg = new Configuration({ ...this._cfg.exportValues(), ...cfg });
     return SealedLog<N, M>(Log<N, M>, this._cfg, this.modifierData, this.modifierQueue);
   }
 
@@ -465,7 +464,7 @@ export default class Log<N extends string = string, Msg = unknown> {
     method: T,
     cfg?: UserConfiguration
   ) {
-    this.mergeConfiguration({ ...this._cfg, ...cfg });
+    this._cfg = new Configuration({ ...this._cfg.exportValues(), ...cfg });
     return (strings: TemplateStringsArray, ...values: string[]) => {
       const message = String.raw({ raw: strings }, ...values);
       const sealed = SealedLog(Log<N, Msg>, this._cfg, this.modifierData, this.modifierQueue);
@@ -1134,8 +1133,6 @@ export default class Log<N extends string = string, Msg = unknown> {
     return this;
   }
 
-  // TODO: Fix types for modifiers that require specific messages like table, dir, dirxml.
-
   /**
    * Stops a timer that was previously started by calling time() on a *labeled* log. Calculates the
    * difference between the start time and when this method was called. This then
@@ -1284,10 +1281,6 @@ export default class Log<N extends string = string, Msg = unknown> {
     // Run the modifier queue to modify the data object.
     this.runModifierQueue();
 
-    // Apply the global configuration overrides
-    // TODO: configuration merging is causing performance issues. Need to find a better way.
-    this._cfg = mergeConfiguration(this._cfg, {}, this.globalStore.configuration);
-
     // Get the level configuration based on the level name.
     const level = this.getLevelConfig(terminator);
 
@@ -1352,13 +1345,6 @@ export default class Log<N extends string = string, Msg = unknown> {
    */
   private selectFormatter(format: string): FormatterConstructor {
     return this._cfg?.formatters[format];
-  }
-
-  /**
-   * Merge the user configuration with the default configuration and the global configuration.
-   */
-  private mergeConfiguration(cfg: UserConfiguration = {}): void {
-    this._cfg = mergeConfiguration(this._cfg, cfg, this.globalStore.configuration);
   }
 
   /**

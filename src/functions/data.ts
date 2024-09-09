@@ -1,6 +1,4 @@
-import { mergician as merge } from 'mergician';
-import { Configuration, UserConfiguration } from '../_types';
-import { defaultConfiguration as dflt } from '../constants';
+import { Configuration } from '../configuration';
 import { envIsWindow } from './global';
 import { isNumber } from './type-guards';
 
@@ -27,22 +25,4 @@ export function getSearchParams(): URLSearchParams | undefined {
 export function getActiveLevel(cfg: Configuration): number {
   if (isNumber(cfg.activeLevel)) return cfg.activeLevel;
   return cfg.levels[cfg.activeLevel].level;
-}
-
-/**
- * Merges configurations together in the proper order of precedence.
- */
-export function mergeConfiguration(...configs: UserConfiguration[]): Configuration {
-  return merge({
-    appendArrays: true,
-    dedupArrays: true,
-    beforeEach: ({ key, srcVal }) => {
-      if (key === 'terminalStyle') {
-        return {
-          value: srcVal,
-          writable: true,
-        };
-      }
-    },
-  })(dflt, ...configs) as Configuration;
 }

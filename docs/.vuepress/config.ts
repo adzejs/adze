@@ -135,7 +135,7 @@ export default defineUserConfig({
   theme: defaultTheme({
     logo: '/images/icon.svg',
     logoDark: '/images/icon-borderless.svg',
-    repo: 'https://github.com/AJStacy/adze',
+    repo: 'https://github.com/adzejs/adze',
     navbar: [
       { text: 'Getting Started', link: '/getting-started/introduction' },
       { text: 'Reference Manual', link: '/reference/introduction' },
