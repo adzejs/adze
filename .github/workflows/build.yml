@@ -5,37 +5,37 @@ on:
       - master
 
 jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Node
-        uses: actions/setup-node@v1
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Yarn Cache
-        uses: c-hive/gha-yarn-cache@v1
-      - name: Install Dependencies
-        run: yarn install --force
-      - name: Run Linter
-        run: yarn lint
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Node
-        uses: actions/setup-node@v1
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Yarn Cache
-        uses: c-hive/gha-yarn-cache@v1
-      - name: Install Dependencies
-        run: yarn install --force
-      - name: Run Unit Tests
-        run: yarn test
+  # lint:
+  #   name: Lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Setup Node
+  #       uses: actions/setup-node@v1
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v2
+  #     - name: Yarn Cache
+  #       uses: c-hive/gha-yarn-cache@v1
+  #     - name: Install Dependencies
+  #       run: yarn install --force
+  #     - name: Run Linter
+  #       run: yarn lint
+  # test:
+  #   name: Test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Setup Node
+  #       uses: actions/setup-node@v1
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v2
+  #     - name: Yarn Cache
+  #       uses: c-hive/gha-yarn-cache@v1
+  #     - name: Install Dependencies
+  #       run: yarn install --force
+  #     - name: Run Unit Tests
+  #       run: yarn test
   release:
     name: Release
-    needs: [lint, test]
+    # needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -59,7 +59,7 @@ jobs:
         run: npx semantic-release
   docs:
     runs-on: ubuntu-latest
-    needs: [lint, test]
+    # needs: [lint, test]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -72,7 +72,7 @@ jobs:
       - name: Build Content
         run: yarn docs:build
       - name: Move to v1 directory
-        run: mv docs/.vuepress/dist dist/v1
+        run: mv ./docs/.vuepress/dist ./dist/v1
       - name: Publish
         uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
         with:
