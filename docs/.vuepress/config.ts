@@ -2,13 +2,19 @@ import { defaultTheme } from '@vuepress/theme-default';
 import { defineUserConfig } from 'vuepress/cli';
 import { viteBundler } from '@vuepress/bundler-vite';
 import { searchProPlugin } from 'vuepress-plugin-search-pro';
+import { markdownContainerPlugin } from '@vuepress/plugin-markdown-container';
 const { description } = require('../../package');
 
 export default defineUserConfig({
   lang: 'en-US',
   title: 'Universal Logging for JavaScript',
   description,
-  plugins: [searchProPlugin({})],
+  plugins: [
+    searchProPlugin({}),
+    markdownContainerPlugin({
+      type: 'template',
+    }),
+  ],
   /**
    * Extra tags to be injected to the page HTML `<head>`
    *

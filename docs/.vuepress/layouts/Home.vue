@@ -10,7 +10,12 @@
       <div class="content-container box">
         <section class="content-block no-border centered no-padding">
           <div class="content">
-            <Content slot-key="getting-started-is-easy" />
+            <Content path="/home/getting-started-is-easy.md" />
+            <img
+              :src="$withBase('/images/info-example-browser.svg')"
+              alt="Example of an info log generated from the example code"
+              style="max-width: 500px; height: 100%"
+            />
           </div>
         </section>
       </div>
@@ -21,31 +26,62 @@
       <section class="content-block no-border">
         <div class="image">
           <img
-            :src="$withBase('images/hero.svg')"
+            :src="$withBase('/images/hero.svg')"
             alt="An isometric illustration of a node server and a web browser among trees"
-            style="max-height: 240px"
+            style="max-width: 100%; height: 100%"
           />
-          <img :src="$withBase('images/trees-1.svg')" />
         </div>
         <div class="content">
-          <Content slot-key="browser-and-node" />
-
+          <Content path="/home/universal.md" />
           <div class="great-with">
-            <div><h3>Works great with</h3></div>
-            <div>
-              <a href="https://nextjs.org/" target="_blank">
-                <img :src="$withBase('images/next-logo.png')" alt="NextJS" />
-              </a>
-            </div>
-            <div>
-              <a href="https://nuxt.com/" target="_blank">
-                <img :src="$withBase('images/nuxt-logo.png')" alt="NuxtJS" />
-              </a>
-            </div>
-            <div>
-              <a href="https://kit.svelte.dev/">
-                <img :src="$withBase('images/sveltekit-logo.png')" alt="SvelteKit" />
-              </a>
+            <h3>Works great with</h3>
+            <div style="display: flex; gap: 1rem">
+              <div>
+                <a href="https://nextjs.org/" target="_blank">
+                  <img style="height: 40px" :src="$withBase('images/next-logo.png')" alt="NextJS" />
+                </a>
+              </div>
+              <div>
+                <a href="https://nuxt.com/" target="_blank">
+                  <img style="height: 40px" :src="$withBase('images/nuxt-logo.png')" alt="NuxtJS" />
+                </a>
+              </div>
+              <div>
+                <a href="https://kit.svelte.dev/">
+                  <img
+                    style="height: 40px"
+                    :src="$withBase('images/sveltekit-logo.png')"
+                    alt="SvelteKit"
+                  />
+                </a>
+              </div>
+              <div>
+                <a href="https://nodejs.org/en">
+                  <img
+                    style="height: 40px; max-width: 100%"
+                    :src="$withBase('images/node-logo.svg')"
+                    alt="NodeJS"
+                  />
+                </a>
+              </div>
+              <div>
+                <a href="https://bun.sh/">
+                  <img
+                    style="height: 40px; max-width: 100%"
+                    :src="$withBase('images/bun-logo.svg')"
+                    alt="BunJS"
+                  />
+                </a>
+              </div>
+              <div>
+                <a href="https://deno.com/">
+                  <img
+                    style="height: 40px; max-width: 100%"
+                    :src="$withBase('images/deno-logo.svg')"
+                    alt="DenoJS"
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -54,61 +90,58 @@
       <!-- Chainable API -->
       <section class="content-block left">
         <div class="image">
-          <img
-            :src="$withBase('images/truck-loaded-with-lumberjack.svg')"
-            style="max-height: 250px"
-          />
+          <img :src="$withBase('images/chainsaw.svg')" style="width: 100%; max-height: 200px" />
         </div>
         <div class="content">
-          <Content slot-key="human-machine-readable" />
-          <!-- <h2>A Fluent, Chainable API</h2>
-          <p>
-            Writing your logs should feel natural which is why Adze chose to implement a chainable
-            API that feels very much like the standard console API (but better).
-          </p> -->
+          <Content path="/home/chainable-api.md" />
+          <img
+            :src="$withBase('/images/alert-example-browser.svg')"
+            alt="Example of an alert log generated from the example code"
+            style="max-width: 800px; height: 100%"
+          />
         </div>
       </section>
     </div>
 
-    <!-- Lumber Scene 1 -->
+    <!-- Choose Your Format -->
     <div class="full-width-container alt-bg">
       <div class="content-container">
         <section class="content-block no-border centered">
           <div class="image">
             <img
               :src="$withBase('images/lumber-scene-1.svg')"
-              style="width: 100%; max-height: 300px"
+              style="max-width: 100%; height: auto"
             />
           </div>
           <div class="content">
-            <Content slot-key="everything-configurable" />
+            <Content path="/home/configurable.md" />
           </div>
         </section>
       </div>
     </div>
 
-    <!-- Browser and Node -->
+    <!-- TypeScript Support -->
     <div class="content-container">
       <!-- Chainable API -->
       <section class="content-block no-border">
         <div class="image">
-          <img :src="$withBase('images/truck-loaded.svg')" style="max-height: 200px" />
+          <img :src="$withBase('images/truck-loaded.svg')" style="max-height: 260px" />
         </div>
         <div class="content">
-          <Content slot-key="typescript-support" />
+          <Content path="/home/typescript-first.md" />
         </div>
       </section>
     </div>
 
-    <!-- Shed -->
+    <!-- Microfrontends -->
     <div class="content-container">
       <!-- Chainable API -->
       <section class="content-block left">
         <div class="image">
-          <img :src="$withBase('images/woodmill.svg')" style="max-height: 172px" />
+          <img :src="$withBase('images/woodmill.svg')" style="max-height: 260px" />
         </div>
         <div class="content">
-          <Content slot-key="shed" />
+          <Content path="/home/global-store.md" />
         </div>
       </section>
     </div>
@@ -121,10 +154,12 @@
             <img :src="$withBase('images/shaped-wood.svg')" style="max-height: 150px" />
           </div>
           <div class="content">
-            <Content slot-key="learn-more" />
+            <Content path="/home/much-more.md" />
             <br />
             <p class="action">
-              <nav-link class="action-button" :item="quickStartLink" />
+              <RouteLink class="action-button" to="/getting-started/introduction.md">
+                Get Started
+              </RouteLink>
             </p>
           </div>
         </section>
@@ -133,7 +168,7 @@
 
     <div clas="content-container">
       <footer class="footer">
-        <Content slot-key="footer" />
+        <Content path="/home/footer.md" />
       </footer>
     </div>
   </main>
@@ -157,6 +192,11 @@ const {
 
 <style scoped lang="scss">
 @use '../styles/palette';
+
+img {
+  max-width: 100%;
+  height: auto;
+}
 
 .home-container {
   position: relative;
@@ -266,9 +306,11 @@ const {
 
 .great-with {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
   align-items: center;
-
+  h3 {
+    margin-right: 2rem;
+  }
   > div > a > img {
     max-height: 40px;
   }
@@ -311,17 +353,21 @@ const {
       width: 100%;
       max-width: none;
     }
-  }
 
-  p {
-    img {
-      max-width: 100%;
-      height: auto;
+    .image {
+      padding-right: 0;
     }
   }
 
   .image {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    align-items: center;
     padding-right: 20px;
+    img {
+      display: block;
+    }
   }
 
   .content {
@@ -370,8 +416,17 @@ const {
     padding: 40px 0;
     margin: 20px 0;
     justify-content: center;
+    .image {
+      flex: none;
+      width: 280px;
+    }
+
     .content {
       max-width: 100%;
+
+      h3 {
+        font-size: 1.2rem;
+      }
     }
   }
 }

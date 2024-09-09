@@ -20,10 +20,12 @@
         />
       </div>
       <div class="button-container">
-        <RouteLink class="action-button alt" to="/getting-started/introduction.md">
+        <RouteLink class="action-button" to="/getting-started/introduction.md">
           Getting Started
         </RouteLink>
-        <RouteLink class="action-button" to="/reference/introduction.md">Reference Guide</RouteLink>
+        <RouteLink class="action-button alt" to="/reference/introduction.md"
+          >Reference Guide</RouteLink
+        >
       </div>
     </div>
   </div>
@@ -44,9 +46,9 @@ import { RouteLink } from '@vuepress/client';
   align-items: center;
   justify-content: center;
   z-index: 10;
-  @media screen and (min-width: 400px) and (orientation: landscape) {
-    height: 230vh;
-  }
+  // @media screen and (min-width: 400px) and (orientation: landscape) {
+  //   height: 230vh;
+  // }
   @media screen and (min-width: 920px) {
     flex-direction: column-reverse;
     background: rgb(255, 255, 255);
@@ -70,6 +72,7 @@ import { RouteLink } from '@vuepress/client';
 
 .action-button {
   display: inline-block;
+  min-width: 205px;
   font-size: 1.2rem;
   color: #fff;
   background-color: palette.$accentColor;
@@ -99,7 +102,7 @@ import { RouteLink } from '@vuepress/client';
   padding: 0 2rem 0 2rem;
   text-align: center;
   img {
-    max-width: 460px;
+    max-width: 340px;
   }
   h1 {
     font-size: 24px;
@@ -126,8 +129,13 @@ import { RouteLink } from '@vuepress/client';
 .illustration {
   padding: 20px;
   text-align: center;
+
+  .button-container {
+    margin-top: 4rem;
+  }
+
   @media screen and (min-width: 920px) {
-    min-width: 700px;
+    min-width: 500px;
     min-height: 40vh;
     flex-grow: 1;
     align-self: flex-end;
@@ -139,19 +147,23 @@ import { RouteLink } from '@vuepress/client';
     align-self: flex-start;
   }
   .image-container {
-    max-width: 550px;
+    display: none;
+    max-width: 500px;
     img {
       max-width: 100%;
       height: auto;
+    }
+    @media screen and (min-width: 389px) {
+      display: block;
     }
     @media screen and (min-width: 540px) and (min-height: 720px) and (orientation: portrait) {
       max-width: 380px;
     }
     @media screen and (min-width: 700px) and (min-height: 720px) and (orientation: portrait) {
-      max-width: 650px;
+      max-width: 500px;
     }
     @media screen and (min-height: 845px) and (min-width: 1138px) {
-      max-width: 1000px;
+      max-width: 650px;
     }
   }
 }
