@@ -132,7 +132,10 @@
           <img :src="$withBase('images/truck-loaded.svg')" style="max-height: 260px" />
         </div>
         <div class="content">
-          <h2>First Class TypeScript Support</h2>
+          <h2 style="display: flex; align-items: center; gap: 15px">
+            First Class TypeScript Support
+            <img :src="$withBase('images/ts-icon.svg')" style="max-height: 40px" />
+          </h2>
           <Content path="/home/typescript-first.md" />
         </div>
       </section>

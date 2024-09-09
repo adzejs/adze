@@ -3,6 +3,7 @@ import { defineUserConfig } from 'vuepress/cli';
 import { viteBundler } from '@vuepress/bundler-vite';
 import { searchProPlugin } from 'vuepress-plugin-search-pro';
 import { markdownContainerPlugin } from '@vuepress/plugin-markdown-container';
+import { prismjsPlugin } from '@vuepress/plugin-prismjs';
 const { description } = require('../../package');
 
 export default defineUserConfig({
@@ -13,6 +14,12 @@ export default defineUserConfig({
     searchProPlugin({}),
     markdownContainerPlugin({
       type: 'template',
+    }),
+    prismjsPlugin({
+      themes: {
+        light: 'duotone-light',
+        dark: 'lucario',
+      },
     }),
   ],
   /**
