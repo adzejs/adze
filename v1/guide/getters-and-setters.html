@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Getters and Setters | Adze JS - Better JavaScript Logging</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <script async="true" defer="true" data-domain="adzejs.com" src="https://plausible.io/js/plausible.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/adze/dist/adze.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Share&amp;display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="64x64" href="/v1/favicon.png">
+    <meta name="description" content="A library for shaping your logs.">
+    <meta property="og:title" content="Adze - Better JavaScript Logging">
+    <meta property="og:description" content="A TypeScript enabled library with a beautiful API that simplifies JavaScript logging.">
+    <meta property="og:image" content="https://adzejs.com/assets/img/demo.ce24f23e.png">
+    <meta property="og:url" content="https://www.adzejs.com/">
+    <meta property="twitter:title" content="Adze - Better JavaScript Logging">
+    <meta property="twitter:description" content="A TypeScript enabled library with a beautiful API that simplifies JavaScript logging.">
+    <meta property="twitter:image" content="https://adzejs.com/assets/img/demo.ce24f23e.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/v1/assets/css/0.styles.8e8ebd33.css" as="style"><link rel="preload" href="/v1/assets/js/app.e1114758.js" as="script"><link rel="preload" href="/v1/assets/js/2.8a90f69c.js" as="script"><link rel="preload" href="/v1/assets/js/24.54123392.js" as="script"><link rel="prefetch" href="/v1/assets/js/10.63e6ff2f.js"><link rel="prefetch" href="/v1/assets/js/11.346a868b.js"><link rel="prefetch" href="/v1/assets/js/12.602ff23a.js"><link rel="prefetch" href="/v1/assets/js/13.4b80865f.js"><link rel="prefetch" href="/v1/assets/js/14.f997a49f.js"><link rel="prefetch" href="/v1/assets/js/15.013cb310.js"><link rel="prefetch" href="/v1/assets/js/16.72bee167.js"><link rel="prefetch" href="/v1/assets/js/17.e84be753.js"><link rel="prefetch" href="/v1/assets/js/18.c2faaea3.js"><link rel="prefetch" href="/v1/assets/js/19.307f3c57.js"><link rel="prefetch" href="/v1/assets/js/20.57d769aa.js"><link rel="prefetch" href="/v1/assets/js/21.ff5f9b94.js"><link rel="prefetch" href="/v1/assets/js/22.2adfbd1a.js"><link rel="prefetch" href="/v1/assets/js/23.71814748.js"><link rel="prefetch" href="/v1/assets/js/25.12e243ce.js"><link rel="prefetch" href="/v1/assets/js/26.518efd1a.js"><link rel="prefetch" href="/v1/assets/js/27.5d0ca398.js"><link rel="prefetch" href="/v1/assets/js/28.b31e5101.js"><link rel="prefetch" href="/v1/assets/js/3.60deda3a.js"><link rel="prefetch" href="/v1/assets/js/4.e5620543.js"><link rel="prefetch" href="/v1/assets/js/5.a45759b3.js"><link rel="prefetch" href="/v1/assets/js/6.49ba4101.js"><link rel="prefetch" href="/v1/assets/js/7.e24dd8a1.js"><link rel="prefetch" href="/v1/assets/js/8.a9b5d9f0.js"><link rel="prefetch" href="/v1/assets/js/9.05ca1da5.js">
+    <link rel="stylesheet" href="/v1/assets/css/0.styles.8e8ebd33.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/v1/" class="home-link router-link-active"><img src="/v1/icon.svg" alt="Adze JS - Better JavaScript Logging" class="logo"> <span class="site-name can-hide">Adze JS - Better JavaScript Logging</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/v1/guide/" class="nav-link router-link-active">
+  Guide
+</a></div><div class="nav-item"><a href="/v1/config/" class="nav-link">
+  Config
+</a></div><div class="nav-item"><a href="/v1/faqs/" class="nav-link">
+  FAQ's
+</a></div><div class="nav-item"><a href="/v1/addons/creating-addons.html" class="nav-link">
+  Add-on's
+</a></div> <a href="https://github.com/AJStacy/Adze" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/v1/guide/" class="nav-link router-link-active">
+  Guide
+</a></div><div class="nav-item"><a href="/v1/config/" class="nav-link">
+  Config
+</a></div><div class="nav-item"><a href="/v1/faqs/" class="nav-link">
+  FAQ's
+</a></div><div class="nav-item"><a href="/v1/addons/creating-addons.html" class="nav-link">
+  Add-on's
+</a></div> <a href="https://github.com/AJStacy/Adze" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Guide</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/v1/guide/" aria-current="page" class="sidebar-link">Introduction</a></li><li><a href="/v1/guide/installation.html" class="sidebar-link">Installing Adze</a></li><li><a href="/v1/guide/adze-concepts.html" class="sidebar-link">Adze Concepts</a></li><li><a href="/v1/guide/factories.html" class="sidebar-link">Factories</a></li><li><a href="/v1/guide/modifiers.html" class="sidebar-link">Modifiers</a></li><li><a href="/v1/guide/default-terminators.html" class="sidebar-link">Default Terminators</a></li><li><a href="/v1/guide/other-terminators.html" class="sidebar-link">Other Terminators</a></li><li><a href="/v1/guide/machine-readable-logs.html" class="sidebar-link">Machine Readable Logs</a></li><li><a href="/v1/guide/filtering-and-utility-functions.html" class="sidebar-link">Filtering &amp; Utility Functions</a></li><li><a href="/v1/guide/getters-and-setters.html" aria-current="page" class="active sidebar-link">Getters and Setters</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/v1/guide/getters-and-setters.html#context" class="sidebar-link">context</a></li><li class="sidebar-sub-header"><a href="/v1/guide/getters-and-setters.html#data" class="sidebar-link">data</a></li><li class="sidebar-sub-header"><a href="/v1/guide/getters-and-setters.html#hydrate" class="sidebar-link">hydrate</a></li><li class="sidebar-sub-header"><a href="/v1/guide/getters-and-setters.html#level" class="sidebar-link">level</a></li><li class="sidebar-sub-header"><a href="/v1/guide/getters-and-setters.html#render" class="sidebar-link">render</a></li></ul></li><li><a href="/v1/guide/data.html" class="sidebar-link">Data</a></li><li><a href="/v1/guide/shed-concepts.html" class="sidebar-link">Shed Concepts</a></li><li><a href="/v1/guide/using-shed.html" class="sidebar-link">Using Shed</a></li><li><a href="/v1/guide/unit-testing.html" class="sidebar-link">Unit Testing</a></li><li><a href="/v1/guide/mapped-diagnostic-context.html" class="sidebar-link">Mapped Diagnostic Context (MDC)</a></li><li><a href="/v1/guide/micro-frontends.html" class="sidebar-link">Micro-Frontends</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="getters-and-setters"><a href="#getters-and-setters" class="header-anchor">#</a> Getters and Setters</h1> <p>Adze log instances have a few setters and getters that you can take advantage of.</p> <h2 id="context"><a href="#context" class="header-anchor">#</a> context</h2> <p>Use this getter to retrieve the log instance's Mapped Diagnostic Context (MDC) value.</p> <h3 id="example"><a href="#example" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze<span class="token punctuation">,</span> createShed <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token function">createShed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Let's generate a log</span>
+<span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">label</span><span class="token punctuation">(</span><span class="token string">'context'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">thread</span><span class="token punctuation">(</span><span class="token string">'foo'</span><span class="token punctuation">,</span> <span class="token string">'bar'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> log <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">label</span><span class="token punctuation">(</span><span class="token string">'context'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">'This is an info log'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Get the MDC context of the log</span>
+<span class="token keyword">const</span> context <span class="token operator">=</span> log<span class="token punctuation">.</span>context<span class="token punctuation">;</span>
+</code></pre></div><h2 id="data"><a href="#data" class="header-anchor">#</a> data</h2> <p>Use this getter to retrieve all of the meta <a href="/v1/guide/data.html#log-data">data</a> related to the log instance.</p> <h3 id="example-2"><a href="#example-2" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Let's generate a log</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> log <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">label</span><span class="token punctuation">(</span><span class="token string">'foo'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>timeNow<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">'This is an info log'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Get all of the meta data from the log instance</span>
+<span class="token keyword">const</span> data <span class="token operator">=</span> log<span class="token punctuation">.</span>data<span class="token punctuation">;</span>
+</code></pre></div><h2 id="hydrate"><a href="#hydrate" class="header-anchor">#</a> hydrate</h2> <p>This setter enables you to create a new log instance or replicate a log instance by providing the method with a <a href="/v1/guide/data.html#log-data">log data object</a>. The log instance will inherit all of the properties from the log data object.</p> <h3 id="example-3"><a href="#example-3" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Let's generate a log</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> log <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">label</span><span class="token punctuation">(</span><span class="token string">'foo'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>timeNow<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">'This is an info log'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Let's clone it by using the hydrate setter</span>
+<span class="token keyword">const</span> cloned <span class="token operator">=</span> <span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hydrate</span><span class="token punctuation">(</span>log<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="level"><a href="#level" class="header-anchor">#</a> level</h2> <p>Use this getter to retrieve the log instance's level.</p> <h3 id="example-4"><a href="#example-4" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Let's generate a log</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> log <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">'This is an info log'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Get the level of the log</span>
+<span class="token keyword">const</span> level <span class="token operator">=</span> log<span class="token punctuation">.</span>level<span class="token punctuation">;</span>
+</code></pre></div><h2 id="render"><a href="#render" class="header-anchor">#</a> render</h2> <p>Use this getter to retrieve the log instance's <a href="/v1/guide/data.html#log-render">render</a>. Under normal circumstances you should retrieve the log render from the <a href="/v1/guide/data.html#terminated-log-object">terminated log object</a> that is returned by a terminated log rather than from the getter.</p> <h3 id="example-5"><a href="#example-5" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Let's generate a log</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> log <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">'This is an info log'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Get the render of the log</span>
+<span class="token keyword">const</span> render <span class="token operator">=</span> log<span class="token punctuation">.</span>render<span class="token punctuation">;</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/v1/guide/filtering-and-utility-functions.html" class="prev">
+        Filtering &amp; Utility Functions
+      </a></span> <span class="next"><a href="/v1/guide/data.html">
+        Data
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/v1/assets/js/app.e1114758.js" defer></script><script src="/v1/assets/js/2.8a90f69c.js" defer></script><script src="/v1/assets/js/24.54123392.js" defer></script>
+  </body>
+</html>

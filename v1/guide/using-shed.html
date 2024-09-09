@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Using Shed | Adze JS - Better JavaScript Logging</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <script async="true" defer="true" data-domain="adzejs.com" src="https://plausible.io/js/plausible.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/adze/dist/adze.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Share&amp;display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="64x64" href="/v1/favicon.png">
+    <meta name="description" content="A library for shaping your logs.">
+    <meta property="og:title" content="Adze - Better JavaScript Logging">
+    <meta property="og:description" content="A TypeScript enabled library with a beautiful API that simplifies JavaScript logging.">
+    <meta property="og:image" content="https://adzejs.com/assets/img/demo.ce24f23e.png">
+    <meta property="og:url" content="https://www.adzejs.com/">
+    <meta property="twitter:title" content="Adze - Better JavaScript Logging">
+    <meta property="twitter:description" content="A TypeScript enabled library with a beautiful API that simplifies JavaScript logging.">
+    <meta property="twitter:image" content="https://adzejs.com/assets/img/demo.ce24f23e.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/v1/assets/css/0.styles.8e8ebd33.css" as="style"><link rel="preload" href="/v1/assets/js/app.e1114758.js" as="script"><link rel="preload" href="/v1/assets/js/2.8a90f69c.js" as="script"><link rel="preload" href="/v1/assets/js/19.307f3c57.js" as="script"><link rel="prefetch" href="/v1/assets/js/10.63e6ff2f.js"><link rel="prefetch" href="/v1/assets/js/11.346a868b.js"><link rel="prefetch" href="/v1/assets/js/12.602ff23a.js"><link rel="prefetch" href="/v1/assets/js/13.4b80865f.js"><link rel="prefetch" href="/v1/assets/js/14.f997a49f.js"><link rel="prefetch" href="/v1/assets/js/15.013cb310.js"><link rel="prefetch" href="/v1/assets/js/16.72bee167.js"><link rel="prefetch" href="/v1/assets/js/17.e84be753.js"><link rel="prefetch" href="/v1/assets/js/18.c2faaea3.js"><link rel="prefetch" href="/v1/assets/js/20.57d769aa.js"><link rel="prefetch" href="/v1/assets/js/21.ff5f9b94.js"><link rel="prefetch" href="/v1/assets/js/22.2adfbd1a.js"><link rel="prefetch" href="/v1/assets/js/23.71814748.js"><link rel="prefetch" href="/v1/assets/js/24.54123392.js"><link rel="prefetch" href="/v1/assets/js/25.12e243ce.js"><link rel="prefetch" href="/v1/assets/js/26.518efd1a.js"><link rel="prefetch" href="/v1/assets/js/27.5d0ca398.js"><link rel="prefetch" href="/v1/assets/js/28.b31e5101.js"><link rel="prefetch" href="/v1/assets/js/3.60deda3a.js"><link rel="prefetch" href="/v1/assets/js/4.e5620543.js"><link rel="prefetch" href="/v1/assets/js/5.a45759b3.js"><link rel="prefetch" href="/v1/assets/js/6.49ba4101.js"><link rel="prefetch" href="/v1/assets/js/7.e24dd8a1.js"><link rel="prefetch" href="/v1/assets/js/8.a9b5d9f0.js"><link rel="prefetch" href="/v1/assets/js/9.05ca1da5.js">
+    <link rel="stylesheet" href="/v1/assets/css/0.styles.8e8ebd33.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/v1/" class="home-link router-link-active"><img src="/v1/icon.svg" alt="Adze JS - Better JavaScript Logging" class="logo"> <span class="site-name can-hide">Adze JS - Better JavaScript Logging</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/v1/guide/" class="nav-link router-link-active">
+  Guide
+</a></div><div class="nav-item"><a href="/v1/config/" class="nav-link">
+  Config
+</a></div><div class="nav-item"><a href="/v1/faqs/" class="nav-link">
+  FAQ's
+</a></div><div class="nav-item"><a href="/v1/addons/creating-addons.html" class="nav-link">
+  Add-on's
+</a></div> <a href="https://github.com/AJStacy/Adze" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/v1/guide/" class="nav-link router-link-active">
+  Guide
+</a></div><div class="nav-item"><a href="/v1/config/" class="nav-link">
+  Config
+</a></div><div class="nav-item"><a href="/v1/faqs/" class="nav-link">
+  FAQ's
+</a></div><div class="nav-item"><a href="/v1/addons/creating-addons.html" class="nav-link">
+  Add-on's
+</a></div> <a href="https://github.com/AJStacy/Adze" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Guide</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/v1/guide/" aria-current="page" class="sidebar-link">Introduction</a></li><li><a href="/v1/guide/installation.html" class="sidebar-link">Installing Adze</a></li><li><a href="/v1/guide/adze-concepts.html" class="sidebar-link">Adze Concepts</a></li><li><a href="/v1/guide/factories.html" class="sidebar-link">Factories</a></li><li><a href="/v1/guide/modifiers.html" class="sidebar-link">Modifiers</a></li><li><a href="/v1/guide/default-terminators.html" class="sidebar-link">Default Terminators</a></li><li><a href="/v1/guide/other-terminators.html" class="sidebar-link">Other Terminators</a></li><li><a href="/v1/guide/machine-readable-logs.html" class="sidebar-link">Machine Readable Logs</a></li><li><a href="/v1/guide/filtering-and-utility-functions.html" class="sidebar-link">Filtering &amp; Utility Functions</a></li><li><a href="/v1/guide/getters-and-setters.html" class="sidebar-link">Getters and Setters</a></li><li><a href="/v1/guide/data.html" class="sidebar-link">Data</a></li><li><a href="/v1/guide/shed-concepts.html" class="sidebar-link">Shed Concepts</a></li><li><a href="/v1/guide/using-shed.html" aria-current="page" class="active sidebar-link">Using Shed</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/v1/guide/using-shed.html#addlabel" class="sidebar-link">addLabel</a></li><li class="sidebar-sub-header"><a href="/v1/guide/using-shed.html#addlistener" class="sidebar-link">addListener</a></li><li class="sidebar-sub-header"><a href="/v1/guide/using-shed.html#cachelimit" class="sidebar-link">cacheLimit</a></li><li class="sidebar-sub-header"><a href="/v1/guide/using-shed.html#cachesize" class="sidebar-link">cacheSize</a></li><li class="sidebar-sub-header"><a href="/v1/guide/using-shed.html#config" class="sidebar-link">config</a></li><li class="sidebar-sub-header"><a href="/v1/guide/using-shed.html#firelisteners" class="sidebar-link">fireListeners</a></li><li class="sidebar-sub-header"><a href="/v1/guide/using-shed.html#getcollection" class="sidebar-link">getCollection</a></li><li class="sidebar-sub-header"><a href="/v1/guide/using-shed.html#getlabel" class="sidebar-link">getLabel</a></li><li class="sidebar-sub-header"><a href="/v1/guide/using-shed.html#haslabel" class="sidebar-link">hasLabel</a></li><li class="sidebar-sub-header"><a href="/v1/guide/using-shed.html#hasoverrides" class="sidebar-link">hasOverrides</a></li><li class="sidebar-sub-header"><a href="/v1/guide/using-shed.html#overrides" class="sidebar-link">overrides</a></li><li class="sidebar-sub-header"><a href="/v1/guide/using-shed.html#removelistener" class="sidebar-link">removeListener</a></li><li class="sidebar-sub-header"><a href="/v1/guide/using-shed.html#store" class="sidebar-link">store</a></li><li class="sidebar-sub-header"><a href="/v1/guide/using-shed.html#shed-tools" class="sidebar-link">$shed.tools</a></li></ul></li><li><a href="/v1/guide/unit-testing.html" class="sidebar-link">Unit Testing</a></li><li><a href="/v1/guide/mapped-diagnostic-context.html" class="sidebar-link">Mapped Diagnostic Context (MDC)</a></li><li><a href="/v1/guide/micro-frontends.html" class="sidebar-link">Micro-Frontends</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="using-shed"><a href="#using-shed" class="header-anchor">#</a> Using Shed</h1> <p>Let's take a deeper dive into each of Shed's public methods.</p> <h2 id="addlabel"><a href="#addlabel" class="header-anchor">#</a> addLabel</h2> <p>Adds a <a href="/v1/guide/modifiers.html#label">label</a> instance to the Shed.</p> <h3 id="interface"><a href="#interface" class="header-anchor">#</a> Interface</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token function">addLabel</span><span class="token punctuation">(</span>label<span class="token operator">:</span> Label<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="example"><a href="#example" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze<span class="token punctuation">,</span> createShed<span class="token punctuation">,</span> Label <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Create a Shed instance</span>
+<span class="token keyword">const</span> shed <span class="token operator">=</span> <span class="token function">createShed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Let's create a Label instance</span>
+<span class="token keyword">const</span> label <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Label</span><span class="token punctuation">(</span><span class="token string">'foo'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Now we can add the label named 'foo' to the Shed</span>
+shed<span class="token punctuation">.</span><span class="token function">addLabel</span><span class="token punctuation">(</span>label<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="addlistener"><a href="#addlistener" class="header-anchor">#</a> addListener</h2> <p>Adds a log listener to Shed that invokes the provided callback function if a log passes the provided <a href="/v1/guide/data.html#level-filter">level filter</a>.</p> <h3 id="interface-2"><a href="#interface-2" class="header-anchor">#</a> Interface</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token function">addListener</span><span class="token punctuation">(</span>
+    levels<span class="token operator">:</span> LevelFilter<span class="token punctuation">,</span>
+    cb<span class="token operator">:</span> ListenerCallback
+  <span class="token punctuation">)</span><span class="token operator">:</span> ListenerLocations<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="example-2"><a href="#example-2" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze<span class="token punctuation">,</span> createShed <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> shed <span class="token operator">=</span> <span class="token function">createShed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// We'll listen to all levels</span>
+shed<span class="token punctuation">.</span><span class="token function">addListener</span><span class="token punctuation">(</span><span class="token string">'*'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">data<span class="token punctuation">,</span> render</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// Do stuff with the log data.</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>render<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Do something with the log if it was rendered</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="cachelimit"><a href="#cachelimit" class="header-anchor">#</a> cacheLimit</h2> <p>Getter and setter for manually overriding the configured or default log cache limit.</p> <h3 id="interface-3"><a href="#interface-3" class="header-anchor">#</a> Interface</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">set</span> <span class="token function">cacheLimit</span><span class="token punctuation">(</span>limit<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">get</span> <span class="token function">cacheLimit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="example-3"><a href="#example-3" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze<span class="token punctuation">,</span> createShed <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> shed <span class="token operator">=</span> <span class="token function">createShed</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">cacheLimit</span><span class="token operator">:</span> <span class="token number">300</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Override the cache limit</span>
+shed<span class="token punctuation">.</span>cacheLimit <span class="token operator">=</span> <span class="token number">500</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Let's get the cache limit</span>
+<span class="token keyword">const</span> cacheLimit <span class="token operator">=</span> shed<span class="token punctuation">.</span>cacheLimit<span class="token punctuation">;</span>
+<span class="token comment">// cacheLimit =&gt; 500</span>
+</code></pre></div><h2 id="cachesize"><a href="#cachesize" class="header-anchor">#</a> cacheSize</h2> <p>Getter that returns the number of logs currently cached.</p> <h3 id="interface-4"><a href="#interface-4" class="header-anchor">#</a> Interface</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">get</span> <span class="token function">cacheSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="example-4"><a href="#example-4" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze<span class="token punctuation">,</span> createShed <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> shed <span class="token operator">=</span> <span class="token function">createShed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'First log'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Second log'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Third log'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Let's get the cache size</span>
+<span class="token keyword">const</span> size <span class="token operator">=</span> shed<span class="token punctuation">.</span>cacheSize<span class="token punctuation">;</span>
+<span class="token comment">// size =&gt; 3</span>
+</code></pre></div><h2 id="config"><a href="#config" class="header-anchor">#</a> config</h2> <p>Sets the value of the Shed configuration.</p> <h3 id="interface-5"><a href="#interface-5" class="header-anchor">#</a> Interface</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">set</span> <span class="token function">config</span><span class="token punctuation">(</span>cfg<span class="token operator">:</span> ShedUserConfig <span class="token operator">|</span> <span class="token keyword">undefined</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="example-5"><a href="#example-5" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze<span class="token punctuation">,</span> createShed <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Creating a Shed instance with no config overrides</span>
+<span class="token keyword">const</span> shed <span class="token operator">=</span> <span class="token function">createShed</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">globalCfg</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">logLevel</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Now we'll override the configuration</span>
+shed<span class="token punctuation">.</span>config <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">globalCfg</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">logLevel</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="firelisteners"><a href="#firelisteners" class="header-anchor">#</a> fireListeners</h2> <p>Fires any listeners that are watching the log level defined with the provided <a href="/v1/guide/data.html#log-data">final log data</a>. The final log data and render object will be passed to the listener callback.</p> <p><em>NOTE:</em> It is not necessary to call this method manually to fire listeners. When a log is terminated it will fire it automatically. However, if you are recalling a log and want to fire the listener for it again, you'll need to use the pattern in the example below.</p> <h3 id="interface-6"><a href="#interface-6" class="header-anchor">#</a> Interface</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token comment">// Versions &lt; 1.3.0</span>
+<span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token function">fireListeners</span><span class="token punctuation">(</span>log<span class="token operator">:</span> FinalLogData<span class="token punctuation">,</span> render<span class="token operator">:</span> LogRender <span class="token operator">|</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Versions &gt;= 1.3.0</span>
+<span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token function">fireListeners</span><span class="token punctuation">(</span>log<span class="token operator">:</span> FinalLogData<span class="token punctuation">,</span> render<span class="token operator">:</span> LogRender <span class="token operator">|</span> <span class="token keyword">null</span><span class="token punctuation">,</span> printed<span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="example-6"><a href="#example-6" class="header-anchor">#</a> Example</h3> <p>For information about the type guard in this example, refer to <a href="/v1/guide/filtering-and-utility-functions.html#isfinallogdata">isFinalLogData</a>.</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze<span class="token punctuation">,</span> createShed<span class="token punctuation">,</span> isFinalLogData <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> shed <span class="token operator">=</span> <span class="token function">createShed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Let's create a listener and store it's location in a variable</span>
+shed<span class="token punctuation">.</span><span class="token function">addListener</span><span class="token punctuation">(</span><span class="token string">'*'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">data<span class="token punctuation">,</span> render</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// Do stuff with the log data.</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token punctuation">{</span> log<span class="token punctuation">,</span> render<span class="token punctuation">,</span> printed <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">'some important info.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> data <span class="token operator">=</span> log<span class="token punctuation">.</span>data<span class="token punctuation">;</span>
+
+<span class="token comment">// Listeners only accept finalized log data so we must use a type guard to verify it</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isFinalLogData</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  shed<span class="token punctuation">.</span><span class="token function">fireListeners</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> render<span class="token punctuation">,</span> printed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="getcollection"><a href="#getcollection" class="header-anchor">#</a> getCollection</h2> <p>Recalls all of the cached logs based on the provided <a href="/v1/guide/data.html#level-filter">level filter</a> as a bundle. This is useful for applying <a href="/v1/guide/filtering-and-utility-functions.html">filters</a> to them, <a href="/v1/guide/filtering-and-utility-functions.html#rerender">re-rendering</a> them, etc.</p> <h3 id="interface-7"><a href="#interface-7" class="header-anchor">#</a> Interface</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token function">getCollection</span><span class="token punctuation">(</span>levels<span class="token operator">:</span> LevelFilter<span class="token punctuation">)</span><span class="token operator">:</span> Collection<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="example-7"><a href="#example-7" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze<span class="token punctuation">,</span> createShed<span class="token punctuation">,</span> rerender <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> shed <span class="token operator">=</span> <span class="token function">createShed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'First log'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Second log'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Third log'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Let's get the a collection of all cached logs</span>
+<span class="token keyword">const</span> collection <span class="token operator">=</span> shed<span class="token punctuation">.</span><span class="token function">getCollection</span><span class="token punctuation">(</span><span class="token string">'*'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Now we can re-render them all</span>
+collection<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>rerender<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="getlabel"><a href="#getlabel" class="header-anchor">#</a> getLabel</h2> <p>Get a <a href="/v1/guide/modifiers.html#label">label</a> instance from the Shed by name.</p> <h3 id="interface-8"><a href="#interface-8" class="header-anchor">#</a> Interface</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token function">getLabel</span><span class="token punctuation">(</span>name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span><span class="token operator">:</span> Label <span class="token operator">|</span> <span class="token keyword">undefined</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="example-8"><a href="#example-8" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze<span class="token punctuation">,</span> createShed <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Create a Shed instance</span>
+<span class="token keyword">const</span> shed <span class="token operator">=</span> <span class="token function">createShed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Create a log with a label</span>
+<span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">label</span><span class="token punctuation">(</span><span class="token string">'foo'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Hello World!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Now we can get the label instance named 'foo'</span>
+<span class="token keyword">const</span> label <span class="token operator">=</span> shed<span class="token punctuation">.</span><span class="token function">getLabel</span><span class="token punctuation">(</span><span class="token string">'foo'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="haslabel"><a href="#haslabel" class="header-anchor">#</a> hasLabel</h2> <p>Returns a boolean value indicating the existence of a label in the Shed.</p> <h3 id="interface-9"><a href="#interface-9" class="header-anchor">#</a> Interface</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token function">hasLabel</span><span class="token punctuation">(</span>name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="example-9"><a href="#example-9" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze<span class="token punctuation">,</span> createShed<span class="token punctuation">,</span> Label <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Create a Shed instance</span>
+<span class="token keyword">const</span> shed <span class="token operator">=</span> <span class="token function">createShed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Create a log with a label</span>
+<span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">label</span><span class="token punctuation">(</span><span class="token string">'foo'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Hello World!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Now we can add the label named 'foo' to the Shed</span>
+<span class="token keyword">const</span> labelExists <span class="token operator">=</span> shed<span class="token punctuation">.</span><span class="token function">hasLabel</span><span class="token punctuation">(</span><span class="token string">'foo'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// labelExists =&gt; true</span>
+</code></pre></div><h2 id="hasoverrides"><a href="#hasoverrides" class="header-anchor">#</a> hasOverrides</h2> <p>Indicates whether this Shed instance has global Adze configuration overrides set.</p> <h3 id="interface-10"><a href="#interface-10" class="header-anchor">#</a> Interface</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">get</span> <span class="token function">hasOverrides</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="example-10"><a href="#example-10" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze<span class="token punctuation">,</span> createShed <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Creating a Shed instance with no config overrides</span>
+<span class="token keyword">const</span> shed <span class="token operator">=</span> <span class="token function">createShed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Let's check if the Shed has global overrides configured</span>
+<span class="token keyword">const</span> has_overrides <span class="token operator">=</span> shed<span class="token punctuation">.</span>hasOverrides<span class="token punctuation">;</span>
+<span class="token comment">// has_overrides =&gt; false</span>
+</code></pre></div><h2 id="overrides"><a href="#overrides" class="header-anchor">#</a> overrides</h2> <p>Returns the current value of the global <a href="/v1/config/#adze-configuration">Adze configuration</a> overrides.</p> <h3 id="interface-11"><a href="#interface-11" class="header-anchor">#</a> Interface</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">get</span> <span class="token function">overrides</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Configuration <span class="token operator">|</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="example-11"><a href="#example-11" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze<span class="token punctuation">,</span> createShed <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Creating a Shed instance with no config overrides</span>
+<span class="token keyword">const</span> shed <span class="token operator">=</span> <span class="token function">createShed</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">globalCfg</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">logLevel</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Let's get our global configuration overrides</span>
+<span class="token keyword">const</span> overrides <span class="token operator">=</span> shed<span class="token punctuation">.</span>overrides<span class="token punctuation">;</span>
+</code></pre></div><h2 id="removelistener"><a href="#removelistener" class="header-anchor">#</a> removeListener</h2> <p>Adds a log listener to Shed that invokes the provided callback function if a log passes the provided <a href="/v1/guide/data.html#level-filter">level filter</a>.</p> <h3 id="interface-12"><a href="#interface-12" class="header-anchor">#</a> Interface</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token function">removeListener</span><span class="token punctuation">(</span>locations<span class="token operator">:</span> ListenerLocations<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="example-12"><a href="#example-12" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze<span class="token punctuation">,</span> createShed <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> shed <span class="token operator">=</span> <span class="token function">createShed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Let's create a listener and store it's location in a variable</span>
+<span class="token keyword">const</span> loc <span class="token operator">=</span> shed<span class="token punctuation">.</span><span class="token function">addListener</span><span class="token punctuation">(</span><span class="token string">'*'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">data<span class="token punctuation">,</span> render</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// Do stuff with the log data.</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// We can now tear down the listener at a later time</span>
+shed<span class="token punctuation">.</span><span class="token function">removeListener</span><span class="token punctuation">(</span>loc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="store"><a href="#store" class="header-anchor">#</a> store</h2> <p>Stores a log in the Shed.</p> <p><em>NOTE:</em> This is not required to be done manually. If a Shed exists logs will automatically be stored in it until the cache limit has been reached.</p> <h3 id="interface-13"><a href="#interface-13" class="header-anchor">#</a> Interface</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token function">store</span><span class="token punctuation">(</span>log<span class="token operator">:</span> BaseLog<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="example-13"><a href="#example-13" class="header-anchor">#</a> Example</h3> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> adze<span class="token punctuation">,</span> createShed <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'adze'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> shed <span class="token operator">=</span> <span class="token function">createShed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Generate a log and get the instance</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> log <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">adze</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">'Some important info.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Store the log</span>
+shed<span class="token punctuation">.</span><span class="token function">store</span><span class="token punctuation">(</span>log<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="shed-tools"><a href="#shed-tools" class="header-anchor">#</a> $shed.tools</h2> <p>Manual debugging tools primarily for use in the web browser. To use the tools, access them via <code>window.$shed.tools</code> or simply <code>$shed.tools</code> in your browser console. Any of the methods listed in the interface below will be made available to you. For all methods other than <code>renderCache</code>, <code>renderNamespace</code>, and <code>renderLabel</code> please refer to the documentation for <a href="/v1/guide/filtering-and-utility-functions.html">Filtering &amp; Utility Functions</a>.</p> <blockquote><p>Supported in versions &gt;= 1.4.0</p></blockquote> <h3 id="interface-14"><a href="#interface-14" class="header-anchor">#</a> Interface</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">Shed</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> tools<span class="token operator">:</span> Tools<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Tools</span> <span class="token punctuation">{</span>
+
+  <span class="token comment">/**
+   * Pass-through alias for the render function.
+   */</span>
+  <span class="token keyword">public</span> render <span class="token operator">=</span> render<span class="token punctuation">;</span>
+
+  <span class="token comment">/**
+   * Pass-through alias for the rerender function.
+   */</span>
+  <span class="token keyword">public</span> rerender <span class="token operator">=</span> rerender<span class="token punctuation">;</span>
+
+  <span class="token comment">/**
+   * Pass-through alias for the filterCollection function.
+   */</span>
+  <span class="token keyword">public</span> filterCollection <span class="token operator">=</span> filterCollection<span class="token punctuation">;</span>
+
+  <span class="token comment">/**
+   * Pass-through alias for the filterLabel function.
+   */</span>
+  <span class="token keyword">public</span> filterLabel <span class="token operator">=</span> filterLabel<span class="token punctuation">;</span>
+
+  <span class="token comment">/**
+   * Pass-through alias for the filterLevel function.
+   */</span>
+  <span class="token keyword">public</span> filterLevel <span class="token operator">=</span> filterLevel<span class="token punctuation">;</span>
+
+  <span class="token comment">/**
+   * Pass-through alias for the filterNamespace function.
+   */</span>
+  <span class="token keyword">public</span> filterNamespace <span class="token operator">=</span> filterNamespace<span class="token punctuation">;</span>
+
+  <span class="token comment">/**
+   * Shortcut method for rendering a level-filtered collection from the Shed cache.
+   */</span>
+  <span class="token keyword">public</span> <span class="token function">renderCache</span><span class="token punctuation">(</span>filter<span class="token operator">:</span> LevelFilter<span class="token punctuation">)</span><span class="token operator">:</span> Collection<span class="token punctuation">;</span>
+
+  <span class="token comment">/**
+   * Shortcut method for rendering a level and namespace filtered collection from the Shed cache.
+   */</span>
+  <span class="token keyword">public</span> <span class="token function">renderNamespace</span><span class="token punctuation">(</span>filter<span class="token operator">:</span> LevelFilter<span class="token punctuation">,</span> <span class="token operator">...</span>ns<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> Collection<span class="token punctuation">;</span>
+
+  <span class="token comment">/**
+   * Shortcut method for rendering a level and label filtered collection from the Shed cache.
+   */</span>
+  <span class="token keyword">public</span> <span class="token function">renderLabel</span><span class="token punctuation">(</span>filter<span class="token operator">:</span> LevelFilter<span class="token punctuation">,</span> label<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span><span class="token operator">:</span> Collection<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="example-14"><a href="#example-14" class="header-anchor">#</a> Example</h3> <p><img src="/v1/assets/img/shed-tools-example.c0c1b95c.png" alt="Shed tools example"></p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/v1/guide/shed-concepts.html" class="prev">
+        Shed Concepts
+      </a></span> <span class="next"><a href="/v1/guide/unit-testing.html">
+        Unit Testing
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/v1/assets/js/app.e1114758.js" defer></script><script src="/v1/assets/js/2.8a90f69c.js" defer></script><script src="/v1/assets/js/19.307f3c57.js" defer></script>
+  </body>
+</html>
