@@ -61,4 +61,6 @@ const logger = _logger.ns('my-module').seal();
 logger.info('This is some information about my application.');
 ```
 
-> Now go read the [reference manual](../reference/introduction.md) and have fun!
+:::tip
+Now go read the [reference manual](../reference/introduction.md) and have fun!
+:::

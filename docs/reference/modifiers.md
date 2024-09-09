@@ -130,10 +130,11 @@ for (let i = 0; i < 5; i += 1) {
 The countClear modifier completely clears the count from a [label](#label). Rather than setting the
 count to `0` it instead becomes `null`.
 
-_NOTE:_
+:::warning
 This method is deliberately a modifier rather than a terminator because it forces you to write a log
 that gives you insight into when a counter was cleared. It also makes the countClear log recallable
 from the [global store](./global-store.md) in the order it was created.
+:::
 
 _This is not a standard API._
 
@@ -167,10 +168,11 @@ adze.label('my-counter').log('A log with the my-counter label but no count.');
 
 The countReset modifier resets the counter associated to the log's [label](#label) to `0`.
 
-_NOTE:_
+:::warning
 This method is deliberately a modifier rather than a terminator because it forces you to write a log
 that gives you insight into when a counter was reset. It also makes the countReset log recallable
 from the [global store](/guide/globalstore) in the order it was created.
+:::
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/countReset)
 
@@ -211,9 +213,11 @@ for (let i = 0; i < 4; i += 1) {
 The dir modifier transforms the output of the log by directing it to use the `console.dir()` method
 for printing purposes only.
 
-_NOTE:_ Logs that use `dir` as a modifier should only be given a single argument which is usually an
+:::warning
+Logs that use `dir` as a modifier should only be given a single argument which is usually an
 object. If multiple arguments are given, behavior may differ between browser and server environments.
-Refer to the MDN docs for more details.
+Refer to the [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir) for more details.
+:::
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
 
@@ -246,9 +250,11 @@ adze.dir.log({ foo: 'bar' });
 The dirxml modifier transforms the output of the log by directing it to use the `console.dirxml()`
 method for printing purposes only. This is mainly useful for logging out DOM elements.
 
-_NOTE:_ Logs that use `dirxml` as a modifier should only be given a single argument which is usually
+:::warning
+Logs that use `dirxml` as a modifier should only be given a single argument which is usually
 a DOM Element or other XML object. If multiple arguments are given, behavior may differ between
-browser and server environments. Refer to the MDN docs for more details.
+browser and server environments. Refer to the [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml) for more details.
+:::
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/dirxml)
 
@@ -410,7 +416,9 @@ adze.groupEnd.info();
 The groupCollapsed modifier starts an collapsed group of logs. This means that all subsequent logs
 will be nested beneath this log until a [groupEnd](#groupEnd) log occurs.
 
-_Note:_ This will not be collapsed in a terminal environment since there is no way to uncollapse it.
+:::warning
+This will not be collapsed in a terminal environment since there is no way to uncollapse it.
+:::
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/console/groupCollapsed_static)
 
@@ -949,8 +957,10 @@ adze.timestamp.log('This log has a timestamp.');
 
 This modifier instructs the log to print a stacktrace using the standard `console.trace()` method.
 
-_NOTE:_ The styling for logs using this modifier varies by browser. Chrome will render the log
+:::warning
+The styling for logs using this modifier varies by browser. Chrome will render the log
 message with proper styling while Firefox will only render the message unstyled.
+:::
 
 [**MDN Docs**](https://developer.mozilla.org/en-US/docs/Web/API/Console/trace)
 

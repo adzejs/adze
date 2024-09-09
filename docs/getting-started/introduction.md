@@ -22,7 +22,9 @@ TODO: Redo the demo video
 
 ## Why should I use Adze?
 
-> Adze is **UNIVERSAL**, meaning it can run in any JS runtime (node, bun, deno, browser) without any special considerations.
+:::tip
+Adze is **UNIVERSAL**, meaning it can run in any JS runtime (node, bun, deno, browser) without any special considerations.
+:::
 
 Compared to existing Javascript logging libraries, Adze sets itself apart because it is **universal**, meaning **it can run in both server and browser environments with zero config**. Other libraries, such as Winston or Bunyan only support server environments. Libraries like Pino and Log4JS support both environments, but it either requires some configuration or it only provides you with a very limited feature set. None of them directly support Deno or Bun.
 
@@ -51,7 +53,9 @@ Aside from universalism, Adze also offers many other compelling features:
 
 ![Preview of Adze logs](./examples/introduction/demo.jpg)
 
-> This preview was generated from the same code executed in both the browser (left) and the server (right) environments.
+:::details
+This preview was generated from the same code executed in both the browser (left) and the server (right) environments.
+:::
 
 ## What does the API look like?
 

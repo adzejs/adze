@@ -70,9 +70,9 @@ Although Adze is meant primarily for long-lived logs that should be in productio
 
 A common problem with libraries that wrap the standard console API is that they lose line numbers in the browser console. This occurs because the browser console is reporting the line number at which the console API was called, which is usually within the library wrapper. To get around this problem, Chromium based browsers (like Chrome, Edge and Brave) added the [**Ignore List**](https://bit.ly/3d1eOex) concept. This tells the browser to pretend like the library source code doesn't exist. This enables Adze logs to print correct line numbers from where they are called.
 
+:::tip
 For information on setting up an **Ignore List**, please go to [https://bit.ly/3d1eOex](https://bit.ly/3d1eOex).
-
-_NOTE: The verbiage for this has been changed to **Ignore List** in the console settings._
+:::
 
 To **ignore** the adze library you will need to supply the following regular expression:
 

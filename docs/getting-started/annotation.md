@@ -74,7 +74,9 @@ in the `getJsonData` function.
 
 ![Example output of an error log with namespaces](./examples/log-annotation/namespaces-example-1.png)
 
-> Notice, the log output contains `#utilities #getJsonData` which indicates the namespaces.
+:::tip
+Notice, the log output contains `#utilities #getJsonData` which indicates the namespaces.
+:::
 
 Great! We have a log with namespaces to help us identify it's origin.
 

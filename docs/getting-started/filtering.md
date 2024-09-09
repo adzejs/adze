@@ -48,7 +48,7 @@ Filtering by namespaces is particularly useful when debugging as it allows you t
 specific code module without the noise of other logs. There is, however, one drawback that can
 make filtering by namespaces cumbersome.
 
-> How do I know what the namespaces in my app are?
+_How do I know what the namespaces in my app are?_
 
 ### Restricting Namespaces (TS Only)
 

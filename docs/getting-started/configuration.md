@@ -30,7 +30,9 @@ Adze comes with **9** log levels by default, ranging from levels **0 through 8**
 7. **Debug** - Use this for logging information that you typically do not want to see unless you are debugging a problem with your application. This is typically hidden by default.
 8. **Verbose** - Use this for logging extremely detailed debugging information. Use this level when the values you are logging are granular enough that they are no longer easily human readable.
 
-> By default the active level is set to 6.
+:::tip
+By default the active level is set to 6.
+:::
 
 Let's lower our active level so that we only see alert, error, warn, and info logs.
 
