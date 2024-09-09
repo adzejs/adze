@@ -71,9 +71,11 @@ jobs:
         run: yarn install --force
       - name: Build Content
         run: yarn docs:build
+      - name: Move to v1 directory
+        run: mv docs/.vuepress/dist dist/v1
       - name: Publish
         uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
         with:
-          dir: docs/.vuepress/dist
+          dir: dist
           branch: gh-pages
           token: ${{ secrets.PAGES_TOKEN }}
