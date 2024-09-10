@@ -1,79 +1,124 @@
-name: Build
-on:
-  push:
-    branches:
-      - master
+# name: Build
+# on:
+#   push:
+#     branches:
+#       - master
 
-jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Node
-        uses: actions/setup-node@v1
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Yarn Cache
-        uses: c-hive/gha-yarn-cache@v1
-      - name: Install Dependencies
-        run: yarn install --force
-      - name: Run Linter
-        run: yarn lint
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Node
-        uses: actions/setup-node@v1
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Yarn Cache
-        uses: c-hive/gha-yarn-cache@v1
-      - name: Install Dependencies
-        run: yarn install --force
-      - name: Run Unit Tests
-        run: yarn test
-  # release:
-  #   name: Release
-  #   needs: [lint, test]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #       with:
-  #         fetch-depth: 0
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 12
-  #     - name: Yarn Cache
-  #       uses: c-hive/gha-yarn-cache@v1
-  #     - name: Install Dependencies
-  #       run: yarn install --force
-  #     - name: Build
-  #       run: yarn build
-  #     - name: Release
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-  #       run: npx semantic-release
-  # docs:
-  #   runs-on: ubuntu-latest
-  #   needs: [lint, test]
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v1
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v1
-  #     - name: Yarn Cache
-  #       uses: c-hive/gha-yarn-cache@v1
-  #     - name: Install Dependencies
-  #       run: yarn install --force
-  #     - name: Build Content
-  #       run: yarn docs:build
-  #     - name: Publish
-  #       uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
-  #       with:
-  #         dir: docs/.vuepress/dist
-  #         branch: gh-pages
-  #         token: ${{ secrets.PAGES_TOKEN }}
+# env:
+#   HUSKY: 0
+
+# permissions:
+#   contents: read
+
+# jobs:
+#   lint:
+#     name: Lint
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v4
+#       - name: Setup Node
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version-file: 'package.json'
+#           cache: 'npm'
+#           cache-dependency-path: 'package-lock.json'
+#       - name: Install Dependencies
+#         run: npm ci
+#       - name: Run Linter
+#         run: npm run lint
+#   test:
+#     name: Test
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v4
+#       - name: Setup Node
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version-file: 'package.json'
+#           cache: 'npm'
+#           cache-dependency-path: 'package-lock.json'
+#       - name: Install Dependencies
+#         run: npm ci
+#       - name: Run Linter
+#         run: npm run test
+#   build:
+#     name: Build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v4
+#       - name: Setup Node
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version-file: 'package.json'
+#           cache: 'npm'
+#           cache-dependency-path: 'package-lock.json'
+#       - name: Install Dependencies
+#         run: npm ci
+#       - name: Build the Library
+#         run: npm run build
+#   release:
+#     name: Release
+#     needs: [lint, test]
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: write # to be able to publish a GitHub release
+#       issues: write # to be able to comment on released issues
+#       pull-requests: write # to be able to comment on released pull requests
+#       id-token: write # to enable use of OIDC for npm provenance
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version-file: 'package.json'
+#           cache: 'npm'
+#           cache-dependency-path: 'package-lock.json'
+#       - name: Install dependencies
+#         run: npm ci
+#       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
+#         run: npm audit signatures
+#       - name: Release
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+#         run: npx semantic-release
+#   docs:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: write
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
+#         with:
+#           fetch-depth: 0
+#           # if your docs needs submodules, uncomment the following line
+#           # submodules: true
+
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 20
+#           cache: npm
+
+#       - name: Install Deps
+#         run: npm ci
+
+#       - name: Build Docs
+#         env:
+#           NODE_OPTIONS: --max_old_space_size=8192
+#         run: |-
+#           npm run docs:build
+#           > docs/.vuepress/dist/.nojekyll
+
+#       - name: Deploy Docs
+#         uses: JamesIves/github-pages-deploy-action@v4
+#         with:
+#           # This is the branch where the docs are deployed to
+#           branch: gh-pages
+#           folder: docs/.vuepress/dist

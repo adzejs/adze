@@ -59,13 +59,15 @@
     "@vuepress/bundler-vite": "^2.0.0-rc.7",
     "@vuepress/plugin-markdown-container": "^2.0.0-rc.42",
     "@vuepress/theme-default": "^2.0.0-rc.11",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "happy-dom": "^15.7.3",
     "http-server": "^14.1.1",
-    "husky": "^9.0.11",
+    "husky": "^9.1.5",
     "jsdom": "^24.1.0",
-    "lint-staged": "^15.2.7",
+    "lint-staged": "^15.2.10",
     "prettier": "3.3.2",
     "size-limit": "^11.1.4",
     "ts-node": "^10.9.2",
@@ -89,5 +91,21 @@
     {
       "path": "dist/index.js"
     }
-  ]
+  ],
+  "release": {
+    "branches": [
+      "master"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
+    }
+  }
 }
