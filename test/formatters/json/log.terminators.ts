@@ -463,14 +463,15 @@ export const printsOptionalFields = async () => {
   expect(log).toEqual({
     v: 1,
     level: 0,
-    levelName: 'alert',
     name: 'test-app',
     hostname: 'localhost',
     msg: 'This is an alert log.',
     args: [],
     pid: 1,
     time: '2024-07-31T13:19:25-04:00',
+    levelName: 'alert',
     meta: {
+      levelName: 'alert',
       meta: {
         hello: 'world',
       },
@@ -490,9 +491,9 @@ export const printsOptionalFields = async () => {
       },
       method: 'POST',
       url: 'https://120.0.0.1:51244/path?q=1#anchor',
-      body: {
+      body: JSON.stringify({
         foo: 'bar',
-      },
+      }),
       remoteAddress: '120.0.0.1',
       remotePort: 51244,
     },
