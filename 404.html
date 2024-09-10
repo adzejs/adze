@@ -1,35 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-US">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Adze JS - Better JavaScript Logging</title>
-    <meta name="generator" content="VuePress 1.8.2">
-    <script async="true" defer="true" data-domain="adzejs.com" src="https://plausible.io/js/plausible.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/adze/dist/adze.min.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Share&amp;display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
-    <meta name="description" content="A library for shaping your logs.">
-    <meta property="og:title" content="Adze - Better JavaScript Logging">
-    <meta property="og:description" content="A TypeScript enabled library with a beautiful API that simplifies JavaScript logging.">
-    <meta property="og:image" content="https://adzejs.com/assets/img/demo.ce24f23e.png">
-    <meta property="og:url" content="https://www.adzejs.com/">
-    <meta property="twitter:title" content="Adze - Better JavaScript Logging">
-    <meta property="twitter:description" content="A TypeScript enabled library with a beautiful API that simplifies JavaScript logging.">
-    <meta property="twitter:image" content="https://adzejs.com/assets/img/demo.ce24f23e.png">
-    <meta property="twitter:card" content="summary_large_image">
-    <meta name="theme-color" content="#3eaf7c">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    
-    <link rel="preload" href="/assets/css/0.styles.0ae45e58.css" as="style"><link rel="preload" href="/assets/js/app.31c711ac.js" as="script"><link rel="preload" href="/assets/js/20.57d769aa.js" as="script"><link rel="prefetch" href="/assets/js/10.63e6ff2f.js"><link rel="prefetch" href="/assets/js/11.24a5d4dc.js"><link rel="prefetch" href="/assets/js/12.602ff23a.js"><link rel="prefetch" href="/assets/js/13.4b80865f.js"><link rel="prefetch" href="/assets/js/14.f997a49f.js"><link rel="prefetch" href="/assets/js/15.52a0740b.js"><link rel="prefetch" href="/assets/js/16.df47b6f2.js"><link rel="prefetch" href="/assets/js/17.8eea58f1.js"><link rel="prefetch" href="/assets/js/18.2fc93bb6.js"><link rel="prefetch" href="/assets/js/19.307f3c57.js"><link rel="prefetch" href="/assets/js/2.8a90f69c.js"><link rel="prefetch" href="/assets/js/21.ff5f9b94.js"><link rel="prefetch" href="/assets/js/22.2adfbd1a.js"><link rel="prefetch" href="/assets/js/23.00ae8a7f.js"><link rel="prefetch" href="/assets/js/24.54123392.js"><link rel="prefetch" href="/assets/js/25.8a06d7fa.js"><link rel="prefetch" href="/assets/js/26.16573463.js"><link rel="prefetch" href="/assets/js/27.5d0ca398.js"><link rel="prefetch" href="/assets/js/28.b31e5101.js"><link rel="prefetch" href="/assets/js/3.60deda3a.js"><link rel="prefetch" href="/assets/js/4.9ebcc9e0.js"><link rel="prefetch" href="/assets/js/5.a45759b3.js"><link rel="prefetch" href="/assets/js/6.49ba4101.js"><link rel="prefetch" href="/assets/js/7.e24dd8a1.js"><link rel="prefetch" href="/assets/js/8.494b7502.js"><link rel="prefetch" href="/assets/js/9.05ca1da5.js">
-    <link rel="stylesheet" href="/assets/css/0.styles.0ae45e58.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content="VuePress 2.0.0-rc.14" />
+    <style>
+      :root {
+        --c-bg: #fff;
+      }
+
+      html.dark {
+        --c-bg: #22272e;
+      }
+
+      html,
+      body {
+        background-color: var(--c-bg);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem('vuepress-color-scheme')
+      const systemDarkMode =
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+
+      if (userMode === 'light') {
+        document.documentElement.dataset.theme = 'light'
+      } else if (userMode === 'dark' || systemDarkMode) {
+        document.documentElement.classList.toggle('dark', true)
+        document.documentElement.dataset.theme = 'dark'
+      }
+    </script>
+    <meta property="og:title" content="Adze - Better JavaScript Logging"><meta property="og:description" content="A TypeScript enabled library with a beautiful API that simplifies JavaScript logging."><meta property="og:image" content="https://adzejs.com/assets/img/demo.png"><meta property="og:url" content="https://www.adzejs.com/"><meta property="twitter:title" content="Adze - Better JavaScript Logging"><meta property="twitter:description" content="A TypeScript enabled library with a beautiful API that simplifies JavaScript logging."><meta property="twitter:image" content="https://adzejs.com/assets/img/demo.png"><meta property="twitter:card" content="summary_large_image"><script async defer data-domain="adzejs.com" src="https://plausible.io/js/plausible.js"></script><script src="https://cdn.jsdelivr.net/npm/adze/dist/adze.min.js"></script><link rel="preconnect" href="https://fonts.gstatic.com"><link href="https://fonts.googleapis.com/css2?family=Share&display=swap" rel="stylesheet"><meta name="theme-color" content="#3eaf7c"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="icon" href="/images/icon.svg"><meta name="apple-mobile-web-app-status-bar-style" content="black"><title>Universal Logging for JavaScript</title><meta name="description" content="A universal, modern, and extendable logging library for JavaScript and TypeScript.">
+    <link rel="preload" href="/assets/style-aEe6FEQ7.css" as="style"><link rel="stylesheet" href="/assets/style-aEe6FEQ7.css">
+    <link rel="modulepreload" href="/assets/app-C2pf8t7r.js"><link rel="modulepreload" href="/assets/404.html-CTAp9d6d.js">
+    <link rel="prefetch" href="/assets/index.html-CR74y3Bo.js" as="script"><link rel="prefetch" href="/assets/plugins.html-B-S5tHML.js" as="script"><link rel="prefetch" href="/assets/annotation.html-l5p9ywk-.js" as="script"><link rel="prefetch" href="/assets/capture-data.html-D3RMNpOc.js" as="script"><link rel="prefetch" href="/assets/concepts.html-DxaDTUyD.js" as="script"><link rel="prefetch" href="/assets/configuration.html-BgvxJVai.js" as="script"><link rel="prefetch" href="/assets/filtering.html-CTwIPFT4.js" as="script"><link rel="prefetch" href="/assets/global-store.html-BF_D7PMM.js" as="script"><link rel="prefetch" href="/assets/installation.html-BpcdLt9J.js" as="script"><link rel="prefetch" href="/assets/introduction.html-BmZjAKKT.js" as="script"><link rel="prefetch" href="/assets/migrating.html-CRsQNuow.js" as="script"><link rel="prefetch" href="/assets/putting-it-all-together.html-BwYsypLQ.js" as="script"><link rel="prefetch" href="/assets/setup.html-DQ6NKWaR.js" as="script"><link rel="prefetch" href="/assets/threading.html-DUkTJOoo.js" as="script"><link rel="prefetch" href="/assets/tools.html-rCqzaF8P.js" as="script"><link rel="prefetch" href="/assets/chainable-api.html-JWvvN-vK.js" as="script"><link rel="prefetch" href="/assets/configurable.html-DYFqRxmc.js" as="script"><link rel="prefetch" href="/assets/footer.html-CRuWYFMR.js" as="script"><link rel="prefetch" href="/assets/getting-started-is-easy.html-DkzghlJ7.js" as="script"><link rel="prefetch" href="/assets/global-store.html-B71vGoD2.js" as="script"><link rel="prefetch" href="/assets/much-more.html-CtYJRmeR.js" as="script"><link rel="prefetch" href="/assets/typescript-first.html-CxlMAHWa.js" as="script"><link rel="prefetch" href="/assets/universal.html-CSD8EE9f.js" as="script"><link rel="prefetch" href="/assets/configuration.html-BVrPtXAU.js" as="script"><link rel="prefetch" href="/assets/formatters.html-Cn91TWgi.js" as="script"><link rel="prefetch" href="/assets/getters.html-h9rcGyIn.js" as="script"><link rel="prefetch" href="/assets/global-store.html-AMv-PqaY.js" as="script"><link rel="prefetch" href="/assets/introduction.html-RLG1WJ10.js" as="script"><link rel="prefetch" href="/assets/log-class.html-BG5TGVWL.js" as="script"><link rel="prefetch" href="/assets/micro-frontends.html-K_3LhzBT.js" as="script"><link rel="prefetch" href="/assets/middleware.html-DoGfdFJq.js" as="script"><link rel="prefetch" href="/assets/modifiers.html-BhjkIe5l.js" as="script"><link rel="prefetch" href="/assets/terminators.html-JIKfwtuX.js" as="script"><link rel="prefetch" href="/assets/tools.html-BDSqv-n4.js" as="script"><link rel="prefetch" href="/assets/unit-testing.html-B--xZP9x.js" as="script"><link rel="prefetch" href="/assets/SearchResult-Cj1LLjDO.js" as="script">
   </head>
   <body>
-    <div id="app" data-server-rendered="true"><div class="theme-container"><div class="theme-default-content"><h1>404</h1> <blockquote>Looks like we've got some broken links.</blockquote> <a href="/" class="router-link-active">
-      Take me home.
-    </a></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.31c711ac.js" defer></script><script src="/assets/js/20.57d769aa.js" defer></script>
+    <div id="app"><!--[--><div class="vp-theme-container" data-v-303656ba><main class="page" data-v-303656ba><div class="theme-default-content" data-v-303656ba><h1 data-v-303656ba>404</h1><blockquote data-v-303656ba>That&#39;s a Four-Oh-Four.</blockquote><a class="route-link" href="/" data-v-303656ba>Take me home</a></div></main></div><!--[--><!----><!----><!--]--><!--]--></div>
+    <script type="module" src="/assets/app-C2pf8t7r.js" defer></script>
   </body>
 </html>
