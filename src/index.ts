@@ -1,15 +1,11 @@
-import { adze } from './adze';
-export { adze };
+import adze from './log';
+import Formatter from './formatters/formatter';
+import { setup, teardown, isBrowser } from './functions';
+export * from './middleware';
+export * from './formatters/common';
+export * from './formatters/standard';
+export * from './formatters/json';
+export * from './_types';
+export { setup, teardown, isBrowser, Formatter };
+export * from './constants';
 export default adze;
-export { Label } from './label';
-export { defaults } from './_defaults';
-export {
-  filterLabel,
-  filterLevel,
-  filterNamespace,
-  filterCollection,
-  render,
-  rerender,
-} from './filters';
-export { isFinalLogData, bundle, shedExists, createShed, removeShed } from './util';
-export * from './_contracts';

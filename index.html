@@ -1,11 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
     <title>Adze - JavaScript Logging Library</title>
     <link rel="icon" type="image/png" href="docs/assets/favicon.png" />
-
-    <script src="dist/adze.min.js"></script>
     <style>
       html,
       body {
@@ -36,24 +34,18 @@
         font-size: 1.8rem;
       }
     </style>
-    <script>
-      const { adze, createShed, removeShed, rerender } = AdzeLib;
-      window.adze = adze;
-      window.createShed = createShed;
-      window.removeShed = removeShed;
-      window.rerender = rerender;
-
-      const methods = [
-        'alert',
-        'error',
-        'warn',
-        'info',
-        'success',
-        'fail',
-        'log',
-        'debug',
-        'verbose',
-      ];
+    <script type="importmap">
+      {
+        "imports": {
+          "./src": "./dist/index.js",
+          "chalk": "./dist/functions/chalk-dummy.js",
+          "date-fns/formatISO": "/node_modules/date-fns/formatISO.mjs",
+          "date-fns/format": "/node_modules/date-fns/format.mjs"
+        }
+      }
+    </script>
+    <script type="module">
+      import './dist/demo_funcs.js';
 
       const sentences = [
         'I just wanted to tell you I could see the love you have for your child by the way you look at her.',
@@ -115,8 +107,6 @@
           logger()[methods[methodIndex]](sentences[sentenceIndex]);
         }
       }
-
-      window.randomLog = randomLog;
     </script>
   </head>
 
@@ -125,28 +115,5 @@
       <img src="docs/assets/logo.svg" />
       <h2>Open up the console to see the tests.</h2>
     </div>
-
-    <script type="module">
-      import runDemo from './demo_funcs.js';
-
-      if (undefined !== window.AdzeLib) {
-        runDemo(AdzeLib, document.querySelector('.main'));
-      } else {
-        console.warn(
-          '%c If you would like to see the browser demo, please run a build first. Commands below.',
-          'font-size: 16px;'
-        );
-        console.info(
-          '%c Build with Yarn -> %c$: yarn build',
-          'font-size: 14px; font-weight: bold;',
-          'font-size: 14px; background-color: #d1d1d1; color: #3d3d3d; border: 1px solid #b5b5b5;'
-        );
-        console.info(
-          '%c Build with npm -> %c$: npm run build',
-          'font-size: 14px; font-weight: bold;',
-          'font-size: 14px; background-color: #d1d1d1; color: #3d3d3d; border: 1px solid #b5b5b5;'
-        );
-      }
-    </script>
   </body>
 </html>

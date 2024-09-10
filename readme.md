@@ -1,15 +1,15 @@
 # Adze
 
-![Adze Logo](docs/assets/logo_small.png)
+![Adze Logo](assets/logo-small.png)
 
 [![build workflow](https://github.com/AJStacy/adze/actions/workflows/build.yml/badge.svg)](https://github.com/AJStacy/adze/actions/workflows/build.yml)
-![npm](https://img.shields.io/npm/v/adze) [![Rate this package](https://badges.openbase.com/js/rating/adze.svg?token=2JRA+eWqLSPTPaqboGXMHy1EnX0DY98eE9VidXDvPLg=)](https://openbase.com/js/adze?utm_source=embedded&amp;utm_medium=badge&amp;utm_campaign=rate-badge) ![node-lts](https://img.shields.io/node/v-lts/adze) [![size](https://badgen.net/bundlephobia/minzip/adze)](https://bundlephobia.com/result?p=adze) [![dependency count](https://badgen.net/bundlephobia/dependency-count/adze)](https://bundlephobia.com/result?p=adze) [![apache 2.0](https://badgen.net/npm/license/adze)](/LICENSE.md)
+![npm](https://img.shields.io/npm/v/adze) ![node-lts](https://img.shields.io/node/v-lts/adze) [![size](https://badgen.net/bundlephobia/minzip/adze)](https://bundlephobia.com/result?p=adze) [![dependency count](https://badgen.net/bundlephobia/dependency-count/adze)](https://bundlephobia.com/result?p=adze) [![apache 2.0](https://badgen.net/npm/license/adze)](/LICENSE.md)
 
 **Please visit our official docs at [adzejs.com](http://www.adzejs.com/).**
 
 ## Why is this named Adze?
 
-![A drawing of a man using an adze to shape a log](./docs/guide/assets/adze.png)
+![A drawing of a man using an adze to shape a log](assets/adze-wikipedia.png)
 
 _Photo from [Wikipedia](https://en.wikipedia.org/wiki/Adze)_
 
@@ -19,77 +19,75 @@ _Photo from [Wikipedia](https://en.wikipedia.org/wiki/Adze)_
 
 ## Why should I use Adze?
 
-As you may already be aware there are a number of other good JS libraries out there to assist with logging. The focus of Adze is to provide a convenient and clean API, provide first-class TypeScript support, and to empower you to take command of your logs rather than pigeon-hole you into a specific way of handling them.
+> Adze is **UNIVERSAL**, meaning it can run in any JS runtime (node, bun, deno, browser) without any special considerations.
 
-Here is a list of the features that Adze provides:
+Compared to existing Javascript logging libraries, Adze sets itself apart because it is **universal**, meaning **it can run in both server and browser environments with zero config**. Other libraries, such as Winston or Bunyan only support server environments. Libraries like Pino and Log4JS support both environments, but it either requires some configuration or it only provides you with a very limited feature set. None of them directly support Deno or Bun.
 
-- First-class TypeScript support
-- Multi-environment support for the Browser and Node
-- Wraps and extends the entire standard API
-- A fluent, chainable API
+Javascript frameworks have been shifting to server-side rendering (SSR) and to micro-frontend style architectures. Both of these architecture approaches present unique challenges with logging in a production-ready environment. Because Adze is universal by nature, you can write your logs the same way throughout your application and **it will just work**.
+
+Aside from [universalism](https://en.wikipedia.org/wiki/Isomorphic_JavaScript), Adze also offers many other compelling features:
+
+- First-class TypeScript support (not bolted-on)
+- Wraps and extends the entire [standard API](https://developer.mozilla.org/en-US/docs/Web/API/console)
+- A convenient chainable API
 - Log Listeners for capturing log data
-- Log annotation namespaces, labels, and other meta data
-- Attractive styling (EMOJI'S INCLUDED and consistent across major browsers)
-- Everything is configurable
-- Enables completely custom log levels
-- A global log store for recalling logs and overriding configuration (supports micro-frontends and modules)
-- Support for Mapped Diagnostic Context
-- Convenient unit testing environment controls
-- Advanced Log Filtering
+- Middleware support for plugins and transporting logs
+- Log annotations such as namespaces, labels, and other meta data
+- Four formats supported out of the box:
+  - Pretty - Human readable logs that are easy on the eyes
+  - JSON - Machine readable logs that are compatible with the [Bunyan CLI](https://github.com/trentm/node-bunyan?tab=readme-ov-file#cli-usage)
+  - Standard - Human readable stdout logs
+  - Common - Logs that adhere to the [Common Log Format](https://en.wikipedia.org/wiki/Common_Log_Format)
+- Everything is customizable and configurable
+- Tools for caching, filtering, and recalling logs
+- Support for creating log thread to track data across multiple scopes
+- Convenient child logger API's
 - and much more...
-
-Beyond the new features that Adze provides you, it also wraps the entire console web standard.
-Read more about the standard here: [MDN Console Docs](https://developer.mozilla.org/en-US/docs/Web/API/console)
 
 ### Here is a simple preview:
 
-![Preview of Adze logs](./docs/guide/assets/demo.png)
+<span style="display: block; max-width: 600px">
+
+![Preview of Adze logs](./docs/getting-started/examples/introduction/demo.jpg)
+
+</span>
 
 > This preview was generated from the same code executed in both the browser (left) and the node (right) environments.
 
 ## What does the API look like?
 
-As stated above, Adze offers an easy to use, chainable API. To create a log you simply chain together an Adze log instance with a series of modifiers and then end with a terminator. Here's an example of creating a log with emoji's and a namespace:
+As stated above, Adze offers an easy to use, chainable API. To create a log you simply chain together an Adze log instance with a series of modifiers and then end with a terminator. Here's an example of creating a log with a namespace:
 
 ```typescript
-import adze, { createShed } from 'adze';
+import adze from 'adze';
 
-// Create our global log in-memory cache
-const shed = createShed();
-
-// Listen to logs that are generated and operate on them
-shed.addListener('*', (data, render, printed) => {
-  // if my log printed to the console
-  if (printed) {
-    // do stuff with my log data like sending to an API or localStorage
-  }
-});
-
-adze({ useEmoji: true }).ns('tix-456').log('Example log');
+adze.namespace('example').log('Example log');
 ```
 
 The output of this would look like the following:
 
-![Preview of Adze logs](./docs/guide/examples/api_example_output.png)
+![Adze log example](./docs/getting-started/examples/introduction/api_example_output_1.png)
 
 ## Install the Package
 
 You can install Adze from NPM using the following command:
 
 ```bash
-# NPM
-npm install --save adze
+# npm
+npm install -S adze
 
-# Yarn
-yarn add adze
+# pnpm
+pnpm add adze
 ```
 
 ## Version Requirements
 
 | Dependency | Supported Versions | Notes                                    |
 | ---------- | ------------------ | ---------------------------------------- |
-| node       | >= 10.x            | When running Adze in a Node environment. |
-| typescript | >= 4.1             | When using Adze with TypeScript          |
+| node       | >= 18.18.x         | When running Adze in a Node environment. |
+| bun        | >= 1.1.26          | When running Adze in a Bun environment.  |
+| deno       | >= 1.46.3          | When running Adze in a Deno environment. |
+| typescript | >= 5.5.2           | When using Adze with TypeScript          |
 
 ## TypeScript Configuration
 
@@ -115,42 +113,20 @@ For more information about configuring TypeScript, go to [https://www.typescript
 
 Adze comes bundled with a few different ways of accessing it. Here are some examples:
 
-### CDN
-
-You can import the library directly into your HTML from the [jsDelivr](https://www.jsdelivr.com/package/npm/adze) CDN.
-
-_**NOTE:** In the script tag in the example below, replace `<version>` with the version of Adze you would like to use._
-
-```html
-<!-- In the head of your html -->
-<head>
-  <!-- To use v1.3.0 you would write https://cdn.jsdelivr.net/npm/adze@1.3.0/dist/adze.min.js -->
-  <script src="https://cdn.jsdelivr.net/npm/adze@<version>/dist/adze.min.js"></script>
-</head>
-
-<!-- Using adze elsewhere in JS -->
-<script>
-  // Adze is registered globally in your browser as AdzeLib
-  const { adze } = AdzeLib;
-
-  adze().log('Hello World!');
-</script>
-```
-
-### Node JS (CommonJS)
+### CommonJS
 
 ```javascript
 const { adze } = require('adze'); // Or alternatively `const adze = require('adze').adze;`
 
-adze().log('Hello World!');
+adze.log('Hello World!');
 ```
 
-### ES6 / TypeScript
+### ESM / TypeScript
 
 ```typescript
 import adze from 'adze';
 
-adze().log('Hello World!');
+adze.log('Hello World!');
 ```
 
 ## Documentation
