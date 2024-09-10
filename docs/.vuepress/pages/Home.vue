@@ -12,6 +12,11 @@
           {{ data.tagline || $description || 'Welcome to your VuePress site' }}
         </p>
 
+        <em style="color: red; font-size: 1.4rem">
+          v1 is now deprecated! Please upgrade to
+          <a href="https://adzejs.com/getting-started/migrating">version 2</a>!
+        </em>
+
         <p v-if="data.actionText && data.actionLink" class="action">
           <iframe
             src="https://ghbtns.com/github-btn.html?user=AJStacy&repo=adze&type=star&count=true&size=large"
