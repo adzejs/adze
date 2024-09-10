@@ -18,9 +18,9 @@ section of the [Global Store](../getting-started/global-store.md) page of the [G
 #### Interface
 
 ```typescript
-class AdzeGlobal {
-  public get cache(): Log[];
-}
+function setup<Meta extends Record<string, any> = Record<string, any>>(
+  cfg?: UserConfiguration<Meta>
+): AdzeGlobal;
 ```
 
 #### Example
@@ -41,6 +41,44 @@ store.addListener('*', (log) => {
 adze.log('This is a log.');
 adze.log('This is another log.');
 ```
+
+## Teardown Function
+
+If you have ran the [setup function](#setup-function) or have generated at least one Adze log, you
+will have an $adzeGlobal context value on your global context (window or global).
+
+Sometimes, such as when running unit tests, it is beneficial to remove the global context between
+tests. Adze exports the `teardown` function which can be used to remove the global context.
+
+#### Interface
+
+```typescript
+function teardown(): void;
+```
+
+#### Example
+
+```typescript
+import adze, { setup, teardown } from 'adze';
+
+// Apply global configuration
+const store = setup();
+
+adze.label('counter').count.log('This is a log.');
+adze.label('counter').count.log('This is a log.');
+
+teardown();
+
+adze.label('counter').count.log('This is a log.');
+```
+
+#### Browser Output
+
+![browser output teardown example](./examples/global-store/teardown-example-browser.png)
+
+#### Server Output
+
+![server output teardown example](./examples/global-store/teardown-example-server.png)
 
 ## Public Getters
 

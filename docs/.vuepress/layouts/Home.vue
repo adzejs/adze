@@ -1,8 +1,5 @@
 <template>
-  <main
-    :aria-labelledby="pageFrontmatter.heroText !== null ? 'main-title' : undefined"
-    class="theme-container"
-  >
+  <main class="theme-container">
     <hero />
 
     <!-- Getting Started is Easy -->
@@ -186,18 +183,7 @@
 
 <script setup>
 import Hero from '../components/Hero.vue';
-import { useClientData, withBase } from '@vuepress/client';
-
-const {
-  pageData,
-  pageFrontmatter,
-  pageHead,
-  pageHeadTitle,
-  pageLang,
-  routeLocale,
-  siteData,
-  siteLocaleData,
-} = useClientData();
+import { withBase } from '@vuepress/client';
 </script>
 
 <style scoped lang="scss">

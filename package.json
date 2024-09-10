@@ -75,7 +75,7 @@
     "typescript-eslint": "^7.14.1",
     "vitest": "^2.0.4",
     "vue": "^3.4.0",
-    "vuepress": "^2.0.0-rc.15"
+    "vuepress": "^2.0.0-rc.7"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

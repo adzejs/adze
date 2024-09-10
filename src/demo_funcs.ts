@@ -29,35 +29,35 @@ const leetLevel: LevelConfiguration = {
 
 // Run our demo modules
 async function runDemo() {
-  await performance();
-  // defaultLevels();
-  // configuration();
-  // custom();
-  // namespace();
-  // label();
-  // filterLevelRange();
-  // filterLevels();
-  // filterNamespaces();
-  // filterLabels();
-  // filterBoth();
-  // counting();
-  // tests();
-  // dir();
-  // table();
-  // group();
-  // groupCollapsed();
-  // seal();
-  // trace();
-  // timestamp();
-  // sealTag();
-  // silent();
-  // tools();
-  // common();
-  // standard();
-  // await json();
-  // // time();
-  // thread();
-  // listener();
+  // await performance();
+  defaultLevels();
+  configuration();
+  custom();
+  namespace();
+  label();
+  filterLevelRange();
+  filterLevels();
+  filterNamespaces();
+  filterLabels();
+  filterBoth();
+  counting();
+  tests();
+  dir();
+  table();
+  group();
+  groupCollapsed();
+  seal();
+  trace();
+  timestamp();
+  sealTag();
+  silent();
+  tools();
+  common();
+  standard();
+  await json();
+  // time();
+  thread();
+  listener();
 }
 
 async function performance() {
