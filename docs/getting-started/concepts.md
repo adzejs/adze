@@ -26,11 +26,11 @@ various middleware hooks are called.
 
 As you can see in the diagram, a log chain is made up of three parts:
 
-- [Log Class](adze-class.md)
+- [Log Class](../reference/log-class.md)
   - This is where all logs begin, often by calling its static methods to start a chain.
-- [Modifiers](modifiers.md)
+- [Modifiers](../reference/modifiers.md)
   - These log methods modify the instance and then return it.
-- [Terminator](default-terminators.md)
+- [Terminator](../reference/terminators.md)
   - These methods end the chain and generate the log.
 
 #### Example
@@ -50,7 +50,7 @@ log, simply call a terminator method.
 
 ### Modifiers
 
-Once you have a Log instance you can immediately [terminate](terminators) it, or you can call
+Once you have a Log instance you can immediately [terminate](../reference/terminators.md) it, or you can call
 certain methods that this library calls **modifiers**. Modifiers are methods on a Log instance
 that changes its behavior. For example, if you wanted to add a performance timestamp to your log you
 could use the `timeNow` modifier.
@@ -71,10 +71,10 @@ For documentation of all of the supported modifiers, please read the [Modifiers]
 ### Terminator
 
 In our [Modifiers](../reference/modifiers.md) example code above, you can see we ended our
-chain with [`log()`](default-terminators.md#log). The log method is one of the eight [default log terminators](default-terminators.md).
-The library also comes with [other special terminators](other-terminators.md) like
-[custom](other-terminators.md#custom). A log method is considered a terminator when it
-ends your log chain and returns a [terminated log object](data.md#terminated-log-object).
+chain with [`log()`](../reference/terminators.md#log). The log method is one of the nine [default log terminators](../reference/terminators.md).
+The library also comes with other special terminators like
+[custom](../reference/terminators.md#custom). A log method is considered a terminator when it
+ends your log chain.
 
 For more information about all of the supported terminators, please read the [Terminators](../reference/terminators.md) page of
 the [Reference Manual](../reference/introduction.md).
