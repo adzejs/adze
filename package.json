@@ -35,7 +35,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AJStacy/adze.git"
+    "url": "git+https://github.com/adzejs/adze.git"
   },
   "keywords": [
     "typescript",
@@ -48,9 +48,9 @@
   "author": "Andrew Stacy <ajstacy@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/AJStacy/adze/issues"
+    "url": "https://github.com/adzejs/adze/issues"
   },
-  "homepage": "https://github.com/AJStacy/adze#readme",
+  "homepage": "https://adzejs.com",
   "devDependencies": {
     "@eslint/js": "^9.5.0",
     "@size-limit/preset-small-lib": "^11.1.4",
