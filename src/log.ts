@@ -24,6 +24,7 @@ import {
 } from './functions';
 import { Middleware } from './middleware';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isCallback(maybeFunction: unknown): maybeFunction is (...args: any[]) => void {
   return typeof maybeFunction === 'function';
 }
@@ -58,7 +59,9 @@ export default class Log<N extends string = string, Msg = unknown> {
     this.globalStore = setup(cfg);
     this._modifierData = modifierData ?? {};
     this._cfg = new Configuration(cfg);
-    this.doHook((m) => (m.constructed ? m.constructed(this) : null));
+    this.doHook((m) => {
+      if (m.constructed) m.constructed(this);
+    });
   }
 
   ////////////////////////////////////////////////////////
@@ -114,7 +117,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard API.
    */
   public static alert<M extends string>(...args: [M, ...unknown[]]): void {
-    return new this().alert(...args);
+    new this().alert(...args);
   }
 
   /**
@@ -144,7 +147,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/error)
    */
   public static error<M extends string>(...args: [M, ...unknown[]]): void {
-    return new this().error(...args);
+    new this().error(...args);
   }
 
   /**
@@ -176,7 +179,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/warn)
    */
   public static warn<M extends string>(...args: [M, ...unknown[]]): void {
-    return new this().warn(...args);
+    new this().warn(...args);
   }
 
   /**
@@ -208,7 +211,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/info)
    */
   public static info<M extends string>(...args: [M, ...unknown[]]): void {
-    return new this().info(...args);
+    new this().info(...args);
   }
 
   /**
@@ -238,7 +241,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard API.
    */
   public static fail<M extends string>(...args: [M, ...unknown[]]): void {
-    return new this().fail(...args);
+    new this().fail(...args);
   }
 
   /**
@@ -266,7 +269,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard API.
    */
   public static success<M>(...args: [M, ...unknown[]]): void {
-    return new this().success(...args);
+    new this().success(...args);
   }
 
   /**
@@ -296,7 +299,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
   public static log<M>(args_0: M, ...args: unknown[]): void {
-    return new this().log(...[args_0, ...args]);
+    new this().log(...[args_0, ...args]);
   }
 
   /**
@@ -326,7 +329,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/log)
    */
   public static debug<M extends string>(...args: [M, ...unknown[]]): void {
-    return new this().debug(...args);
+    new this().debug(...args);
   }
 
   /**
@@ -360,7 +363,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * This is a non-standard API.
    */
   public static verbose<M extends string>(...args: [M, ...unknown[]]): void {
-    return new this().verbose(...args);
+    new this().verbose(...args);
   }
 
   /**
@@ -404,6 +407,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Adze configuration object under the levels property.
    */
   public custom<M extends string>(levelName: string, ...args: [M, ...unknown[]]): this {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!this._cfg.levels[levelName]) {
       console.warn(new Error('Custom log level not found in configuration.'));
       return this;
@@ -560,7 +564,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    * ```
    */
   public static thread<T>(key: string, value: T): void {
-    return new this().thread(key, value);
+    new this().thread(key, value);
   }
 
   ////////////////////////////////////////////////////////
@@ -698,7 +702,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
    */
-  public get dir(): Log<string, Record<string | symbol | number, any>> {
+  public get dir(): Log<string, Record<string | symbol | number, unknown>> {
     this.modifierQueue.push([
       'dir',
       (data: ModifierData) => {
@@ -706,7 +710,7 @@ export default class Log<N extends string = string, Msg = unknown> {
         return data;
       },
     ]);
-    return this as Log<string, Record<string | symbol | number, any>>;
+    return this as Log<string, Record<string | symbol | number, unknown>>;
   }
 
   /**
@@ -715,7 +719,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/dir)
    */
-  public static get dir(): Log<string, Record<string | symbol | number, any>> {
+  public static get dir(): Log<string, Record<string | symbol | number, unknown>> {
     return new this().dir;
   }
 
@@ -958,7 +962,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * This is a non-standard API.
    */
-  public meta<T extends Record<string, any> = Record<string, unknown>>(meta: T): this {
+  public meta<T extends Record<string, unknown> = Record<string, unknown>>(meta: T): this {
     this.modifierQueue.push([
       'meta',
       (data: ModifierData, ctxt: Log) => {
@@ -990,7 +994,7 @@ export default class Log<N extends string = string, Msg = unknown> {
     this.modifierQueue.push([
       'namespace',
       (data: ModifierData) => {
-        let arr = data.namespace ?? [];
+        const arr = data.namespace ?? [];
         data.namespace = arr.length > 0 ? [...arr, ...namespace] : namespace;
         return data;
       },
@@ -1079,7 +1083,7 @@ export default class Log<N extends string = string, Msg = unknown> {
    *
    * MDN API Docs [here](https://developer.mozilla.org/en-US/docs/Web/API/Console/table)
    */
-  public static get table(): Log<any, TableData> {
+  public static get table(): Log<never, TableData> {
     return new this().table;
   }
 
@@ -1125,7 +1129,7 @@ export default class Log<N extends string = string, Msg = unknown> {
     this.modifierQueue.push([
       'timeEnd',
       (data: ModifierData) => {
-        if (data.label && data.label?.timeStart) {
+        if (data.label?.timeStart) {
           data.label.timeElapsed = formatTime(hrtime(data.label.timeStart));
         }
         return data;
@@ -1253,11 +1257,9 @@ export default class Log<N extends string = string, Msg = unknown> {
   public print(data: LogData): void {
     // Skip printing if the Adze environment is set to test.
     if (isTestEnvironment()) return;
-    if (data) {
+    if (data.message.length > 0) {
       // Don't print if it is configured to be silent.
       if (data.silent) return;
-      // Don't print if the message is empty.
-      if (data.message.length < 1) return;
       // Only print the message with arguments if it is using a method that allows arguments.
       if (isMethodWithArgs(data.method)) {
         console[data.method](...data.message);
@@ -1265,7 +1267,7 @@ export default class Log<N extends string = string, Msg = unknown> {
         console[data.method]();
       }
     } else {
-      console.warn(new Error('Adze: Cannot reprint a log that has never been previously printed.'));
+      console.warn(new Error('Adze: Cannot print a log that has never been previously printed.'));
     }
   }
 
@@ -1274,10 +1276,10 @@ export default class Log<N extends string = string, Msg = unknown> {
   ////////////////////////////////////////////////////////
 
   private terminate(terminator: string, args: unknown[]): void {
-    // TODO: For performance reasons, check if the terminator is allowed before doing anything else.
-
     // Run the beforeTerminated middleware hooks
-    this.doHook((m) => (m.beforeTerminated ? m.beforeTerminated(this, terminator, args) : null));
+    this.doHook((m) => {
+      if (m.beforeTerminated) m.beforeTerminated(this, terminator, args);
+    });
 
     // Run the modifier queue to modify the data object.
     this.runModifierQueue();
@@ -1298,9 +1300,9 @@ export default class Log<N extends string = string, Msg = unknown> {
     if (this._cfg.dump && this.modifierData.label?.context) {
       message.push(this.modifierData.label.context);
     }
-    this.doHook((m) =>
-      m.beforeFormatApplied ? m.beforeFormatApplied(this, this._cfg.format, message) : null
-    );
+    this.doHook((m) => {
+      if (m.beforeFormatApplied) m.beforeFormatApplied(this, this._cfg.format, message);
+    });
     const { activeLevel, cache, cacheSize, dump, format, meta, showTimestamp, silent, withEmoji } =
       this._cfg;
     const data: LogData = {
@@ -1320,9 +1322,9 @@ export default class Log<N extends string = string, Msg = unknown> {
       timestamp,
       message,
     };
-    this.doHook((m) =>
-      m.afterFormatApplied ? m.afterFormatApplied(this, this._cfg.format, message) : null
-    );
+    this.doHook((m) => {
+      if (m.afterFormatApplied) m.afterFormatApplied(this, this._cfg.format, message);
+    });
 
     // save the data to this instance
     this._data = data;
@@ -1330,22 +1332,28 @@ export default class Log<N extends string = string, Msg = unknown> {
       this.globalStore.addLogToCache(this);
     }
 
-    this.doHook((m) => (m.beforePrint ? m.beforePrint(this) : null));
+    this.doHook((m) => {
+      if (m.beforePrint) m.beforePrint(this);
+    });
 
     // Print the log to the console.
     this.print(this._data);
 
-    this.doHook((m) => (m.afterTerminated ? m.afterTerminated(this, terminator, args) : null));
+    this.doHook((m) => {
+      if (m.afterTerminated) m.afterTerminated(this, terminator, args);
+    });
 
     // Fire all of the log listeners and pass this log instance to them.
-    this.globalStore.getListeners(level.level).forEach((listener: LogListener) => listener(this));
+    this.globalStore.getListeners(level.level).forEach((listener: LogListener) => {
+      listener(this);
+    });
   }
 
   /**
    * Returns a formatter constructor based on the provided format.
    */
   private selectFormatter(format: string): FormatterConstructor {
-    return this._cfg?.formatters[format];
+    return this._cfg.formatters[format];
   }
 
   /**
@@ -1361,13 +1369,13 @@ export default class Log<N extends string = string, Msg = unknown> {
   private runModifierQueue(): void {
     this.modifierQueue.forEach(([modName, modFunc]) => {
       const result = modFunc(this.modifierData, this);
-      this.doHook((m) =>
-        m.beforeModifierApplied ? m.beforeModifierApplied(this, modName, result) : null
-      );
+      this.doHook((m) => {
+        if (m.beforeModifierApplied) m.beforeModifierApplied(this, modName, result);
+      });
       this._modifierData = result;
-      this.doHook((m) =>
-        m.afterModifierApplied ? m.afterModifierApplied(this, modName, result) : null
-      );
+      this.doHook((m) => {
+        if (m.afterModifierApplied) m.afterModifierApplied(this, modName, result);
+      });
     });
   }
 
@@ -1375,6 +1383,8 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Execute a middleware hook.
    */
   private doHook(cb: (middleware: Middleware) => void): void {
-    this._cfg.middleware?.forEach((middleware: Middleware) => cb(middleware));
+    this._cfg.middleware?.forEach((middleware: Middleware) => {
+      cb(middleware);
+    });
   }
 }

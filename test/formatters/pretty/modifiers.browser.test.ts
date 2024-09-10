@@ -201,6 +201,7 @@ describe('modifiers with pretty format in the browser', () => {
 
   test('the if modifier prints the log if it passes the condition', () => {
     console.log = vi.fn();
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     adze.if(2 === 2).log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
       '%c Log',
@@ -212,6 +213,7 @@ describe('modifiers with pretty format in the browser', () => {
 
   test('the if modifier prints the log with an emoji if it passes the condition', () => {
     console.log = vi.fn();
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     adze.withEmoji.if(2 === 2).log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
       '%c🪵 %c Log',
@@ -224,7 +226,8 @@ describe('modifiers with pretty format in the browser', () => {
 
   test('the assert modifier prints the log if it failes the condition', () => {
     console.log = vi.fn();
-    // @ts-ignore
+    // @ts-expect-error Testing assertion failure
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     adze.assert(2 === 3).log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
       '%c Log',
@@ -236,7 +239,8 @@ describe('modifiers with pretty format in the browser', () => {
 
   test('the assert modifier prints the log with an emoji if it failes the condition', () => {
     console.log = vi.fn();
-    // @ts-ignore
+    // @ts-expect-error Testing assertion failure
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     adze.withEmoji.assert(2 === 3).log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
       '%c🪵 %c Log',
@@ -252,7 +256,6 @@ describe('modifiers with pretty format in the browser', () => {
     setup({
       timestampFormatter: () => '2024-08-03T16:37:11-04:00',
     });
-    // @ts-ignore
     adze.timestamp.log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
       '%c Log',

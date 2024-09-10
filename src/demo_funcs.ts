@@ -11,9 +11,10 @@ import adze, {
   isBrowser,
 } from './index';
 import { StandardLogFormatMeta } from './formatters/standard/types';
+import Log from './log';
 
 if (isBrowser()) {
-  // @ts-ignore
+  // @ts-expect-error Setting adze to the window if in the browser
   window.adze = adze;
 }
 
@@ -60,6 +61,7 @@ async function runDemo() {
   listener();
 }
 
+// eslint-disable-next-line @typescript-eslint/require-await, @typescript-eslint/no-unused-vars
 async function performance() {
   setup({
     withEmoji: true,
@@ -95,7 +97,7 @@ async function performance() {
   teardown();
 }
 
-async function defaultLevels() {
+function defaultLevels() {
   setup({
     withEmoji: true,
     activeLevel: 1337,
@@ -350,13 +352,19 @@ function counting() {
 
 function tests() {
   // @ts-expect-error Intentional error to test the assertion
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   adze.assert(2 === 4).log('This is a failed assertion!');
   // @ts-expect-error Intentional error to test the assertion
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   adze.withEmoji.assert(2 === 4).log('This is a failed assertion with emoji!');
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   adze.assert(4 === 4).log('This passed so it should not show!');
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   adze.if(2 === 2).log('This condition passed!');
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   adze.withEmoji.if(2 === 2).log('This condition passed with emoji!');
   // @ts-expect-error Intentional error to test the assertion
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   adze.if(2 === 4).log('This condition failed so it should not show!');
 }
 
@@ -533,7 +541,7 @@ async function json() {
       },
       req_id: '12345',
       req: await serializeRequest(request, true),
-      res: await serializeResponse(response),
+      res: serializeResponse(response),
       latency: 4444444,
     })
     .ns('foobar', 'baz')
@@ -552,8 +560,8 @@ async function json() {
 
 function listener() {
   const store = setup();
-  const id = store.addListener('*', (log) => {
-    // console.log(log.data);
+  const id = store.addListener('*', (log: Log) => {
+    console.log('Log level logged from listener', log.data?.level);
   });
   adze.withEmoji.log('This is a log');
   adze.ns('derp').log('This is a namespaced log');
@@ -562,6 +570,7 @@ function listener() {
   teardown();
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function time() {
   setup();
   adze.timeNow.log('This is a time log');

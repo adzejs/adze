@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import adze, { LevelConfig, setup, teardown } from '../../../src';
+import adze, { LevelConfiguration, setup, teardown } from '../../../src';
 
 /**
  * @vitest-environment jsdom
@@ -105,7 +105,7 @@ describe('terminators with pretty format in the browser', () => {
 
   test('prints a custom log', () => {
     console.log = vi.fn();
-    const leetLevel: LevelConfig = {
+    const leetLevel: LevelConfiguration = {
       levelName: 'leetLevel',
       level: 1337,
       method: 'log',
@@ -233,7 +233,7 @@ describe('terminators with emoji', () => {
 
   test('prints an emoji custom log', () => {
     console.log = vi.fn();
-    const leetLevel: LevelConfig = {
+    const leetLevel: LevelConfiguration = {
       levelName: 'leetLevel',
       level: 1337,
       method: 'log',

@@ -1,6 +1,5 @@
 import Formatter from '../formatter';
-import { Configuration } from '../../configuration';
-import { LevelConfiguration, ModifierData } from '../../_types';
+import { ModifierData } from '../../_types';
 import { formatISO } from 'date-fns/formatISO';
 import { JsonLog, JsonLogOptionalFields, JsonLogRequiredFields } from './types';
 import { hasRequiredFields } from './type-guards';
@@ -14,10 +13,6 @@ export default class JsonFormatter extends Formatter {
    * Format the date in the ISO8601 format by default.
    */
   protected timestampFormatFunction: (date: Date) => string = (date: Date) => formatISO(date);
-
-  constructor(cfg: Configuration, level: LevelConfiguration) {
-    super(cfg, level);
-  }
 
   /**
    * Format the log message for the browser.
@@ -39,9 +34,9 @@ export default class JsonFormatter extends Formatter {
   private formatMessage(mods: ModifierData, timestamp: string, _args: unknown[]): unknown[] {
     const global = setup();
     const args = [..._args];
-    const msg = args.shift();
-    if (this.cfg.meta && hasRequiredFields(this.cfg.meta)) {
-      const { levelName, src, err, req_id, req, res, latency, hostname, name, ...meta } = this.cfg
+    const msg = args.shift() as string;
+    if (hasRequiredFields(this.cfg.meta)) {
+      const { src, err, req_id, req, res, latency, hostname, name, ...meta } = this.cfg
         .meta as JsonLogRequiredFields & JsonLogOptionalFields;
       const { namespace, label } = mods;
       const json: JsonLog = {
@@ -50,7 +45,7 @@ export default class JsonFormatter extends Formatter {
         levelName: this.level.levelName,
         name,
         hostname,
-        msg: `${msg}`,
+        msg: msg,
         args,
         pid: global.pid,
         time: timestamp,

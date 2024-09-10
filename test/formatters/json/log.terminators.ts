@@ -8,7 +8,7 @@ import adze, {
 } from '../../../src';
 import { isMatch } from 'date-fns';
 
-export const printJsonAlert = async () => {
+export const printJsonAlert = () => {
   const fn = vi.fn();
   console.error = fn;
   setup({ format: 'json', timestampFormatter: () => '2024-07-31T13:19:25-04:00' });
@@ -21,7 +21,8 @@ export const printJsonAlert = async () => {
     .alert('This is an alert log.', 'foo');
 
   expect(fn).toHaveBeenCalledTimes(1);
-  const log = JSON.parse(fn.mock.calls[0][0]);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
+  const log: string = JSON.parse(fn.mock.calls[0][0]);
   expect(log).toEqual({
     v: 1,
     level: 0,
@@ -48,6 +49,7 @@ export const printJsonError = () => {
     .error('This is an error log.', 'foo');
 
   expect(fn).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const log = JSON.parse(fn.mock.calls[0][0]);
   expect(log).toEqual({
     v: 1,
@@ -75,6 +77,7 @@ export const printJsonWarn = () => {
     .warn('This is a warn log.', 'foo');
 
   expect(fn).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const log = JSON.parse(fn.mock.calls[0][0]);
   expect(log).toEqual({
     v: 1,
@@ -102,6 +105,7 @@ export const printJsonInfo = () => {
     .info('This is an info log.', 'foo');
 
   expect(fn).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const log = JSON.parse(fn.mock.calls[0][0]);
   expect(log).toEqual({
     v: 1,
@@ -129,6 +133,7 @@ export const printJsonFail = () => {
     .fail('This is a fail log.', 'foo');
 
   expect(fn).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const log = JSON.parse(fn.mock.calls[0][0]);
   expect(log).toEqual({
     v: 1,
@@ -156,6 +161,7 @@ export const printJsonSuccess = () => {
     .success('This is a success log.', 'foo');
 
   expect(fn).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const log = JSON.parse(fn.mock.calls[0][0]);
   expect(log).toEqual({
     v: 1,
@@ -183,6 +189,7 @@ export const printJsonLog = () => {
     .log('This is a log log.', 'foo');
 
   expect(fn).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const log = JSON.parse(fn.mock.calls[0][0]);
   expect(log).toEqual({
     v: 1,
@@ -214,6 +221,7 @@ export const printJsonDebug = () => {
     .debug('This is a debug log.', 'foo');
 
   expect(fn).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const log = JSON.parse(fn.mock.calls[0][0]);
   expect(log).toEqual({
     v: 1,
@@ -245,6 +253,7 @@ export const printJsonVerbose = () => {
     .verbose('This is a verbose log.', 'foo');
 
   expect(fn).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const log = JSON.parse(fn.mock.calls[0][0]);
   expect(log).toEqual({
     v: 1,
@@ -286,6 +295,7 @@ export const printJsonCustom = () => {
     .custom('leetLevel', 'This is a custom log.', 'foo');
 
   expect(fn).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const log = JSON.parse(fn.mock.calls[0][0]);
   expect(log).toEqual({
     v: 1,
@@ -316,6 +326,7 @@ export const noEmoji = () => {
     .log('This is a log log.', 'foo');
 
   expect(fn).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const log = JSON.parse(fn.mock.calls[0][0]);
   expect(log).toEqual({
     v: 1,
@@ -346,7 +357,9 @@ export const defaultTimestamp = () => {
     .log('This is a log log.', 'foo');
   expect(console.log).toHaveBeenCalledTimes(1);
   expect(fn).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const log = JSON.parse(fn.mock.calls[0][0]);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
   expect(isMatch(log.time, "yyyy-MM-dd'T'HH:mm:ssxxx")).toBe(true);
 };
 
@@ -373,6 +386,7 @@ export const incrementingPids = () => {
 
   expect(fn).toHaveBeenCalledTimes(2);
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const log1 = JSON.parse(fn.mock.calls[0][0]);
   expect(log1).toEqual({
     v: 1,
@@ -386,6 +400,7 @@ export const incrementingPids = () => {
     time: '2024-07-31T13:19:25-04:00',
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const log2 = JSON.parse(fn.mock.calls[1][0]);
   expect(log2).toEqual({
     v: 1,
@@ -436,13 +451,14 @@ export const printsOptionalFields = async () => {
         hello: 'world',
       },
       req: await serializeRequest(request),
-      res: await serializeResponse(response),
+      res: serializeResponse(response),
       req_id: '12345',
       src: 'test.ts',
     })
     .alert('This is an alert log.');
 
   expect(fn).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const log = JSON.parse(fn.mock.calls[0][0]);
   expect(log).toEqual({
     v: 1,

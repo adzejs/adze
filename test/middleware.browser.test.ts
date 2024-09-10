@@ -18,9 +18,11 @@ describe('middleware', () => {
     class TestMiddleware extends Middleware {
       protected async loadBrowserDependencies(): Promise<void> {
         funcBrowser();
+        await Promise.resolve();
       }
       protected async loadServerDependencies(): Promise<void> {
         funcServer();
+        await Promise.resolve();
       }
     }
     setup({
@@ -45,9 +47,11 @@ describe('middleware', () => {
 
       protected async loadBrowserDependencies(): Promise<void> {
         funcBrowser();
+        await Promise.resolve();
       }
       protected async loadServerDependencies(): Promise<void> {
         funcServer();
+        await Promise.resolve();
       }
     }
     const testMiddleware = new TestMiddleware();

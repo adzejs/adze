@@ -1,6 +1,5 @@
 import Formatter from '../formatter';
-import { Configuration } from '../../configuration';
-import { LevelConfiguration, ModifierData } from '../../_types';
+import { ModifierData } from '../../_types';
 import { format } from 'date-fns/format';
 
 /**
@@ -17,10 +16,6 @@ export default class CommonFormatter extends Formatter {
    */
   protected timestampFormatFunction: (date: Date) => string = (date: Date) =>
     format(date, 'dd/MMM/yyyy:HH:mm:ss xx');
-
-  constructor(cfg: Configuration, level: LevelConfiguration) {
-    super(cfg, level);
-  }
 
   /**
    * Format the log message for the browser.
@@ -42,16 +37,17 @@ export default class CommonFormatter extends Formatter {
    * **Example:** 127.0.0.1 user-identifier frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326
    */
   private formatMessage(_: ModifierData, timestamp: string, args: unknown[]): unknown[] {
-    if (this.cfg.meta?.hostname === undefined) {
+    if (this.cfg.meta.hostname === undefined) {
       console.warn(
         new Error(
           "Adze: 'hostname' is required for the common log format. Please provide this value in your log's meta data."
         )
       );
     }
-    const hostname = this.cfg.meta?.hostname;
-    const ident = this.cfg.meta?.ident ?? '-';
-    const user = this.cfg.meta?.user ?? '-';
-    return [`${hostname} ${ident} ${user} [${timestamp}] ${args[0]}`];
+    const hostname = this.cfg.meta.hostname as string;
+    const ident = (this.cfg.meta.ident as string | undefined) ?? '-';
+    const user = (this.cfg.meta.user as string | undefined) ?? '-';
+    const firstArg = args[0] as string;
+    return [`${hostname} ${ident} ${user} [${timestamp}] ${firstArg}`];
   }
 }

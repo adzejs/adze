@@ -30,7 +30,7 @@ export class Configuration implements IConfiguration {
   }
 
   public get activeLevel(): Level | number {
-    return this.glblCfg?.activeLevel ?? this.logCfg?.activeLevel ?? dfltCfg.activeLevel;
+    return this.glblCfg?.activeLevel ?? this.logCfg.activeLevel ?? dfltCfg.activeLevel;
   }
 
   public set activeLevel(level: Level | number) {
@@ -38,7 +38,7 @@ export class Configuration implements IConfiguration {
   }
 
   public get cache(): boolean {
-    return this.glblCfg?.cache ?? this.logCfg?.cache ?? dfltCfg.cache;
+    return this.glblCfg?.cache ?? this.logCfg.cache ?? dfltCfg.cache;
   }
 
   public set cache(value: boolean) {
@@ -46,7 +46,7 @@ export class Configuration implements IConfiguration {
   }
 
   public get cacheSize(): number {
-    return this.glblCfg?.cacheSize ?? this.logCfg?.cacheSize ?? dfltCfg.cacheSize;
+    return this.glblCfg?.cacheSize ?? this.logCfg.cacheSize ?? dfltCfg.cacheSize;
   }
 
   public set cacheSize(size: number) {
@@ -54,23 +54,23 @@ export class Configuration implements IConfiguration {
   }
 
   public get dump(): boolean {
-    return this.glblCfg?.dump ?? this.logCfg?.dump ?? dfltCfg.dump;
+    return this.glblCfg?.dump ?? this.logCfg.dump ?? dfltCfg.dump;
   }
 
   public set dump(value: boolean) {
     this.logCfg.dump = value;
   }
 
-  public get meta(): Record<string, any> {
-    return { ...this.logCfg?.meta, ...this.glblCfg?.meta };
+  public get meta(): Record<string, unknown> {
+    return { ...this.logCfg.meta, ...this.glblCfg?.meta };
   }
 
-  public set meta(value: Record<string, any>) {
+  public set meta(value: Record<string, unknown>) {
     this.logCfg.meta = value;
   }
 
   public get silent(): boolean {
-    return this.glblCfg?.silent ?? this.logCfg?.silent ?? dfltCfg.silent;
+    return this.glblCfg?.silent ?? this.logCfg.silent ?? dfltCfg.silent;
   }
 
   public set silent(value: boolean) {
@@ -78,7 +78,7 @@ export class Configuration implements IConfiguration {
   }
 
   public get showTimestamp(): boolean {
-    return this.glblCfg?.showTimestamp ?? this.logCfg?.showTimestamp ?? dfltCfg.showTimestamp;
+    return this.glblCfg?.showTimestamp ?? this.logCfg.showTimestamp ?? dfltCfg.showTimestamp;
   }
 
   public set showTimestamp(value: boolean) {
@@ -86,7 +86,7 @@ export class Configuration implements IConfiguration {
   }
 
   public get withEmoji(): boolean {
-    return this.glblCfg?.withEmoji ?? this.logCfg?.withEmoji ?? dfltCfg.withEmoji;
+    return this.glblCfg?.withEmoji ?? this.logCfg.withEmoji ?? dfltCfg.withEmoji;
   }
 
   public set withEmoji(value: boolean) {
@@ -94,7 +94,7 @@ export class Configuration implements IConfiguration {
   }
 
   public get format(): string {
-    return this.glblCfg?.format ?? this.logCfg?.format ?? dfltCfg.format;
+    return this.glblCfg?.format ?? this.logCfg.format ?? dfltCfg.format;
   }
 
   public set format(value: string) {
@@ -102,7 +102,7 @@ export class Configuration implements IConfiguration {
   }
 
   public get levels(): Record<string, LevelConfiguration> {
-    return { ...dfltCfg.levels, ...(this.logCfg?.levels ?? {}), ...(this.glblCfg?.levels ?? {}) };
+    return { ...dfltCfg.levels, ...(this.logCfg.levels ?? {}), ...(this.glblCfg?.levels ?? {}) };
   }
 
   public set levels(value: Record<string, LevelConfiguration>) {
@@ -110,7 +110,7 @@ export class Configuration implements IConfiguration {
   }
 
   public get middleware(): Middleware[] | undefined {
-    return [...(this.glblCfg?.middleware ?? []), ...(this.logCfg?.middleware ?? [])];
+    return [...(this.glblCfg?.middleware ?? []), ...(this.logCfg.middleware ?? [])];
   }
 
   public set middleware(value: Middleware[] | undefined) {
@@ -118,7 +118,7 @@ export class Configuration implements IConfiguration {
   }
 
   public get filters(): Filters | undefined {
-    return this.glblCfg?.filters ?? this.logCfg?.filters;
+    return this.glblCfg?.filters ?? this.logCfg.filters;
   }
 
   public set filters(value: Filters | undefined) {
@@ -126,7 +126,7 @@ export class Configuration implements IConfiguration {
   }
 
   public get timestampFormatter(): TimestampFormatter | undefined {
-    return this.glblCfg?.timestampFormatter ?? this.logCfg?.timestampFormatter;
+    return this.glblCfg?.timestampFormatter ?? this.logCfg.timestampFormatter;
   }
 
   public set timestampFormatter(value: TimestampFormatter | undefined) {
@@ -136,7 +136,7 @@ export class Configuration implements IConfiguration {
   public get formatters(): Record<string, FormatterConstructor> {
     return {
       ...dfltCfg.formatters,
-      ...(this.logCfg?.formatters ?? {}),
+      ...(this.logCfg.formatters ?? {}),
       ...(this.glblCfg?.formatters ?? {}),
     };
   }

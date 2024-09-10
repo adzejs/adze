@@ -24,7 +24,9 @@ export default class Tools {
    */
   public filterByLabel(label: string): void {
     const logs = filterByLabel(label, this.globalStore.cache);
-    logs.forEach((log) => render(log));
+    logs.forEach((log) => {
+      render(log);
+    });
   }
 
   /**
@@ -32,7 +34,9 @@ export default class Tools {
    */
   public filterByNamespace(...namespace: string[]): void {
     const logs = filterByNamespace(namespace, this.globalStore.cache);
-    logs.forEach((log) => render(log));
+    logs.forEach((log) => {
+      render(log);
+    });
   }
 
   /**
@@ -40,13 +44,17 @@ export default class Tools {
    */
   public filterByLevel(level: LevelSelector): void {
     const logs = filterByLevel(level, this.globalStore.cache);
-    logs.forEach((log) => render(log));
+    logs.forEach((log) => {
+      render(log);
+    });
   }
 
   /**
    * Rerenders all logs that have been cached.
    */
   public renderAll(): void {
-    this.globalStore.cache.forEach((log) => render(log));
+    this.globalStore.cache.forEach((log) => {
+      render(log);
+    });
   }
 }

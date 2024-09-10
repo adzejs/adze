@@ -12,7 +12,7 @@
   },
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "tsc --project tsconfig.prod.json && tsc-alias && rm ./dist/demo_funcs.js && rm ./dist/demo_funcs.d.ts",
+    "build": "tsc --project tsconfig.prod.json && tsc-alias && rm -f ./dist/demo_funcs.js && rm -f ./dist/demo_funcs.d.ts",
     "build:demo": "tsc --project tsconfig.json && tsc-alias",
     "clean": "rm -rf ./dist",
     "docs:build": "vuepress build docs",

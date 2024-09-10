@@ -28,7 +28,7 @@ export function formatCount(count?: number): string {
  * Formats the assertion result for printing.
  */
 export function formatAssert(expression?: boolean, withEmoji?: boolean): string {
-  return expression !== undefined && expression === false
+  return expression !== undefined && !expression
     ? `${withEmoji ? '❌ ' : ''}Assertion failed:`
     : '';
 }
@@ -37,7 +37,7 @@ export function formatAssert(expression?: boolean, withEmoji?: boolean): string 
  * Formats the if statement result for printing.
  */
 export function formatIf(expression?: boolean, withEmoji?: boolean): string {
-  return expression !== undefined && expression === true
+  return expression !== undefined && expression
     ? `${withEmoji ? '✅ ' : ''}Expression passed:`
     : '';
 }

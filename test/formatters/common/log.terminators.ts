@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, test, vi } from 'vitest';
-import adze, { CommonLogFormatMeta, LevelConfig, setup, teardown } from '../../../src';
+import { expect, vi } from 'vitest';
+import adze, { CommonLogFormatMeta, LevelConfiguration, setup } from '../../../src';
 import { isMatch } from 'date-fns';
 
 export const printCommonAlert = () => {
@@ -147,7 +147,7 @@ export const printCommonVerbose = () => {
 
 export const printCommonCustom = () => {
   console.log = vi.fn();
-  const leetLevel: LevelConfig = {
+  const leetLevel: LevelConfiguration = {
     levelName: 'leetLevel',
     level: 1337,
     method: 'log',
@@ -206,7 +206,10 @@ export const commonTimestamp = () => {
     })
     .alert('This is an alert log.');
   expect(console.error).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
   const message = fn.mock.calls[0][0];
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
   const timestamp = message.split('[')[1].split(']')[0];
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   expect(isMatch(timestamp, 'dd/MMM/yyyy:HH:mm:ss xx')).toBe(true);
 };

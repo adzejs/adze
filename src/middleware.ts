@@ -4,6 +4,7 @@ import Log from './log';
 
 export type TargetEnvironment = 'server' | 'browser' | 'both';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface Middleware {
   /**
    * Hook that is called during construction of a log instance.
@@ -42,6 +43,7 @@ export interface Middleware {
 /**
  * Middleware abstract class that can be extended to create custom middleware.
  */
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export abstract class Middleware {
   /**
    * The target environment for this middleware.
@@ -84,9 +86,13 @@ export abstract class Middleware {
   /**
    * Load dependencies for the server environment.
    */
-  protected async loadServerDependencies() {}
+  protected async loadServerDependencies() {
+    /* noop */
+  }
   /**
    * Load dependencies for the browser environment.
    */
-  protected async loadBrowserDependencies() {}
+  protected async loadBrowserDependencies() {
+    /* noop */
+  }
 }

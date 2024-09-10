@@ -5,7 +5,7 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['test/**/*.{test,spec}.{js,ts}'],
     fakeTimers: {
-      toFake: [...(configDefaults.fakeTimers.toFake ?? []), 'performance'],
+      toFake: [...configDefaults.fakeTimers.toFake, 'performance'],
     },
     restoreMocks: true,
   },

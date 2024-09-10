@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 import { UserConfiguration } from '../_types';
 import AdzeGlobal from '../adze-global';
 
@@ -14,7 +15,7 @@ declare global {
  * Initialize the global log store for Adze. This is used for creating global configuration
  * overrides, storing labels, and optionally caching logs.
  */
-export function setup<Meta extends Record<string, any> = Record<string, any>>(
+export function setup<Meta extends Record<string, unknown> = Record<string, unknown>>(
   cfg?: UserConfiguration<Meta>
 ): AdzeGlobal {
   const store = globalThis.$adzeGlobal;
@@ -82,7 +83,7 @@ export function isTestEnvironment(): boolean {
 export function isChrome(): boolean {
   const _glbl = globalThis;
   if (envIsWindow(_glbl)) {
-    return _glbl.navigator?.userAgent?.indexOf('Chrome') > -1;
+    return _glbl.navigator.userAgent.includes('Chrome');
   }
   return false;
 }
@@ -93,7 +94,7 @@ export function isChrome(): boolean {
 export function isFirefox(): boolean {
   const _glbl = globalThis;
   if (envIsWindow(_glbl)) {
-    return _glbl.navigator?.userAgent?.indexOf('Firefox') > -1;
+    return _glbl.navigator.userAgent.includes('Firefox');
   }
   return false;
 }
@@ -104,7 +105,7 @@ export function isFirefox(): boolean {
 export function isSafari(): boolean {
   const _glbl = globalThis;
   if (envIsWindow(_glbl)) {
-    return _glbl.navigator?.userAgent?.indexOf('Safari') > -1 && !isChrome();
+    return _glbl.navigator.userAgent.includes('Safari') && !isChrome();
   }
   return false;
 }

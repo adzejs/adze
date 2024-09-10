@@ -1,6 +1,5 @@
-import { JSDOM } from 'jsdom';
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import adze, { setup, TableData, teardown } from '../../src';
+import adze, { teardown } from '../../src';
 import { applyChalkStyles } from '../../src/functions';
 import { getLogConfig } from '../../src/constants';
 

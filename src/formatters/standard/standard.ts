@@ -1,8 +1,7 @@
 import Formatter from '../formatter';
-import { Configuration } from '../../configuration';
-import { LevelConfiguration, ModifierData } from '../../_types';
+import { ModifierData } from '../../_types';
 import { formatISO } from 'date-fns/formatISO';
-import { isObject } from '../../functions';
+import { isNumber, isObject, isString } from '../../functions';
 
 /**
  * Formats log messages for stdout lines.
@@ -14,10 +13,6 @@ export default class StandardFormatter extends Formatter {
    * Format the date in the ISO8601 format by default.
    */
   protected timestampFormatFunction: (date: Date) => string = (date: Date) => formatISO(date);
-
-  constructor(cfg: Configuration, level: LevelConfiguration) {
-    super(cfg, level);
-  }
 
   /**
    * Format the log message for the browser.
@@ -38,17 +33,15 @@ export default class StandardFormatter extends Formatter {
    */
   private formatMessage(timestamp: string, mods: ModifierData, args: unknown[]): unknown[] {
     let leader = '';
-    if (this.cfg.meta) {
-      const { appname, hostname, port } = this.cfg.meta;
-      let _port = port ? `/${port}` : '';
-      let appPort = appname ? `${appname}${_port}` : '';
-      let _host = hostname ? ` on ${hostname}: ` : '';
-      let namespace = this.formatNamespace(mods.namespace);
-      let label = mods.label ? `[${mods.label.name}] ` : '';
-      leader = `${appPort}${_host}${namespace}${label}`;
-    }
+    const { appname, hostname, port } = this.cfg.meta;
+    const _port = isNumber(port) ? `/${port}` : '';
+    const appPort = isString(appname) ? `${appname}${_port}` : '';
+    const _host = isString(hostname) ? ` on ${hostname}: ` : '';
+    const namespace = this.formatNamespace(mods.namespace);
+    const label = mods.label ? `[${mods.label.name}] ` : '';
+    leader = `${appPort}${_host}${namespace}${label}`;
     return [
-      `[${timestamp}] ${this.level.levelName.toUpperCase()}: ${leader}${args[0]} `,
+      `[${timestamp}] ${this.level.levelName.toUpperCase()}: ${leader}${args[0] as string} `,
       args
         .map((arg) => (isObject(arg) ? JSON.stringify(arg) : arg))
         .slice(1)

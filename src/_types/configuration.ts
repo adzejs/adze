@@ -10,7 +10,7 @@ export type Format = (typeof formats)[number];
 /**
  * Configuration data points that are also emitted with log data.
  */
-export interface ConfigurationData<Meta extends Record<string, any> = Record<string, any>> {
+export interface ConfigurationData<Meta extends Record<string, unknown> = Record<string, unknown>> {
   /**
    * The level of logs to render.
    *
@@ -67,7 +67,7 @@ export interface ConfigurationData<Meta extends Record<string, any> = Record<str
 /**
  * Configuration for the logger.
  */
-export interface Configuration<Meta extends Record<string, any> = Record<string, any>>
+export interface Configuration<Meta extends Record<string, unknown> = Record<string, unknown>>
   extends ConfigurationData<Meta> {
   /**
    * Applies middleware to execute along with the log.
@@ -115,7 +115,6 @@ export interface Filters {
  * The log levels to filter.
  */
 export type LevelSelector =
-  | '*'
   | string
   | number
   | string[]
@@ -145,9 +144,8 @@ export interface FilterConfig<T = string[]> {
 /**
  * Partial configuration provided by the user.
  */
-export type UserConfiguration<Meta extends Record<string, any> = Record<string, any>> = Partial<
-  Configuration<Meta>
->;
+export type UserConfiguration<Meta extends Record<string, unknown> = Record<string, unknown>> =
+  Partial<Configuration<Meta>>;
 
 /**
  * Extended configuration if the user specifies a the formatter as "common".

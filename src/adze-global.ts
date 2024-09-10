@@ -1,11 +1,4 @@
-import {
-  Configuration,
-  Label,
-  LabelMap,
-  LevelSelector,
-  LogListener,
-  UserConfiguration,
-} from './_types';
+import { Label, LabelMap, LevelSelector, LogListener, UserConfiguration } from './_types';
 import { defaultConfiguration } from './constants';
 import { normalizeLevelSelector } from './functions';
 import Log from './log';
@@ -18,7 +11,7 @@ import Tools from './tools';
  */
 type ListenersMap = Map<number, Map<number, LogListener>>;
 
-export default class AdzeGlobal<Meta extends Record<string, any> = Record<string, any>> {
+export default class AdzeGlobal<Meta extends Record<string, unknown> = Record<string, unknown>> {
   /**
    * Global Adze configuration overrides.
    */
@@ -122,7 +115,7 @@ export default class AdzeGlobal<Meta extends Record<string, any> = Record<string
       { ...defaultConfiguration.levels, ...(this.config.levels ?? {}) },
       levels
     );
-    normalizedLevels.forEach((level) => {
+    normalizedLevels.forEach((level: number) => {
       if (this._levelsToListeners.has(level)) {
         const levelContainer = this._levelsToListeners.get(level) as Map<number, LogListener>;
         levelContainer.set(id, listener);

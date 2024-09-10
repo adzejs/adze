@@ -44,9 +44,7 @@ export default abstract class Formatter {
    * this formatter instance.
    */
   public get timestampFormatter(): (date: Date) => string {
-    return this.cfg?.timestampFormatter
-      ? this.cfg?.timestampFormatter
-      : this.timestampFormatFunction;
+    return this.cfg.timestampFormatter ? this.cfg.timestampFormatter : this.timestampFormatFunction;
   }
 
   /**
@@ -114,15 +112,12 @@ export default abstract class Formatter {
   private failsNamespacesFilter(mods: ModifierData): boolean {
     if (this.cfg.filters?.namespaces === undefined) return false;
     if (this.cfg.filters.namespaces.values.length > 0 && mods.namespace === undefined) return true;
-    if (this.cfg.filters?.namespaces.type === 'include') {
+    if (this.cfg.filters.namespaces.type === 'include') {
       const namespaces = mods.namespace ?? [];
-      return isNotIncluded(this.cfg.filters?.namespaces.values, namespaces);
+      return isNotIncluded(this.cfg.filters.namespaces.values, namespaces);
     }
-    if (this.cfg.filters?.namespaces.type === 'exclude') {
-      const namespaces = mods.namespace ?? [];
-      return isExcluded(this.cfg.filters?.namespaces.values, namespaces);
-    }
-    return false;
+    const namespaces = mods.namespace ?? [];
+    return isExcluded(this.cfg.filters.namespaces.values, namespaces);
   }
 
   /**
@@ -130,14 +125,11 @@ export default abstract class Formatter {
    */
   private failsLabelsFilter(mods: ModifierData): boolean {
     if (this.cfg.filters?.labels === undefined) return false;
-    if (this.cfg.filters.labels.values?.length > 0 && mods.label === undefined) return true;
+    if (this.cfg.filters.labels.values.length > 0 && mods.label === undefined) return true;
     const label = mods.label ? [mods.label.name] : [];
-    if (this.cfg.filters?.labels.type === 'include') {
-      return isNotIncluded(this.cfg.filters?.labels.values, label);
+    if (this.cfg.filters.labels.type === 'include') {
+      return isNotIncluded(this.cfg.filters.labels.values, label);
     }
-    if (this.cfg.filters?.labels.type === 'exclude') {
-      return isExcluded(this.cfg.filters?.labels.values, label);
-    }
-    return false;
+    return isExcluded(this.cfg.filters.labels.values, label);
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modifier, ModifierData } from '..';
 import { Configuration } from '../configuration';
 import Log from '../log';
@@ -5,7 +6,9 @@ import Log from '../log';
 /**
  * Required type for creating mixins in TypeScript.
  */
-type Constructor = new (...args: any[]) => {};
+type Constructor = new (...args: any[]) => {
+  /* noop */
+};
 
 /**
  * A mixin function for creating a sealed log instance that inherits properties from the parent.

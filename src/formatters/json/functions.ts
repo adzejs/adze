@@ -12,14 +12,15 @@ import { JsonLogHttpRequest, JsonLogHttpResponse, JsonLogError } from './types';
  */
 export async function serializeRequest(
   request: Request,
-  includeUsername: boolean = false
+  includeUsername = false
 ): Promise<JsonLogHttpRequest> {
   const url = new URL(request.url);
+  const json = (await request.json()) as unknown;
   return {
     headers: getHeaders(request.headers),
     method: request.method as HttpMethod,
     url: request.url,
-    body: await request.json(),
+    body: json ? JSON.stringify(json) : undefined,
     remoteAddress: url.host.split(':')[0],
     remotePort: getPortFromUrl(url),
     username: includeUsername ? getUsername(request.headers) : undefined,
@@ -39,8 +40,9 @@ function getPortFromUrl(url: URL): number | undefined {
  * Converts a Headers object to a plain object.
  */
 function getHeaders(headers: Headers): Record<string, string> {
-  let headerObj: Record<string, string> = {};
+  const headerObj: Record<string, string> = {};
   headers.forEach((v, k) => (headerObj[k] = v));
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { Authorization, authorization, ...rest } = headerObj;
   return rest;
 }
@@ -63,7 +65,7 @@ function getUsername(headers: Headers): string | undefined {
 /**
  * Serializes a Response object into a JSON Log HTTP Response object.
  */
-export async function serializeResponse(response: Response): Promise<JsonLogHttpResponse> {
+export function serializeResponse(response: Response): JsonLogHttpResponse {
   const url = new URL(response.url);
   const headerString = Object.keys(getHeaders(response.headers)).reduce(
     (s, k, v) => `${s}${k}: ${v}\r\n`,

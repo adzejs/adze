@@ -1,8 +1,8 @@
 import { expect, vi } from 'vitest';
-import adze, { StandardLogFormatMeta, LevelConfig, setup } from '../../../src';
+import adze, { StandardLogFormatMeta, LevelConfiguration, setup } from '../../../src';
 import { isMatch } from 'date-fns';
 
-export const printStandardAlert = async () => {
+export const printStandardAlert = () => {
   const fn = vi.fn();
   console.error = fn;
   setup({ format: 'standard', timestampFormatter: () => '2013-01-04T19:01:18.241Z' });
@@ -255,7 +255,7 @@ export const printStandardCustom = () => {
   const fn = vi.fn();
   console.log = fn;
 
-  const leetLevel: LevelConfig = {
+  const leetLevel: LevelConfiguration = {
     levelName: 'leetLevel',
     level: 1337,
     method: 'log',
@@ -322,7 +322,9 @@ export const defaultTimestamp = () => {
     })
     .log('This is a log log.', 'foo');
   expect(console.log).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const message = fn.mock.calls[0][0];
-  const timestamp = message.split('[')[1].split(']')[0];
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+  const timestamp: string = message.split('[')[1].split(']')[0];
   expect(isMatch(timestamp, "yyyy-MM-dd'T'HH:mm:ssxxx")).toBe(true);
 };

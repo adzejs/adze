@@ -63,16 +63,12 @@ export type IObject = Record<string, unknown>;
 /**
  * Type for the constructor of a Formatter class.
  */
-export interface FormatterConstructor {
-  new (cfg: Configuration, level: LevelConfiguration): Formatter;
-}
+export type FormatterConstructor = new (cfg: Configuration, level: LevelConfiguration) => Formatter;
 
 /**
  * Type for the constructor of an adze class.
  */
-export interface AdzeConstructor {
-  new (cfg: UserConfiguration, modifierData?: ModifierData): adze;
-}
+export type AdzeConstructor = new (cfg: UserConfiguration, modifierData?: ModifierData) => adze;
 
 export interface ModifierData {
   method?: Method;

@@ -1,5 +1,4 @@
 import Formatter from '../formatter';
-import { Configuration } from '../../configuration';
 import {
   addPadding,
   applyChalkStyles,
@@ -10,16 +9,12 @@ import {
   formatNamespace,
   initialCaps,
 } from '../../functions';
-import { LevelConfiguration, ModifierData } from '../../_types';
+import { ModifierData } from '../../_types';
 
 /**
  * Formats log messages in a pretty, human-readable manner.
  */
 export default class PrettyFormatter extends Formatter {
-  constructor(cfg: Configuration, level: LevelConfiguration) {
-    super(cfg, level);
-  }
-
   /**
    * Format the log message for the browser.
    */
@@ -27,9 +22,9 @@ export default class PrettyFormatter extends Formatter {
     const leader = this.formatLeader();
     const meta = this.formatMeta(mods, timestamp);
     if (this.cfg.withEmoji) {
-      return [leader, 'font-size: 12px;', this.level.style, meta, ...(args ?? [])];
+      return [leader, 'font-size: 12px;', this.level.style, meta, ...args];
     }
-    return [leader, this.level.style, meta, ...(args ?? [])];
+    return [leader, this.level.style, meta, ...args];
   }
 
   /**
@@ -45,7 +40,7 @@ export default class PrettyFormatter extends Formatter {
 
     message.push(styledLeader);
     meta !== '' ? message.push(meta) : null;
-    return [styledLeader, meta, ...(args ?? [])];
+    return [styledLeader, meta, ...args];
   }
 
   /**
@@ -87,10 +82,10 @@ export default class PrettyFormatter extends Formatter {
    * Formats the time elapsed string.
    */
   private formatTime(mods: ModifierData): string {
-    const timeLeader = `${this.cfg.withEmoji ? '⏱ ' : 'Time elapsed: '}`;
+    const timeLeader = this.cfg.withEmoji ? '⏱ ' : 'Time elapsed: ';
     if (mods.timeNow) {
       return `(${timeLeader}${mods.timeNow})`;
     }
-    return mods.label?.timeElapsed ? `(${timeLeader}${mods.label?.timeElapsed})` : '';
+    return mods.label?.timeElapsed ? `(${timeLeader}${mods.label.timeElapsed})` : '';
   }
 }

@@ -3,7 +3,7 @@ import CommonFormatter from './formatters/common';
 import JsonFormatter from './formatters/json';
 import PrettyFormatter from './formatters/pretty';
 import StandardFormatter from './formatters/standard/standard';
-import { isChrome, isSafari } from './functions/global';
+import { isChrome, isSafari } from './functions';
 
 /**
  * All valid log terminators. These are the terminators that can be called to end a log chain.

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { LevelSelector, Method, MethodWithArgs, MethodWithoutArgs, SpecialMethod } from '../_types';
 import {
   methodsWithArgs,

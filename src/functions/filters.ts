@@ -14,7 +14,8 @@ export function normalizeLevelSelector(
   if (selector === '*') return Object.values(levels).map((lvl) => lvl.level);
   // If it's a string, convert it to a number and coerce it to a number array.
   if (isString(selector)) {
-    return levels[selector] ? [levels[selector].level] : [];
+    // it's actually not always truthy eslint... you fool...
+    return [levels[selector].level];
   }
   // If it's a number, coerce it to a number array.
   if (isNumber(selector)) return [selector];
