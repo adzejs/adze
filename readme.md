@@ -1,6 +1,6 @@
 # Adze
 
-![Adze Logo](assets/logo-small.png)
+![Adze Logo](./readme/logo-small.png)
 
 [![build workflow](https://github.com/AJStacy/adze/actions/workflows/build.yml/badge.svg)](https://github.com/AJStacy/adze/actions/workflows/build.yml)
 ![npm](https://img.shields.io/npm/v/adze) ![node-lts](https://img.shields.io/node/v-lts/adze) [![size](https://badgen.net/bundlephobia/minzip/adze)](https://bundlephobia.com/result?p=adze) [![dependency count](https://badgen.net/bundlephobia/dependency-count/adze)](https://bundlephobia.com/result?p=adze) [![apache 2.0](https://badgen.net/npm/license/adze)](/LICENSE.md)
@@ -9,7 +9,7 @@
 
 ## Why is this named Adze?
 
-![A drawing of a man using an adze to shape a log](assets/adze-wikipedia.png)
+![A drawing of a man using an adze to shape a log](./readme/adze-wikipedia.png)
 
 _Photo from [Wikipedia](https://en.wikipedia.org/wiki/Adze)_
 
@@ -48,7 +48,7 @@ Aside from [universalism](https://en.wikipedia.org/wiki/Isomorphic_JavaScript), 
 
 <span style="display: block; max-width: 600px">
 
-![Preview of Adze logs](./docs/getting-started/examples/introduction/demo.jpg)
+![Preview of Adze logs](./readme/demo.jpg)
 
 </span>
 
@@ -66,7 +66,7 @@ adze.namespace('example').log('Example log');
 
 The output of this would look like the following:
 
-![Adze log example](./docs/getting-started/examples/introduction/api_example_output_1.png)
+![Adze log example](./readme/api_example_output_1.png)
 
 ## Install the Package
 
