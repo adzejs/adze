@@ -24,7 +24,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       - name: Run Linter
         run: npm run lint
   test:
@@ -40,7 +40,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       - name: Run Linter
         run: npm run test
   build:
@@ -56,6 +56,6 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       - name: Build the Library
         run: npm run build

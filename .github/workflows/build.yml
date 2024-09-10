@@ -25,7 +25,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       - name: Run Linter
         run: npm run lint
   test:
@@ -41,7 +41,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       - name: Run Linter
         run: npm run test
   build:
@@ -57,7 +57,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       - name: Build the Library
         run: npm run build
       - name: Upload the build artifact
@@ -87,7 +87,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         run: npm audit signatures
       - name: Download the build artifact
@@ -110,23 +110,19 @@ jobs:
           fetch-depth: 0
           # if your docs needs submodules, uncomment the following line
           # submodules: true
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
           cache: npm
-
       - name: Install Deps
-        run: npm ci
-
+        run: npm ci --legacy-peer-deps
       - name: Build Docs
         env:
           NODE_OPTIONS: --max_old_space_size=8192
         run: |-
           npm run docs:build
           > docs/.vuepress/dist/.nojekyll
-
       - name: Deploy Docs
         uses: JamesIves/github-pages-deploy-action@v4
         with:
