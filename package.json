@@ -2,7 +2,7 @@
   "name": "adze",
   "description": "A universal, modern, and extendable logging library for JavaScript and TypeScript.",
   "version": "2.0.0",
-  "main": "dist/index.js",
+  "main": "index.js",
   "type": "module",
   "engines": {
     "node": ">=18.19.0"
