@@ -3,6 +3,7 @@ import {
   FormatterConstructor,
   LevelConfiguration,
   LogData,
+  LogListener,
   Modifier,
   ModifierData,
   UserConfiguration,
@@ -19,8 +20,8 @@ import {
   stacktrace,
   cleanMessage,
   isTestEnvironment,
+  SealedLog,
 } from './functions';
-import { SealedLog } from './functions/seal';
 import { Middleware } from './middleware';
 
 export function isCallback(maybeFunction: unknown): maybeFunction is (...args: any[]) => void {
@@ -572,7 +573,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public assert(expression: boolean): this {
     this.modifierQueue.push([
       'assert',
-      (data) => {
+      (data: ModifierData) => {
         data.assertion = expression;
         return data;
       },
@@ -593,7 +594,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get closeThread(): this {
     this.modifierQueue.push([
       'closeThread',
-      (data) => {
+      (data: ModifierData) => {
         if (data.label?.context) {
           data.label.context = undefined;
         }
@@ -618,7 +619,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get count(): this {
     this.modifierQueue.push([
       'count',
-      (data) => {
+      (data: ModifierData) => {
         if (data.label) {
           data.label.count = data.label.count !== undefined ? data.label.count + 1 : 1;
         }
@@ -645,7 +646,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get countClear(): this {
     this.modifierQueue.push([
       'countClear',
-      (data) => {
+      (data: ModifierData) => {
         if (data.label) {
           delete data.label.count;
         }
@@ -672,7 +673,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get countReset(): this {
     this.modifierQueue.push([
       'countReset',
-      (data) => {
+      (data: ModifierData) => {
         if (data.label) {
           data.label.count = 0;
         }
@@ -700,7 +701,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get dir(): Log<string, Record<string | symbol | number, any>> {
     this.modifierQueue.push([
       'dir',
-      (data) => {
+      (data: ModifierData) => {
         data.method = 'dir';
         return data;
       },
@@ -727,7 +728,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get dirxml(): Log<string, Element | XMLDocument | Node | ChildNode> {
     this.modifierQueue.push([
       'dirxml',
-      (data) => {
+      (data: ModifierData) => {
         data.method = 'dirxml';
         return data;
       },
@@ -754,7 +755,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get dump(): this {
     this.modifierQueue.push([
       'dump',
-      (data, ctxt) => {
+      (data: ModifierData, ctxt: Log) => {
         ctxt._cfg.dump = true;
         return data;
       },
@@ -780,7 +781,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public format(format: string): this {
     this.modifierQueue.push([
       'format',
-      (data, ctxt) => {
+      (data: ModifierData, ctxt: Log) => {
         if (Object.keys(ctxt._cfg.formatters).includes(format)) {
           ctxt._cfg.format = format;
           return data;
@@ -809,7 +810,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get group(): this {
     this.modifierQueue.push([
       'group',
-      (data) => {
+      (data: ModifierData) => {
         data.method = 'group';
         return data;
       },
@@ -834,7 +835,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get groupCollapsed(): this {
     this.modifierQueue.push([
       'groupCollapsed',
-      (data) => {
+      (data: ModifierData) => {
         data.method = 'groupCollapsed';
         return data;
       },
@@ -859,7 +860,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get groupEnd(): Log<string, never> {
     this.modifierQueue.push([
       'groupEnd',
-      (data) => {
+      (data: ModifierData) => {
         data.method = 'groupEnd';
         return data;
       },
@@ -884,7 +885,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public if(expression: boolean): this {
     this.modifierQueue.push([
       'if',
-      (data) => {
+      (data: ModifierData) => {
         data.if = expression;
         return data;
       },
@@ -930,7 +931,7 @@ export default class Log<N extends string = string, Msg = unknown> {
     // prepend the modifier queue
     this.modifierQueue.unshift([
       'label',
-      (data) => {
+      (data: ModifierData) => {
         const label = this.globalStore.getLabel(name) ?? { name };
         data.label = label;
         this.globalStore.setLabel(name, label);
@@ -960,7 +961,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public meta<T extends Record<string, any> = Record<string, unknown>>(meta: T): this {
     this.modifierQueue.push([
       'meta',
-      (data, ctxt) => {
+      (data: ModifierData, ctxt: Log) => {
         ctxt._cfg.meta = { ...ctxt._cfg.meta, ...meta };
         return data;
       },
@@ -988,7 +989,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public namespace(...namespace: string[]): this {
     this.modifierQueue.push([
       'namespace',
-      (data) => {
+      (data: ModifierData) => {
         let arr = data.namespace ?? [];
         data.namespace = arr.length > 0 ? [...arr, ...namespace] : namespace;
         return data;
@@ -1041,7 +1042,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get silent(): this {
     this.modifierQueue.push([
       'silent',
-      (data, ctxt) => {
+      (data: ModifierData, ctxt: Log) => {
         ctxt._cfg.silent = true;
         return data;
       },
@@ -1065,7 +1066,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get table(): Log<N, TableData> {
     this.modifierQueue.push([
       'table',
-      (data) => {
+      (data: ModifierData) => {
         data.method = 'table';
         return data;
       },
@@ -1091,7 +1092,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get time(): this {
     this.modifierQueue.push([
       'time',
-      (data) => {
+      (data: ModifierData) => {
         const timeStart = hrtime();
         if (data.label) {
           data.label.timeStart = timeStart;
@@ -1123,7 +1124,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get timeEnd(): this {
     this.modifierQueue.push([
       'timeEnd',
-      (data) => {
+      (data: ModifierData) => {
         if (data.label && data.label?.timeStart) {
           data.label.timeElapsed = formatTime(hrtime(data.label.timeStart));
         }
@@ -1153,7 +1154,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get timeNow(): this {
     this.modifierQueue.push([
       'timeNow',
-      (data) => {
+      (data: ModifierData) => {
         data.timeNow = captureTimeNow();
         return data;
       },
@@ -1178,7 +1179,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get timestamp(): this {
     this.modifierQueue.push([
       'timestamp',
-      (data, ctxt) => {
+      (data: ModifierData, ctxt: Log) => {
         ctxt._cfg.showTimestamp = true;
         return data;
       },
@@ -1204,7 +1205,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get trace(): this {
     this.modifierQueue.push([
       'trace',
-      (data) => {
+      (data: ModifierData) => {
         data.stacktrace = stacktrace();
         return data;
       },
@@ -1228,7 +1229,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   public get withEmoji(): this {
     this.modifierQueue.push([
       'withEmoji',
-      (data, ctxt) => {
+      (data: ModifierData, ctxt: Log) => {
         ctxt._cfg.withEmoji = true;
         return data;
       },
@@ -1337,7 +1338,7 @@ export default class Log<N extends string = string, Msg = unknown> {
     this.doHook((m) => (m.afterTerminated ? m.afterTerminated(this, terminator, args) : null));
 
     // Fire all of the log listeners and pass this log instance to them.
-    this.globalStore.getListeners(level.level).forEach((listener) => listener(this));
+    this.globalStore.getListeners(level.level).forEach((listener: LogListener) => listener(this));
   }
 
   /**
@@ -1374,6 +1375,6 @@ export default class Log<N extends string = string, Msg = unknown> {
    * Execute a middleware hook.
    */
   private doHook(cb: (middleware: Middleware) => void): void {
-    this._cfg.middleware?.forEach((middleware) => cb(middleware));
+    this._cfg.middleware?.forEach((middleware: Middleware) => cb(middleware));
   }
 }

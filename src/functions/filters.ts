@@ -83,7 +83,9 @@ export function filterByLabel(label: string, logs: Log[]): Log[] {
 export function filterByNamespace(namespace: string[], logs: Log[]): Log[] {
   return logs.filter((log) => {
     if (log.data?.namespace) {
-      const isMatched = log.data.namespace.map((ns) => namespace.includes(ns)).includes(true);
+      const isMatched = log.data.namespace
+        .map((ns: string) => namespace.includes(ns))
+        .includes(true);
       return isMatched;
     }
     return false;

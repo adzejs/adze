@@ -24,7 +24,7 @@
     "predemo:node": "npm run build:demo",
     "demo:node": "tsx src/demo_funcs.ts --project tsconfig.json",
     "demo:bun": "bun src/demo_funcs.ts",
-    "demo:deno": "deno src/demo_funcs.ts",
+    "demo:deno": "deno --allow-env dist/demo_funcs.js",
     "lint": "prettier ./src --check && eslint .",
     "lint:fix": "prettier ./src --write && eslint . --fix",
     "test": "vitest",

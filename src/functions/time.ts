@@ -1,5 +1,4 @@
 import type { HrTime } from '../_types';
-import { envIsWindow } from '.';
 
 /**
  * Takes an HrTime tuple and converts it into a human-readable formatted
@@ -17,22 +16,10 @@ export function captureTimeNow(): string {
 }
 
 /**
- * Returns an hrtime object with different implementations based on the current environment.
- */
-export function hrtime(prev?: [number, number]): [number, number] {
-  const ctxt = globalThis;
-  if (envIsWindow(ctxt)) {
-    return hrtimeBrowser(ctxt, prev);
-  } else {
-    return process?.hrtime(prev);
-  }
-}
-
-/**
  * Browser implementation of the node hrtime function for recording elapsed time.
  */
-function hrtimeBrowser(ctxt: Window, prev?: [number, number]): [number, number] {
-  const time = ctxt.performance.now() * 0.001;
+export function hrtime(prev?: [number, number]): [number, number] {
+  const time = performance.now() * 0.001;
   const seconds = Math.floor(time);
   const nanoseconds = Math.floor((time % 1) * 1000000000);
 
