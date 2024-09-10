@@ -24,6 +24,7 @@
     "predemo:node": "npm run build:demo",
     "demo:node": "tsx src/demo_funcs.ts --project tsconfig.json",
     "demo:bun": "bun src/demo_funcs.ts",
+    "predemo:deno": "npm run build:demo",
     "demo:deno": "deno --allow-env dist/demo_funcs.js",
     "lint": "prettier ./src --check && eslint .",
     "lint:fix": "prettier ./src --write && eslint . --fix",
@@ -100,12 +101,6 @@
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
     }
   }
 }

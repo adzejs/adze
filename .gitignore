@@ -71,3 +71,6 @@ typings/
 # vuepress
 docs/.vuepress/.temp
 docs/.vuepress/.cache
+
+# other environments
+deno.lock

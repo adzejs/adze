@@ -46,8 +46,15 @@ export function isGlobalInitialized(global: unknown): global is AdzeGlobal {
  * Validates that the current environment is `Window`.
  */
 export function isBrowser(): boolean {
-  // @ts-expect-error Deno is not defined in the browser
-  return typeof window !== 'undefined' && Deno.env === undefined;
+  return typeof window !== 'undefined' && !isDeno();
+}
+
+/**
+ * Validates that the current environment is Deno.
+ */
+export function isDeno(): boolean {
+  // @ts-expect-error Deno is not defined in other environments
+  return typeof Deno !== 'undefined';
 }
 
 /**

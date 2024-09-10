@@ -14,8 +14,8 @@ describe('modifiers with pretty format in node', () => {
   });
 
   test('prints a log with a timer', () => {
-    const spy = vi.spyOn(process, 'hrtime');
-    spy.mockReturnValue([0, 0]);
+    const spy = vi.spyOn(performance, 'now');
+    spy.mockReturnValue(0);
     console.log = vi.fn();
 
     adze.label('timer').time.log('Test timer.');
@@ -36,8 +36,8 @@ describe('modifiers with pretty format in node', () => {
   });
 
   test('prints a log with a timer since page load', () => {
-    const spy = vi.spyOn(process, 'hrtime');
-    spy.mockReturnValue([0, 0]);
+    const spy = vi.spyOn(performance, 'now');
+    spy.mockReturnValue(0);
     console.log = vi.fn();
 
     adze.label('timer').timeNow.log('Test timer.');

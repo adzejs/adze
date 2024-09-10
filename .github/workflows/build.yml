@@ -1,124 +1,134 @@
-# name: Build
-# on:
-#   push:
-#     branches:
-#       - master
+name: Build
+on:
+  push:
+    branches:
+      - master
 
-# env:
-#   HUSKY: 0
+env:
+  HUSKY: 0
 
-# permissions:
-#   contents: read
+permissions:
+  contents: read
 
-# jobs:
-#   lint:
-#     name: Lint
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v4
-#       - name: Setup Node
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version-file: 'package.json'
-#           cache: 'npm'
-#           cache-dependency-path: 'package-lock.json'
-#       - name: Install Dependencies
-#         run: npm ci
-#       - name: Run Linter
-#         run: npm run lint
-#   test:
-#     name: Test
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v4
-#       - name: Setup Node
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version-file: 'package.json'
-#           cache: 'npm'
-#           cache-dependency-path: 'package-lock.json'
-#       - name: Install Dependencies
-#         run: npm ci
-#       - name: Run Linter
-#         run: npm run test
-#   build:
-#     name: Build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v4
-#       - name: Setup Node
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version-file: 'package.json'
-#           cache: 'npm'
-#           cache-dependency-path: 'package-lock.json'
-#       - name: Install Dependencies
-#         run: npm ci
-#       - name: Build the Library
-#         run: npm run build
-#   release:
-#     name: Release
-#     needs: [lint, test]
-#     runs-on: ubuntu-latest
-#     permissions:
-#       contents: write # to be able to publish a GitHub release
-#       issues: write # to be able to comment on released issues
-#       pull-requests: write # to be able to comment on released pull requests
-#       id-token: write # to enable use of OIDC for npm provenance
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v4
-#         with:
-#           fetch-depth: 0
-#       - name: Setup Node.js
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version-file: 'package.json'
-#           cache: 'npm'
-#           cache-dependency-path: 'package-lock.json'
-#       - name: Install dependencies
-#         run: npm ci
-#       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-#         run: npm audit signatures
-#       - name: Release
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-#         run: npx semantic-release
-#   docs:
-#     runs-on: ubuntu-latest
-#     permissions:
-#       contents: write
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v3
-#         with:
-#           fetch-depth: 0
-#           # if your docs needs submodules, uncomment the following line
-#           # submodules: true
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'package.json'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run Linter
+        run: npm run lint
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'package.json'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run Linter
+        run: npm run test
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'package.json'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build the Library
+        run: npm run build
+      - name: Upload the build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 1
+  release:
+    name: Release
+    needs: [lint, test, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'package.json'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+      - name: Install dependencies
+        run: npm ci
+      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
+        run: npm audit signatures
+      - name: Download the build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
+  docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          # if your docs needs submodules, uncomment the following line
+          # submodules: true
 
-#       - name: Setup Node.js
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: 20
-#           cache: npm
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: npm
 
-#       - name: Install Deps
-#         run: npm ci
+      - name: Install Deps
+        run: npm ci
 
-#       - name: Build Docs
-#         env:
-#           NODE_OPTIONS: --max_old_space_size=8192
-#         run: |-
-#           npm run docs:build
-#           > docs/.vuepress/dist/.nojekyll
+      - name: Build Docs
+        env:
+          NODE_OPTIONS: --max_old_space_size=8192
+        run: |-
+          npm run docs:build
+          > docs/.vuepress/dist/.nojekyll
 
-#       - name: Deploy Docs
-#         uses: JamesIves/github-pages-deploy-action@v4
-#         with:
-#           # This is the branch where the docs are deployed to
-#           branch: gh-pages
-#           folder: docs/.vuepress/dist
+      - name: Deploy Docs
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          # This is the branch where the docs are deployed to
+          branch: gh-pages
+          folder: docs/.vuepress/dist

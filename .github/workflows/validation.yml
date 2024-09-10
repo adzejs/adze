@@ -1,54 +1,61 @@
-name: Validation
+name: Validate
 on:
   pull_request:
     branches:
       - master
+
+env:
+  HUSKY: 0
+
+permissions:
+  contents: read
 
 jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Node
-        uses: actions/setup-node@v1
       - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Yarn Cache
-        uses: c-hive/gha-yarn-cache@v1
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'package.json'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
       - name: Install Dependencies
-        run: yarn install --force
+        run: npm ci
       - name: Run Linter
-        run: yarn lint
+        run: npm run lint
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Node
-        uses: actions/setup-node@v1
       - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Yarn Cache
-        uses: c-hive/gha-yarn-cache@v1
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'package.json'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
       - name: Install Dependencies
-        run: yarn install --force
-      - name: Run Unit Tests
-        run: yarn test
+        run: npm ci
+      - name: Run Linter
+        run: npm run test
   build:
     name: Build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x, 14.x]
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: Yarn Cache
-        uses: c-hive/gha-yarn-cache@v1
+          node-version-file: 'package.json'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
       - name: Install Dependencies
-        run: yarn install --force
-      - name: Build
-        run: yarn build
+        run: npm ci
+      - name: Build the Library
+        run: npm run build
