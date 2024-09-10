@@ -22,7 +22,7 @@
     "predemo:browser": "npm run build:demo",
     "demo:browser": "http-server -o -p 8082",
     "predemo:node": "npm run build:demo",
-    "demo:node": "ts-node --project tsconfig.json --experimental-specifier-resolution=node --esm src/demo_funcs.ts",
+    "demo:node": "tsx src/demo_funcs.ts --project tsconfig.json",
     "demo:bun": "bun src/demo_funcs.ts",
     "demo:deno": "deno src/demo_funcs.ts",
     "lint": "prettier ./src --check && eslint .",
@@ -70,11 +70,12 @@
     "size-limit": "^11.1.4",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.10",
+    "tsx": "^4.19.0",
     "typescript": "^5.5.2",
     "typescript-eslint": "^7.14.1",
     "vitest": "^2.0.4",
     "vue": "^3.4.0",
-    "vuepress": "^2.0.0-rc.7"
+    "vuepress": "^2.0.0-rc.15"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
