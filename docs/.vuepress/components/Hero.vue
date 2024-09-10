@@ -2,7 +2,7 @@
   <div class="hero">
     <div class="intro">
       <img :src="$withBase('images/logo.svg')" alt="Adze JS " />
-      <h1>Isomorphic Logging for Modern JavaScript</h1>
+      <h1>Universal Logging for Modern JavaScript</h1>
       <div class="button-container">
         <RouteLink class="action-button" to="/getting-started/introduction.md">
           Getting Started

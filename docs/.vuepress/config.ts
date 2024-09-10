@@ -124,9 +124,7 @@ export default defineUserConfig({
       'link',
       {
         rel: 'icon',
-        type: 'image/png',
-        sizes: '64x64',
-        href: '/favicon.png',
+        href: '/images/icon.svg',
       },
     ],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],

@@ -78,7 +78,7 @@ adze.label('counter').count.log('This is a log.');
 
 #### Server Output
 
-![server output teardown example](./examples/global-store/teardown-example-server.png)
+![server output teardown example](./examples/global-store/teardown-example-node.png)
 
 ## Public Getters
 

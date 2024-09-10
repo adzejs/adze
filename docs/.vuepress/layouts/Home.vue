@@ -183,7 +183,6 @@
 
 <script setup>
 import Hero from '../components/Hero.vue';
-import { withBase } from '@vuepress/client';
 </script>
 
 <style scoped lang="scss">
