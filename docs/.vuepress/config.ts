@@ -8,7 +8,7 @@ const { description } = require('../../package');
 
 export default defineUserConfig({
   lang: 'en-US',
-  title: 'Universal Logging for JavaScript',
+  title: 'Universal Logging for Typescript/JavaScript',
   description,
   plugins: [
     searchProPlugin({}),
@@ -33,7 +33,7 @@ export default defineUserConfig({
       'meta',
       {
         property: 'og:title',
-        content: 'Adze - Better JavaScript Logging',
+        content: 'Adze - Universal JavaScript Logging',
       },
     ],
     [
@@ -41,14 +41,14 @@ export default defineUserConfig({
       {
         property: 'og:description',
         content:
-          'A TypeScript enabled library with a beautiful API that simplifies JavaScript logging.',
+          'A universal logging library that makes logging simple for SSR or new runtimes like Bun and Deno.',
       },
     ],
     [
       'meta',
       {
         property: 'og:image',
-        content: 'https://adzejs.com/assets/img/demo.png',
+        content: 'https://adzejs.com/assets/demo-DkYm-IJC.jpg',
       },
     ],
     [
@@ -78,7 +78,7 @@ export default defineUserConfig({
       'meta',
       {
         property: 'twitter:image',
-        content: 'https://adzejs.com/assets/img/demo.png',
+        content: 'https://adzejs.com/assets/demo-DkYm-IJC.jpg',
       },
     ],
     [
@@ -95,13 +95,7 @@ export default defineUserConfig({
         async: true,
         defer: true,
         'data-domain': 'adzejs.com',
-        src: 'https://plausible.io/js/plausible.js',
-      },
-    ],
-    [
-      'script',
-      {
-        src: 'https://cdn.jsdelivr.net/npm/adze/dist/adze.min.js',
+        src: 'https://plausible.io/js/script.js',
       },
     ],
     [

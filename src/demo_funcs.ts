@@ -31,6 +31,7 @@ const leetLevel: LevelConfiguration = {
 // Run our demo modules
 async function runDemo() {
   // await performance();
+  demo();
   defaultLevels();
   configuration();
   custom();
@@ -95,6 +96,10 @@ async function performance() {
   }
   adze.label('performance').timeEnd.log('Ending a performance timer');
   teardown();
+}
+
+function demo() {
+  adze.withEmoji.success('This is a pretty log!');
 }
 
 function defaultLevels() {
