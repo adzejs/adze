@@ -13,7 +13,7 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "tsc --project tsconfig.prod.json && tsc-alias && rm -f ./dist/demo_funcs.js && rm -f ./dist/demo_funcs.d.ts",
-    "build:demo": "tsc --project tsconfig.json && tsc-alias",
+    "build:demo": "tsc --project tsconfig.prod.json && tsc-alias",
     "clean": "rm -rf ./dist",
     "docs:build": "vuepress build docs",
     "docs:clean-dev": "vuepress dev docs --clean-cache",

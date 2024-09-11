@@ -1257,17 +1257,15 @@ export default class Log<N extends string = string, Msg = unknown> {
   public print(data: LogData): void {
     // Skip printing if the Adze environment is set to test.
     if (isTestEnvironment()) return;
-    if (data.message.length > 0) {
-      // Don't print if it is configured to be silent.
-      if (data.silent) return;
-      // Only print the message with arguments if it is using a method that allows arguments.
-      if (isMethodWithArgs(data.method)) {
-        console[data.method](...data.message);
-      } else {
-        console[data.method]();
-      }
+    // Don't print if it is configured to be silent.
+    if (data.silent) return;
+    // If no message, skip.
+    if (data.message.length < 1) return;
+    // Only print the message with arguments if it is using a method that allows arguments.
+    if (isMethodWithArgs(data.method)) {
+      console[data.method](...data.message);
     } else {
-      console.warn(new Error('Adze: Cannot print a log that has never been previously printed.'));
+      console[data.method]();
     }
   }
 
