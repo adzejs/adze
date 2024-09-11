@@ -27,7 +27,7 @@ describe('mapped diagnostic context', () => {
     adze.label('test').dump.log('This log contains output from MDC thread.');
     expect(console.log).toHaveBeenCalledWith(
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '[test] ',
       'This log contains output from MDC thread.',
       {
@@ -57,7 +57,7 @@ describe('mapped diagnostic context', () => {
     expect(console.log).toHaveBeenNthCalledWith(
       1,
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '[test] ',
       'This log contains output from MDC thread.',
       {
@@ -70,7 +70,7 @@ describe('mapped diagnostic context', () => {
     expect(console.log).toHaveBeenNthCalledWith(
       2,
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '[test] ',
       'This log closes an MDC thread.'
     );
@@ -78,7 +78,7 @@ describe('mapped diagnostic context', () => {
     expect(console.log).toHaveBeenNthCalledWith(
       3,
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '[test] ',
       'Nothing is dumped.'
     );

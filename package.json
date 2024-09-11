@@ -57,6 +57,7 @@
     "@types/eslint__js": "^8.42.3",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/jsdom": "^21.1.7",
+    "@vitest/ui": "^2.0.5",
     "@vuepress/bundler-vite": "^2.0.0-rc.7",
     "@vuepress/plugin-markdown-container": "^2.0.0-rc.42",
     "@vuepress/theme-default": "^2.0.0-rc.11",

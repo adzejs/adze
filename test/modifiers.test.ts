@@ -19,7 +19,7 @@ describe('modifiers with pretty format in the browser', () => {
     adze.meta({ foo: 'bar' }).log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       'Test log.'
     );
   });
@@ -31,7 +31,7 @@ describe('modifiers with pretty format in the browser', () => {
       if (log.data) {
         expect(log.data.message).toStrictEqual([
           '%c Log',
-          'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+          'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
           'Test log.',
         ]);
       } else {

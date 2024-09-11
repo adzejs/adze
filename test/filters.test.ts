@@ -101,7 +101,7 @@ describe('log filtering', () => {
 
     const logLeader = '%c Log';
     const logStyle =
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;';
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;';
 
     expect(console.log).toHaveBeenNthCalledWith(1, logLeader, logStyle, '#bar ', 'Included');
     expect(console.log).toHaveBeenCalledTimes(1);
@@ -127,7 +127,7 @@ describe('log filtering', () => {
 
     const logLeader = '%c Log';
     const logStyle =
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;';
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;';
 
     expect(console.log).toHaveBeenNthCalledWith(1, logLeader, logStyle, '#foo ', 'Included');
     expect(console.log).toHaveBeenNthCalledWith(2, logLeader, logStyle, '#baz ', 'Included');
@@ -155,7 +155,7 @@ describe('log filtering', () => {
 
     const logLeader = '%c Log';
     const logStyle =
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;';
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;';
 
     expect(console.log).toHaveBeenNthCalledWith(1, logLeader, logStyle, '[bar] ', 'Included');
     expect(console.log).toHaveBeenCalledTimes(1);
@@ -180,7 +180,7 @@ describe('log filtering', () => {
 
     const logLeader = '%c Log';
     const logStyle =
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;';
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;';
 
     expect(console.log).toHaveBeenNthCalledWith(1, logLeader, logStyle, '[foo] ', 'Included');
     expect(console.log).toHaveBeenNthCalledWith(2, logLeader, logStyle, '[baz] ', 'Included');
@@ -208,7 +208,7 @@ describe('log filtering', () => {
 
     const logLeader = '%c Info';
     const logStyle =
-      'padding-right: 52px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #d8ebff, #b2d7ff); color: #465464; border-color: #96b5d7;';
+      'padding-right: 44px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #d8ebff, #b2d7ff); color: #465464; border-color: #96b5d7;';
 
     expect(console.info).toHaveBeenNthCalledWith(1, logLeader, logStyle, 'Included');
     expect(console.error).not.toHaveBeenCalled();
@@ -238,14 +238,14 @@ describe('log filtering', () => {
     expect(console.log).toHaveBeenNthCalledWith(
       1,
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       'Included'
     );
     expect(console.log).toHaveBeenCalledTimes(2);
     expect(console.error).toHaveBeenNthCalledWith(
       1,
       '%c Alert',
-      'padding-right: 26px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #fc8585, #fc2323); color: #fff; border-color: #b70101;',
+      'padding-right: 24px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #fc8585, #fc2323); color: #fff; border-color: #b70101;',
       'Included'
     );
     expect(console.info).not.toHaveBeenCalled();

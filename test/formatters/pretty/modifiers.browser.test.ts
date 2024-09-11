@@ -20,14 +20,14 @@ describe('modifiers with pretty format in the browser', () => {
     expect(console.log).toHaveBeenNthCalledWith(
       1,
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '[timer] ',
       'Test timer.'
     );
     expect(console.log).toHaveBeenNthCalledWith(
       2,
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '[timer] (Time elapsed: 0s 0ms)',
       'Test timer.'
     );
@@ -41,7 +41,7 @@ describe('modifiers with pretty format in the browser', () => {
 
     expect(console.log).toHaveBeenCalledWith(
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '[timer] (Time elapsed: 0s 0ms)',
       'Test timer.'
     );
@@ -59,7 +59,7 @@ describe('modifiers with pretty format in the browser', () => {
       expect(console.log).toHaveBeenNthCalledWith(
         i,
         '%c Log',
-        'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+        'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
         `[counter] (Count: ${i}) `,
         'Counting log.'
       );
@@ -77,7 +77,7 @@ describe('modifiers with pretty format in the browser', () => {
     expect(console.log).toHaveBeenNthCalledWith(
       6,
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '[counter] ',
       'Clearing count.'
     );
@@ -94,7 +94,7 @@ describe('modifiers with pretty format in the browser', () => {
     expect(console.log).toHaveBeenNthCalledWith(
       6,
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '[counter] (Count: 0) ',
       'Resetting count.'
     );
@@ -128,7 +128,7 @@ describe('modifiers with pretty format in the browser', () => {
     adze.group.log('Grouping logs.');
     expect(console.group).toHaveBeenCalledWith(
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       'Grouping logs.'
     );
   });
@@ -138,7 +138,7 @@ describe('modifiers with pretty format in the browser', () => {
     adze.groupCollapsed.log('Grouping logs.');
     expect(console.groupCollapsed).toHaveBeenCalledWith(
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       'Grouping logs.'
     );
   });
@@ -148,7 +148,7 @@ describe('modifiers with pretty format in the browser', () => {
     adze.groupCollapsed.log('Grouping logs.');
     expect(console.groupCollapsed).toHaveBeenCalledWith(
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       'Grouping logs.'
     );
   });
@@ -160,7 +160,7 @@ describe('modifiers with pretty format in the browser', () => {
     adze.groupEnd.log();
     expect(console.group).toHaveBeenCalledWith(
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       'Grouping logs.'
     );
     expect(console.groupEnd).toHaveBeenCalled();
@@ -171,7 +171,7 @@ describe('modifiers with pretty format in the browser', () => {
     adze.label('test').log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '[test] ',
       'Test log.'
     );
@@ -182,7 +182,7 @@ describe('modifiers with pretty format in the browser', () => {
     adze.namespace('foo', 'bar').log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '#foo #bar ',
       'Test log.'
     );
@@ -193,7 +193,7 @@ describe('modifiers with pretty format in the browser', () => {
     adze.ns('foo', 'bar').log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '#foo #bar ',
       'Test log.'
     );
@@ -205,7 +205,7 @@ describe('modifiers with pretty format in the browser', () => {
     adze.if(2 === 2).log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       'Expression passed:',
       'Test log.'
     );
@@ -218,7 +218,7 @@ describe('modifiers with pretty format in the browser', () => {
     expect(console.log).toHaveBeenCalledWith(
       '%c🪵 %c Log',
       'font-size: 12px;',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '✅ Expression passed:',
       'Test log.'
     );
@@ -231,7 +231,7 @@ describe('modifiers with pretty format in the browser', () => {
     adze.assert(2 === 3).log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       'Assertion failed:',
       'Test log.'
     );
@@ -245,7 +245,7 @@ describe('modifiers with pretty format in the browser', () => {
     expect(console.log).toHaveBeenCalledWith(
       '%c🪵 %c Log',
       'font-size: 12px;',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '❌ Assertion failed:',
       'Test log.'
     );
@@ -259,7 +259,7 @@ describe('modifiers with pretty format in the browser', () => {
     adze.timestamp.log('Test log.');
     expect(console.log).toHaveBeenCalledWith(
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       '2024-08-03T16:37:11-04:00 ',
       'Test log.'
     );
@@ -272,7 +272,7 @@ describe('modifiers with pretty format in the browser', () => {
       if (log.data) {
         expect(log.data.message[0]).toBe('%c Log');
         expect(log.data.message[1]).toBe(
-          'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;'
+          'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;'
         );
         expect(log.data.message[2]).toBe('Test log.');
         expect(log.data.stacktrace).toBeTruthy();

@@ -15,7 +15,7 @@ describe('terminators with pretty format in the browser', () => {
     adze.alert('This is an alert log.');
     expect(console.error).toHaveBeenCalledWith(
       '%c Alert',
-      'padding-right: 26px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #fc8585, #fc2323); color: #fff; border-color: #b70101;',
+      'padding-right: 24px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #fc8585, #fc2323); color: #fff; border-color: #b70101;',
       'This is an alert log.'
     );
   });
@@ -25,7 +25,7 @@ describe('terminators with pretty format in the browser', () => {
     adze.error('This is an error log.');
     expect(console.error).toHaveBeenCalledWith(
       '%c Error',
-      'padding-right: 26px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;',
+      'padding-right: 24px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;',
       'This is an error log.'
     );
   });
@@ -35,7 +35,7 @@ describe('terminators with pretty format in the browser', () => {
     adze.warn('This is a warn log.');
     expect(console.warn).toHaveBeenCalledWith(
       '%c Warn',
-      'font-size: 12px; border-radius: 4px;  background: linear-gradient(to right, #fff, #fff0a8); color: #715100; border-color: #e3d696; padding-right: 44px;',
+      'font-size: 12px; border-radius: 4px;  background: linear-gradient(to right, #fff, #fff0a8); color: #715100; border-color: #e3d696; padding-right: 30px;',
       'This is a warn log.'
     );
   });
@@ -45,7 +45,7 @@ describe('terminators with pretty format in the browser', () => {
     adze.info('This is an info log.');
     expect(console.info).toHaveBeenCalledWith(
       '%c Info',
-      'padding-right: 52px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #d8ebff, #b2d7ff); color: #465464; border-color: #96b5d7;',
+      'padding-right: 44px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #d8ebff, #b2d7ff); color: #465464; border-color: #96b5d7;',
       'This is an info log.'
     );
   });
@@ -65,7 +65,7 @@ describe('terminators with pretty format in the browser', () => {
     adze.success('This is a success log.');
     expect(console.info).toHaveBeenCalledWith(
       '%c Success',
-      'font-size: 12px; border-radius: 4px; padding-right: 30px; background: linear-gradient(to right, #e6f6e4, #ceedc9); color: #4e594d; border-color: #b7d1b3;',
+      'font-size: 12px; border-radius: 4px; padding-right: 22px; background: linear-gradient(to right, #e6f6e4, #ceedc9); color: #4e594d; border-color: #b7d1b3;',
       'This is a success log.'
     );
   });
@@ -76,7 +76,7 @@ describe('terminators with pretty format in the browser', () => {
     adze.log('This is a log log.');
     expect(console.log).toHaveBeenCalledWith(
       '%c Log',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       'This is a log log.'
     );
   });
@@ -87,7 +87,7 @@ describe('terminators with pretty format in the browser', () => {
     adze.debug('This is a debug log.');
     expect(console.debug).toHaveBeenCalledWith(
       '%c Debug',
-      'font-size: 12px; padding-right: 44px; border-right: 1px solid #d9dce0; color: #465464; border-color: #999999;',
+      'font-size: 12px; padding-right: 36px; border-right: 1px solid #d9dce0; color: #465464; border-color: #999999;',
       'This is a debug log.'
     );
   });
@@ -98,7 +98,7 @@ describe('terminators with pretty format in the browser', () => {
     adze.verbose('This is a verbose log.');
     expect(console.debug).toHaveBeenCalledWith(
       '%c Verbose',
-      'font-size: 12px; padding-right: 31px; color: #999999;',
+      'font-size: 12px; padding-right: 22px; color: #999999;',
       'This is a verbose log.'
     );
   });
@@ -136,7 +136,7 @@ describe('terminators with emoji', () => {
     expect(console.error).toHaveBeenCalledWith(
       '%c🚨 %c Alert',
       'font-size: 12px;',
-      'padding-right: 26px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #fc8585, #fc2323); color: #fff; border-color: #b70101;',
+      'padding-right: 24px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #fc8585, #fc2323); color: #fff; border-color: #b70101;',
       'This is an alert log.'
     );
   });
@@ -147,7 +147,7 @@ describe('terminators with emoji', () => {
     expect(console.error).toHaveBeenCalledWith(
       '%c🔥 %c Error',
       'font-size: 12px;',
-      'padding-right: 26px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;',
+      'padding-right: 24px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;',
       'This is an error log.'
     );
   });
@@ -158,7 +158,7 @@ describe('terminators with emoji', () => {
     expect(console.warn).toHaveBeenCalledWith(
       '%c🔔 %c Warn',
       'font-size: 12px;',
-      'font-size: 12px; border-radius: 4px;  background: linear-gradient(to right, #fff, #fff0a8); color: #715100; border-color: #e3d696; padding-right: 44px;',
+      'font-size: 12px; border-radius: 4px;  background: linear-gradient(to right, #fff, #fff0a8); color: #715100; border-color: #e3d696; padding-right: 30px;',
       'This is a warn log.'
     );
   });
@@ -169,7 +169,7 @@ describe('terminators with emoji', () => {
     expect(console.info).toHaveBeenCalledWith(
       '%cℹ️ %c Info',
       'font-size: 12px;',
-      'padding-right: 52px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #d8ebff, #b2d7ff); color: #465464; border-color: #96b5d7;',
+      'padding-right: 44px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #d8ebff, #b2d7ff); color: #465464; border-color: #96b5d7;',
       'This is an info log.'
     );
   });
@@ -191,7 +191,7 @@ describe('terminators with emoji', () => {
     expect(console.info).toHaveBeenCalledWith(
       '%c🎉 %c Success',
       'font-size: 12px;',
-      'font-size: 12px; border-radius: 4px; padding-right: 30px; background: linear-gradient(to right, #e6f6e4, #ceedc9); color: #4e594d; border-color: #b7d1b3;',
+      'font-size: 12px; border-radius: 4px; padding-right: 22px; background: linear-gradient(to right, #e6f6e4, #ceedc9); color: #4e594d; border-color: #b7d1b3;',
       'This is a success log.'
     );
   });
@@ -202,7 +202,7 @@ describe('terminators with emoji', () => {
     expect(console.log).toHaveBeenCalledWith(
       '%c🪵 %c Log',
       'font-size: 12px;',
-      'font-size: 12px; border-radius: 4px; padding-right: 60px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
+      'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
       'This is a log log.'
     );
   });
@@ -214,7 +214,7 @@ describe('terminators with emoji', () => {
     expect(console.debug).toHaveBeenCalledWith(
       '%c🐞 %c Debug',
       'font-size: 12px;',
-      'font-size: 12px; padding-right: 44px; border-right: 1px solid #d9dce0; color: #465464; border-color: #999999;',
+      'font-size: 12px; padding-right: 36px; border-right: 1px solid #d9dce0; color: #465464; border-color: #999999;',
       'This is a debug log.'
     );
   });
@@ -226,7 +226,7 @@ describe('terminators with emoji', () => {
     expect(console.debug).toHaveBeenCalledWith(
       '%c💬 %c Verbose',
       'font-size: 12px;',
-      'font-size: 12px; padding-right: 31px; color: #999999;',
+      'font-size: 12px; padding-right: 22px; color: #999999;',
       'This is a verbose log.'
     );
   });
