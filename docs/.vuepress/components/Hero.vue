@@ -41,15 +41,14 @@ import { RouteLink } from '@vuepress/client';
 .hero {
   position: relative;
   display: flex;
-  height: 100vh;
+  margin-top: 20px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 10;
-  // @media screen and (min-width: 400px) and (orientation: landscape) {
-  //   height: 230vh;
-  // }
   @media screen and (min-width: 920px) {
+    margin-top: 0;
+    height: 100vh;
     flex-direction: column-reverse;
     background: rgb(255, 255, 255);
     background: linear-gradient(

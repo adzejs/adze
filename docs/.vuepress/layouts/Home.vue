@@ -98,6 +98,7 @@
             :src="$withBase('/images/alert-example-browser.svg')"
             alt="Example of an alert log generated from the example code"
             style="max-width: 800px; height: 100%"
+            class="hidden-small"
           />
         </div>
       </section>
@@ -116,6 +117,14 @@
           <div class="content">
             <h2>Choose Your Format</h2>
             <Content path="/home/configurable.md" />
+            <strong class="hidden-small">
+              This is an example of the same log printed two different ways by changing the format.
+            </strong>
+            <img
+              class="hidden-small"
+              :src="$withBase('images/humanAndMachineFormat-example-browser.png')"
+              style="max-width: 100%; height: auto"
+            />
           </div>
         </section>
       </div>
@@ -191,6 +200,13 @@ import Hero from '../components/Hero.vue';
 img {
   max-width: 100%;
   height: auto;
+}
+
+.hidden-small {
+  display: none;
+  @media screen and (min-width: 600px) {
+    display: initial;
+  }
 }
 
 .home-container {
