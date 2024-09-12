@@ -21,11 +21,11 @@ export function SealedLog<N extends string, Msg, TBase extends Constructor = Con
 ) {
   const { formatters, middleware = [], ...cfgWithoutFormatters } = cfg.exportValues();
   const sealing: unknown = class Sealing extends Base {
-    _cfg = {
+    _cfg = new Configuration({
       ...structuredClone(cfgWithoutFormatters),
       formatters: { ...formatters },
       middleware: [...middleware],
-    };
+    });
     _modifierData = structuredClone(mods);
     modifierQueue = [...modifierQueue];
   };
