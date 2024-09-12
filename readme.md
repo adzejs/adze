@@ -84,7 +84,7 @@ pnpm add adze
 
 | Dependency | Supported Versions | Notes                                    |
 | ---------- | ------------------ | ---------------------------------------- |
-| node       | >= 18.18.x         | When running Adze in a Node environment. |
+| node       | >= 18.19.x         | When running Adze in a Node environment. |
 | bun        | >= 1.1.26          | When running Adze in a Bun environment.  |
 | deno       | >= 1.46.3          | When running Adze in a Deno environment. |
 | typescript | >= 5.5.2           | When using Adze with TypeScript          |

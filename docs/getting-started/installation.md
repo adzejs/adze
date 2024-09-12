@@ -19,7 +19,7 @@ yarn add adze
 
 | Dependency | Supported Versions | Notes                                    |
 | ---------- | ------------------ | ---------------------------------------- |
-| node       | >= 18.18.0         | When running Adze in a Node environment. |
+| node       | >= 18.19.x         | When running Adze in a Node environment. |
 | bun        | >= 1.1.x           | When running in a Bun environment.       |
 | deno       | >= 1.46.x          | When running in a Deno environment.      |
 | typescript | >= 5.5.x           | When using Adze with TypeScript          |
