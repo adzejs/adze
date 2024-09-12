@@ -78,7 +78,7 @@ import logger from './logger';
 logger.info('Logging from the index.');
 ```
 
-## Set the Output Format
+## Structured Logging (JSON)
 
 Now that we have our active log level configured, we decide that what's best for our application is
 to generate logs as structured data, also known as JSON logs.

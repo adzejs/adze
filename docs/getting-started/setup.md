@@ -22,15 +22,22 @@ Here you may have noticed the presence of the `setup` function that we are impor
 is used to create a global log store and to apply global configuration to all adze logs.
 
 Now that we have imported our dependencies, let's create and export a shared logger that has
-emoji's enabled and outputs timestamps with every log.
+emoji's enabled and outputs timestamps with every log. We'll also attach some meta data globally to
+all loggers using the [setup function](../reference/global-store.md#setup-function). We'll go more
+in-depth on why we we're doing this [later](./capture-data.md).
 
 ```typescript
 // ./src/logger.ts
 import adze, { setup } from 'adze';
 
+setup({
+  meta: {
+    hello: 'world!',
+  },
+});
+
 const logger = adze.withEmoji.timestamp.seal();
 export default logger;
-set;
 ```
 
 The interesting thing about the code above is that we are calling the `seal` method instead of a
