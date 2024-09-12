@@ -42,7 +42,7 @@ adze.label('maths').dump.info('Results from our thread');
 Notice that each log within the `add` and `subtract` functions does not actually generate a log, but
 rather they add a key / value pair of data to the `"maths"` label thread.
 
-On line 16, we create a log with the `"maths"` label, which provides it with the same context as the
+On line 18, we create a log with the `"maths"` label, which provides it with the same context as the
 other logs in the thread, and the `dump` modifier instructs the info log to dump the values from
 the `"maths"` thread into the log output.
 
