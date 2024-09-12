@@ -20,15 +20,15 @@ cases where we need to debug something, we can increase the visibility into our 
 
 Adze comes with **9** log levels by default, ranging from levels **0 through 8**.
 
-0. **Alert** - This level should only be used for logs that require immediate attention. This should be used sparingly and only for the most critical of errors.
-1. **Error** - Use this for logging fatal errors or errors that impact functionality of your application.
-2. **Warn** - Use this for logging issues that may impact app performance in a less impactful way than an error.
-3. **Info** - Use this for logging general insights into your application. This level does not indicate any problems.
-4. **Fail** - Use this for logging network communication errors or other non-fatal errors that do not break your application.
-5. **Success** - Use this for logging successful network communications or other successful operations within your app.
-6. **Log** - Use this for general logging that doesn't apply to any of the lower levels.
-7. **Debug** - Use this for logging information that you typically do not want to see unless you are debugging a problem with your application. This is typically hidden by default.
-8. **Verbose** - Use this for logging extremely detailed debugging information. Use this level when the values you are logging are granular enough that they are no longer easily human readable.
+0. [**Alert**](../reference/terminators.md#alert) - This level should only be used for logs that require immediate attention. This should be used sparingly and only for the most critical of errors.
+1. [**Error**](../reference/terminators.md#error) - Use this for logging fatal errors or errors that impact functionality of your application.
+2. [**Warn**](../reference/terminators.md#warn) - Use this for logging issues that may impact app performance in a less impactful way than an error.
+3. [**Info**](../reference/terminators.md#info) - Use this for logging general insights into your application. This level does not indicate any problems.
+4. [**Fail**](../reference/terminators.md#fail) - Use this for logging network communication errors or other non-fatal errors that do not break your application.
+5. [**Success**](../reference/terminators.md#success) - Use this for logging successful network communications or other successful operations within your app.
+6. [**Log**](../reference/terminators.md#log) - Use this for general logging that doesn't apply to any of the lower levels.
+7. [**Debug**](../reference/terminators.md#debug) - Use this for logging information that you typically do not want to see unless you are debugging a problem with your application. This is typically hidden by default.
+8. [**Verbose**](../reference/terminators.md#verbose) - Use this for logging extremely detailed debugging information. Use this level when the values you are logging are granular enough that they are no longer easily human readable.
 
 :::tip
 By default the active level is set to 6.
