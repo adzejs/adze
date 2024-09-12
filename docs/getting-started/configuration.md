@@ -85,10 +85,10 @@ to generate logs as structured data, also known as JSON logs.
 
 Adze comes with four log formatters built in:
 
-- **Pretty** - Human readable, pretty printed logs.
-- **JSON** - Machine readable, structured JSON logs.
-- **Common** - Logs that conform to the [Common Log Format](https://en.wikipedia.org/wiki/Common_Log_Format)
-- **Standard** - Logs that are human-readable but formatted for stdout in backend/terminal environments.
+- [**Pretty**](../reference/formatters.md#pretty-formatter) - Human readable, pretty printed logs.
+- [**JSON**](../reference/formatters.md#json-formatter) - Machine readable, structured JSON logs.
+- [**Common**](../reference/formatters.md#common-formatter) - Logs that conform to the [Common Log Format](https://en.wikipedia.org/wiki/Common_Log_Format)
+- [**Standard**](../reference/formatters.md#standard-formatter) - Logs that are human-readable but formatted for stdout in backend/terminal environments.
 
 Let's configure our shared logger to output as JSON.
 
