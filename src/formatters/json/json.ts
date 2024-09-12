@@ -1,6 +1,6 @@
 import Formatter from '../formatter';
 import { ModifierData } from '../../_types';
-import { formatISO } from '../../functions';
+import { formatISO } from 'date-fns/formatISO';
 import { JsonLog, JsonLogOptionalFields, JsonLogRequiredFields } from './types';
 import { hasRequiredFields } from './type-guards';
 import { setup } from '../../functions';
