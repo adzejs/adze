@@ -2,8 +2,11 @@
 
 ![Adze Logo](./readme/logo-small.png)
 
-[![build workflow](https://github.com/adzejs/adze/actions/workflows/build.yml/badge.svg)](https://github.com/adzejs/adze/actions/workflows/build.yml)
-![node-lts](https://img.shields.io/node/v-lts/adze) [![apache 2.0](https://badgen.net/npm/license/adze)](/LICENSE.md)
+![build workflow](https://github.com/adzejs/adze/actions/workflows/build.yml/badge.svg)
+![node-lts](https://img.shields.io/node/v-lts/adze)
+[![apache 2.0](https://badgen.net/npm/license/adze)](/LICENSE.md)
+![minzip](https://badgen.net/bundlephobia/minzip/adze)
+![dependency count](https://badgen.net/bundlephobia/dependency-count/adze)
 
 **Please visit our official docs at [adzejs.com](http://www.adzejs.com/).**
 
