@@ -1,4 +1,4 @@
-import { formatISO } from 'date-fns/formatISO';
+import { formatISO } from '../functions';
 import { LevelConfiguration, ModifierData } from '../_types';
 import { Configuration } from '../configuration';
 import {

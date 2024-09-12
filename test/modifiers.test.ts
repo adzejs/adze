@@ -41,4 +41,17 @@ describe('modifiers with pretty format in the browser', () => {
     adze.silent.log('Test log.');
     expect(console.log).not.toHaveBeenCalled();
   });
+
+  test('timestamp is formatted as ISO-8601 by default', () => {
+    const fn = vi.fn();
+    console.log = fn;
+
+    adze.timestamp.log('Log with ISO-8601 timestamp.');
+
+    expect(console.log).toHaveBeenCalledTimes(1);
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const timestamp = fn.mock.calls[0][2];
+    expect(timestamp).toMatch(/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d/);
+  });
 });
