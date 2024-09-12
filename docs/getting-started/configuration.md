@@ -129,7 +129,7 @@ There are two ways we can provide this meta data to the logger.
 
 The first way is through the `setup` function. The second way is by the `meta` modifier.
 
-Adze also provides a convenient type (`JsonLogFormatMeta`) that can be used for type safety when
+Adze also provides a convenient type ([`JsonLogFormatMeta`](../reference/formatters.md#jsonlogformatmeta-interface)) that can be used for type safety when
 adding the meta data.
 
 #### By the setup function
@@ -229,7 +229,6 @@ const issue: LevelConfig = {
   emoji: '🔥',
 };
 
-// Set the format to "json"
 setup({
   activeLevel: 'info',
   levels: {
