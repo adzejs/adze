@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import adze, { setup, teardown } from '../src';
+import adze, { teardown } from '../src';
 
 /**
  * @vitest-environment happy-dom

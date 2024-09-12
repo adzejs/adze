@@ -82,7 +82,8 @@
     "vuepress": "^2.0.0-rc.7"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "**/*": "prettier --write --ignore-unknown",
+    "**/*.{js,ts}": "eslint --fix"
   },
   "dependencies": {
     "chalk": "^5.3.0",
