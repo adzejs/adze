@@ -23,7 +23,7 @@ TODO: Redo the demo video
 ## Why should I use Adze?
 
 :::tip
-Adze is **UNIVERSAL**, meaning it can run in any JS runtime (node, bun, deno, browser) without any special considerations.
+Adze is [**UNIVERSAL**](https://en.wikipedia.org/wiki/Isomorphic_JavaScript), meaning it can run in any JS runtime (node, bun, deno, browser) without any special considerations.
 :::
 
 Compared to existing Javascript logging libraries, Adze sets itself apart because it is **universal**, meaning **it can run in both server and browser environments with zero config**. Other libraries, such as Winston or Bunyan only support server environments. Libraries like Pino and Log4JS support both environments, but it either requires some configuration or it only provides you with a very limited feature set. None of them directly support Deno or Bun.
@@ -32,21 +32,21 @@ Javascript frameworks have been shifting to server-side rendering (SSR) and to m
 
 Aside from universalism, Adze also offers many other compelling features:
 
-- First-class TypeScript support (not bolted-on)
+- First-class [TypeScript](https://typescriptlang.org/) support (not bolted-on)
 - Wraps and extends the entire [standard API](https://developer.mozilla.org/en-US/docs/Web/API/console)
-- A convenient chainable API
-- Log Listeners for capturing log data
-- Middleware support for plugins and transporting logs
-- Log annotations such as namespaces, labels, and other meta data
+- A convenient [chainable API](./concepts.md)
+- [Log Listeners](./capture-data.md#log-listeners) for capturing log data
+- [Middleware](../reference/middleware.md) support for [plugins](../plugins.md) and transporting logs
+- [Log annotations](./annotation.md) such as [namespaces](../reference/modifiers.md#namespace--ns), [labels](../reference/modifiers.md#label), and other [meta data](../reference/modifiers.md#meta)
 - Four formats supported out of the box:
-  - Pretty - Human readable logs that are easy on the eyes
-  - JSON - Machine readable logs that are compatible with the [Bunyan CLI](https://github.com/trentm/node-bunyan?tab=readme-ov-file#cli-usage)
-  - Standard - Human readable stdout logs
-  - Common - Logs that adhere to the [Common Log Format](https://en.wikipedia.org/wiki/Common_Log_Format)
+  - [Pretty](../reference/formatters.md#pretty-formatter) - Human readable logs that are easy on the eyes
+  - [JSON](../reference/formatters.md#json-formatter) - Machine readable logs that are compatible with the [Bunyan CLI](https://github.com/trentm/node-bunyan?tab=readme-ov-file#cli-usage)
+  - [Standard](../reference/formatters.md#standard-formatter) - Human readable stdout logs
+  - [Common](../reference/formatters.md#common-formatter) - Logs that adhere to the [Common Log Format](https://en.wikipedia.org/wiki/Common_Log_Format)
 - Everything is customizable and configurable
-- Tools for caching, filtering, and recalling logs
-- Support for creating log thread to track data across multiple scopes
-- Convenient child logger API's
+- [Tools](../reference/tools.md) for caching, filtering, and recalling logs
+- Support for creating [log threads](./threading.md) to track data across multiple scopes
+- Convenient [child logger](../reference/terminators.md#seal) API's
 - and much more...
 
 ### Here is a simple preview

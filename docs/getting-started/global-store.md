@@ -32,7 +32,7 @@ adze.log('This is a log!');
 
 This code looks pretty simple. We're just importing Adze and generating a single log. However,
 behind the scenes, Adze will check if a **Global Store** exists, and if it doesn't exist it will
-automatically instantiate and instance of it in the global context of your environment.
+automatically instantiate an instance of it in the global context of your environment.
 
 Here's where it will be created:
 

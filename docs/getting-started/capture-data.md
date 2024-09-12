@@ -7,7 +7,7 @@ log data and transport it to another source for tracking and monitoring our appl
 provides two ways for capturing the log data and then acting upon it to either send over the
 network, write to a file, or insert into a database.
 
-The two supported methods are **middleware** and **log listeners**.
+The two supported methods are [**middleware**](../reference/middleware.md) and [**log listeners**](../reference/global-store.md#addlistener).
 
 ## Middleware
 
