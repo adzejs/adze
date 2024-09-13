@@ -435,8 +435,8 @@ export default class Log<N extends string = string, Msg = unknown> {
    * sealed.log('Another log.'); // -> prints "#sealed [sealed-label] Another log."
    * ```
    */
-  public seal<N extends string = string, M = unknown>(cfg?: UserConfiguration) {
-    this._cfg = new Configuration({ ...this._cfg.exportValues(), ...cfg });
+  public seal<N extends string = string, M = unknown>(_cfg?: UserConfiguration) {
+    if (_cfg) this._cfg.updateConfiguration(_cfg);
     return SealedLog<N, M>(Log<N, M>, this._cfg, this.modifierData, this.modifierQueue);
   }
 

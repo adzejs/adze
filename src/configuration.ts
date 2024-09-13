@@ -29,6 +29,10 @@ export class Configuration implements IConfiguration {
     this.glblCfg = globalThis.$adzeGlobal?.configuration;
   }
 
+  public updateConfiguration(cfg: UserConfiguration): void {
+    this.logCfg = cfg;
+  }
+
   public get activeLevel(): Level | number {
     return this.glblCfg?.activeLevel ?? this.logCfg.activeLevel ?? dfltCfg.activeLevel;
   }
@@ -147,20 +151,20 @@ export class Configuration implements IConfiguration {
 
   public exportValues(): UserConfiguration {
     return {
-      activeLevel: this.activeLevel,
-      cache: this.cache,
-      cacheSize: this.cacheSize,
-      dump: this.dump,
-      meta: this.meta,
-      silent: this.silent,
-      showTimestamp: this.showTimestamp,
-      withEmoji: this.withEmoji,
-      format: this.format,
-      levels: this.levels,
-      middleware: this.middleware,
-      filters: this.filters,
-      timestampFormatter: this.timestampFormatter,
-      formatters: this.formatters,
+      activeLevel: this.logCfg.activeLevel,
+      cache: this.logCfg.cache,
+      cacheSize: this.logCfg.cacheSize,
+      dump: this.logCfg.dump,
+      meta: this.logCfg.meta,
+      silent: this.logCfg.silent,
+      showTimestamp: this.logCfg.showTimestamp,
+      withEmoji: this.logCfg.withEmoji,
+      format: this.logCfg.format,
+      levels: this.logCfg.levels,
+      middleware: this.logCfg.middleware,
+      filters: this.logCfg.filters,
+      timestampFormatter: this.logCfg.timestampFormatter,
+      formatters: this.logCfg.formatters,
     };
   }
 }
