@@ -12,10 +12,10 @@ This plugin is middleware for automatically transporting logs to rotating log fi
 the [file-stream-rotator](https://github.com/rogerc/file-stream-rotator#readme) library and accepts
 all of the same configuration.
 
-|             | Location                                                                             |
-| ----------- | ------------------------------------------------------------------------------------ |
-| Source Code | [https://github.com/adzejs/transport-file](https://github.com/adzejs/transport-file) |
-| npm         | ???                                                                                  |
+|             | Location                                                                                                 |
+| ----------- | -------------------------------------------------------------------------------------------------------- |
+| Source Code | [https://github.com/adzejs/transport-file](https://github.com/adzejs/transport-file)                     |
+| npm         | [https://www.npmjs.com/package/@adze/transport-file](https://www.npmjs.com/package/@adze/transport-file) |
 
 <!-- ## @adze/transport-cloudwatch-logs
 
