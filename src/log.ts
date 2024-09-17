@@ -470,7 +470,7 @@ export default class Log<N extends string = string, Msg = unknown> {
     cfg?: UserConfiguration
   ) {
     this._cfg = new Configuration({ ...this._cfg.exportValues(), ...cfg });
-    return (strings: TemplateStringsArray, ...values: string[]) => {
+    return (strings: TemplateStringsArray, ...values: unknown[]) => {
       const message = String.raw({ raw: strings }, ...values);
       const sealed = SealedLog(Log<N, Msg>, this._cfg, this.modifierData, this.modifierQueue);
       const _method: keyof typeof sealed = method;

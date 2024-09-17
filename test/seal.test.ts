@@ -49,4 +49,20 @@ describe('Configuration', () => {
 
     logger3.log('This is a log from a sealed logger.');
   });
+
+  test('sealTag returns a template literal tag function that generates a log of the sealed level', () => {
+    console.error = vi.fn();
+
+    const logger1 = adze.withEmoji.seal();
+    const ERR = logger1.sealTag('error');
+
+    ERR`Something went wrong with node ${1}! ${new Error('An error occurred')}`;
+
+    expect(console.error).toHaveBeenCalledWith(
+      '%c🔥 %c Error',
+      'font-size: 12px;',
+      'padding-right: 24px; font-size: 12px; border-radius: 4px; background: linear-gradient(to right, #fff, #ffd1d1); color: #a4000f; border-color: #e3bbbb;',
+      'Something went wrong with node 1! Error: An error occurred'
+    );
+  });
 });
