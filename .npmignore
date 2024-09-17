@@ -6,6 +6,7 @@ docs/
 logs/
 test/
 readme/
+src/
 dist/demo_funcs.js
 dist/demo_funcs.d.ts
 .eslint_cache
