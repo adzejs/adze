@@ -132,6 +132,7 @@ export default defineUserConfig({
       { text: 'Getting Started', link: '/getting-started/introduction' },
       { text: 'Reference Manual', link: '/reference/introduction' },
       { text: 'Plugins', link: '/plugins' },
+      { text: "FAQ's", link: '/faqs' },
       { text: 'v1.x', link: 'https://v1.adzejs.com/' },
     ],
     sidebar: {
