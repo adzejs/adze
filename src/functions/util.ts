@@ -1,5 +1,5 @@
-import { Chalk } from 'chalk';
-import { ChalkStyle, Configuration } from '..';
+import { picocolors } from './picocolors-loader';
+import { ConsoleStyle, Configuration } from '..';
 import Log from '../log';
 
 /**
@@ -37,16 +37,15 @@ export function addPadding(str: string, withEmoji = false, emoji?: string): stri
 }
 
 /**
- * Applies array of chalk styles to the provided string. An optional terminal color fidelity
+ * Applies array of console styles to the provided string. An optional terminal color fidelity
  * value can be passed to enable different color fidelities for different terminals.
  *
- * Refer to https://github.com/chalk/chalk#chalklevel
+ * Refer to https://github.com/alexeyraspopov/picocolors#usage
  */
-export function applyChalkStyles(str: string, styles: ChalkStyle[]): string {
-  // Force chalk colors
-  const chalk = new Chalk();
-  return styles.reduce((acc, style) => {
-    return chalk[style](acc);
+export function applyStyles(str: string, styles: ConsoleStyle[]): string {
+  // Force console colors
+  return styles.reduce<string>((acc, style) => {
+    return picocolors[style](acc);
   }, str);
 }
 

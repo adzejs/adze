@@ -86,14 +86,14 @@ property of the [UserConfiguration](#user-configuration).
 
 ### LevelConfiguration Interface
 
-> Refer to the [ChalkJS documentation](https://github.com/chalk/chalk?tab=readme-ov-file#styles) for information about terminal style values.
+> Refer to the [picocolors documentation](https://github.com/alexeyraspopov/picocolors#usage) for information about terminal style values.
 
 ```typescript
 interface LevelConfiguration {
   levelName: string;
   level: number;
   style: string;
-  terminalStyle: ChalkStyle[];
+  terminalStyle: ConsoleStyle[];
   method: Method;
   emoji: string;
 }
@@ -210,12 +210,12 @@ to change the padding based on the browser environment. These functions are also
 
 ### Default Server Styles
 
-Adze styling for the server makes use of a library named [Chalk](https://github.com/chalk/chalk).
-Chalk exposes several formatting functions for server text styling that Adze exposes in its
+Adze styling for the server makes use of a library named [picocolors](https://github.com/alexeyraspopov/picocolors).
+picocolors exposes several formatting functions for server text styling that Adze exposes in its
 configuration.
 
-For a list of styles available for use with Chalk, refer to the
-[Chalk styles documentation](https://github.com/chalk/chalk?tab=readme-ov-file#styles).
+For a list of styles available for use with picocolors, refer to the
+[picocolors styles documentation](https://github.com/alexeyraspopov/picocolors#usage).
 
 #### Default Level Styles
 

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import adze, { LevelConfiguration, setup, teardown } from '../../../src';
-import { applyChalkStyles } from '../../../src/functions';
+import { applyStyles } from '../../../src/functions';
 import {
   getAlertConfig,
   getDebugConfig,
@@ -24,70 +24,70 @@ describe('terminators with pretty format in node stdout', () => {
 
   test('prints a log with level of alert', () => {
     console.error = vi.fn();
-    const chalkStyles = getAlertConfig().terminalStyle;
+    const consoleStyles = getAlertConfig().terminalStyle;
     adze.alert('This is an alert log.');
     expect(console.error).toHaveBeenCalledWith(
-      applyChalkStyles(' Alert     ', chalkStyles),
+      applyStyles(' Alert     ', consoleStyles),
       'This is an alert log.'
     );
   });
 
   test('prints a log with level of error', () => {
     console.error = vi.fn();
-    const chalkStyles = getErrorConfig().terminalStyle;
+    const consoleStyles = getErrorConfig().terminalStyle;
     adze.error('This is an error log.');
     expect(console.error).toHaveBeenCalledWith(
-      applyChalkStyles(' Error     ', chalkStyles),
+      applyStyles(' Error     ', consoleStyles),
       'This is an error log.'
     );
   });
 
   test('prints a log with level of warn', () => {
     console.warn = vi.fn();
-    const chalkStyles = getWarnConfig().terminalStyle;
+    const consoleStyles = getWarnConfig().terminalStyle;
     adze.warn('This is a warn log.');
     expect(console.warn).toHaveBeenCalledWith(
-      applyChalkStyles(' Warn      ', chalkStyles),
+      applyStyles(' Warn      ', consoleStyles),
       'This is a warn log.'
     );
   });
 
   test('prints a log with level of info', () => {
     console.info = vi.fn();
-    const chalkStyles = getInfoConfig().terminalStyle;
+    const consoleStyles = getInfoConfig().terminalStyle;
     adze.info('This is an info log.');
     expect(console.info).toHaveBeenCalledWith(
-      applyChalkStyles(' Info      ', chalkStyles),
+      applyStyles(' Info      ', consoleStyles),
       'This is an info log.'
     );
   });
 
   test('prints a log with level of fail', () => {
     console.info = vi.fn();
-    const chalkStyles = getFailConfig().terminalStyle;
+    const consoleStyles = getFailConfig().terminalStyle;
     adze.fail('This is a fail log.');
     expect(console.info).toHaveBeenCalledWith(
-      applyChalkStyles(' Fail      ', chalkStyles),
+      applyStyles(' Fail      ', consoleStyles),
       'This is a fail log.'
     );
   });
 
   test('prints a log with level of success', () => {
     console.info = vi.fn();
-    const chalkStyles = getSuccessConfig().terminalStyle;
+    const consoleStyles = getSuccessConfig().terminalStyle;
     adze.success('This is a success log.');
     expect(console.info).toHaveBeenCalledWith(
-      applyChalkStyles(' Success   ', chalkStyles),
+      applyStyles(' Success   ', consoleStyles),
       'This is a success log.'
     );
   });
 
   test('prints a log with level of log', () => {
     console.log = vi.fn();
-    const chalkStyles = getLogConfig().terminalStyle;
+    const consoleStyles = getLogConfig().terminalStyle;
     adze.log('This is a log log.');
     expect(console.log).toHaveBeenCalledWith(
-      applyChalkStyles(' Log       ', chalkStyles),
+      applyStyles(' Log       ', consoleStyles),
       'This is a log log.'
     );
   });
@@ -95,10 +95,10 @@ describe('terminators with pretty format in node stdout', () => {
   test('prints a log with level of debug', () => {
     console.debug = vi.fn();
     setup({ activeLevel: 'debug' });
-    const chalkStyles = getDebugConfig().terminalStyle;
+    const consoleStyles = getDebugConfig().terminalStyle;
     adze.debug('This is a debug log.');
     expect(console.debug).toHaveBeenCalledWith(
-      applyChalkStyles(' Debug     ', chalkStyles),
+      applyStyles(' Debug     ', consoleStyles),
       'This is a debug log.'
     );
   });
@@ -106,10 +106,10 @@ describe('terminators with pretty format in node stdout', () => {
   test('prints a log with level of verbose', () => {
     console.debug = vi.fn();
     setup({ activeLevel: 'verbose' });
-    const chalkStyles = getVerboseConfig().terminalStyle;
+    const consoleStyles = getVerboseConfig().terminalStyle;
     adze.verbose('This is a verbose log.');
     expect(console.debug).toHaveBeenCalledWith(
-      applyChalkStyles(' Verbose   ', chalkStyles),
+      applyStyles(' Verbose   ', consoleStyles),
       'This is a verbose log.'
     );
   });
@@ -130,7 +130,7 @@ describe('terminators with pretty format in node stdout', () => {
     adze.custom('leetLevel', 'This is a custom log.');
 
     expect(console.log).toHaveBeenCalledWith(
-      applyChalkStyles(' LeetLevel ', leetLevel.terminalStyle),
+      applyStyles(' LeetLevel ', leetLevel.terminalStyle),
       'This is a custom log.'
     );
   });
@@ -143,70 +143,70 @@ describe('terminators with emoji', () => {
 
   test('prints a log with level of alert with an emoji', () => {
     console.error = vi.fn();
-    const chalkStyles = getAlertConfig().terminalStyle;
+    const consoleStyles = getAlertConfig().terminalStyle;
     adze.withEmoji.alert('This is an alert log.');
     expect(console.error).toHaveBeenCalledWith(
-      applyChalkStyles('🚨 Alert     ', chalkStyles),
+      applyStyles('🚨 Alert     ', consoleStyles),
       'This is an alert log.'
     );
   });
 
   test('prints a log with level of error with an emoji', () => {
     console.error = vi.fn();
-    const chalkStyles = getErrorConfig().terminalStyle;
+    const consoleStyles = getErrorConfig().terminalStyle;
     adze.withEmoji.error('This is an error log.');
     expect(console.error).toHaveBeenCalledWith(
-      applyChalkStyles('🔥 Error     ', chalkStyles),
+      applyStyles('🔥 Error     ', consoleStyles),
       'This is an error log.'
     );
   });
 
   test('prints a log with level of warn with an emoji', () => {
     console.warn = vi.fn();
-    const chalkStyles = getWarnConfig().terminalStyle;
+    const consoleStyles = getWarnConfig().terminalStyle;
     adze.withEmoji.warn('This is a warn log.');
     expect(console.warn).toHaveBeenCalledWith(
-      applyChalkStyles('🔔 Warn      ', chalkStyles),
+      applyStyles('🔔 Warn      ', consoleStyles),
       'This is a warn log.'
     );
   });
 
   test('prints a log with level of info with an emoji', () => {
     console.info = vi.fn();
-    const chalkStyles = getInfoConfig().terminalStyle;
+    const consoleStyles = getInfoConfig().terminalStyle;
     adze.withEmoji.info('This is an info log.');
     expect(console.info).toHaveBeenCalledWith(
-      applyChalkStyles('ℹ️ Info      ', chalkStyles),
+      applyStyles('ℹ️ Info      ', consoleStyles),
       'This is an info log.'
     );
   });
 
   test('prints a log with level of fail with an emoji', () => {
     console.info = vi.fn();
-    const chalkStyles = getFailConfig().terminalStyle;
+    const consoleStyles = getFailConfig().terminalStyle;
     adze.withEmoji.fail('This is a fail log.');
     expect(console.info).toHaveBeenCalledWith(
-      applyChalkStyles('❌ Fail      ', chalkStyles),
+      applyStyles('❌ Fail      ', consoleStyles),
       'This is a fail log.'
     );
   });
 
   test('prints a log with level of success with an emoji', () => {
     console.info = vi.fn();
-    const chalkStyles = getSuccessConfig().terminalStyle;
+    const consoleStyles = getSuccessConfig().terminalStyle;
     adze.withEmoji.success('This is a success log.');
     expect(console.info).toHaveBeenCalledWith(
-      applyChalkStyles('🎉 Success   ', chalkStyles),
+      applyStyles('🎉 Success   ', consoleStyles),
       'This is a success log.'
     );
   });
 
   test('prints a log with level of log with an emoji', () => {
     console.log = vi.fn();
-    const chalkStyles = getLogConfig().terminalStyle;
+    const consoleStyles = getLogConfig().terminalStyle;
     adze.withEmoji.log('This is a log log.');
     expect(console.log).toHaveBeenCalledWith(
-      applyChalkStyles('🪵 Log       ', chalkStyles),
+      applyStyles('🪵 Log       ', consoleStyles),
       'This is a log log.'
     );
   });
@@ -214,10 +214,10 @@ describe('terminators with emoji', () => {
   test('prints a log with level of debug with an emoji', () => {
     console.debug = vi.fn();
     setup({ activeLevel: 'debug' });
-    const chalkStyles = getDebugConfig().terminalStyle;
+    const consoleStyles = getDebugConfig().terminalStyle;
     adze.withEmoji.debug('This is a debug log.');
     expect(console.debug).toHaveBeenCalledWith(
-      applyChalkStyles('🐞 Debug     ', chalkStyles),
+      applyStyles('🐞 Debug     ', consoleStyles),
       'This is a debug log.'
     );
   });
@@ -225,10 +225,10 @@ describe('terminators with emoji', () => {
   test('prints a log with level of verbose with an emoji', () => {
     console.debug = vi.fn();
     setup({ activeLevel: 'verbose' });
-    const chalkStyles = getVerboseConfig().terminalStyle;
+    const consoleStyles = getVerboseConfig().terminalStyle;
     adze.withEmoji.verbose('This is a verbose log.');
     expect(console.debug).toHaveBeenCalledWith(
-      applyChalkStyles('💬 Verbose   ', chalkStyles),
+      applyStyles('💬 Verbose   ', consoleStyles),
       'This is a verbose log.'
     );
   });
@@ -249,7 +249,7 @@ describe('terminators with emoji', () => {
     adze.withEmoji.custom('leetLevel', 'This is a custom log.');
 
     expect(console.log).toHaveBeenCalledWith(
-      applyChalkStyles('👾 LeetLevel ', leetLevel.terminalStyle),
+      applyStyles('👾 LeetLevel ', leetLevel.terminalStyle),
       'This is a custom log.'
     );
   });

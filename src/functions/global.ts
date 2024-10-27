@@ -47,7 +47,12 @@ export function isGlobalInitialized(global: unknown): global is AdzeGlobal {
  * Validates that the current environment is `Window`.
  */
 export function isBrowser(): boolean {
-  return typeof window !== 'undefined' && !isDeno();
+  return (
+    typeof window !== 'undefined' &&
+    typeof window.location !== 'undefined' &&
+    typeof window.navigator.userAgent !== 'undefined' &&
+    !isDeno()
+  );
 }
 
 /**
