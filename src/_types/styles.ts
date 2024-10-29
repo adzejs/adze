@@ -8,7 +8,6 @@ const styles_raw = [
   'cyan',
   'white',
   'gray',
-  'grey',
   'blackBright',
   'redBright',
   'greenBright',
@@ -25,8 +24,6 @@ const styles_raw = [
   'bgMagenta',
   'bgCyan',
   'bgWhite',
-  'bgGray',
-  'bgGrey',
   'bgBlackBright',
   'bgRedBright',
   'bgGreenBright',
@@ -43,15 +40,15 @@ const styles_raw = [
   'inverse',
   'hidden',
   'strikethrough',
-  'visible',
 ] as const;
 
+type StylesRaw = typeof styles_raw;
 /**
- * String union representing all possible Chalk styles.
+ * String union representing all possible Console styles.
  */
-export type ChalkStyle = (typeof styles_raw)[number];
+export type ConsoleStyle = StylesRaw[number];
 
 /**
- * Immutable array of all possible chalk styles.
+ * Immutable array of all possible console styles.
  */
-export const chalk_styles = Object.freeze(styles_raw);
+export const console_styles = Object.freeze(styles_raw);

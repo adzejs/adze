@@ -248,7 +248,7 @@ export function getLogConfig(overrides: Partial<LevelConfiguration> = {}): Level
     level: 6,
     style:
       'font-size: 12px; border-radius: 4px; padding-right: 51px; background: linear-gradient(to right, #ecedef, #d9dce0); color: #333435; border-color: #bfc1c5;',
-    terminalStyle: ['white', 'bgGray'],
+    terminalStyle: ['white', 'bgBlackBright'],
     method: 'log',
     emoji: '🪵',
     ...overrides,

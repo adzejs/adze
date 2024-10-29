@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import adze, { setup, teardown } from '../src';
-import { applyChalkStyles } from '../src/functions';
+import { applyStyles } from '../src/functions';
 
 /**
  * @vitest-environment node
@@ -31,7 +31,7 @@ describe('Configuration', () => {
     adze.withEmoji.error('This is an error log with overwritten style configuration.');
 
     expect(console.error).toHaveBeenCalledWith(
-      applyChalkStyles('🔥 Error     ', ['magenta', 'bgWhite']),
+      applyStyles('🔥 Error     ', ['magenta', 'bgWhite']),
       'This is an error log with overwritten style configuration.'
     );
   });

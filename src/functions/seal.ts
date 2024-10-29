@@ -2,6 +2,7 @@
 import { Modifier, ModifierData } from '..';
 import { Configuration } from '../configuration';
 import Log from '../log';
+import structuredClone from '@ungap/structured-clone';
 
 /**
  * Required type for creating mixins in TypeScript.
