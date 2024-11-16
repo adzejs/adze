@@ -1,4 +1,4 @@
-export * from './chalk-dummy';
+export * from './picocolors-dummy';
 export * from './data';
 export * from './filters';
 export * from './formatters';

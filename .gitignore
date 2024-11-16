@@ -74,3 +74,6 @@ docs/.vuepress/.cache
 
 # other environments
 deno.lock
+
+# intellij
+.idea

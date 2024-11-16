@@ -1,7 +1,7 @@
 import Formatter from '../formatter';
 import {
   addPadding,
-  applyChalkStyles,
+  applyStyles,
   formatAssert,
   formatCount,
   formatIf,
@@ -36,7 +36,7 @@ export default class PrettyFormatter extends Formatter {
     const leader = `${leaderRaw} `;
     const meta = this.formatMeta(mods, timestamp);
 
-    const styledLeader = applyChalkStyles(leader, this.level.terminalStyle);
+    const styledLeader = applyStyles(leader, this.level.terminalStyle);
 
     message.push(styledLeader);
     meta !== '' ? message.push(meta) : null;

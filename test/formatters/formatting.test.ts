@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import adze, { teardown } from '../../src';
-import { applyChalkStyles } from '../../src/functions';
+import { applyStyles } from '../../src/functions';
 import { getLogConfig } from '../../src/constants';
 
 /**
@@ -19,7 +19,7 @@ describe('log formatting', () => {
     adze.format('bad').log('Testing bad formatting modifier.');
 
     expect(console.log).toHaveBeenCalledWith(
-      applyChalkStyles(' Log       ', getLogConfig().terminalStyle),
+      applyStyles(' Log       ', getLogConfig().terminalStyle),
       'Testing bad formatting modifier.'
     );
     expect(console.warn).toHaveBeenCalledTimes(1);
