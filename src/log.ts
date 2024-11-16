@@ -1293,13 +1293,16 @@ export default class Log<N extends string = string, Msg = unknown> {
     const timestamp = formatter.timestampFormatter(new Date());
 
     // Create our final log data object
-    const message = cleanMessage(formatter.print(this.modifierData, timestamp, args));
+    let message = cleanMessage(formatter.print(this.modifierData, timestamp, args));
     // If dump is enabled, add the context to the message.
     if (this._cfg.dump && this.modifierData.label?.context) {
       message.push(this.modifierData.label.context);
     }
     this.doHook((m) => {
-      if (m.beforeFormatApplied) m.beforeFormatApplied(this, this._cfg.format, message);
+      if (m.beforeFormatApplied) {
+        // Update the message
+        message = m.beforeFormatApplied(this, this._cfg.format, message);
+      }
     });
     const { activeLevel, cache, cacheSize, dump, format, meta, showTimestamp, silent, withEmoji } =
       this._cfg;

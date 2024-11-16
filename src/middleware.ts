@@ -21,7 +21,7 @@ export interface Middleware {
   /**
    * Hook that is called just before a formatter is applied to a log instance to format a message.
    */
-  beforeFormatApplied?(log: Log, format: string, message: unknown[]): void;
+  beforeFormatApplied?(log: Log, format: string, message: unknown[]): unknown[];
   /**
    * Hook that is called just after a formatter is applied to a log instance to format a message.
    */

@@ -97,10 +97,11 @@ describe('middleware', () => {
     const func = vi.fn();
 
     class TestMiddleware extends Middleware {
-      beforeFormatApplied(log: adze, format: string) {
+      beforeFormatApplied(log: adze, format: string, message: unknown[]) {
         func();
         expect(format).toBe('standard');
         expect(log.configuration.format).toBe('standard');
+        return message;
       }
     }
     setup({
@@ -113,15 +114,38 @@ describe('middleware', () => {
     expect(func).toHaveBeenCalledTimes(1);
   });
 
+  test('returning a different message in the beforeFormatApplied hook changes the log message', () => {
+    console.log = vi.fn();
+    const func = vi.fn();
+
+    class TestMiddleware extends Middleware {
+      beforeFormatApplied(log: adze, format: string) {
+        func();
+        expect(format).toBe('standard');
+        expect(log.configuration.format).toBe('standard');
+        return ['derp'];
+      }
+    }
+    setup({
+      format: 'standard',
+      middleware: [new TestMiddleware()],
+    });
+
+    adze.ns('foo', 'bar').log('Test log.');
+    expect(console.log).toHaveBeenCalledOnce();
+    expect(console.log).toHaveBeenCalledWith('derp');
+  });
+
   test('afterFormatApplied hook fires', () => {
     console.log = vi.fn();
     const func = vi.fn();
 
     class TestMiddleware extends Middleware {
-      afterFormatApplied(log: adze, format: string) {
+      afterFormatApplied(log: adze, format: string, message: unknown[]) {
         func();
         expect(format).toBe('standard');
         expect(log.configuration.format).toBe('standard');
+        return message;
       }
     }
     setup({

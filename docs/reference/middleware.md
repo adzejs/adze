@@ -166,11 +166,13 @@ interface Middleware {
 
 ### beforeFormatApplied
 
-This hook is called just before a formatter is applied to a log instance to format a message.
+This hook is called just before a formatter is applied to a log instance to format a message. The
+hook must return a message (`unknown[]`). It can return the message parameter mutated or unchanged.
+Whatever is returned will be the new log message.
 
 ```typescript
 interface Middleware {
-  beforeFormatApplied?(log: Log, format: string, message: unknown[]): void;
+  beforeFormatApplied?(log: Log, format: string, message: unknown[]): unknown[];
 }
 ```
 
@@ -184,11 +186,13 @@ interface Middleware {
 
 ### afterFormatApplied
 
-This hook is called just after a formatter is applied to a log instance to format a message.
+This hook is called just after a formatter is applied to a log instance to format a message. The
+hook must return a message (`unknown[]`). It can return the message parameter mutated or unchanged.
+Whatever is returned will be the new log message.
 
 ```typescript
 interface Middleware {
-  afterFormatApplied?(log: Log, format: string, message: unknown[]): void;
+  afterFormatApplied?(log: Log, format: string, message: unknown[]): unknown[];
 }
 ```
 
