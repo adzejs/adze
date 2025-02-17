@@ -34,7 +34,7 @@
           <Content path="/home/universal.md" />
           <div class="great-with">
             <h3>Works great with</h3>
-            <div style="display: flex; gap: 1rem">
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap">
               <div>
                 <a href="https://nextjs.org/" target="_blank">
                   <img style="height: 40px" :src="$withBase('images/next-logo.png')" alt="NextJS" />
@@ -78,6 +78,15 @@
                     style="height: 40px; max-width: 100%"
                     :src="$withBase('images/deno-logo.svg')"
                     alt="DenoJS"
+                  />
+                </a>
+              </div>
+              <div>
+                <a href="https://reactnative.dev/">
+                  <img
+                    style="height: 40px; max-width: 100%"
+                    :src="$withBase('images/react-native-logo.svg')"
+                    alt="React Native"
                   />
                 </a>
               </div>

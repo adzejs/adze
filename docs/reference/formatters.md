@@ -430,10 +430,11 @@ arguments as an array in the same order they were provided.
 #### Example
 
 ```typescript
-import { Formatter } from 'adze';
+import { Configuration, Formatter, type LevelConfiguration, type ModifierData } from 'adze';
 
 class HelloFormatter extends Formatter {
   constructor(cfg: Configuration, level: LevelConfiguration) {
+    // This constructor isn't necessary, but is here for illustrative purposes.
     super(cfg, level);
   }
 
@@ -441,6 +442,11 @@ class HelloFormatter extends Formatter {
     // We'll make the first arg printed always the word "Hello".
     return ['Hello', ...args];
   }
+
+  /*
+  ...a TypeScript error will be shown because we have not yet implemented 
+  the formatServer() method. We will add it in the next section.
+  */
 }
 ```
 
@@ -459,12 +465,14 @@ arguments as an array in the same order they were provided.
 #### Example
 
 ```typescript
-import { Formatter } from 'adze';
+import { Configuration, Formatter, type LevelConfiguration, type ModifierData } from 'adze';
 
 class HelloFormatter extends Formatter {
   constructor(cfg: Configuration, level: LevelConfiguration) {
     super(cfg, level);
   }
+
+  // ...formatBrowser method should be here from the previous section.
 
   protected formatServer(data: ModifierData, timestamp: string, args: unknown[]): unknown[] {
     // We'll make the first arg printed always the word "Hello".
