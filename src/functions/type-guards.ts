@@ -31,7 +31,7 @@ export function hasOwnProperties<
  */
 export function isNumber(value: unknown): value is number {
   // Number(null) returns 0 😭
-  return value !== null && !isNaN(Number(value));
+  return value !== null && typeof value === 'number' && !isNaN(Number(value));
 }
 
 /**
