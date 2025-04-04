@@ -1,6 +1,6 @@
-export * from './configuration';
-export * from './http';
-export * from './label';
-export * from './log';
-export * from './styles';
-export * from './time';
+export type * from './configuration';
+export type * from './http';
+export type * from './label';
+export type * from './log';
+export { type ConsoleStyle, console_styles } from './styles';
+export type * from './time';
