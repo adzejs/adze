@@ -39,6 +39,29 @@ describe('log filtering', () => {
     expect(listener).toHaveBeenCalledTimes(3);
   });
 
+  test('listener fires for a single level when passed a level filter array with a single item', () => {
+    console.error = vi.fn();
+    console.warn = vi.fn();
+    console.info = vi.fn();
+    console.log = vi.fn();
+    console.debug = vi.fn();
+
+    const listener = vi.fn();
+    const store = setup();
+    store.addListener([1], listener);
+    adze.alert('Testing');
+    adze.error('Testing');
+    adze.warn('Testing');
+    adze.info('Testing');
+    adze.fail('Testing');
+    adze.success('Testing');
+    adze.log('Testing');
+    adze.debug('Testing');
+    adze.verbose('Testing');
+    expect(listener).toHaveBeenCalledTimes(1);
+    expect(console.error).toHaveBeenCalledTimes(2); // 2 times because "alert" also uses error
+  });
+
   test('listener does not fire when a log does not match the associated level filter', () => {
     console.log = vi.fn();
     const listener = vi.fn();
