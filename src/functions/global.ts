@@ -18,11 +18,19 @@ declare global {
 export function setup<Meta extends Record<string, unknown> = Record<string, unknown>>(
   cfg?: UserConfiguration<Meta>
 ): AdzeGlobal {
+  globalThis.$adzeGlobal = new AdzeGlobal<Meta>(cfg);
+  return globalThis.$adzeGlobal;
+}
+
+/**
+ * Gets the global store context or initializes a new one if it doesn't exist.
+ */
+export function getGlobal(cfg?: UserConfiguration): AdzeGlobal {
   const store = globalThis.$adzeGlobal;
   if (isGlobalInitialized(store)) {
     return store;
   }
-  const globalCtxt = new AdzeGlobal<Meta>(cfg);
+  const globalCtxt = new AdzeGlobal(cfg);
   globalThis.$adzeGlobal = globalCtxt;
   return globalCtxt;
 }

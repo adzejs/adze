@@ -14,13 +14,13 @@ import { Configuration } from './configuration';
 import {
   captureTimeNow,
   formatTime,
-  setup,
   hrtime,
   isMethodWithArgs,
   stacktrace,
   cleanMessage,
   isTestEnvironment,
   SealedLog,
+  getGlobal,
 } from './functions';
 import { Middleware } from './middleware';
 
@@ -55,8 +55,8 @@ export default class Log<N extends string = string, Msg = unknown> {
    */
   private modifierQueue: Modifier[] = [];
 
-  constructor(cfg: UserConfiguration = {}, modifierData?: ModifierData) {
-    this.globalStore = setup(cfg);
+  constructor(cfg?: UserConfiguration, modifierData?: ModifierData) {
+    this.globalStore = getGlobal(cfg);
     this._modifierData = modifierData ?? {};
     this._cfg = new Configuration(cfg);
     this.doHook((m) => {

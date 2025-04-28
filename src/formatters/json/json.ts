@@ -3,7 +3,7 @@ import { ModifierData } from '../../_types';
 import { formatISO } from 'date-fns/formatISO';
 import { JsonLog, JsonLogOptionalFields, JsonLogRequiredFields } from './types';
 import { hasRequiredFields } from './type-guards';
-import { setup } from '../../functions';
+import { getGlobal } from '../../functions';
 
 /**
  * Formats log messages in machine-readable JSON format.
@@ -32,7 +32,7 @@ export default class JsonFormatter extends Formatter {
    * Format the log message for NDJSON lines.
    */
   private formatMessage(mods: ModifierData, timestamp: string, _args: unknown[]): unknown[] {
-    const global = setup();
+    const global = getGlobal();
     const args = [..._args];
     const msg = args.shift() as string;
     if (hasRequiredFields(this.cfg.meta)) {
