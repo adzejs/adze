@@ -6,6 +6,7 @@
 ![node-lts](https://img.shields.io/node/v-lts/adze)
 [![apache 2.0](https://badgen.net/npm/license/adze)](/LICENSE.md)
 ![minzip](https://badgen.net/bundlephobia/minzip/adze)
+[![install size](https://packagephobia.com/badge?p=adze)](https://packagephobia.com/result?p=adze)
 ![dependency count](https://badgen.net/bundlephobia/dependency-count/adze)
 
 **Please visit our official docs at [adzejs.com](http://www.adzejs.com/).**
