@@ -1,7 +1,6 @@
 import Formatter from '../formatter';
 import { ModifierData } from '../../_types';
-import { formatISO } from 'date-fns/formatISO';
-import { isNumber, isObject, isString } from '../../functions';
+import { dateFormatISO, isNumber, isObject, isString } from '../../functions';
 
 /**
  * Formats log messages for stdout lines.
@@ -12,7 +11,7 @@ export default class StandardFormatter extends Formatter {
   /**
    * Format the date in the ISO8601 format by default.
    */
-  protected timestampFormatFunction: (date: Date) => string = (date: Date) => formatISO(date);
+  protected timestampFormatFunction: (date: Date) => string = (date: Date) => dateFormatISO(date);
 
   /**
    * Format the log message for the browser.

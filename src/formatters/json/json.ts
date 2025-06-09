@@ -1,9 +1,8 @@
 import Formatter from '../formatter';
 import { ModifierData } from '../../_types';
-import { formatISO } from 'date-fns/formatISO';
 import { JsonLog, JsonLogOptionalFields, JsonLogRequiredFields } from './types';
 import { hasRequiredFields } from './type-guards';
-import { getGlobal } from '../../functions';
+import { dateFormatISO, getGlobal } from '../../functions';
 
 /**
  * Formats log messages in machine-readable JSON format.
@@ -12,7 +11,7 @@ export default class JsonFormatter extends Formatter {
   /**
    * Format the date in the ISO8601 format by default.
    */
-  protected timestampFormatFunction: (date: Date) => string = (date: Date) => formatISO(date);
+  protected timestampFormatFunction: (date: Date) => string = (date: Date) => dateFormatISO(date);
 
   /**
    * Format the log message for the browser.

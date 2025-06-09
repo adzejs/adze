@@ -1,6 +1,6 @@
 import Formatter from '../formatter';
 import { ModifierData } from '../../_types';
-import { format } from 'date-fns/format';
+import { dateFormatCommon } from '../../functions';
 
 /**
  * Formats log messages according to the common log standard.
@@ -15,7 +15,7 @@ export default class CommonFormatter extends Formatter {
    * - date-fns pattern: `dd/MMM/yyyy:HH:mm:ss xx`
    */
   protected timestampFormatFunction: (date: Date) => string = (date: Date) =>
-    format(date, 'dd/MMM/yyyy:HH:mm:ss xx');
+    dateFormatCommon(date);
 
   /**
    * Format the log message for the browser.
