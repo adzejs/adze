@@ -66,7 +66,7 @@ export {
   type FilterConfig,
   type Filters,
   type Format,
-  type Formatter,
+  Formatter,
   type FormatterConstructor,
   type HrTime,
   type HttpMethod,
