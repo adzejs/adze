@@ -5,9 +5,9 @@
 ![build workflow](https://github.com/adzejs/adze/actions/workflows/build.yml/badge.svg)
 ![node-lts](https://img.shields.io/node/v-lts/adze)
 [![apache 2.0](https://badgen.net/npm/license/adze)](/LICENSE.md)
-![minzip](https://badgen.net/bundlephobia/minzip/adze)
+[![minzip](https://badgen.net/bundlephobia/minzip/adze)](https://bundlephobia.com/package/adze)
 [![install size](https://packagephobia.com/badge?p=adze)](https://packagephobia.com/result?p=adze)
-![dependency count](https://badgen.net/bundlephobia/dependency-count/adze)
+[![dependency count](https://badgen.net/bundlephobia/dependency-count/adze)](https://bundlephobia.com/package/adze)
 
 **Please visit our official docs at [adzejs.com](http://www.adzejs.com/).**
 
