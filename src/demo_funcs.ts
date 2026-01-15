@@ -1,16 +1,16 @@
+import { StandardLogFormatMeta } from './formatters/standard/types';
 import adze, {
-  setup,
-  teardown,
-  CommonLogFormatMeta,
   CommonLogFormatMessage,
+  CommonLogFormatMeta,
   JsonLogFormatMeta,
   JsonLogOptionalFields,
-  serializeRequest,
-  serializeResponse,
   LevelConfiguration,
   isBrowser,
+  serializeRequest,
+  serializeResponse,
+  setup,
+  teardown,
 } from './index';
-import { StandardLogFormatMeta } from './formatters/standard/types';
 import Log from './log';
 
 if (isBrowser()) {
@@ -57,6 +57,7 @@ async function runDemo() {
   common();
   standard();
   await json();
+  jsonCustomReplacer();
   // time();
   thread();
   listener();
@@ -552,6 +553,17 @@ async function json() {
     .ns('foobar', 'baz')
     .label('derp')
     .alert('This is an alert log');
+  logger.log('This log has a BigInt.', BigInt('9007199254741991'));
+  logger.log('This has an error object', new Error('Testing'));
+  logger.log('This log has a date object', new Date());
+  logger.log(
+    'This log has a Map object',
+    new Map([
+      ['foo', 'bar'],
+      ['baz', '42'],
+    ])
+  );
+  logger.log('This log has a Set object', new Set(['foo', 'bar', 'baz', 'baz']));
   logger.ns('foobar').error('This is an error log');
   logger.warn('This is a warning log');
   logger.ns('hello world').info('This is an info log');
@@ -560,6 +572,28 @@ async function json() {
   logger.log('This is a log');
   logger.debug('This is a debug log');
   logger.verbose('This is a verbose log');
+  teardown();
+}
+
+function jsonCustomReplacer() {
+  setup({
+    customReplacer: (key: string, value: unknown) => {
+      if (key === 'hello') {
+        return 'world!';
+      }
+      return value;
+    },
+    format: 'json',
+  });
+
+  adze
+    .meta({
+      name: 'custom-replacer-demo',
+      hostname: 'localhost',
+    })
+    .log('This log replaces all values with keys of hello with "world!"', {
+      hello: 'doobadoo',
+    });
   teardown();
 }
 

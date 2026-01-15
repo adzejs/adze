@@ -119,6 +119,7 @@ export const formats = ['pretty', 'prettyEmoji', 'json', 'standard', 'common', '
 
 export const defaultConfiguration: Configuration = {
   activeLevel: 'log',
+  autoSerialize: true,
   cache: false,
   cacheSize: 300,
   dump: false,

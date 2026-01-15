@@ -28,7 +28,8 @@
     "demo:deno": "deno --allow-env dist/demo_funcs.js",
     "lint": "prettier ./src --check && eslint .",
     "lint:fix": "prettier ./src --write && eslint . --fix",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:ui": "vitest --ui --disable-console-intercept",
     "prepare": "husky",
     "size": "size-limit"

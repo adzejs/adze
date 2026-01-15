@@ -70,6 +70,17 @@ export interface ConfigurationData<Meta extends Record<string, unknown> = Record
 export interface Configuration<Meta extends Record<string, unknown> = Record<string, unknown>>
   extends ConfigurationData<Meta> {
   /**
+   * Automatically serialize certain types of objects such as Errors, Dates, Maps, Sets,
+   * and BigInts.
+   */
+  autoSerialize: boolean;
+  /**
+   * Custom replacer function for JSON formatter stringification. Use this if you have a value
+   * type that isn't automatically serialized by default or if you want to override the default
+   * serialization.
+   */
+  customReplacer?: (key: string, value: unknown) => unknown;
+  /**
    * Applies middleware to execute along with the log.
    */
   middleware?: Middleware[];

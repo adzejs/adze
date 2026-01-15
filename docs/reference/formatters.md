@@ -287,6 +287,62 @@ adze
 
 ![example of a json log with a serialized response](./examples/formatters/jsonFormatResponseSerializer-example-node.png)
 
+#### Automatic Argument Serialization
+
+| Supported by [Version >= 2.3]
+
+JSON formatted log arguments that are not included in the [JSONLogFormatMeta](#jsonlogformatmeta-interface)
+are automatically attempted to be [serialized by default]().
+
+Data types that are automatically serialized are as follows:
+
+- [BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
+- [Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
+- [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+- [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
+- [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
+- [Array Buffers](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer)
+  - Uint8Array
+  - Uint8ClampedArray
+  - Int8Array
+  - Uint16Array
+  - Int16Array
+  - Uint32Array
+  - Int32Array
+  - Float32Array
+  - Float64Array
+  - BigInt64Array
+  - BigUint64Array
+  - DataView
+
+#### Custom Serialization
+
+| Supported by [Version >= 2.3]
+
+If you have a value that is not handled by the automatic serializer, you can configure a custom
+replacer in the [setup function](./global-store.md#setup-function) or by the
+[seal terminator](./terminators.md#seal). Please check out the
+[configuration documentation](./configuration.md#userconfiguration-property-descriptions) for more
+details on the interface and how to configure it.
+
+##### Example
+
+```typescript
+import adze, { setup } from 'adze';
+
+setup({
+  // Replace null values with a value of 0
+  customReplacer: (key: string, value: unknown) => {
+    if (value === null) {
+      return 0;
+    }
+  },
+  format: 'json',
+});
+
+adze.log('No null values allowed', null);
+```
+
 <br />
 
 ## Standard Formatter

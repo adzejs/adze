@@ -4,6 +4,8 @@ import {
   defaultTimestamp,
   incrementingPids,
   noEmoji,
+  printAutoSerializedFields,
+  printCustomReplacer,
   printJsonAlert,
   printJsonCustom,
   printJsonDebug,
@@ -53,4 +55,8 @@ describe('terminators with json format in browser', () => {
   test('multiple json logs have incrementing pids', incrementingPids);
 
   test('prints an alert json log with all of the optional fields', printsOptionalFields);
+
+  test('prints auto-serialized fields in json log', printAutoSerializedFields);
+
+  test('prints with custom replacer', printCustomReplacer);
 });

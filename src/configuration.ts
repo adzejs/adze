@@ -41,6 +41,14 @@ export class Configuration implements IConfiguration {
     this.logCfg.activeLevel = level;
   }
 
+  public set autoSerialize(value: boolean) {
+    this.logCfg.autoSerialize = value;
+  }
+
+  public get autoSerialize(): boolean {
+    return this.glblCfg?.autoSerialize ?? this.logCfg.autoSerialize ?? dfltCfg.autoSerialize;
+  }
+
   public get cache(): boolean {
     return this.glblCfg?.cache ?? this.logCfg.cache ?? dfltCfg.cache;
   }
@@ -55,6 +63,14 @@ export class Configuration implements IConfiguration {
 
   public set cacheSize(size: number) {
     this.logCfg.cacheSize = size;
+  }
+
+  public set customReplacer(value: (key: string, value: unknown) => unknown) {
+    this.logCfg.customReplacer = value;
+  }
+
+  public get customReplacer(): ((key: string, value: unknown) => unknown) | undefined {
+    return this.glblCfg?.customReplacer ?? this.logCfg.customReplacer;
   }
 
   public get dump(): boolean {

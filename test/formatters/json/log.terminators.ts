@@ -1,3 +1,4 @@
+import { isMatch } from 'date-fns';
 import { expect, vi } from 'vitest';
 import adze, {
   JsonLogFormatMeta,
@@ -6,7 +7,6 @@ import adze, {
   serializeResponse,
   setup,
 } from '../../../src';
-import { isMatch } from 'date-fns';
 
 export const printJsonAlert = () => {
   const fn = vi.fn();
@@ -94,6 +94,7 @@ export const printJsonWarn = () => {
 
 export const printJsonInfo = () => {
   const fn = vi.fn();
+  const infoFn = console.info;
   console.info = fn;
   setup({ format: 'json', timestampFormatter: () => '2024-07-31T13:19:25-04:00' });
 
@@ -118,10 +119,12 @@ export const printJsonInfo = () => {
     pid: 1,
     time: '2024-07-31T13:19:25-04:00',
   });
+  console.info = infoFn;
 };
 
 export const printJsonFail = () => {
   const fn = vi.fn();
+  const infoFn = console.info;
   console.info = fn;
   setup({ format: 'json', timestampFormatter: () => '2024-07-31T13:19:25-04:00' });
 
@@ -146,10 +149,12 @@ export const printJsonFail = () => {
     pid: 1,
     time: '2024-07-31T13:19:25-04:00',
   });
+  console.info = infoFn;
 };
 
 export const printJsonSuccess = () => {
   const fn = vi.fn();
+  const infoFn = console.info;
   console.info = fn;
   setup({ format: 'json', timestampFormatter: () => '2024-07-31T13:19:25-04:00' });
 
@@ -174,6 +179,7 @@ export const printJsonSuccess = () => {
     pid: 1,
     time: '2024-07-31T13:19:25-04:00',
   });
+  console.info = infoFn;
 };
 
 export const printJsonLog = () => {
@@ -502,5 +508,113 @@ export const printsOptionalFields = async () => {
       header: 'HTTPS 200 OK\r\nboop: 0\r\ncontent-type: 1\r\n\r\n',
     },
     latency: 100,
+  });
+};
+
+export const printAutoSerializedFields = () => {
+  const fn = vi.fn();
+  console.log = fn;
+  setup({
+    format: 'json',
+    timestampFormatter: () => '2024-07-31T13:19:25-04:00',
+    autoSerialize: true,
+  });
+
+  adze
+    .meta<JsonLogFormatMeta>({
+      hostname: 'localhost',
+      name: 'test-app',
+    })
+    .log('Testing auto-serialization of special fields.', {
+      err: new Error('An error occurred.'),
+      map: new Map([
+        ['key1', 'value1'],
+        ['key2', 'value2'],
+      ]),
+      set: new Set([1, 2, 3]),
+      bigInt: BigInt('9007199254741991'),
+      date: new Date('2024-07-31T13:19:25-04:00'),
+    });
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
+  const parsed = JSON.parse(fn.mock.calls[0][0]);
+  expect(parsed).toEqual({
+    v: 1,
+    level: 6,
+    levelName: 'log',
+    name: 'test-app',
+    hostname: 'localhost',
+    msg: 'Testing auto-serialization of special fields.',
+    args: [
+      {
+        err: {
+          name: 'Error',
+          message: 'An error occurred.',
+          stack:
+            'Error: An error occurred.\n' +
+            '    at printAutoSerializedFields (/Users/andrewstacy/Projects/personal/adze/test/formatters/json/log.terminators.ts:529:12)\n' +
+            '    at file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:146:14\n' +
+            '    at file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:533:11\n' +
+            '    at runWithTimeout (file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:39:7)\n' +
+            '    at runTest (file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:1056:17)\n' +
+            '    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+            '    at runSuite (file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
+            '    at runSuite (file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
+            '    at runFiles (file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:1262:5)\n' +
+            '    at startTests (file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:1271:3)',
+        },
+        map: { key1: 'value1', key2: 'value2' },
+        set: [1, 2, 3],
+        bigInt: '9007199254741991',
+        date: '2024-07-31T17:19:25.000Z',
+      },
+    ],
+    pid: 1,
+    time: '2024-07-31T13:19:25-04:00',
+  });
+};
+
+export const printCustomReplacer = () => {
+  const fn = vi.fn();
+  console.log = fn;
+  setup({
+    format: 'json',
+    timestampFormatter: () => '2024-07-31T13:19:25-04:00',
+    autoSerialize: true,
+    customReplacer: (_k: string, v: unknown) => {
+      // Replace any field named "special" with a marker so we can assert custom replacer runs
+      // Note: JSON.stringify passes an empty string as the root key, so check for 'special' key name
+      if (_k === 'special') return 'SERIALIZED_BY_CUSTOM';
+      return v;
+    },
+  });
+
+  adze
+    .meta<JsonLogFormatMeta>({
+      hostname: 'localhost',
+      name: 'test-app',
+    })
+    .log('Testing custom serializer', { special: 'original', other: 1 });
+
+  expect(fn).toHaveBeenCalledTimes(1);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
+  const parsed = JSON.parse(fn.mock.calls[0][0]);
+  expect(parsed).toEqual({
+    v: 1,
+    level: 6,
+    levelName: 'log',
+    name: 'test-app',
+    hostname: 'localhost',
+    msg: 'Testing custom serializer',
+    args: [
+      {
+        special: 'SERIALIZED_BY_CUSTOM',
+        other: 1,
+      },
+    ],
+    pid: 1,
+    time: '2024-07-31T13:19:25-04:00',
   });
 };
