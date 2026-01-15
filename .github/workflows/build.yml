@@ -107,8 +107,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
-      - name: Publish to npm with provenance
-        run: npm publish --provenance --access public
   docs:
     runs-on: ubuntu-latest
     permissions:
