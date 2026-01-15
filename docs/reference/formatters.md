@@ -289,7 +289,7 @@ adze
 
 #### Automatic Argument Serialization
 
-|> Supported by [Version >= 2.3.0]
+> Supported by [Version >= 2.3.0]
 
 JSON formatted log arguments that are not included in the [JSONLogFormatMeta](#jsonlogformatmeta-interface)
 are automatically attempted to be [serialized by default]().
@@ -317,7 +317,7 @@ Data types that are automatically serialized are as follows:
 
 #### Custom Serialization
 
-|> Supported by [Version >= 2.3.0]
+> Supported by [Version >= 2.3.0]
 
 If you have a value that is not handled by the automatic serializer, you can configure a custom
 replacer in the [setup function](./global-store.md#setup-function) or by the
