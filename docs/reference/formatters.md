@@ -287,7 +287,7 @@ adze
 
 ![example of a json log with a serialized response](./examples/formatters/jsonFormatResponseSerializer-example-node.png)
 
-#### Automatic Argument Serialization
+### Automatic Argument Serialization
 
 > Supported by [Version >= 2.3.0]
 
@@ -315,7 +315,7 @@ Data types that are automatically serialized are as follows:
   - BigUint64Array
   - DataView
 
-#### Custom Serialization
+### Custom Serialization
 
 > Supported by [Version >= 2.3.0]
 
