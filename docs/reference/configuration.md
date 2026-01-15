@@ -38,6 +38,8 @@ type Level = 'alert' | 'error' | 'warn' | 'info' | 'fail' | 'success' | 'log' | 
 
 ### UserConfiguration Property Descriptions
 
+|> [Version >= 2.3.0] Supports `autoSerialize` and `customReplacer`
+
 | Property Name      | Default Value                                 | Description                                                                                                                                        |
 | ------------------ | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | activeLevel        | `"log"`                                       | Set the maximum log level that will be rendered.                                                                                                   |
