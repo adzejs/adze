@@ -53,6 +53,9 @@
   },
   "homepage": "https://adzejs.com",
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "semantic-release": "^24.2.0",
     "@eslint/js": "^9.5.0",
     "@size-limit/preset-small-lib": "^11.1.4",
     "@types/eslint__js": "^8.42.3",
@@ -98,11 +101,6 @@
       "path": "dist/index.js"
     }
   ],
-  "release": {
-    "branches": [
-      "master"
-    ]
-  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"

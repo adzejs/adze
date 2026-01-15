@@ -1,8 +1,6 @@
-// @ts-check
-
 import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
@@ -31,6 +29,6 @@ export default tseslint.config(
     },
   },
   {
-    ignores: ['dist/', 'docs/'],
+    ignores: ['dist/', 'docs/', 'release.config.js', 'eslint.config.js'],
   }
 );

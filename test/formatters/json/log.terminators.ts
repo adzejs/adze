@@ -513,6 +513,7 @@ export const printsOptionalFields = async () => {
 
 export const printAutoSerializedFields = () => {
   const fn = vi.fn();
+  const consoleFn = console.log;
   console.log = fn;
   setup({
     format: 'json',
@@ -552,18 +553,8 @@ export const printAutoSerializedFields = () => {
         err: {
           name: 'Error',
           message: 'An error occurred.',
-          stack:
-            'Error: An error occurred.\n' +
-            '    at printAutoSerializedFields (/Users/andrewstacy/Projects/personal/adze/test/formatters/json/log.terminators.ts:529:12)\n' +
-            '    at file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:146:14\n' +
-            '    at file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:533:11\n' +
-            '    at runWithTimeout (file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:39:7)\n' +
-            '    at runTest (file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:1056:17)\n' +
-            '    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
-            '    at runSuite (file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
-            '    at runSuite (file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
-            '    at runFiles (file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:1262:5)\n' +
-            '    at startTests (file:///Users/andrewstacy/Projects/personal/adze/node_modules/.deno/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:1271:3)',
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          stack: expect.stringContaining('Error: An error occurred.'),
         },
         map: { key1: 'value1', key2: 'value2' },
         set: [1, 2, 3],
@@ -574,6 +565,7 @@ export const printAutoSerializedFields = () => {
     pid: 1,
     time: '2024-07-31T13:19:25-04:00',
   });
+  console.log = consoleFn;
 };
 
 export const printCustomReplacer = () => {

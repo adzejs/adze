@@ -14,13 +14,7 @@
     "preserveConstEnums": true,
     "skipLibCheck": true
   },
-  "include": [
-    "src/**/*",
-    "src/demo_funcs.ts",
-    "vitest.config.ts",
-    "eslint.config.js",
-    "./test/**/*"
-  ],
+  "include": ["src/**/*", "src/demo_funcs.ts", "vitest.config.ts", "./test/**/*"],
   "tsc-alias": {
     "resolveFullPaths": true,
     "verbose": false
