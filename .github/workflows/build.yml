@@ -97,12 +97,18 @@ jobs:
         with:
           name: dist
           path: ./dist
-      # Uses npm OIDC trusted publishing – no NPM_TOKEN required.
+      # Uses npm OIDC Trusted Publishing - no NPM_TOKEN needed.
       # Configure trusted publisher at https://www.npmjs.com/package/adze/access
+      # Settings:
+      #   - Organization or user: adzejs
+      #   - Repository: adze
+      #   - Workflow filename: build.yml
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
+      - name: Publish to npm with provenance
+        run: npm publish --provenance --access public
   docs:
     runs-on: ubuntu-latest
     permissions:

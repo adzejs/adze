@@ -19,8 +19,8 @@ export default {
     [
       '@semantic-release/npm',
       {
-        // Enable npm provenance (cryptographic attestation of build origin)
-        provenance: true,
+        // Disable npm publish here - we publish separately with OIDC trusted publishing
+        npmPublish: false,
       },
     ],
     '@semantic-release/github',
