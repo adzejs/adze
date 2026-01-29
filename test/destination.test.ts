@@ -12,7 +12,7 @@ describe('Destination Callback', () => {
     teardown();
   });
 
-  test('destination callback is called instead of console when provided', () => {
+  test('destination callback is called in addition to console', () => {
     const destinationFn = vi.fn();
     console.log = vi.fn();
 
@@ -22,10 +22,9 @@ describe('Destination Callback', () => {
 
     adze.log('Test message');
 
-    // Destination callback should be called
+    // Both destination callback and console should be called
     expect(destinationFn).toHaveBeenCalledTimes(1);
-    // Console should not be called
-    expect(console.log).not.toHaveBeenCalled();
+    expect(console.log).toHaveBeenCalled();
   });
 
   test('destination callback receives correct parameters', () => {
@@ -72,10 +71,10 @@ describe('Destination Callback', () => {
     // Destination should be called 3 times
     expect(destinationFn).toHaveBeenCalledTimes(3);
 
-    // Console methods should not be called
-    expect(console.error).not.toHaveBeenCalled();
-    expect(console.warn).not.toHaveBeenCalled();
-    expect(console.info).not.toHaveBeenCalled();
+    // Console methods should also be called
+    expect(console.error).toHaveBeenCalled();
+    expect(console.warn).toHaveBeenCalled();
+    expect(console.info).toHaveBeenCalled();
 
     // Check terminators
     expect(destinationFn.mock.calls[0][1]).toBe('error');
@@ -164,7 +163,8 @@ describe('Destination Callback', () => {
 
     expect(globalDestination).toHaveBeenCalledTimes(1);
     expect(localDestination).toHaveBeenCalledTimes(1);
-    expect(console.log).not.toHaveBeenCalled();
+    // Console should also be called
+    expect(console.log).toHaveBeenCalledTimes(2);
   });
 
   test('destination callback can write to custom output stream', () => {

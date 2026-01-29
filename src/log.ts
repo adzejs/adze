@@ -1252,7 +1252,7 @@ export default class Log<N extends string = string, Msg = unknown> {
   // Public Utility Methods
   ////////////////////////////////////////////////////////
   /**
-   * Prints the log to the console or custom destination.
+   * Prints the log to the console and custom destination.
    */
   public print(data: LogData): void {
     // Skip printing if the Adze environment is set to test.
@@ -1262,13 +1262,12 @@ export default class Log<N extends string = string, Msg = unknown> {
     // If no message, skip.
     if (data.message.length < 1) return;
 
-    // Use custom destination if provided
+    // Call custom destination if provided
     if (this._cfg.destination) {
       this._cfg.destination(this, data.terminator, data.args);
-      return;
     }
 
-    // Otherwise use console
+    // Print to console
     // Only print the message with arguments if it is using a method that allows arguments.
     if (isMethodWithArgs(data.method)) {
       console[data.method](...data.message);

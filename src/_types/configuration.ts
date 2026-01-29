@@ -98,7 +98,7 @@ export interface Configuration<Meta extends Record<string, unknown> = Record<str
    */
   timestampFormatter?: TimestampFormatter;
   /**
-   * A callback function that allows the user to specify a custom log destination instead of console.
+   * A callback function that allows the user to specify a custom log destination in addition to console.
    */
   destination?: DestinationCallback;
   /**
