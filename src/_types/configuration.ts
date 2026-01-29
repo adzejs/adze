@@ -1,6 +1,7 @@
 import { formats } from '../constants';
 import { Middleware } from '../middleware';
 import { FormatterConstructor, Level, LevelConfiguration } from './log';
+import Log from '../log';
 
 /**
  * All valid log formats. These determine the style that is emitted.
@@ -97,6 +98,10 @@ export interface Configuration<Meta extends Record<string, unknown> = Record<str
    */
   timestampFormatter?: TimestampFormatter;
   /**
+   * A callback function that allows the user to specify a custom log destination instead of console.
+   */
+  destination?: DestinationCallback;
+  /**
    * Map of formatters that can be used to render logs.
    */
   formatters: Record<string, FormatterConstructor>;
@@ -106,6 +111,11 @@ export interface Configuration<Meta extends Record<string, unknown> = Record<str
  * A callback function that allows the user to return a custom timestamp format for each log.
  */
 export type TimestampFormatter = (date: Date) => string;
+
+/**
+ * Type for the log destination callback that will be invoked instead of console.
+ */
+export type DestinationCallback = (log: Log, terminator: string, args: unknown[]) => void;
 
 /**
  * Configuration for filtering logs.
