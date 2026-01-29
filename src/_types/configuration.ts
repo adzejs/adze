@@ -1,7 +1,7 @@
 import { formats } from '../constants';
 import { Middleware } from '../middleware';
 import { FormatterConstructor, Level, LevelConfiguration } from './log';
-import Log from '../log';
+import type Log from '../log';
 
 /**
  * All valid log formats. These determine the style that is emitted.
