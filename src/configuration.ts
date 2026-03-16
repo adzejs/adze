@@ -5,6 +5,7 @@ import {
   Level,
   LevelConfiguration,
   TimestampFormatter,
+  DestinationCallback,
   UserConfiguration,
 } from './_types';
 import { defaultConfiguration as dfltCfg } from './constants';
@@ -153,6 +154,14 @@ export class Configuration implements IConfiguration {
     this.logCfg.timestampFormatter = value;
   }
 
+  public get destination(): DestinationCallback | undefined {
+    return this.glblCfg?.destination ?? this.logCfg.destination;
+  }
+
+  public set destination(value: DestinationCallback | undefined) {
+    this.logCfg.destination = value;
+  }
+
   public get formatters(): Record<string, FormatterConstructor> {
     return {
       ...dfltCfg.formatters,
@@ -180,6 +189,7 @@ export class Configuration implements IConfiguration {
       middleware: this.logCfg.middleware,
       filters: this.logCfg.filters,
       timestampFormatter: this.logCfg.timestampFormatter,
+      destination: this.logCfg.destination,
       formatters: this.logCfg.formatters,
     };
   }
